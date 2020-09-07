@@ -12,7 +12,6 @@ func NewServerCallBuzz(chat JID, teamUid, displayName string, icons *IconData, u
 	r.Params.Icons = icons
 	r.Params.Uid = uid
 	r.Params.BuzzTimeout = int(timeout.Seconds())
-	//resp.Params.BuzzTimeout = int(config.WebRtc.WaitCallTimeout.Seconds())
 	return r
 }
 
