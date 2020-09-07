@@ -1,11 +1,16 @@
 package tdproto
 
+func NewClientConfirm(confirmId string) (r ClientConfirm) {
+	r.Name = "client.confirm"
+	r.Params.ConfirmId = confirmId
+	return r
+}
+
 type ClientConfirm struct {
 	BaseEvent
 	Params ClientConfirmParams `json:"params"`
 }
 
 type ClientConfirmParams struct {
-	MessageId string `json:"message_id,omitempty"`
 	ConfirmId string `json:"confirm_id"`
 }
