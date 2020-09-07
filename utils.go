@@ -1,6 +1,14 @@
 package tdproto
 
-import uuid "github.com/satori/go.uuid"
+import (
+	"time"
+
+	uuid "github.com/satori/go.uuid"
+)
+
+func Gentime() int64 {
+	return time.Now().UnixNano()
+}
 
 func ValidUid(s string) bool {
 	if s == "" {
