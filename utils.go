@@ -2,7 +2,7 @@ package tdproto
 
 import uuid "github.com/satori/go.uuid"
 
-func IsValidUid(s string) bool {
+func ValidUid(s string) bool {
 	if s == "" {
 		return false
 	}

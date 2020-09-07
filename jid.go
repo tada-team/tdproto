@@ -58,7 +58,7 @@ func (jid JID) Uid() string {
 		return ""
 	}
 	bits := strings.SplitN(jid.val, "-", 2)
-	if len(bits) != 2 || !IsValidUid(bits[1]) {
+	if len(bits) != 2 || !ValidUid(bits[1]) {
 		return ""
 	}
 	return bits[1]
