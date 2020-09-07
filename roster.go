@@ -1,5 +1,6 @@
 package tdproto
 
+// deprecated
 type Roster struct {
 	Badge           *uint        `json:"badge"`            // TODO: ,omitempty
 	ContactSections []Section    `json:"contact_sections"` // TODO: ,omitempty
