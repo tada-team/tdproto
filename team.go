@@ -1,0 +1,50 @@
+package tdproto
+
+type TeamStatus string
+
+const (
+	TeamOwner  = TeamStatus("owner")
+	TeamAdmin  = TeamStatus("admin")
+	TeamMember = TeamStatus("member")
+	TeamGuest  = TeamStatus("guest")
+)
+
+type TeamPreview struct {
+	Name  string    `json:"name"`
+	Icons *IconData `json:"icons"`
+}
+
+type Team struct {
+	Uid                 string       `json:"uid"`
+	IsArchive           bool         `json:"is_archive,omitempty"`
+	Gentime             int64        `json:"gentime"`
+	Name                string       `json:"name"`
+	DefaultTaskDeadline string       `json:"default_task_deadline,omitempty"`
+	MaxMessageUpdateAge int          `json:"max_message_update_age"`
+	Icons               *IconData    `json:"icons"`
+	LastActive          bool         `json:"last_active"`
+	ChangeableStatuses  []TeamStatus `json:"changeable_statuses,omitempty"`
+	BadProfile          bool         `json:"bad_profile,omitempty"`
+	NeedConfirmation    bool         `json:"need_confirmation"`
+	UsePatronymic       bool         `json:"use_patronymic,omitempty"`
+	UseTaskImportance   bool         `json:"use_task_importance,omitempty"`
+	TaskImportanceMin   int          `json:"task_importance_min,omitempty"`
+	TaskImportanceMax   int          `json:"task_importance_max,omitempty"`
+	TaskImportanceRev   bool         `json:"task_importance_rev,omitempty"`
+	UseTaskUrgency      bool         `json:"use_task_urgency,omitempty"`
+	UseTaskComplexity   bool         `json:"use_task_complexity,omitempty"`
+	UseTaskSpentTime    bool         `json:"use_task_spent_time,omitempty"`
+	UploadsSize         int64        `json:"uploads_size,omitempty"`
+	UploadsSizeLimit    int64        `json:"uploads_size_limit,omitempty"`
+	Unreads             *TeamUnread  `json:"unread"`
+	Me                  Contact      `json:"me,omitempty"`
+	Contacts            []Contact    `json:"contacts,omitempty"`
+	SingleGroup         *JID         `json:"single_group,omitempty"`
+	Theme               *Theme       `json:"theme,omitempty"`
+}
+
+type DeletedTeam struct {
+	Uid       string `json:"uid"`
+	IsArchive bool   `json:"is_archive"`
+	Gentime   int64  `json:"gentime"`
+}
