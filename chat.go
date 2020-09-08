@@ -7,10 +7,6 @@ type DeletedChat struct {
 	IsArchive bool     `json:"is_archive"`
 }
 
-type GroupMembers struct {
-	Members []GroupMembership `json:"members"`
-}
-
 type Chat struct {
 	ChatType                  ChatType          `json:"chat_type"`
 	BaseGentime               int64             `json:"base_gentime,omitempty"`
