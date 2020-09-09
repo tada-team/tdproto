@@ -16,16 +16,17 @@ type Contact struct {
 	Botname         string     `json:"botname,omitempty"`
 	Sections        []string   `json:"sections"`
 	// actor:
-	CanSendMessage   *bool     `json:"can_send_message,omitempty"`
-	CanCall          *bool     `json:"can_call,omitempty"`
-	CanCreateTask    *bool     `json:"can_create_task,omitempty"`
-	CanAddToGroup    *bool     `json:"can_add_to_group,omitempty"`
-	CanDelete        *bool     `json:"can_delete,omitempty"`
-	ChangeableFields *[]string `json:"changeable_fields,omitempty"`
-	FamilyName       *string   `json:"family_name,omitempty"`
-	GivenName        *string   `json:"given_name,omitempty"`
-	Patronymic       *string   `json:"patronymic,omitempty"`
-	DefaultLang      *string   `json:"default_lang,omitempty"`
+	CanSendMessage        *bool     `json:"can_send_message,omitempty"`
+	CantSendMessageReason string    `json:"cant_send_message_reason,omitempty"`
+	CanCall               *bool     `json:"can_call,omitempty"`
+	CanCreateTask         *bool     `json:"can_create_task,omitempty"`
+	CanAddToGroup         *bool     `json:"can_add_to_group,omitempty"`
+	CanDelete             *bool     `json:"can_delete,omitempty"`
+	ChangeableFields      *[]string `json:"changeable_fields,omitempty"`
+	FamilyName            *string   `json:"family_name,omitempty"`
+	GivenName             *string   `json:"given_name,omitempty"`
+	Patronymic            *string   `json:"patronymic,omitempty"`
+	DefaultLang           *string   `json:"default_lang,omitempty"`
 	// self:
 	DebugShowActivity         *bool   `json:"debug_show_activity,omitempty"`
 	DropallEnabled            *bool   `json:"dropall_enabled,omitempty"`

@@ -18,6 +18,7 @@ type Chat struct {
 	CountersEnabled           bool              `json:"counters_enabled,omitempty"`
 	CanCall                   bool              `json:"can_call,omitempty"`
 	CanSendMessage            bool              `json:"can_send_message,omitempty"`
+	CantSendMessageReason     string            `json:"cant_send_message_reason,omitempty"`
 	Collapsed                 bool              `json:"collapsed,omitempty"`
 	Draft                     string            `json:"draft,omitempty"`
 	DraftNum                  int64             `json:"draft_num,omitempty"`
