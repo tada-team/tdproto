@@ -8,9 +8,9 @@ func NewServerRemindUpdated(remind Remind) (r ServerRemindUpdated) {
 
 type ServerRemindUpdated struct {
 	BaseEvent
-	Params ServerRemindUpdatedParams `json:"params"`
+	Params serverRemindUpdatedParams `json:"params"`
 }
 
-type ServerRemindUpdatedParams struct {
+type serverRemindUpdatedParams struct {
 	Reminds []Remind `json:"reminds"`
 }

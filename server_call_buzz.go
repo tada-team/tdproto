@@ -17,10 +17,10 @@ func NewServerCallBuzz(chat JID, teamUid, displayName string, icons *IconData, u
 
 type ServerCallBuzz struct {
 	BaseEvent
-	Params ServerCallBuzzParams `json:"params"`
+	Params serverCallBuzzParams `json:"params"`
 }
 
-type ServerCallBuzzParams struct {
+type serverCallBuzzParams struct {
 	Jid         JID       `json:"jid"`
 	Team        string    `json:"team"`
 	DisplayName string    `json:"display_name"`

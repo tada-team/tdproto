@@ -8,9 +8,9 @@ func NewServerTeamUpdated(team Team) (r ServerTeamUpdated) {
 
 type ServerTeamUpdated struct {
 	BaseEvent
-	Params ServerTeamUpdatedParams `json:"params"`
+	Params serverTeamUpdatedParams `json:"params"`
 }
 
-type ServerTeamUpdatedParams struct {
+type serverTeamUpdatedParams struct {
 	Teams []Team `json:"teams"`
 }

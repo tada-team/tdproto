@@ -10,10 +10,10 @@ func NewServerChatUpdated(chat Chat, teamUnread *TeamUnread, badge uint) (r Serv
 
 type ServerChatUpdated struct {
 	BaseEvent
-	Params ServerChatUpdatedParams `json:"params"`
+	Params serverChatUpdatedParams `json:"params"`
 }
 
-type ServerChatUpdatedParams struct {
+type serverChatUpdatedParams struct {
 	Chats      []Chat      `json:"chats"`
 	TeamUnread *TeamUnread `json:"team_unread"`
 	Badge      uint        `json:"badge"`

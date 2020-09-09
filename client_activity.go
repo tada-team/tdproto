@@ -2,9 +2,9 @@ package tdproto
 
 type ClientActivity struct {
 	BaseEvent
-	Params ClientActivityParams `json:"params"`
+	Params clientActivityParams `json:"params"`
 }
 
-type ClientActivityParams struct {
+type clientActivityParams struct {
 	Afk bool `json:"afk"`
 }

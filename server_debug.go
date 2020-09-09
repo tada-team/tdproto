@@ -8,9 +8,9 @@ func NewServerDebug(text string) (r ServerDebug) {
 
 type ServerDebug struct {
 	BaseEvent
-	Params ServerDebugParams `json:"params"`
+	Params serverDebugParams `json:"params"`
 }
 
-type ServerDebugParams struct {
+type serverDebugParams struct {
 	Text string `json:"text"`
 }

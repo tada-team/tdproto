@@ -10,9 +10,9 @@ func NewServerTime() (r ServerTime) {
 
 type ServerTime struct {
 	BaseEvent
-	Params ServerTimeParams `json:"params"`
+	Params serverTimeParams `json:"params"`
 }
 
-type ServerTimeParams struct {
+type serverTimeParams struct {
 	Time string `json:"time"`
 }

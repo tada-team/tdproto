@@ -8,10 +8,10 @@ func NewServerPanic(code string) (r ServerPanic) {
 
 type ServerPanic struct {
 	BaseEvent
-	Params ServerPanicParams `json:"params"`
+	Params serverPanicParams `json:"params"`
 }
 
-type ServerPanicParams struct {
+type serverPanicParams struct {
 	Code  string `json:"code"`
 	Debug string `json:"debug,omitempty"`
 }

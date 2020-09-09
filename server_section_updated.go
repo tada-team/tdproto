@@ -10,10 +10,10 @@ func NewServerSectionUpdated(ct ChatType, sections ...Section) (r ServerSectionU
 
 type ServerSectionUpdated struct {
 	BaseEvent
-	Params ServerSectionUpdatedParams `json:"params"`
+	Params serverSectionUpdatedParams `json:"params"`
 }
 
-type ServerSectionUpdatedParams struct {
+type serverSectionUpdatedParams struct {
 	ChatType ChatType  `json:"chat_type"`
 	Gentime  int64     `json:"gentime"`
 	Sections []Section `json:"sections"`

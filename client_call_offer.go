@@ -2,10 +2,10 @@ package tdproto
 
 type ClientCallOffer struct {
 	BaseEvent
-	Params ClientCallOfferParams `json:"params"`
+	Params clientCallOfferParams `json:"params"`
 }
 
-type ClientCallOfferParams struct {
+type clientCallOfferParams struct {
 	Jid     JID    `json:"jid"`
 	Muted   bool   `json:"muted"`
 	Trickle bool   `json:"trickle"`

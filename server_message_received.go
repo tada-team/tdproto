@@ -17,9 +17,9 @@ func NewServerMessageReceived(messages []ReceivedMessage) (r ServerMessageReceiv
 
 type ServerMessageReceived struct {
 	BaseEvent
-	Params ServerMessageReceivedParams `json:"params"`
+	Params serverMessageReceivedParams `json:"params"`
 }
 
-type ServerMessageReceivedParams struct {
+type serverMessageReceivedParams struct {
 	Messages []ReceivedMessage `json:"messages"`
 }

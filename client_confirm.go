@@ -8,9 +8,9 @@ func NewClientConfirm(confirmId string) (r ClientConfirm) {
 
 type ClientConfirm struct {
 	BaseEvent
-	Params ClientConfirmParams `json:"params"`
+	Params clientConfirmParams `json:"params"`
 }
 
-type ClientConfirmParams struct {
+type clientConfirmParams struct {
 	ConfirmId string `json:"confirm_id"`
 }

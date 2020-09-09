@@ -2,10 +2,10 @@ package tdproto
 
 type ClientCallReject struct {
 	BaseEvent
-	Params ClientCallRejectParams `json:"params"`
+	Params clientCallRejectParams `json:"params"`
 }
 
-type ClientCallRejectParams struct {
+type clientCallRejectParams struct {
 	Jid    JID    `json:"jid"`
 	Reason string `json:"reason"`
 }

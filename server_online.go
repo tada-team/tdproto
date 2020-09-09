@@ -10,10 +10,10 @@ func NewServerOnline(contacts []OnlineContact, calls []OnlineCall) (r ServerOnli
 
 type ServerOnline struct {
 	BaseEvent
-	Params ServerOnlineParams `json:"params"`
+	Params serverOnlineParams `json:"params"`
 }
 
-type ServerOnlineParams struct {
+type serverOnlineParams struct {
 	Contacts *[]OnlineContact `json:"contacts"`
 	Calls    *[]OnlineCall    `json:"calls"`
 }

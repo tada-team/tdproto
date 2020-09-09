@@ -2,10 +2,10 @@ package tdproto
 
 type ClientCallBuzz struct {
 	BaseEvent
-	Params ClientCallBuzzParams `json:"params"`
+	Params clientCallBuzzParams `json:"params"`
 }
 
-type ClientCallBuzzParams struct {
+type clientCallBuzzParams struct {
 	Jid     JID   `json:"jid"`
 	Members []JID `json:"members"`
 }

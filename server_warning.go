@@ -9,10 +9,10 @@ func NewServerWarning(message, orig string) (r ServerWarning) {
 
 type ServerWarning struct {
 	BaseEvent
-	Params ServerWarningParams `json:"params"`
+	Params serverWarningParams `json:"params"`
 }
 
-type ServerWarningParams struct {
+type serverWarningParams struct {
 	Message string      `json:"message"`
 	Orig    interface{} `json:"orig"`
 }

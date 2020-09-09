@@ -28,10 +28,10 @@ func NewServerMessageUpdated(messages []Message, delayed bool, counters *ChatCou
 
 type ServerMessageUpdated struct {
 	BaseEvent
-	Params ServerMessageUpdatedParams `json:"params"`
+	Params serverMessageUpdatedParams `json:"params"`
 }
 
-type ServerMessageUpdatedParams struct {
+type serverMessageUpdatedParams struct {
 	Messages     []Message      `json:"messages"`
 	Delayed      bool           `json:"delayed"`
 	ChatCounters []ChatCounters `json:"chat_counters"` // TODO: omitempty

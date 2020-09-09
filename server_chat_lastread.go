@@ -10,10 +10,10 @@ func NewServerChatLastread(counters ChatCounters, teamUnread *TeamUnread, badge 
 
 type ServerChatLastread struct {
 	BaseEvent
-	Params ServerChatLastreadParams `json:"params"`
+	Params serverChatLastreadParams `json:"params"`
 }
 
-type ServerChatLastreadParams struct {
+type serverChatLastreadParams struct {
 	Chats      []ChatCounters `json:"chats"`
 	TeamUnread *TeamUnread    `json:"team_unread"`
 	Badge      uint           `json:"badge"`

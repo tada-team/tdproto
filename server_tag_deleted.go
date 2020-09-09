@@ -8,9 +8,9 @@ func NewServerTagDeleted(tags ...DeletedTag) (r ServerTagDeleted) {
 
 type ServerTagDeleted struct {
 	BaseEvent
-	Params ServerTagDeletedParams `json:"params"`
+	Params serverTagDeletedParams `json:"params"`
 }
 
-type ServerTagDeletedParams struct {
+type serverTagDeletedParams struct {
 	Tags []DeletedTag `json:"tags"`
 }

@@ -26,10 +26,10 @@ func NewServerCallState(chat HasJid, startCall, finishCall *time.Time, onliners 
 
 type ServerCallState struct {
 	BaseEvent
-	Params ServerCallStateParams `json:"params"`
+	Params serverCallStateParams `json:"params"`
 }
 
-type ServerCallStateParams struct {
+type serverCallStateParams struct {
 	Jid         JID           `json:"jid"`
 	Onliners    []CallOnliner `json:"onliners"`
 	Start       *string       `json:"start"`

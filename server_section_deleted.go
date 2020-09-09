@@ -10,10 +10,10 @@ func NewServerSectionDeleted(ct ChatType, section DeletedSection) (r ServerSecti
 
 type ServerSectionDeleted struct {
 	BaseEvent
-	Params ServerSectionDeletedParams `json:"params"`
+	Params serverSectionDeletedParams `json:"params"`
 }
 
-type ServerSectionDeletedParams struct {
+type serverSectionDeletedParams struct {
 	ChatType ChatType         `json:"chat_type"`
 	Gentime  int64            `json:"gentime"`
 	Sections []DeletedSection `json:"sections"`

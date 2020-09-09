@@ -9,9 +9,9 @@ func NewClientMessageDeleted(messageId string) (r ClientMessageDeleted) {
 
 type ClientMessageDeleted struct {
 	BaseEvent
-	Params ClientMessageDeletedParams `json:"params"`
+	Params clientMessageDeletedParams `json:"params"`
 }
 
-type ClientMessageDeletedParams struct {
+type clientMessageDeletedParams struct {
 	MessageId string `json:"message_id,omitempty"`
 }

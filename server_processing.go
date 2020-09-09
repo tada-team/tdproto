@@ -12,10 +12,10 @@ func NewServerProcessing(num, total int, action, message string, hasError bool) 
 
 type ServerProcessing struct {
 	BaseEvent
-	Params ServerProcessingParams `json:"params"`
+	Params serverProcessingParams `json:"params"`
 }
 
-type ServerProcessingParams struct {
+type serverProcessingParams struct {
 	Action   string `json:"action"`
 	Message  string `json:"message"`
 	HasError bool   `json:"has_error"`

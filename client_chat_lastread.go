@@ -2,10 +2,10 @@ package tdproto
 
 type ClientChatLastread struct {
 	BaseEvent
-	Params ClientChatLastreadParams `json:"params"`
+	Params clientChatLastreadParams `json:"params"`
 }
 
-type ClientChatLastreadParams struct {
+type clientChatLastreadParams struct {
 	Jid               JID     `json:"jid"`
 	LastReadMessageId *string `json:"last_read_message_id"`
 }

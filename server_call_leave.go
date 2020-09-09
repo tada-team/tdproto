@@ -9,10 +9,10 @@ func NewServerCallLeave(jid JID, uid string) (r ServerCallLeave) {
 
 type ServerCallLeave struct {
 	BaseEvent
-	Params ServerCallLeaveParams `json:"params"`
+	Params serverCallLeaveParams `json:"params"`
 }
 
-type ServerCallLeaveParams struct {
+type serverCallLeaveParams struct {
 	Jid JID    `json:"jid"`
 	Uid string `json:"uid"`
 }

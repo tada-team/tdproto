@@ -10,10 +10,10 @@ func NewServerCallReject(jid JID, reason string, uid string) (r ServerCallReject
 
 type ServerCallReject struct {
 	BaseEvent
-	Params ServerCallRejectParams `json:"params"`
+	Params serverCallRejectParams `json:"params"`
 }
 
-type ServerCallRejectParams struct {
+type serverCallRejectParams struct {
 	Jid    JID    `json:"jid"`
 	Reason string `json:"reason"`
 	Uid    string `json:"uid"`

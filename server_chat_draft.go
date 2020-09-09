@@ -10,10 +10,10 @@ func NewServerChatDraft(jid *JID, draft string, draftNum int64) (r ServerChatDra
 
 type ServerChatDraft struct {
 	BaseEvent
-	Params ServerChatDraftParams `json:"params"`
+	Params serverChatDraftParams `json:"params"`
 }
 
-type ServerChatDraftParams struct {
+type serverChatDraftParams struct {
 	Jid      *JID   `json:"jid"`
 	Draft    string `json:"draft"`
 	DraftNum int64  `json:"draft_num"`

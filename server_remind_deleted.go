@@ -10,9 +10,9 @@ func NewServerRemindDeleted(uid string) (r ServerRemindDeleted) {
 
 type ServerRemindDeleted struct {
 	BaseEvent
-	Params ServerRemindDeletedParams `json:"params"`
+	Params serverRemindDeletedParams `json:"params"`
 }
 
-type ServerRemindDeletedParams struct {
+type serverRemindDeletedParams struct {
 	Remind []DeletedRemind `json:"reminds"`
 }

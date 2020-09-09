@@ -8,9 +8,9 @@ func NewServerCallCheckFingerprint(fingerprint string) (r ServerCallCheckFingerp
 
 type ServerCallCheckFingerprint struct {
 	BaseEvent
-	Params ServerCallCheckFingerprintParams `json:"params"`
+	Params serverCallCheckFingerprintParams `json:"params"`
 }
 
-type ServerCallCheckFingerprintParams struct {
+type serverCallCheckFingerprintParams struct {
 	Fingerprint string `json:"fingerprint"`
 }

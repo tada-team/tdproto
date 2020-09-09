@@ -9,10 +9,10 @@ func NewServerCallSound(jid JID, muted bool) (r ServerCallSound) {
 
 type ServerCallSound struct {
 	BaseEvent
-	Params ServerCallSoundParams `json:"params"`
+	Params serverCallSoundParams `json:"params"`
 }
 
-type ServerCallSoundParams struct {
+type serverCallSoundParams struct {
 	Jid   JID  `json:"jid"`
 	Muted bool `json:"muted"`
 }

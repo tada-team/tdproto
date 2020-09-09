@@ -2,10 +2,10 @@ package tdproto
 
 type ClientChatComposing struct {
 	BaseEvent
-	Params ClientChatComposingParams `json:"params"`
+	Params clientChatComposingParams `json:"params"`
 }
 
-type ClientChatComposingParams struct {
+type clientChatComposingParams struct {
 	Jid       JID     `json:"jid"`
 	IsAudio   bool    `json:"is_audio"`
 	Composing bool    `json:"composing"`

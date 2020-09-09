@@ -2,9 +2,9 @@ package tdproto
 
 type ClientCallMuteAll struct {
 	BaseEvent
-	Params ClientCallMuteAllParams `json:"params"`
+	Params clientCallMuteAllParams `json:"params"`
 }
 
-type ClientCallMuteAllParams struct {
+type clientCallMuteAllParams struct {
 	Jid JID `json:"jid"`
 }

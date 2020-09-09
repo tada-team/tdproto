@@ -11,10 +11,10 @@ func NewServerTeamCounters(counters []TeamCounter, badge uint) ServerTeamCounter
 
 type ServerTeamCounters struct {
 	BaseEvent
-	Params ServerTeamCountersParams `json:"params"`
+	Params serverTeamCountersParams `json:"params"`
 }
 
-type ServerTeamCountersParams struct {
+type serverTeamCountersParams struct {
 	Teams []TeamCounter `json:"teams"`
 	Badge uint          `json:"badge"`
 }

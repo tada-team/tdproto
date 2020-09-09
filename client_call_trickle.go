@@ -2,10 +2,10 @@ package tdproto
 
 type ClientCallTrickle struct {
 	BaseEvent
-	Params ClientCallTrickleParams `json:"params"`
+	Params clientCallTrickleParams `json:"params"`
 }
 
-type ClientCallTrickleParams struct {
+type clientCallTrickleParams struct {
 	Jid           JID    `json:"jid"`
 	Candidate     string `json:"candidate"`
 	SdpMid        string `json:"sdp_mid"`

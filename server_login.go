@@ -8,9 +8,9 @@ func NewServerLogin(deviceName string) (r ServerLogin) {
 
 type ServerLogin struct {
 	BaseEvent
-	Params ServerLoginParams `json:"params"`
+	Params serverLoginParams `json:"params"`
 }
 
-type ServerLoginParams struct {
+type serverLoginParams struct {
 	DeviceName string `json:"device_name"`
 }

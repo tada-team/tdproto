@@ -10,10 +10,10 @@ func NewServerCallMuteall(jid JID, muted bool, error string) (r ServerCallMuteal
 
 type ServerCallMuteall struct {
 	BaseEvent
-	Params ServerCallMuteallParams `json:"params"`
+	Params serverCallMuteallParams `json:"params"`
 }
 
-type ServerCallMuteallParams struct {
+type serverCallMuteallParams struct {
 	Jid   JID    `json:"jid"`
 	Muted bool   `json:"muted"`
 	Error string `json:"reason"`

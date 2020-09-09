@@ -8,9 +8,9 @@ func NewServerTagUpdated(tags ...Tag) (r ServerTagUpdated) {
 
 type ServerTagUpdated struct {
 	BaseEvent
-	Params ServerTagUpdatedParams `json:"params"`
+	Params serverTagUpdatedParams `json:"params"`
 }
 
-type ServerTagUpdatedParams struct {
+type serverTagUpdatedParams struct {
 	Tags []Tag `json:"tags"`
 }

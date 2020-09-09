@@ -10,10 +10,10 @@ func NewServerCallBuzzcancel(chat *JID, teamUid string, uid string) (r ServerCal
 
 type ServerCallBuzzcancel struct {
 	BaseEvent
-	Params ServerCallBuzzcancelParams `json:"params"`
+	Params serverCallBuzzcancelParams `json:"params"`
 }
 
-type ServerCallBuzzcancelParams struct {
+type serverCallBuzzcancelParams struct {
 	Jid  JID    `json:"jid"`
 	Team string `json:"team"`
 	Uid  string `json:"uid"`

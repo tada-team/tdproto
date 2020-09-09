@@ -8,9 +8,9 @@ func NewServerContactUpdated(contacts ...Contact) (r ServerContactUpdated) {
 
 type ServerContactUpdated struct {
 	BaseEvent
-	Params ServerContactUpdatedParams `json:"params"`
+	Params serverContactUpdatedParams `json:"params"`
 }
 
-type ServerContactUpdatedParams struct {
+type serverContactUpdatedParams struct {
 	Contacts []Contact `json:"contacts"`
 }

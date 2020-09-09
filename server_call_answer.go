@@ -12,10 +12,10 @@ func NewServerCallAnswer(jid JID, sdp string, onliners []CallOnliner, uid string
 
 type ServerCallAnswer struct {
 	BaseEvent
-	Params ServerCallAnswerParams `json:"params"`
+	Params serverCallAnswerParams `json:"params"`
 }
 
-type ServerCallAnswerParams struct {
+type serverCallAnswerParams struct {
 	Jid        JID                         `json:"jid"`
 	Candidates []serverCallAnswerCandidate `json:"candidates"`
 	Onliners   []CallOnliner               `json:"onliners"`

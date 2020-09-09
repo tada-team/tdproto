@@ -11,10 +11,10 @@ func NewServerCallTalking(talking bool, chat, actor *JID) (r ServerCallTalking) 
 
 type ServerCallTalking struct {
 	BaseEvent
-	Params ServerCallTalkingParams `json:"params"`
+	Params serverCallTalkingParams `json:"params"`
 }
 
-type ServerCallTalkingParams struct {
+type serverCallTalkingParams struct {
 	Jid     JID  `json:"jid"`
 	Actor   JID  `json:"actor"`
 	Talking bool `json:"talking"`

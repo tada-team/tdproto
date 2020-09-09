@@ -12,10 +12,10 @@ func NewServerChatComposing(composing, isAudio bool, chat, actor *JID) (r Server
 
 type ServerChatComposing struct {
 	BaseEvent
-	Params ServerChatComposingParams `json:"params"`
+	Params serverChatComposingParams `json:"params"`
 }
 
-type ServerChatComposingParams struct {
+type serverChatComposingParams struct {
 	Jid       JID  `json:"jid"`
 	Actor     JID  `json:"actor"`
 	Composing bool `json:"composing"`

@@ -2,10 +2,10 @@ package tdproto
 
 type ClientCallSound struct {
 	BaseEvent
-	Params ClientCallSoundParams `json:"params"`
+	Params clientCallSoundParams `json:"params"`
 }
 
-type ClientCallSoundParams struct {
+type clientCallSoundParams struct {
 	Jid   JID  `json:"jid"`
 	Muted bool `json:"muted"`
 }
