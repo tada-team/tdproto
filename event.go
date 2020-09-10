@@ -11,10 +11,16 @@ type AnyEvent struct {
 	Params *map[string]interface{} `json:"params"`
 }
 
-func (ev BaseEvent) String() string       { return ev.Name }
 func (ev BaseEvent) GetName() string      { return ev.Name }
 func (ev BaseEvent) GetConfirmId() string { return ev.ConfirmId }
 func (ev BaseEvent) IsUnimportant() bool  { return ev.Unimportant }
+
+func (ev BaseEvent) String() string {
+	if ev.ConfirmId != "" {
+		return "*" + ev.Name
+	}
+	return ev.Name
+}
 
 func NewAnyEvent(name string) AnyEvent {
 	params := make(map[string]interface{})
