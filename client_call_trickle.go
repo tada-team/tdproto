@@ -1,5 +1,6 @@
 package tdproto
 
+// deprecated: use http api
 type ClientCallTrickle struct {
 	BaseEvent
 	Params clientCallTrickleParams `json:"params"`

@@ -1,5 +1,6 @@
 package tdproto
 
+// deprecated: use http api
 type ClientCallBuzz struct {
 	BaseEvent
 	Params clientCallBuzzParams `json:"params"`

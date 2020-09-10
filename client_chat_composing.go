@@ -1,5 +1,13 @@
 package tdproto
 
+func NewClientChatComposing(jid JID, composing bool, draft *string) (r ClientChatComposing) {
+	r.Name = "client.chat.composing"
+	r.Params.Jid = jid
+	r.Params.Composing = composing
+	r.Params.Draft = draft
+	return r
+}
+
 type ClientChatComposing struct {
 	BaseEvent
 	Params clientChatComposingParams `json:"params"`

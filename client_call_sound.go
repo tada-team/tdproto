@@ -1,5 +1,6 @@
 package tdproto
 
+// deprecated: use http api
 type ClientCallSound struct {
 	BaseEvent
 	Params clientCallSoundParams `json:"params"`
