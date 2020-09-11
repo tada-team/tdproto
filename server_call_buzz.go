@@ -26,7 +26,7 @@ func ServerCallBuzz(teamShort TeamShort, chatShort ChatShort, actorShort Contact
 	resp.Params.ActorShort = actorShort
 	resp.Params.Uid = uid
 	resp.Params.Jid = chatShort.Jid
-	resp.Params.BuzzTimeout = int(timeout)
+	resp.Params.BuzzTimeout = int(timeout.Seconds())
 
 	resp.Params.Icons = chatShort.Icons
 
