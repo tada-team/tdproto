@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	jsoniter "github.com/json-iterator/go"
-
 	uuid "github.com/satori/go.uuid"
 )
 

@@ -15,7 +15,7 @@ type ClientChatComposing struct {
 
 type clientChatComposingParams struct {
 	Jid       JID     `json:"jid"`
-	IsAudio   bool    `json:"is_audio"`
-	Composing bool    `json:"composing"`
-	Draft     *string `json:"draft"`
+	IsAudio   bool    `json:"is_audio,omitempty"`
+	Composing bool    `json:"composing,omitempty"`
+	Draft     *string `json:"draft,omitempty"`
 }
