@@ -43,6 +43,12 @@ type Team struct {
 	Theme               *Theme       `json:"theme,omitempty"`
 }
 
+type TeamShort struct {
+	Uid   string    `json:"uid"`
+	Name  string    `json:"name"`
+	Icons *IconData `json:"icons"`
+}
+
 type DeletedTeam struct {
 	Uid       string `json:"uid"`
 	IsArchive bool   `json:"is_archive"`

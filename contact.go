@@ -66,3 +66,10 @@ type ContactCustomFields struct {
 	Title       string `json:"title,omitempty"`
 	MobilePhone string `json:"mobile_phone,omitempty"`
 }
+
+type ContactShort struct {
+	DisplayName string    `json:"display_name"`
+	ShortName   string    `json:"short_name,omitempty"`
+	Icons       *IconData `json:"icons"`
+	Jid         JID       `json:"jid"`
+}

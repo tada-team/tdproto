@@ -77,6 +77,13 @@ type Chat struct {
 	//WikiPage              *ShortWikiPage `chattype:"group" json:"wiki_page,omitempty"`
 }
 
+type ChatShort struct {
+	Jid         JID          `json:"jid"`
+	DisplayName string       `json:"display_name"`
+	Icons       *IconData    `json:"icons"`
+	ChatType    ChatType `json:"chat_type"`
+}
+
 type Subtask struct {
 	Jid         JID    `json:"jid"`
 	Assignee    JID    `json:"assignee"`

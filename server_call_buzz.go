@@ -4,27 +4,34 @@ import (
 	"time"
 )
 
-func NewServerCallBuzz(chat JID, teamUid, displayName string, icons *IconData, uid string, timeout time.Duration) (r ServerCallBuzz) {
-	r.BaseEvent.Name = "server.call.buzz"
-	r.Params.Jid = chat
-	r.Params.Team = teamUid
-	r.Params.DisplayName = displayName
-	r.Params.Icons = icons
-	r.Params.Uid = uid
-	r.Params.BuzzTimeout = int(timeout.Seconds())
-	return r
-}
-
-type ServerCallBuzz struct {
+func ServerCallBuzz(teamShort TeamShort, chatShort ChatShort, actorShort ContactShort, uid string, timeout time.Duration) (resp struct {
 	BaseEvent
-	Params serverCallBuzzParams `json:"params"`
-}
+	Params struct {
+		TeamShort   TeamShort    `json:"teaminfo"`
+		ChatShort   ChatShort    `json:"chat"`
+		ActorShort  ContactShort `json:"actor"`
+		Uid         string       `json:"uid"`
+		Jid         JID          `json:"jid"`
+		BuzzTimeout int          `json:"buzz_timeout"`
+		Icons       *IconData    `json:"icons"`
 
-type serverCallBuzzParams struct {
-	Jid         JID       `json:"jid"`
-	Team        string    `json:"team"`
-	DisplayName string    `json:"display_name"`
-	Icons       *IconData `json:"icons"`
-	Uid         string    `json:"uid"`
-	BuzzTimeout int       `json:"buzz_timeout"`
+		Team        string `json:"team"`
+		DisplayName string `json:"display_name"`
+	} `json:"params"`
+}) {
+
+	resp.BaseEvent.Name = "server.call.buzz"
+	resp.Params.TeamShort = teamShort
+	resp.Params.ChatShort = chatShort
+	resp.Params.ActorShort = actorShort
+	resp.Params.Uid = uid
+	resp.Params.Jid = chatShort.Jid
+	resp.Params.BuzzTimeout = int(timeout)
+
+	resp.Params.Icons = chatShort.Icons
+
+	// Set as Deprecated or just leave for reverse compatibility?
+	resp.Params.Team = teamShort.Uid
+	resp.Params.DisplayName = chatShort.DisplayName
+	return resp
 }
