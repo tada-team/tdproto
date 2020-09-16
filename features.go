@@ -47,6 +47,12 @@ type Features struct {
 	// Maximum chars for group chat name
 	MaxGroupTitleLength int `json:"max_group_title_length"`
 
+	// Maximum chars for role in team
+	MaxRoleLength int `json:"max_role_length"`
+
+	// Maximum chars for mood in team
+	MaxMoodLength int `json:"max_mood_length"`
+
 	// Maximum chars for text message
 	MaxMessageLength int `json:"max_message_length"`
 
