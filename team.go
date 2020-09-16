@@ -41,6 +41,7 @@ type Team struct {
 	Contacts            []Contact    `json:"contacts,omitempty"`
 	SingleGroup         *JID         `json:"single_group,omitempty"`
 	Theme               *Theme       `json:"theme,omitempty"`
+	HideArchivedUsers   bool         `json:"hide_archived_users,omitempty"`
 }
 
 type TeamShort struct {
