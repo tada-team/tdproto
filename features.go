@@ -44,6 +44,9 @@ type Features struct {
 	// Maximum chars for: family_name, given_name, patronymic if any
 	MaxUsernamePartLength int `json:"max_username_part_length"`
 
+	// Maximum chars for group chat name
+	MaxGroupTitleLength int `json:"max_group_title_length"`
+
 	// Maximum chars for text message
 	MaxMessageLength int `json:"max_message_length"`
 
