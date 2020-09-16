@@ -35,6 +35,7 @@ type Team struct {
 	UseTaskComplexity      bool         `json:"use_task_complexity,omitempty"`
 	UseTaskSpentTime       bool         `json:"use_task_spent_time,omitempty"`
 	DisplayFamilyNameFirst bool         `json:"display_family_name_first,omitempty"`
+	UserFields             []string     `json:"user_fields"`
 	UploadsSize            int64        `json:"uploads_size,omitempty"`
 	UploadsSizeLimit       int64        `json:"uploads_size_limit,omitempty"`
 	Unreads                *TeamUnread  `json:"unread"`
