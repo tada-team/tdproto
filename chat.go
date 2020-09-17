@@ -41,10 +41,10 @@ type Chat struct {
 	ColorIndex                *uint16           `chattype:"task" json:"color_index,omitempty"`
 	NumItems                  *uint             `chattype:"task" json:"num_items,omitempty"`
 	NumCheckedItems           *uint             `chattype:"task" json:"num_checked_items,omitempty"`
-	Assignee                  JID               `chattype:"task" json:"assignee,omitempty"`
+	Assignee                  *JID              `chattype:"task" json:"assignee,omitempty"`
 	Num                       uint              `chattype:"task" json:"num,omitempty"`
 	Observers                 *[]JID            `chattype:"task" json:"observers,omitempty"`
-	Owner                     JID               `chattype:"task" json:"owner,omitempty"`
+	Owner                     *JID              `chattype:"task" json:"owner,omitempty"`
 	TaskStatus                string            `chattype:"task" json:"task_status,omitempty"`
 	Title                     string            `chattype:"task" json:"title,omitempty"`
 	Done                      string            `chattype:"task" json:"done,omitempty"`
