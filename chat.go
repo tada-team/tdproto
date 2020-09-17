@@ -41,10 +41,10 @@ type Chat struct {
 	ColorIndex                *uint16           `chattype:"task" json:"color_index,omitempty"`
 	NumItems                  *uint             `chattype:"task" json:"num_items,omitempty"`
 	NumCheckedItems           *uint             `chattype:"task" json:"num_checked_items,omitempty"`
-	Assignee                  string            `chattype:"task" json:"assignee,omitempty"`
+	Assignee                  JID               `chattype:"task" json:"assignee,omitempty"`
 	Num                       uint              `chattype:"task" json:"num,omitempty"`
-	Observers                 *[]string         `chattype:"task" json:"observers,omitempty"`
-	Owner                     string            `chattype:"task" json:"owner,omitempty"`
+	Observers                 *[]JID            `chattype:"task" json:"observers,omitempty"`
+	Owner                     JID               `chattype:"task" json:"owner,omitempty"`
 	TaskStatus                string            `chattype:"task" json:"task_status,omitempty"`
 	Title                     string            `chattype:"task" json:"title,omitempty"`
 	Done                      string            `chattype:"task" json:"done,omitempty"`
@@ -78,10 +78,10 @@ type Chat struct {
 }
 
 type ChatShort struct {
-	Jid         JID          `json:"jid"`
-	DisplayName string       `json:"display_name"`
-	Icons       *IconData    `json:"icons"`
-	ChatType    ChatType `json:"chat_type"`
+	Jid         JID       `json:"jid"`
+	DisplayName string    `json:"display_name"`
+	Icons       *IconData `json:"icons"`
+	ChatType    ChatType  `json:"chat_type"`
 }
 
 type Subtask struct {
