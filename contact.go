@@ -2,7 +2,7 @@ package tdproto
 
 type Contact struct {
 	DisplayName     string     `json:"display_name"`
-	ShortName       string     `json:"short_name,omitempty"`
+	ShortName       string     `json:"short_name"`
 	ContactEmail    string     `json:"contact_email"`
 	ContactPhone    string     `json:"contact_phone"`
 	Icons           *IconData  `json:"icons"`
@@ -69,7 +69,7 @@ type ContactCustomFields struct {
 
 type ContactShort struct {
 	DisplayName string    `json:"display_name"`
-	ShortName   string    `json:"short_name,omitempty"`
+	ShortName   string    `json:"short_name"`
 	Icons       *IconData `json:"icons"`
 	Jid         JID       `json:"jid"`
 }
