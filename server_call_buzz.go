@@ -4,22 +4,7 @@ import (
 	"time"
 )
 
-func ServerCallBuzz(teamShort TeamShort, chatShort ChatShort, actorShort ContactShort, uid string, timeout time.Duration) (resp struct {
-	BaseEvent
-	Params struct {
-		TeamShort   TeamShort    `json:"teaminfo"`
-		ChatShort   ChatShort    `json:"chat"`
-		ActorShort  ContactShort `json:"actor"`
-		Uid         string       `json:"uid"`
-		Jid         JID          `json:"jid"`
-		BuzzTimeout int          `json:"buzz_timeout"`
-		Icons       *IconData    `json:"icons"`
-
-		Team        string `json:"team"`
-		DisplayName string `json:"display_name"`
-	} `json:"params"`
-}) {
-
+func NewServerCallBuzz(teamShort TeamShort, chatShort ChatShort, actorShort ContactShort, uid string, timeout time.Duration) (resp ServerCallBuzz) {
 	resp.BaseEvent.Name = "server.call.buzz"
 	resp.Params.TeamShort = teamShort
 	resp.Params.ChatShort = chatShort
@@ -34,4 +19,20 @@ func ServerCallBuzz(teamShort TeamShort, chatShort ChatShort, actorShort Contact
 	resp.Params.Team = teamShort.Uid
 	resp.Params.DisplayName = chatShort.DisplayName
 	return resp
+}
+
+type ServerCallBuzz struct {
+	BaseEvent
+	Params struct {
+		TeamShort   TeamShort    `json:"teaminfo"`
+		ChatShort   ChatShort    `json:"chat"`
+		ActorShort  ContactShort `json:"actor"`
+		Uid         string       `json:"uid"`
+		Jid         JID          `json:"jid"`
+		BuzzTimeout int          `json:"buzz_timeout"`
+		Icons       *IconData    `json:"icons"`
+
+		Team        string `json:"team"`
+		DisplayName string `json:"display_name"`
+	} `json:"params"`
 }
