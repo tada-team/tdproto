@@ -1,9 +1,8 @@
 package tdproto
 
 type BaseEvent struct {
-	Name        string `json:"event"`
-	ConfirmId   string `json:"confirm_id,omitempty"`
-	Unimportant bool   `json:"_unimportant,omitempty"`
+	Name      string `json:"event"`
+	ConfirmId string `json:"confirm_id,omitempty"`
 }
 
 type AnyEvent struct {
@@ -13,7 +12,6 @@ type AnyEvent struct {
 
 func (ev BaseEvent) GetName() string      { return ev.Name }
 func (ev BaseEvent) GetConfirmId() string { return ev.ConfirmId }
-func (ev BaseEvent) IsUnimportant() bool  { return ev.Unimportant }
 
 func (ev BaseEvent) String() string {
 	if ev.ConfirmId != "" {
@@ -33,5 +31,4 @@ func NewAnyEvent(name string) AnyEvent {
 type Event interface {
 	GetName() string
 	GetConfirmId() string
-	IsUnimportant() bool
 }

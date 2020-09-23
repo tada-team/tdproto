@@ -1,7 +1,6 @@
 package tdproto
 
 func NewServerOnline(contacts []OnlineContact, calls []OnlineCall) (r ServerOnline) {
-	r.BaseEvent.Unimportant = true
 	r.BaseEvent.Name = "server.online"
 	r.Params.Contacts = &contacts
 	r.Params.Calls = &calls

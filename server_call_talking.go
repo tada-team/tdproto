@@ -1,7 +1,6 @@
 package tdproto
 
 func NewServerCallTalking(talking bool, chat, actor *JID) (r ServerCallTalking) {
-	r.BaseEvent.Unimportant = true
 	r.BaseEvent.Name = "server.call.talking"
 	r.Params.Jid = *chat
 	r.Params.Actor = *actor

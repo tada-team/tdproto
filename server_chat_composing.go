@@ -1,7 +1,6 @@
 package tdproto
 
 func NewServerChatComposing(composing, isAudio bool, chat, actor *JID) (r ServerChatComposing) {
-	r.BaseEvent.Unimportant = true
 	r.BaseEvent.Name = "server.chat.composing"
 	r.Params.Jid = *chat
 	r.Params.Actor = *actor

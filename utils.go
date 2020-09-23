@@ -3,11 +3,18 @@ package tdproto
 import (
 	"crypto/rand"
 	"log"
+	"path/filepath"
+	"runtime"
 	"strings"
 	"time"
 
 	uuid "github.com/satori/go.uuid"
 )
+
+func SourceDir() string {
+	_, filename, _, _ := runtime.Caller(0)
+	return filepath.Dir(filename)
+}
 
 func Gentime() int64 {
 	return time.Now().UnixNano()
