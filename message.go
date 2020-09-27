@@ -172,6 +172,6 @@ type MessageReaction struct {
 
 type MessageReactionDetail struct {
 	Created string `json:"created"`
-	Sender  string `json:"sender"`
+	Sender  *JID   `json:"sender"`
 	Name    string `json:"name"`
 }

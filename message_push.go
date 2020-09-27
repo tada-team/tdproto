@@ -8,8 +8,8 @@ type MessagePush struct {
 	ClickAction string `json:"click_action"`
 	Tag         string `json:"tag"`
 	Team        string `json:"team"`
-	Sender      string `json:"sender"`
-	Chat        string `json:"chat"`
+	Sender      *JID   `json:"sender"`
+	Chat        *JID   `json:"chat"`
 	MessageId   string `json:"message_id"`
 	Created     string `json:"created"`
 }
