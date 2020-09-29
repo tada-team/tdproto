@@ -141,19 +141,34 @@ type Message struct {
 	Debug string `json:"_debug,omitempty"`
 }
 
+// Website title and description
 type MessageLinkPreview struct {
 	Title       string `json:"title"`
 	Description string `json:"description,omitempty"`
 }
 
+// Checked message links. In short: "Click here: {link.Pattern}" => "Click here: <a href='{link.Url}'>{link.Text}</a>"
 type MessageLink struct {
-	Pattern   string              `json:"pattern"`
-	Url       string              `json:"url"`
-	Text      string              `json:"text"`
-	Preview   *MessageLinkPreview `json:"preview,omitempty"`
-	Uploads   []Upload            `json:"uploads,omitempty"`
-	NoPreview bool                `json:"nopreview,omitempty"`
-	YoutubeId string              `json:"youtube_id,omitempty"`
+	// Text fragment that should be replaced by link
+	Pattern string `json:"pattern"`
+
+	// Internal (tadateam://) or external link
+	Url string `json:"url"`
+
+	// Text replacement.
+	Text string `json:"text"`
+
+	// Optional preview info, for websites
+	Preview *MessageLinkPreview `json:"preview,omitempty"`
+
+	// Optional upload info
+	Uploads []Upload `json:"uploads,omitempty"`
+
+	// Website previews disabled
+	NoPreview bool `json:"nopreview,omitempty"`
+
+	// Optional youtube movie id
+	YoutubeId string `json:"youtube_id,omitempty"`
 }
 
 type MessageLinks []MessageLink
