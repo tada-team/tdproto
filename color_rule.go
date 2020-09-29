@@ -10,7 +10,7 @@ type ColorRule struct {
 	TaskStatus            string   `json:"task_status,omitempty"`
 	TaskImportance        *int     `json:"task_importance,omitempty"`
 	TaskUrgency           *int     `json:"task_urgency,omitempty"`
-	SectionEnabled        bool     `json:"section_enabled,omitempty"`
-	TaskImportanceEnabled bool     `json:"task_importance_enabled,omitempty"`
-	TaskUrgencyEnabled    bool     `json:"task_urgency_enabled,omitempty"`
+	SectionEnabled        *bool    `json:"section_enabled,omitempty"`
+	TaskImportanceEnabled *bool    `json:"task_importance_enabled,omitempty"`
+	TaskUrgencyEnabled    *bool    `json:"task_urgency_enabled,omitempty"`
 }
