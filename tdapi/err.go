@@ -5,6 +5,7 @@ type Err string
 const (
 	Ok                  = Err("OK")
 	EmptyToken          = Err("EMPTY_TOKEN")
+	EmptySession        = Err("EMPTY_SESSION")
 	InvalidToken        = Err("INVALID_TOKEN")
 	AccessDenied        = Err("ACCESS_DENIED")
 	NotFound            = Err("NOT_FOUND")
@@ -18,7 +19,7 @@ func (e Err) Error() string { return string(e) }
 
 func (e Err) StatusCode() int {
 	switch e {
-	case EmptyToken, InvalidToken:
+	case EmptyToken, InvalidToken, EmptySession:
 		return 401
 	case AccessDenied:
 		return 403
