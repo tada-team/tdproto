@@ -4,14 +4,14 @@ import "github.com/tada-team/tdproto"
 
 
 type ClientCallTrickle struct {
-	Jid           JID    `json:"jid"`
+	Jid           tdproto.JID    `json:"jid"`
 	Candidate     string `json:"candidate"`
 	SdpMid        string `json:"sdp_mid"`
 	SdpMlineIndex int    `json:"sdp_mline_index"`
 }
 
 type ClientCallRecord struct {
-	Jid           JID    `json:"jid"`
+	Jid           tdproto.JID    `json:"jid"`
 	Audiorecord bool         `json:"audiorecord,omitempty"`
 	Uid         string       `json:"uid"`
 }
