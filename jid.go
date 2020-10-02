@@ -23,8 +23,6 @@ type JID struct {
 	val string
 }
 
-type JIDs []JID
-
 func NewJID(val string) *JID { return &JID{val} }
 
 func (jid JID) ChatType() ChatType {
