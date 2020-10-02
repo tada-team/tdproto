@@ -80,15 +80,6 @@ type Features struct {
 	// SMS authentication enabled
 	AuthBySms bool `json:"auth_by_sms,omitempty"`
 
-	// Calls functions enabled
-	Calls bool `json:"calls"`
-
-	// Calls functions enabled for mobile applications
-	MoblieCalls bool `json:"mobile_calls"`
-
-	// Calls record enabled
-	CallsRecord bool `json:"calls_record"`
-
 	// ICE servers for WebRTC
 	ICEServers []ICEServer `json:"ice_servers"`
 
@@ -122,6 +113,21 @@ type Features struct {
 	// Firebase sender id for web-push notifacations
 	FirebaseSenderId string `json:"firebase_sender_id"`
 
+	// Calls functions enabled
+	Calls bool `json:"calls"`
+
+	// Calls functions enabled for mobile applications
+	MobileCalls bool `json:"mobile_calls"`
+
+	// Calls record enabled
+	CallsRecord bool `json:"calls_record"`
+
+	// Disallow call from multiply devices. Experimental
+	OnlyOneDevicePerCall bool `json:"only_one_device_per_call,omitempty"`
+
+	// Maximum number of participants per call
+	MaxParticipantsPerCall int `json:"max_participants_per_call,omitempty"`
+
 	// Safari push id for web-push notifacations
 	SafariPushId string `json:"safari_push_id"`
 
@@ -136,9 +142,6 @@ type Features struct {
 
 	// Wiki pages in chats. Experimental
 	AllowAdminMute bool `json:"allow_admin_mute,omitempty"`
-
-	// Disallow call from multiply devices. Experimental
-	OnlyOneDevicePerCall bool `json:"only_one_device_per_call,omitempty"`
 
 	// Deprecated. Always true
 	TaskChecklist bool `json:"task_checklist"`
