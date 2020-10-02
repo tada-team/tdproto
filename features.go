@@ -107,35 +107,59 @@ type Features struct {
 	// message drafts saved on server
 	ServerDrafts bool `json:"server_drafts"`
 
-	// web-push notifacations related fields
-	FirebaseAppId    string `json:"firebase_app_id"`
+	// Firebase application id for web-push notifacations
+	FirebaseAppId string `json:"firebase_app_id"`
+
+	// Firebase sender id for web-push notifacations
 	FirebaseSenderId string `json:"firebase_sender_id"`
-	SafariPushId     string `json:"safari_push_id"`
 
 	// Calls functions enabled
 	Calls bool `json:"calls"`
+
 	// Calls functions enabled for mobile applications
 	MobileCalls bool `json:"mobile_calls"`
+
 	// Calls record enabled
 	CallsRecord bool `json:"calls_record"`
-	// Only one device per user can join to call
+
+	// Disallow call from multiply devices. Experimental
 	OnlyOneDevicePerCall bool `json:"only_one_device_per_call,omitempty"`
+
 	// Maximum number of participants per call
 	MaxParticipantsPerCall int `json:"max_participants_per_call,omitempty"`
 
-	// experimetal functions
-	Terms            Terms `json:"terms"`
-	SingleGroupTeams bool  `json:"single_group_teams"`
-	WikiPages        bool  `json:"wiki_pages"`
-	AllowAdminMute   bool  `json:"allow_admin_mute,omitempty"`
+	// Safari push id for web-push notifacations
+	SafariPushId string `json:"safari_push_id"`
 
-	// obsolete fields. Always true
-	TaskChecklist  bool `json:"task_checklist"`
+	// Team entity naming. Experimental.
+	Terms Terms `json:"terms"`
+
+	// Cross team communication. Experimental.
+	SingleGroupTeams bool `json:"single_group_teams"`
+
+	// Wiki pages in chats. Experimental
+	WikiPages bool `json:"wiki_pages"`
+
+	// Wiki pages in chats. Experimental
+	AllowAdminMute bool `json:"allow_admin_mute,omitempty"`
+
+	// Deprecated. Always true
+	TaskChecklist bool `json:"task_checklist"`
+
+	// Deprecated. Always true
 	ReadonlyGroups bool `json:"readonly_groups"`
-	TaskDashboard  bool `json:"task_dashboard"`
-	TaskMessages   bool `json:"task_messages"`
-	TaskPublic     bool `json:"task_public"`
-	TaskTags       bool `json:"task_tags"`
+
+	// Deprecated. Always true
+	TaskDashboard bool `json:"task_dashboard"`
+
+	// Deprecated. Always true
+	TaskMessages bool `json:"task_messages"`
+
+	// Deprecated. Always true
+	TaskPublic bool `json:"task_public"`
+
+	// Deprecated. Always true
+	TaskTags bool `json:"task_tags"`
 }
 
 type ICEServer struct {
