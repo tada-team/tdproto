@@ -117,9 +117,11 @@ type Features struct {
 	// Calls functions enabled for mobile applications
 	MobileCalls bool `json:"mobile_calls"`
 	// Calls record enabled
-	CallsRecord            bool `json:"calls_record"`
-	OnlyOneDevicePerCall   bool `json:"only_one_device_per_call,omitempty"`
-	MaxParticipantsPerCall int  `json:"max_participants_per_call,omitempty"`
+	CallsRecord bool `json:"calls_record"`
+	// Only one device per user can join to call
+	OnlyOneDevicePerCall bool `json:"only_one_device_per_call,omitempty"`
+	// Maximum number of participants per call
+	MaxParticipantsPerCall int `json:"max_participants_per_call,omitempty"`
 
 	// experimetal functions
 	Terms            Terms `json:"terms"`
