@@ -13,4 +13,5 @@ type ColorRule struct {
 	SectionEnabled        *bool    `json:"section_enabled,omitempty"`
 	TaskImportanceEnabled *bool    `json:"task_importance_enabled,omitempty"`
 	TaskUrgencyEnabled    *bool    `json:"task_urgency_enabled,omitempty"`
+	TagsEnabled           *bool    `json:"tags_enabled,omitempty"`
 }
