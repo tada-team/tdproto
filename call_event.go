@@ -1,21 +1,43 @@
 package tdproto
 
+// Audiocall information
 type CallEvent struct {
-	Start       *string       `json:"start"`
-	Finish      *string       `json:"finish"`
-	Audiorecord bool          `json:"audiorecord"`
-	Onliners    []CallOnliner `json:"onliners"`
+	// Call start, iso date
+	Start *string `json:"start"`
+
+	// Call finish, iso date
+	Finish *string `json:"finish"`
+
+	// Call record enabled
+	Audiorecord bool `json:"audiorecord"`
+
+	// Call members
+	Onliners []CallOnliner `json:"onliners"`
 }
 
+// Call participant
 type CallOnliner struct {
-	Jid         JID          `json:"jid"`
-	Muted       bool         `json:"muted"`
-	Devices     []CallDevice `json:"devices"`
-	DisplayName string       `json:"display_name"`
-	Icon        string       `json:"icon"`
+	// Contact id
+	Jid JID `json:"jid"`
+
+	// Contact name
+	DisplayName string `json:"display_name"`
+
+	// Contact icon
+	Icon string `json:"icon"`
+
+	// Microphone muted. Computed from devices muted states
+	Muted bool `json:"muted"`
+
+	// Member devices, strictly one for now
+	Devices []CallDevice `json:"devices"`
 }
 
+// Call participant device
 type CallDevice struct {
-	Muted     bool   `json:"muted"`
+	// Device muted
+	Muted bool `json:"muted"`
+
+	// Device description
 	Useragent string `json:"useragent"`
 }
