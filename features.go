@@ -80,15 +80,6 @@ type Features struct {
 	// SMS authentication enabled
 	AuthBySms bool `json:"auth_by_sms,omitempty"`
 
-	// Calls functions enabled
-	Calls bool `json:"calls"`
-
-	// Calls functions enabled for mobile applications
-	MoblieCalls bool `json:"mobile_calls"`
-
-	// Calls record enabled
-	CallsRecord bool `json:"calls_record"`
-
 	// ICE servers for WebRTC
 	ICEServers []ICEServer `json:"ice_servers"`
 
@@ -121,12 +112,20 @@ type Features struct {
 	FirebaseSenderId string `json:"firebase_sender_id"`
 	SafariPushId     string `json:"safari_push_id"`
 
+	// Calls functions enabled
+	Calls bool `json:"calls"`
+	// Calls functions enabled for mobile applications
+	MobileCalls bool `json:"mobile_calls"`
+	// Calls record enabled
+	CallsRecord            bool `json:"calls_record"`
+	OnlyOneDevicePerCall   bool `json:"only_one_device_per_call,omitempty"`
+	MaxParticipantsPerCall int  `json:"max_participants_per_call,omitempty"`
+
 	// experimetal functions
-	Terms                Terms `json:"terms"`
-	SingleGroupTeams     bool  `json:"single_group_teams"`
-	WikiPages            bool  `json:"wiki_pages"`
-	AllowAdminMute       bool  `json:"allow_admin_mute,omitempty"`
-	OnlyOneDevicePerCall bool  `json:"only_one_device_per_call,omitempty"`
+	Terms            Terms `json:"terms"`
+	SingleGroupTeams bool  `json:"single_group_teams"`
+	WikiPages        bool  `json:"wiki_pages"`
+	AllowAdminMute   bool  `json:"allow_admin_mute,omitempty"`
 
 	// obsolete fields. Always true
 	TaskChecklist  bool `json:"task_checklist"`
