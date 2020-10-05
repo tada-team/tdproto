@@ -6,6 +6,8 @@ type ClientCallSound struct {
 	Params clientCallSoundParams `json:"params"`
 }
 
+func (p ClientCallSound) GetName() string { return "client.call.sound" }
+
 type clientCallSoundParams struct {
 	Jid   JID  `json:"jid"`
 	Muted bool `json:"muted"`

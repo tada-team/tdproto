@@ -3,7 +3,7 @@ package tdproto
 import "time"
 
 func NewServerCallState(chat HasJid, startCall, finishCall *time.Time, onliners []CallOnliner, audiorecord, buzz bool, uid string, timestamp int64) (r ServerCallState) {
-	r.BaseEvent.Name = "server.call.state"
+	r.Name = r.GetName()
 	r.Params.Jid = *chat.JID()
 	r.Params.Onliners = onliners
 	r.Params.Buzz = buzz
@@ -28,6 +28,8 @@ type ServerCallState struct {
 	BaseEvent
 	Params serverCallStateParams `json:"params"`
 }
+
+func (p ServerCallState) GetName() string { return "server.call.state" }
 
 type serverCallStateParams struct {
 	Jid         JID           `json:"jid"`

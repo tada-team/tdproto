@@ -1,7 +1,7 @@
 package tdproto
 
 func NewServerProcessing(num, total int, action, message string, hasError bool) (r ServerProcessing) {
-	r.BaseEvent.Name = "server.processing"
+	r.Name = r.GetName()
 	r.Params.Action = action
 	r.Params.Message = message
 	r.Params.HasError = hasError
@@ -14,6 +14,8 @@ type ServerProcessing struct {
 	BaseEvent
 	Params serverProcessingParams `json:"params"`
 }
+
+func (p ServerProcessing) GetName() string { return "server.processing" }
 
 type serverProcessingParams struct {
 	Action   string `json:"action"`

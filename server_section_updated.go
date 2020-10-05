@@ -1,7 +1,7 @@
 package tdproto
 
 func NewServerSectionUpdated(ct ChatType, sections ...Section) (r ServerSectionUpdated) {
-	r.BaseEvent.Name = "server.section.updated"
+	r.Name = r.GetName()
 	r.Params.ChatType = ct
 	r.Params.Gentime = Gentime() // XXX
 	r.Params.Sections = sections
@@ -12,6 +12,8 @@ type ServerSectionUpdated struct {
 	BaseEvent
 	Params serverSectionUpdatedParams `json:"params"`
 }
+
+func (p ServerSectionUpdated) GetName() string { return "server.section.updated" }
 
 type serverSectionUpdatedParams struct {
 	ChatType ChatType  `json:"chat_type"`

@@ -1,7 +1,7 @@
 package tdproto
 
 func NewServerSectionDeleted(ct ChatType, section DeletedSection) (r ServerSectionDeleted) {
-	r.BaseEvent.Name = "server.section.deleted"
+	r.Name = r.GetName()
 	r.Params.ChatType = ct
 	r.Params.Gentime = Gentime() // XXX
 	r.Params.Sections = []DeletedSection{section}
@@ -12,6 +12,8 @@ type ServerSectionDeleted struct {
 	BaseEvent
 	Params serverSectionDeletedParams `json:"params"`
 }
+
+func (p ServerSectionDeleted) GetName() string { return "server.section.deleted" }
 
 type serverSectionDeletedParams struct {
 	ChatType ChatType         `json:"chat_type"`

@@ -5,7 +5,7 @@ import (
 )
 
 func NewServerCallBuzz(teamShort TeamShort, chatShort ChatShort, actorShort ContactShort, uid string, timeout time.Duration) (r ServerCallBuzz) {
-	r.BaseEvent.Name = "server.call.buzz"
+	r.Name = r.GetName()
 	r.Params.TeamShort = teamShort
 	r.Params.ChatShort = chatShort
 	r.Params.ActorShort = actorShort
@@ -25,6 +25,8 @@ type ServerCallBuzz struct {
 	BaseEvent
 	Params serverCallBuzzParams `json:"params"`
 }
+
+func (p ServerCallBuzz) GetName() string { return "server.call.buzz" }
 
 type serverCallBuzzParams struct {
 	TeamShort   TeamShort    `json:"teaminfo"`

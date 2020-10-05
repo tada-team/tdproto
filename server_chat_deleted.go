@@ -4,7 +4,7 @@ func NewServerChatDeleted(chat DeletedChat, teamUnread *TeamUnread, badge uint) 
 	chat.IsArchive = true
 	chat.Gentime = Gentime()
 
-	r.BaseEvent.Name = "server.chat.deleted"
+	r.Name = r.GetName()
 	r.Params.Chats = []DeletedChat{chat}
 	r.Params.TeamUnread = teamUnread
 	r.Params.Badge = badge
@@ -15,6 +15,8 @@ type ServerChatDeleted struct {
 	BaseEvent
 	Params serverChatDeletedParams `json:"params"`
 }
+
+func (p ServerChatDeleted) GetName() string { return "server.chat.deleted" }
 
 type serverChatDeletedParams struct {
 	Chats      []DeletedChat `json:"chats"`

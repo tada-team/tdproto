@@ -1,7 +1,7 @@
 package tdproto
 
 func NewServerChatUpdated(chat Chat, teamUnread *TeamUnread, badge uint) (r ServerChatUpdated) {
-	r.BaseEvent.Name = "server.chat.updated"
+	r.Name = r.GetName()
 	r.Params.Chats = []Chat{chat}
 	r.Params.TeamUnread = teamUnread
 	r.Params.Badge = badge
@@ -12,6 +12,8 @@ type ServerChatUpdated struct {
 	BaseEvent
 	Params serverChatUpdatedParams `json:"params"`
 }
+
+func (p ServerChatUpdated) GetName() string { return "server.chat.updated" }
 
 type serverChatUpdatedParams struct {
 	Chats      []Chat      `json:"chats"`

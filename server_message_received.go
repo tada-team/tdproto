@@ -10,7 +10,7 @@ type ReceivedMessage struct {
 
 func NewServerMessageReceived(messages []ReceivedMessage) (r ServerMessageReceived) {
 	r.ConfirmId = ConfirmId()
-	r.BaseEvent.Name = "server.message.received"
+	r.Name = r.GetName()
 	r.Params.Messages = messages
 	return r
 }
@@ -19,6 +19,8 @@ type ServerMessageReceived struct {
 	BaseEvent
 	Params serverMessageReceivedParams `json:"params"`
 }
+
+func (p ServerMessageReceived) GetName() string { return "server.message.received" }
 
 type serverMessageReceivedParams struct {
 	Messages []ReceivedMessage `json:"messages"`

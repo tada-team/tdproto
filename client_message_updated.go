@@ -1,7 +1,7 @@
 package tdproto
 
 func NewClientMessageUpdated(p ClientMessageUpdatedParams) (r ClientMessageUpdated) {
-	r.Name = "client.message.updated"
+	r.Name = r.GetName()
 	r.ConfirmId = ConfirmId()
 	r.Params = p
 	return r
@@ -11,6 +11,8 @@ type ClientMessageUpdated struct {
 	BaseEvent
 	Params ClientMessageUpdatedParams `json:"params"`
 }
+
+func (p ClientMessageUpdated) GetName() string { return "client.message.updated" }
 
 type ClientMessageUpdatedParams struct {
 	// chat, task or contact jid. Required.

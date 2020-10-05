@@ -6,6 +6,8 @@ type ClientCallBuzzCancel struct {
 	Params clientCallBuzzCancelParams `json:"params"`
 }
 
+func (p ClientCallBuzzCancel) GetName() string { return "client.call.buzzcancel" }
+
 type clientCallBuzzCancelParams struct {
 	Jid JID `json:"jid"`
 }
