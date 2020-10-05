@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"log"
 	"strings"
+
+	"github.com/vmihailenco/msgpack/v5"
 )
 
 const (
@@ -69,6 +71,19 @@ func (jid JID) MarshalJSON() ([]byte, error) {
 func (jid *JID) UnmarshalJSON(data []byte) error {
 	var val string
 	if err := json.Unmarshal(data, &val); err != nil {
+		return err
+	}
+	jid.val = val
+	return nil
+}
+
+func (jid JID) MarshalMsgpack() ([]byte, error) {
+	return msgpack.Marshal(jid.val)
+}
+
+func (jid *JID) UnmarshalMsgpack(data []byte) error {
+	var val string
+	if err := msgpack.Unmarshal(data, &val); err != nil {
 		return err
 	}
 	jid.val = val
