@@ -35,9 +35,13 @@ type Struct struct {
 }
 
 var tsTypeMap = map[string]string{
-	"str":  "string",
-	"int":  "number",
-	"uint": "number",
+	"str":         "string",
+	"int":         "number",
+	"int64":       "number",
+	"uint16":      "number",
+	"uint":        "number",
+	"bool":        "boolean",
+	"interface{}": "any",
 }
 
 func Render(wr io.Writer, s string) error {
@@ -108,6 +112,10 @@ func Parse() ([]*Struct, error) {
 
 					fieldList := v.Type.(*ast.StructType).Fields
 					for _, field := range fieldList.List {
+						if field.Tag == nil {
+							continue
+						}
+
 						tag := reflect.StructTag(strings.Trim(field.Tag.Value, "`"))
 						jsontag := strings.Split(tag.Get("json"), ",")
 

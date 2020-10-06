@@ -23,7 +23,7 @@ type DeletedChat struct {
 	// Chat type
 	ChatType ChatType `json:"chat_type"`
 
-	// Chat fields (related to concrete participan) changes indicator
+	// Chat fields (related to concrete participan) version
 	Gentime int64 `json:"gentime"`
 
 	// Archive flag. Always true for this structure
@@ -38,10 +38,10 @@ type Chat struct {
 	// Chat type
 	ChatType ChatType `json:"chat_type"`
 
-	// Base fields (not related to concrete participant) changes indicator
+	// Base fields (not related to concrete participant) version
 	BaseGentime int64 `json:"base_gentime,omitempty"`
 
-	// Chat fields (related to concrete participan) changes indicator
+	// Chat fields related to concrete participan) version
 	Gentime int64 `json:"gentime"`
 
 	// Creation date, iso datetime

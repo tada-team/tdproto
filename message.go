@@ -26,61 +26,113 @@ const (
 	//MediaSubtypeSpeech  Mediasubtype = "speech"
 )
 
+// Chat message content
 type MessageContent struct {
-	Text          string       `json:"text"`
-	Type          Mediatype    `json:"type"`
-	Subtype       Mediasubtype `json:"subtype,omitempty"`
-	Upload        string       `mediatype:"audiomsg,image,video,file" json:"upload,omitempty"`
-	MediaUrl      string       `mediatype:"audiomsg,image,video,file" json:"mediaURL,omitempty"`
-	Size          int          `mediatype:"audiomsg,image,video,file" json:"size,omitempty"`
-	Duration      *uint        `mediatype:"audiomsg,video" json:"duration,omitempty"`
-	Processing    bool         `mediatype:"video" json:"processing,omitempty"`
-	PreviewHeight int          `mediatype:"image,video" json:"previewHeight,omitempty"`
-	PreviewWidth  int          `mediatype:"image,video" json:"previewWidth,omitempty"`
-	PreviewUrl    string       `mediatype:"image,video" json:"previewURL,omitempty"`
-	Preview2xUrl  string       `mediatype:"image,video" json:"preview2xURL,omitempty"`
-	Name          string       `mediatype:"image,video,file" json:"name,omitempty"`
-	Animated      bool         `mediatype:"image" json:"animated,omitempty"`
-	Title         string       `mediatype:"change" json:"title,omitempty"`
-	New           *string      `mediatype:"change" json:"new,omitempty"`
-	Old           *string      `mediatype:"change" json:"old,omitempty"`
-	Actor         *JID         `mediatype:"change" json:"actor,omitempty"`
-	Comment       string       `mediatype:"progress" json:"comment,omitempty"`
-	I             uint         `mediatype:"progress" json:"i,omitempty"`
-	Total         uint         `mediatype:"progress" json:"total,omitempty"`
-	GivenName     *string      `mediatype:"contact" json:"given_name,omitempty"`
-	FamilyName    *string      `mediatype:"contact" json:"family_name,omitempty"`
-	Patronymic    *string      `mediatype:"contact" json:"patronymic,omitempty"`
-	Phones        *[]string    `mediatype:"contact" json:"phones,omitempty"`
-	Emails        *[]string    `mediatype:"contact" json:"emails,omitempty"`
-	Stickerpack   string       `mediasubtype:"sticker" json:"stickerpack,omitempty"`
-	PdfVersion    *PdfVersion  `json:"pdf_version,omitempty"`
-	//Deadline      *time.Time   `mediasubtype:"newtask" json:"deadline,omitempty"`
+	// Text repesentation of message
+	Text string `json:"text"`
+
+	// Message type
+	Type Mediatype `json:"type"`
+
+	// Message subtype, if any
+	Subtype Mediasubtype `json:"subtype,omitempty"`
+
+	// Upload id, if any
+	Upload string `mediatype:"audiomsg,image,video,file" json:"upload,omitempty"`
+
+	// Upload url, if any
+	MediaUrl string `mediatype:"audiomsg,image,video,file" json:"mediaURL,omitempty"`
+
+	// Upload size, if any
+	Size int `mediatype:"audiomsg,image,video,file" json:"size,omitempty"`
+
+	// Upload duration, if any
+	Duration *uint `mediatype:"audiomsg,video" json:"duration,omitempty"`
+
+	// Upload stil processing, if any
+	Processing bool `mediatype:"video" json:"processing,omitempty"`
+
+	// Upload preview height, in pixels, if any
+	PreviewHeight int `mediatype:"image,video" json:"previewHeight,omitempty"`
+
+	// Upload width, in pixels, if any
+	PreviewWidth int `mediatype:"image,video" json:"previewWidth,omitempty"`
+
+	// Upload preview absolute url, if any
+	PreviewUrl string `mediatype:"image,video" json:"previewURL,omitempty"`
+
+	// Upload high resolution preview absolute url, if any
+	Preview2xUrl string `mediatype:"image,video" json:"preview2xURL,omitempty"`
+
+	// Upload name, if any
+	Name string `mediatype:"image,video,file" json:"name,omitempty"`
+
+	// Upload is animated image, if any
+	Animated bool `mediatype:"image" json:"animated,omitempty"`
+
+	// Change title (for "change" mediatype)
+	Title string `mediatype:"change" json:"title,omitempty"`
+
+	// Change old value (for "change" mediatype)
+	Old *string `mediatype:"change" json:"old,omitempty"`
+
+	// Change new value (for "change" mediatype)
+	New *string `mediatype:"change" json:"new,omitempty"`
+
+	// Change actor contact id (for "change" mediatype)
+	Actor *JID `mediatype:"change" json:"actor,omitempty"`
+
+	// Comment. For audimessage.
+	Comment string `mediatype:"progress" json:"comment,omitempty"`
+
+	// Given name (for "contact"  mediatype)
+	GivenName *string `mediatype:"contact" json:"given_name,omitempty"`
+
+	// Family name (for "contact"  mediatype)
+	FamilyName *string `mediatype:"contact" json:"family_name,omitempty"`
+
+	// Patronymic name (for "contact"  mediatype)
+	Patronymic *string `mediatype:"contact" json:"patronymic,omitempty"`
+
+	// Contact phones list (for "contact"  mediatype)
+	Phones *[]string `mediatype:"contact" json:"phones,omitempty"`
+
+	// Emails list (for "contact"  mediatype)
+	Emails *[]string `mediatype:"contact" json:"emails,omitempty"`
+
+	// Stickerpack name (for "sticker" subtype)
+	Stickerpack string `mediasubtype:"sticker" json:"stickerpack,omitempty"`
+
+	// Pdf version, if any
+	PdfVersion *PdfVersion `json:"pdf_version,omitempty"`
+
+	//Deadline *time.Time   `mediasubtype:"newtask" json:"deadline,omitempty"`
 }
 
+// Chat message
 type Message struct {
-	// message content struct
+	// Message content struct
 	Content MessageContent `json:"content"`
 
-	// simple plaintext message representation
+	// Simple plaintext message representation
 	PushText string `json:"push_text,omitempty"`
 
-	// sender jid
+	// Sender contact id
 	From JID `json:"from"`
 
-	// recipient jid
+	// Recipient jid
 	To JID `json:"to"`
 
-	// message uid
+	// Message uid
 	MessageId string `json:"message_id"`
 
-	// message creation datetime (set by server side)
+	// Message creation datetime (set by server side)
 	Created string `json:"created"`
 
-	// object version
+	// Object version
 	Gentime int64 `json:"gentime"`
 
-	// chat type
+	// Chat type
 	ChatType ChatType `json:"chat_type"`
 
 	// chat jid
@@ -182,14 +234,26 @@ func (links MessageLinks) Sort() {
 	})
 }
 
+// Message emoji reaction
 type MessageReaction struct {
-	Name    string                  `json:"name"`
-	Counter int                     `json:"counter"`
+	// Emoji
+	Name string `json:"name"`
+
+	// Number of reactions
+	Counter int `json:"counter"`
+
+	// Details
 	Details []MessageReactionDetail `json:"details"`
 }
 
+// Message reaction detail
 type MessageReactionDetail struct {
+	// When reaction added, iso datetime
 	Created string `json:"created"`
-	Sender  *JID   `json:"sender"`
-	Name    string `json:"name"`
+
+	// Reaction author
+	Sender *JID `json:"sender"`
+
+	// Reaction emoji
+	Name string `json:"name"`
 }
