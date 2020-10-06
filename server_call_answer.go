@@ -1,7 +1,7 @@
 package tdproto
 
 func NewServerCallAnswer(jid JID, sdp string, onliners []CallOnliner, uid string) (r ServerCallAnswer) {
-	r.Name = "server.call.answer"
+	r.Name = r.GetName()
 	r.Params.Jid = jid
 	r.Params.JSEP.Type = "answer"
 	r.Params.JSEP.SDP = sdp
@@ -14,6 +14,8 @@ type ServerCallAnswer struct {
 	BaseEvent
 	Params serverCallAnswerParams `json:"params"`
 }
+
+func (p ServerCallAnswer) GetName() string { return "server.call.answer" }
 
 type serverCallAnswerParams struct {
 	Jid        JID                         `json:"jid"`

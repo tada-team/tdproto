@@ -6,8 +6,10 @@ import (
 	"fmt"
 	"go/ast"
 	"go/parser"
+	"go/printer"
 	"go/token"
 	"log"
+	"reflect"
 	"strings"
 
 	"github.com/pkg/errors"
@@ -15,13 +17,16 @@ import (
 )
 
 type Field struct {
-	Doc  string
-	Name string
+	Name      string
+	Help      string
+	Tag       string
+	Type      string
+	Omitempty bool
 }
 
 type Struct struct {
-	Doc    string
 	Name   string
+	Help   string
 	Fields []Field
 }
 
@@ -52,11 +57,11 @@ func parse(path string) ([]Struct, error) {
 				}
 
 				s := Struct{
-					Doc:    strings.TrimSpace(gen.Doc.Text()),
+					Help:   cleanText(gen.Doc.Text()),
 					Fields: make([]Field, 0),
 				}
 
-				if s.Doc == "" || strings.HasPrefix(s.Doc, "deprecated") {
+				if s.Help == "" || strings.HasPrefix(s.Help, "deprecated") {
 					continue
 				}
 
@@ -66,14 +71,35 @@ func parse(path string) ([]Struct, error) {
 						continue
 					}
 					s.Name = v.Name.Name
+
+					fieldList := v.Type.(*ast.StructType).Fields
+					for _, field := range fieldList.List {
+						tag := reflect.StructTag(strings.Trim(field.Tag.Value, "`"))
+						json := strings.Split(tag.Get("json"), ",")
+						var typeNameBuf bytes.Buffer
+						printer.Fprint(&typeNameBuf, fset, field.Type)
+						s.Fields = append(s.Fields, Field{
+							Help:      cleanText(field.Doc.Text()),
+							Name:      field.Names[0].Name,
+							Tag:       json[0],
+							Type:      typeNameBuf.String(),
+							Omitempty: len(json) == 2 && json[1] == "omitempty",
+						})
+					}
+
 					break
 				}
+
 				structs = append(structs, s)
 			}
 		}
 
 	}
 	return structs, nil
+}
+
+func cleanText(s string) string {
+	return strings.TrimSpace(strings.Join(strings.Fields(s), " "))
 }
 
 func debugJSON(v interface{}) string {

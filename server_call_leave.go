@@ -1,7 +1,7 @@
 package tdproto
 
 func NewServerCallLeave(jid JID, uid string) (r ServerCallLeave) {
-	r.BaseEvent.Name = "server.call.leave"
+	r.Name = r.GetName()
 	r.Params.Jid = jid
 	r.Params.Uid = uid
 	return r
@@ -11,6 +11,8 @@ type ServerCallLeave struct {
 	BaseEvent
 	Params serverCallLeaveParams `json:"params"`
 }
+
+func (p ServerCallLeave) GetName() string { return "server.call.leave" }
 
 type serverCallLeaveParams struct {
 	Jid JID    `json:"jid"`

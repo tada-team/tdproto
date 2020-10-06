@@ -2,7 +2,7 @@ package tdproto
 
 // deprecated
 func NewServerRoster(roster Roster) (r ServerRoster) {
-	r.BaseEvent.Name = "server.roster"
+	r.Name = r.GetName()
 	r.Params = roster
 	return r
 }
@@ -12,3 +12,5 @@ type ServerRoster struct {
 	BaseEvent
 	Params Roster `json:"params"`
 }
+
+func (p ServerRoster) GetName() string { return "server.roster" }

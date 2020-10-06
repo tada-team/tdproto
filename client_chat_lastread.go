@@ -1,7 +1,7 @@
 package tdproto
 
 func NewClientChatLastread(jid JID, messageId *string) (r ClientChatLastread) {
-	r.Name = "client.chat.lastread"
+	r.Name = r.GetName()
 	r.ConfirmId = ConfirmId()
 	r.Params.Jid = jid
 	r.Params.LastReadMessageId = messageId
@@ -12,6 +12,8 @@ type ClientChatLastread struct {
 	BaseEvent
 	Params clientChatLastreadParams `json:"params"`
 }
+
+func (p ClientChatLastread) GetName() string { return "client.chat.lastread" }
 
 type clientChatLastreadParams struct {
 	Jid               JID     `json:"jid"`

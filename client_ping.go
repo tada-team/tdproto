@@ -1,7 +1,7 @@
 package tdproto
 
 func NewClientPing() (r ClientPing) {
-	r.Name = "client.ping"
+	r.Name = r.GetName()
 	r.ConfirmId = ConfirmId()
 	return r
 }
@@ -9,3 +9,5 @@ func NewClientPing() (r ClientPing) {
 type ClientPing struct {
 	BaseEvent
 }
+
+func (p ClientPing) GetName() string { return "client.ping" }

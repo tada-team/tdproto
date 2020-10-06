@@ -6,6 +6,8 @@ type ClientCallTrickle struct {
 	Params clientCallTrickleParams `json:"params"`
 }
 
+func (p ClientCallTrickle) GetName() string { return "client.call.trickle" }
+
 type clientCallTrickleParams struct {
 	Jid           JID    `json:"jid"`
 	Candidate     string `json:"candidate"`

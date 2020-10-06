@@ -5,7 +5,7 @@ import (
 )
 
 func NewServerMessageUpdated(messages []Message, delayed bool, counters *ChatCounters, teamUnread *TeamUnread, badge *uint) (r ServerMessageUpdated) {
-	r.Name = "server.message.updated"
+	r.Name = r.GetName()
 	r.ConfirmId = ConfirmId()
 	r.Params.Messages = messages
 	r.Params.Delayed = delayed
@@ -30,6 +30,8 @@ type ServerMessageUpdated struct {
 	BaseEvent
 	Params serverMessageUpdatedParams `json:"params"`
 }
+
+func (p ServerMessageUpdated) GetName() string { return "server.message.updated" }
 
 type serverMessageUpdatedParams struct {
 	Messages     []Message      `json:"messages"`

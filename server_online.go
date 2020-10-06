@@ -1,7 +1,7 @@
 package tdproto
 
 func NewServerOnline(contacts []OnlineContact, calls []OnlineCall) (r ServerOnline) {
-	r.BaseEvent.Name = "server.online"
+	r.Name = r.GetName()
 	r.Params.Contacts = &contacts
 	r.Params.Calls = &calls
 	return r
@@ -11,6 +11,8 @@ type ServerOnline struct {
 	BaseEvent
 	Params serverOnlineParams `json:"params"`
 }
+
+func (p ServerOnline) GetName() string { return "server.online" }
 
 type serverOnlineParams struct {
 	Contacts *[]OnlineContact `json:"contacts"`

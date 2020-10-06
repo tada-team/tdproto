@@ -1,7 +1,7 @@
 package tdproto
 
 func NewServerCallTalking(talking bool, chat, actor *JID) (r ServerCallTalking) {
-	r.BaseEvent.Name = "server.call.talking"
+	r.Name = r.GetName()
 	r.Params.Jid = *chat
 	r.Params.Actor = *actor
 	r.Params.Talking = talking
@@ -12,6 +12,8 @@ type ServerCallTalking struct {
 	BaseEvent
 	Params serverCallTalkingParams `json:"params"`
 }
+
+func (p ServerCallTalking) GetName() string { return "server.call.talking" }
 
 type serverCallTalkingParams struct {
 	Jid     JID  `json:"jid"`

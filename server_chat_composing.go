@@ -1,7 +1,7 @@
 package tdproto
 
 func NewServerChatComposing(composing, isAudio bool, chat, actor *JID) (r ServerChatComposing) {
-	r.BaseEvent.Name = "server.chat.composing"
+	r.Name = r.GetName()
 	r.Params.Jid = *chat
 	r.Params.Actor = *actor
 	r.Params.Composing = composing
@@ -13,6 +13,8 @@ type ServerChatComposing struct {
 	BaseEvent
 	Params serverChatComposingParams `json:"params"`
 }
+
+func (p ServerChatComposing) GetName() string { return "server.chat.composing" }
 
 type serverChatComposingParams struct {
 	Jid       JID  `json:"jid"`
