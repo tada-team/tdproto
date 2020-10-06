@@ -25,7 +25,15 @@ export interface {{$s.Name}} { {{- range $f := $s.Fields }}
 let New{{$s.Name}} = function(e: any): {{$s.Name}} { return {
 	{{- range $i, $f := $s.Fields -}}
 		{{- if (gt $i 0) }}, {{ end -}}
-	 	{{$f.JSName}}: e["{{$f.Json}}"]
+		{{- if $f.InternalType -}}
+			{{- if $f.List -}}
+				{{$f.JSName}}: e["{{$f.Json}}"].map(New{{ $f.TSType }})
+			{{- else -}}
+				{{$f.JSName}}: New{{ $f.TSType }}(e["{{$f.Json}}"])
+			{{- end -}}
+		{{- else -}}
+	 		{{$f.JSName}}: e["{{$f.Json}}"]
+        {{- end -}}
 	{{- end -}}	
 } }
 
