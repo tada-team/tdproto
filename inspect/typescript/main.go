@@ -14,7 +14,7 @@ func main() {
 /**
  * {{$s.Help}}.
  */
-export interface {{$s.Name}} { {{range $f := $s.Fields }}
+export interface {{$s.Name}} { {{- range $f := $s.Fields }}
    /**
     * {{$f.Help}}.{{ if $f.Null }} Nullable.{{ end }}{{ if $f.Omitempty }} Omitempty.{{ end }}
     */

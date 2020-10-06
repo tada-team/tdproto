@@ -203,116 +203,6 @@ Group chat membership status.
  * **can_remove** (bool, omitempty) — Can I remove this member.
 
 
-### <a name="Features"></a>Features
-{hostname}/features.js / {hostname}/features.json structure.
-
- * **host** (string) — current host.
-
- * **build** (string) — build/revision of server side.
-
- * **desktop_version** (string) — desktop application version.
-
- * **front_version** (string) — webclient version.
-
- * **app_title** (string) — Application title.
-
- * **userver** (string) — Static files server address.
-
- * **ios_app** (string) — Link to AppStore.
-
- * **android_app** (string) — Link to Google Play.
-
- * **theme** (string) — Default UI theme.
-
- * **min_app_version** (string) — Minimal application version required for this server. Used for breaking changes.
-
- * **free_registration** (bool) — Free registration allowed.
-
- * **max_upload_mb** (int) — Maximum size of user's upload.
-
- * **max_linked_messages** (int) — Maximum number of forwarded messages.
-
- * **max_username_part_length** (int) — Maximum chars for: family_name, given_name, patronymic if any.
-
- * **max_group_title_length** (int) — Maximum chars for group chat name.
-
- * **max_role_length** (int) — Maximum chars for role in team.
-
- * **max_mood_length** (int) — Maximum chars for mood in team.
-
- * **max_message_length** (int) — Maximum chars for text message.
-
- * **max_section_length** (int) — Maximum length for project and contact's sections names.
-
- * **max_tag_length** (int) — Maximum length for tags.
-
- * **max_task_title_length** (int) — Maximum length for task title.
-
- * **max_teams** (int) — Maximum teams for one account.
-
- * **afk_age** (int) — Max inactivity seconds.
-
- * **auth_by_password** (bool, omitempty) — Password authentication enabled.
-
- * **auth_by_qr_code** (bool, omitempty) — QR-code / link authentication enabled.
-
- * **auth_by_sms** (bool, omitempty) — SMS authentication enabled.
-
- * **ice_servers** (ICEServer, list) — ICE servers for WebRTC.
-
- * **custom_server** (bool) — True for onpremise installation.
-
- * **installation_type** (string) — name of instalation.
-
- * **is_testing** (bool) — testing installation.
-
- * **metrika** (string) — yandex metrika counter id.
-
- * **min_search_length** (int) — minimal chars number for starting global search.
-
- * **resend_timeout** (int) — resend message in n seconds if no confirmation from server given.
-
- * **sentry_dsn_js** (string) — frontent sentry.io settings.
-
- * **server_drafts** (bool) — message drafts saved on server.
-
- * **firebase_app_id** (string) — Firebase application id for web-push notifacations.
-
- * **firebase_sender_id** (string) — Firebase sender id for web-push notifacations.
-
- * **calls** (bool) — Calls functions enabled.
-
- * **mobile_calls** (bool) — Calls functions enabled for mobile applications.
-
- * **calls_record** (bool) — Calls record enabled.
-
- * **only_one_device_per_call** (bool, omitempty) — Disallow call from multiply devices. Experimental.
-
- * **max_participants_per_call** (int, omitempty) — Maximum number of participants per call.
-
- * **safari_push_id** (string) — Safari push id for web-push notifacations.
-
- * **terms** (Terms) — Team entity naming. Experimental.
-
- * **single_group_teams** (bool) — Cross team communication. Experimental.
-
- * **wiki_pages** (bool) — Wiki pages in chats. Experimental.
-
- * **allow_admin_mute** (bool, omitempty) — Wiki pages in chats. Experimental.
-
- * **task_checklist** (bool) — Deprecated. Always true.
-
- * **readonly_groups** (bool) — Deprecated. Always true.
-
- * **task_dashboard** (bool) — Deprecated. Always true.
-
- * **task_messages** (bool) — Deprecated. Always true.
-
- * **task_public** (bool) — Deprecated. Always true.
-
- * **task_tags** (bool) — Deprecated. Always true.
-
-
 ### <a name="CallEvent"></a>CallEvent
 Audiocall information.
 
@@ -395,4 +285,114 @@ Checked message links. In short: "Click here: {link.Pattern}" => "Click here: <a
  * **nopreview** (bool, omitempty) — Website previews disabled.
 
  * **youtube_id** (string, omitempty) — Optional youtube movie id.
+
+
+### <a name="Features"></a>Features
+{hostname}/features.js / {hostname}/features.json structure.
+
+ * **host** (string) — Current host.
+
+ * **build** (string) — Build/revision of server side.
+
+ * **desktop_version** (string) — Desktop application version.
+
+ * **front_version** (string) — Webclient version.
+
+ * **app_title** (string) — Application title.
+
+ * **userver** (string) — Static files server address.
+
+ * **ios_app** (string) — Link to AppStore.
+
+ * **android_app** (string) — Link to Google Play.
+
+ * **theme** (string) — Default UI theme.
+
+ * **min_app_version** (string) — Minimal application version required for this server. Used for breaking changes.
+
+ * **free_registration** (bool) — Free registration allowed.
+
+ * **max_upload_mb** (int) — Maximum size of user's upload.
+
+ * **max_linked_messages** (int) — Maximum number of forwarded messages.
+
+ * **max_username_part_length** (int) — Maximum chars for: family_name, given_name, patronymic if any.
+
+ * **max_group_title_length** (int) — Maximum chars for group chat name.
+
+ * **max_role_length** (int) — Maximum chars for role in team.
+
+ * **max_mood_length** (int) — Maximum chars for mood in team.
+
+ * **max_message_length** (int) — Maximum chars for text message.
+
+ * **max_section_length** (int) — Maximum length for project and contact's sections names.
+
+ * **max_tag_length** (int) — Maximum length for tags.
+
+ * **max_task_title_length** (int) — Maximum length for task title.
+
+ * **max_teams** (int) — Maximum teams for one account.
+
+ * **afk_age** (int) — Max inactivity seconds.
+
+ * **auth_by_password** (bool, omitempty) — Password authentication enabled.
+
+ * **auth_by_qr_code** (bool, omitempty) — QR-code / link authentication enabled.
+
+ * **auth_by_sms** (bool, omitempty) — SMS authentication enabled.
+
+ * **ice_servers** (ICEServer, list) — ICE servers for WebRTC.
+
+ * **custom_server** (bool) — True for onpremise installation.
+
+ * **installation_type** (string) — Name of instalation.
+
+ * **is_testing** (bool) — Testing installation.
+
+ * **metrika** (string) — Yandex metrika counter id.
+
+ * **min_search_length** (int) — Minimal chars number for starting global search.
+
+ * **resend_timeout** (int) — Resend message in n seconds if no confirmation from server given.
+
+ * **sentry_dsn_js** (string) — Frontent sentry.io settings.
+
+ * **server_drafts** (bool) — Message drafts saved on server.
+
+ * **firebase_app_id** (string) — Firebase application id for web-push notifacations.
+
+ * **firebase_sender_id** (string) — Firebase sender id for web-push notifacations.
+
+ * **calls** (bool) — Calls functions enabled.
+
+ * **mobile_calls** (bool) — Calls functions enabled for mobile applications.
+
+ * **calls_record** (bool) — Calls record enabled.
+
+ * **only_one_device_per_call** (bool, omitempty) — Disallow call from multiply devices. Experimental.
+
+ * **max_participants_per_call** (int, omitempty) — Maximum number of participants per call.
+
+ * **safari_push_id** (string) — Safari push id for web-push notifacations.
+
+ * **terms** (Terms) — Team entity naming. Experimental.
+
+ * **single_group_teams** (bool) — Cross team communication. Experimental.
+
+ * **wiki_pages** (bool) — Wiki pages in chats. Experimental.
+
+ * **allow_admin_mute** (bool, omitempty) — Wiki pages in chats. Experimental.
+
+ * **task_checklist** (bool) — Deprecated.
+
+ * **readonly_groups** (bool) — Deprecated.
+
+ * **task_dashboard** (bool) — Deprecated.
+
+ * **task_messages** (bool) — Deprecated.
+
+ * **task_public** (bool) — Deprecated.
+
+ * **task_tags** (bool) — Deprecated.
 

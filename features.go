@@ -2,16 +2,16 @@ package tdproto
 
 // {hostname}/features.js / {hostname}/features.json structure
 type Features struct {
-	// current host
+	// Current host
 	Host string `json:"host"`
 
-	// build/revision of server side
+	// Build/revision of server side
 	Build string `json:"build"`
 
-	// desktop application version
+	// Desktop application version
 	DesktopVersion string `json:"desktop_version"`
 
-	// webclient version
+	// Webclient version
 	FrontVersion string `json:"front_version"`
 
 	// Application title
@@ -86,25 +86,25 @@ type Features struct {
 	// True for onpremise installation
 	CustomServer bool `json:"custom_server"`
 
-	// name of instalation
+	// Name of instalation
 	InstallationType string `json:"installation_type"`
 
-	// testing installation
+	// Testing installation
 	IsTesting bool `json:"is_testing"`
 
-	// yandex metrika counter id
+	// Yandex metrika counter id
 	Metrika string `json:"metrika"`
 
-	// minimal chars number for starting global search
+	// Minimal chars number for starting global search
 	MinSearchLength int `json:"min_search_length"`
 
-	// resend message in n seconds if no confirmation from server given
+	// Resend message in n seconds if no confirmation from server given
 	ResendTimeout int `json:"resend_timeout"`
 
-	// frontent sentry.io settings
+	// Frontent sentry.io settings
 	SentryDsnJS string `json:"sentry_dsn_js"`
 
-	// message drafts saved on server
+	// Message drafts saved on server
 	ServerDrafts bool `json:"server_drafts"`
 
 	// Firebase application id for web-push notifacations
@@ -143,22 +143,22 @@ type Features struct {
 	// Wiki pages in chats. Experimental
 	AllowAdminMute bool `json:"allow_admin_mute,omitempty"`
 
-	// Deprecated. Always true
+	// Deprecated
 	TaskChecklist bool `json:"task_checklist"`
 
-	// Deprecated. Always true
+	// Deprecated
 	ReadonlyGroups bool `json:"readonly_groups"`
 
-	// Deprecated. Always true
+	// Deprecated
 	TaskDashboard bool `json:"task_dashboard"`
 
-	// Deprecated. Always true
+	// Deprecated
 	TaskMessages bool `json:"task_messages"`
 
-	// Deprecated. Always true
+	// Deprecated
 	TaskPublic bool `json:"task_public"`
 
-	// Deprecated. Always true
+	// Deprecated
 	TaskTags bool `json:"task_tags"`
 }
 
