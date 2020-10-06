@@ -1,21 +1,49 @@
 package tdproto
 
+// Uploaded media
 type Upload struct {
-	Uid         string         `json:"uid"`
-	Size        int            `json:"size"`
-	Duration    uint           `json:"duration,omitempty"`
-	Name        string         `json:"name"`
-	Url         string         `json:"url"`
-	Preview     *UploadPreview `json:"preview,omitempty"`
-	ContentType string         `json:"content_type"`
-	Animated    bool           `json:"animated,omitempty"`
-	Processing  bool           `json:"processing,omitempty"`
-	PdfVersion  *PdfVersion    `json:"pdf_version,omitempty"`
+	// Upload id
+	Uid string `json:"uid"`
+
+	// Upload size in bytes
+	Size int `json:"size"`
+
+	// Mediafile duration (for audio/video only)
+	Duration uint `json:"duration,omitempty"`
+
+	// Filename
+	Name string `json:"name"`
+
+	// Absolute url
+	Url string `json:"url"`
+
+	// Preview details
+	Preview *UploadPreview `json:"preview,omitempty"`
+
+	// Content type
+	ContentType string `json:"content_type"`
+
+	// Is animated (images only)
+	Animated bool `json:"animated,omitempty"`
+
+	// File still processing (video only)
+	Processing bool `json:"processing,omitempty"`
+
+	// PDF version of file. Experimental
+	PdfVersion *PdfVersion `json:"pdf_version,omitempty"`
 }
 
+// Upload preview
 type UploadPreview struct {
-	Url    string `json:"url"`
-	Url2x  string `json:"url_2x"`
-	Width  int    `json:"width"`
-	Height int    `json:"height"`
+	// Absolute url to image
+	Url string `json:"url"`
+
+	// Absolute url to high resolution image (retina)
+	Url2x string `json:"url_2x"`
+
+	// Width in pixels
+	Width int `json:"width"`
+
+	// Height in pixels
+	Height int `json:"height"`
 }
