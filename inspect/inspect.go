@@ -8,6 +8,7 @@ import (
 	"go/token"
 	"io"
 	"reflect"
+	"sort"
 	"strings"
 	"text/template"
 
@@ -72,7 +73,16 @@ func Parse() ([]*Struct, error) {
 	types := make(map[string]bool)
 
 	for _, f := range d {
-		for _, f := range f.Files {
+		files := make([]ast.File, 0, len(f.Files))
+		for _, file := range f.Files {
+			files = append(files, *file)
+		}
+
+		sort.Slice(files, func(i, j int) bool {
+			return files[i].Name.Name < files[j].Name.Name
+		})
+
+		for _, f := range files {
 			for _, decl := range f.Decls {
 				gen, ok := decl.(*ast.GenDecl)
 				if !ok || gen.Tok != token.TYPE {
