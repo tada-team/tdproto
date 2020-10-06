@@ -1,45 +1,36 @@
-package main
+package inspect
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/printer"
 	"go/token"
-	"log"
 	"reflect"
 	"strings"
 
-	"github.com/pkg/errors"
 	"github.com/tada-team/tdproto"
 )
 
 type Field struct {
-	Name      string
-	Help      string
-	Tag       string
-	Type      string
-	Omitempty bool
+	Name      string `json:"name"`
+	Help      string `json:"help"`
+	Json      string `json:"json"`
+	Type      string `json:"type"`
+	Null      bool   `json:"null,omitempty"`
+	Omitempty bool   `json:"omitempty,omitempty"`
 }
 
 type Struct struct {
-	Name   string
-	Help   string
-	Fields []Field
+	Name   string  `json:"name"`
+	Help   string  `json:"help"`
+	Fields []Field `json:"fields"`
 }
 
-func main() {
-	structs, err := parse(tdproto.SourceDir())
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Println(debugJSON(structs))
-}
+func Parse() ([]Struct, error) {
+	path := tdproto.SourceDir()
 
-func parse(path string) ([]Struct, error) {
 	fset := token.NewFileSet()
 	d, err := parser.ParseDir(fset, path, nil, parser.ParseComments)
 	if err != nil {
@@ -75,15 +66,27 @@ func parse(path string) ([]Struct, error) {
 					fieldList := v.Type.(*ast.StructType).Fields
 					for _, field := range fieldList.List {
 						tag := reflect.StructTag(strings.Trim(field.Tag.Value, "`"))
-						json := strings.Split(tag.Get("json"), ",")
+						jsontag := strings.Split(tag.Get("json"), ",")
+
 						var typeNameBuf bytes.Buffer
-						printer.Fprint(&typeNameBuf, fset, field.Type)
+						if err := printer.Fprint(&typeNameBuf, fset, field.Type); err != nil {
+							return nil, err
+						}
+
+						nullable := false
+						typeDescr := typeNameBuf.String()
+						if strings.HasPrefix(typeDescr, "*") {
+							nullable = true
+							typeDescr = typeDescr[1:]
+						}
+
 						s.Fields = append(s.Fields, Field{
 							Help:      cleanText(field.Doc.Text()),
 							Name:      field.Names[0].Name,
-							Tag:       json[0],
-							Type:      typeNameBuf.String(),
-							Omitempty: len(json) == 2 && json[1] == "omitempty",
+							Json:      jsontag[0],
+							Type:      typeDescr,
+							Null:      nullable,
+							Omitempty: len(jsontag) == 2 && jsontag[1] == "omitempty",
 						})
 					}
 
@@ -100,16 +103,4 @@ func parse(path string) ([]Struct, error) {
 
 func cleanText(s string) string {
 	return strings.TrimSpace(strings.Join(strings.Fields(s), " "))
-}
-
-func debugJSON(v interface{}) string {
-	b := new(bytes.Buffer)
-	debugEncoder := json.NewEncoder(b)
-	debugEncoder.SetIndent("", "    ")
-	debugEncoder.SetEscapeHTML(false)
-	err := debugEncoder.Encode(v)
-	if err != nil {
-		log.Panicln(errors.Wrap(err, "json marshall fail"))
-	}
-	return b.String()
 }
