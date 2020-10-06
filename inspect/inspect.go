@@ -2,7 +2,6 @@ package inspect
 
 import (
 	"bytes"
-	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/printer"
@@ -38,8 +37,8 @@ func Parse() ([]Struct, error) {
 	}
 
 	structs := make([]Struct, 0)
-	for k, f := range d {
-		fmt.Println("package", k)
+	for _, f := range d {
+		//fmt.Println("package", k)
 		for _, f := range f.Files {
 			for _, decl := range f.Decls {
 				gen, ok := decl.(*ast.GenDecl)
