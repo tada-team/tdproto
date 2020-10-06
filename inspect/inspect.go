@@ -16,6 +16,7 @@ import (
 
 type Field struct {
 	Name         string `json:"name"`
+	JSName       string `json:"js_name"`
 	Help         string `json:"help"`
 	Json         string `json:"json"`
 	Type         string `json:"type"`
@@ -23,12 +24,19 @@ type Field struct {
 	List         bool   `json:"list,omitempty"`
 	InternalType bool   `json:"internal_type,omitempty"`
 	Omitempty    bool   `json:"omitempty,omitempty"`
+	TSType       string `json:"ts_type"`
 }
 
 type Struct struct {
 	Name   string   `json:"name"`
 	Help   string   `json:"help"`
 	Fields []*Field `json:"fields"`
+}
+
+var tsTypeMap = map[string]string{
+	"str":  "string",
+	"int":  "number",
+	"uint": "number",
 }
 
 func Render(wr io.Writer, s string) error {
@@ -112,9 +120,17 @@ func Parse() ([]*Struct, error) {
 							typeDescr = typeDescr[2:]
 						}
 
+						tsType := tsTypeMap[typeDescr]
+						if tsType == "" {
+							tsType = typeDescr
+						}
+
+						name := field.Names[0].Name
 						s.Fields = append(s.Fields, &Field{
 							Help:      cleanHelp(field.Doc.Text()),
-							Name:      field.Names[0].Name,
+							Name:      name,
+							JSName:    strings.ToLower(name[:1]) + name[1:],
+							TSType:    tsType,
 							Json:      jsontag[0],
 							Type:      typeDescr,
 							Null:      nullable,

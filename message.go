@@ -143,7 +143,10 @@ type Message struct {
 
 // Website title and description
 type MessageLinkPreview struct {
-	Title       string `json:"title"`
+	// Website title or og:title content
+	Title string `json:"title"`
+
+	// Website description
 	Description string `json:"description,omitempty"`
 }
 
