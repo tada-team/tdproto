@@ -125,6 +125,12 @@ func Parse() ([]*Struct, error) {
 							tsType = typeDescr
 						}
 
+						omitempty := len(jsontag) == 2 && jsontag[1] == "omitempty"
+
+						if nullable && !omitempty && typeDescr == "JID" {
+							nullable = false
+						}
+
 						name := field.Names[0].Name
 						s.Fields = append(s.Fields, &Field{
 							Help:      cleanHelp(field.Doc.Text()),
@@ -135,7 +141,7 @@ func Parse() ([]*Struct, error) {
 							Type:      typeDescr,
 							Null:      nullable,
 							List:      list,
-							Omitempty: len(jsontag) == 2 && jsontag[1] == "omitempty",
+							Omitempty: omitempty,
 						})
 					}
 
