@@ -9,11 +9,6 @@ const (
 	TeamGuest  = TeamStatus("guest")
 )
 
-type TeamPreview struct {
-	Name  string    `json:"name"`
-	Icons *IconData `json:"icons"`
-}
-
 type Team struct {
 	Uid                    string       `json:"uid"`
 	IsArchive              bool         `json:"is_archive,omitempty"`
@@ -21,7 +16,7 @@ type Team struct {
 	Name                   string       `json:"name"`
 	DefaultTaskDeadline    string       `json:"default_task_deadline,omitempty"`
 	MaxMessageUpdateAge    int          `json:"max_message_update_age"`
-	Icons                  *IconData    `json:"icons"`
+	Icons                  IconData     `json:"icons"`
 	LastActive             bool         `json:"last_active"`
 	ChangeableStatuses     []TeamStatus `json:"changeable_statuses,omitempty"`
 	BadProfile             bool         `json:"bad_profile,omitempty"`
@@ -46,10 +41,16 @@ type Team struct {
 	HideArchivedUsers      bool         `json:"hide_archived_users,omitempty"`
 }
 
+// Short team representation. For invites, push notifications, etc
 type TeamShort struct {
-	Uid   string    `json:"uid"`
-	Name  string    `json:"name"`
-	Icons *IconData `json:"icons"`
+	// Team id
+	Uid string `json:"uid"`
+
+	// Team name
+	Name string `json:"name"`
+
+	// Team icon data
+	Icons IconData `json:"icons"`
 }
 
 type DeletedTeam struct {
