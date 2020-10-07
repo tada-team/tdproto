@@ -65,6 +65,9 @@ type Features struct {
 	// Maximum length for task title
 	MaxTaskTitleLength int `json:"max_task_title_length"`
 
+	// Maximum length for Color Rule
+	MaxColorRuleDescriptionLength int `json:"max_color_rule_description_length"`
+
 	// Maximum teams for one account
 	MaxTeams int `json:"max_teams"`
 
