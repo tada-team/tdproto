@@ -81,7 +81,7 @@ declare namespace TdProto {
     */
    export interface {{$s.Name}} { {{- range $f := $s.Fields }}
       /**
-      * {{$f.Help}}.
+      * {{$f.Help}}.{{if $f.Readonly}} Readonly.{{end}}
       */
       {{$f.JSName}}: {{$f.TSType}}{{ if $f.List }}[]{{end}}{{ if $f.Null }} | null{{ end }};
 {{end}}
@@ -106,6 +106,23 @@ export const New{{$s.Name}} = (e: any): TdProto.{{$s.Name}} => ({
 	{{- if $f.List }}// list{{ end }}
 	 */}}
 {{- end }}
+})
+
+/**
+ * Export {{$s.Name}} to json.
+ */
+export const Export{{$s.Name}} = (e: TdProto.{{$s.Name}}|null): any => (e === null ? null : {  
+{{- range $f := $s.Fields }}{{ if not $f.Readonly }}
+	'{{$f.Json}}': {{ if $f.InternalType -}}
+		{{- if $f.List -}}
+			e.{{$f.JSName}}.map(Export{{$f.TSType}})
+		{{- else -}}
+			Export{{$f.TSType}}(e.{{$f.JSName}})
+		{{- end -}}
+	{{- else -}}
+		e.{{$f.JSName}}
+	{{- end }},
+{{- end }}{{- end }}
 })
 {{end}}
 

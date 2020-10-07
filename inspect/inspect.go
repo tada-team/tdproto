@@ -21,6 +21,7 @@ type Field struct {
 	Help         string `json:"help"`
 	Json         string `json:"json"`
 	Type         string `json:"type"`
+	Readonly     bool   `json:"readonly"`
 	Null         bool   `json:"null,omitempty"`
 	List         bool   `json:"list,omitempty"`
 	InternalType bool   `json:"internal_type,omitempty"`
@@ -125,11 +126,18 @@ func Parse() ([]*Struct, error) {
 
 						omitempty := false
 						jsonName := name
+						readonly := false
 						if field.Tag != nil {
 							tag := reflect.StructTag(strings.Trim(field.Tag.Value, "`"))
 							jsontag := strings.Split(tag.Get("json"), ",")
 							omitempty = len(jsontag) == 2 && jsontag[1] == "omitempty"
 							jsonName = jsontag[0]
+
+							for _, tag := range strings.Split(tag.Get("tdproto"), ",") {
+								if tag == "readonly" {
+									readonly = true
+								}
+							}
 						}
 
 						var typeNameBuf bytes.Buffer
@@ -156,7 +164,7 @@ func Parse() ([]*Struct, error) {
 							tsType = typeDescr
 						}
 
-						if nullable && !omitempty && typeDescr == "JID" {
+						if nullable && !omitempty && typeDescr == "JID" { // XXX:
 							nullable = false
 						}
 
@@ -189,6 +197,7 @@ func Parse() ([]*Struct, error) {
 							Null:      nullable,
 							List:      list,
 							Omitempty: omitempty,
+							Readonly:  readonly,
 						})
 					}
 

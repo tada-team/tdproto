@@ -12,13 +12,13 @@ const (
 // Team
 type Team struct {
 	// Team id
-	Uid string `json:"uid"`
+	Uid string `json:"uid" tdproto:"readonly"`
 
 	// Team deleted
-	IsArchive bool `json:"is_archive,omitempty"`
+	IsArchive bool `json:"is_archive,omitempty" tdproto:"readonly"`
 
 	// Object version
-	Gentime int64 `json:"gentime"`
+	Gentime int64 `json:"gentime" tdproto:"readonly"`
 
 	// Team name
 	Name string `json:"name"`
@@ -30,25 +30,25 @@ type Team struct {
 	MaxMessageUpdateAge int `json:"max_message_update_age"`
 
 	// Team icons
-	Icons IconData `json:"icons"`
+	Icons IconData `json:"icons" tdproto:"readonly"`
 
 	// User last activity was in this team
-	LastActive bool `json:"last_active"`
+	LastActive bool `json:"last_active" tdproto:"readonly"`
 
 	// What status I can set to other team mebers
-	ChangeableStatuses []TeamStatus `json:"changeable_statuses,omitempty"`
+	ChangeableStatuses []TeamStatus `json:"changeable_statuses,omitempty" tdproto:"readonly"`
 
 	// My profile in this team isn't full
-	BadProfile bool `json:"bad_profile,omitempty"`
+	BadProfile bool `json:"bad_profile,omitempty" tdproto:"readonly"`
 
 	// Neet confirmation after invite to this team
-	NeedConfirmation bool `json:"need_confirmation"`
+	NeedConfirmation bool `json:"need_confirmation" tdproto:"readonly"`
 
 	// Patronymic in usernames for this team
 	UsePatronymic bool `json:"use_patronymic,omitempty"`
 
 	// Username fields ordering
-	UserFields []string `json:"user_fields"`
+	UserFields []string `json:"user_fields" tdproto:"readonly"`
 
 	// Family name should be first in display name
 	DisplayFamilyNameFirst bool `json:"display_family_name_first,omitempty"`
@@ -75,25 +75,25 @@ type Team struct {
 	UseTaskSpentTime bool `json:"use_task_spent_time,omitempty"`
 
 	// Total uploads size, bytes
-	UploadsSize int64 `json:"uploads_size,omitempty"`
+	UploadsSize int64 `json:"uploads_size,omitempty" tdproto:"readonly"`
 
 	// Maximum uploads size, bytes, if any
-	UploadsSizeLimit int64 `json:"uploads_size_limit,omitempty"`
+	UploadsSizeLimit int64 `json:"uploads_size_limit,omitempty" tdproto:"readonly"`
 
 	// Unread message counters
-	Unreads *TeamUnread `json:"unread"`
+	Unreads *TeamUnread `json:"unread" tdproto:"readonly"`
 
 	// My profile in this team
-	Me Contact `json:"me"`
+	Me Contact `json:"me" tdproto:"readonly"`
 
 	// Team contacts. Used only for team creation
-	Contacts []Contact `json:"contacts,omitempty"`
+	Contacts []Contact `json:"contacts,omitempty" tdproto:"readonly"`
 
 	// For single group teams, jid of chat
-	SingleGroup *JID `json:"single_group,omitempty"`
+	SingleGroup *JID `json:"single_group,omitempty" tdproto:"readonly"`
 
 	// Color theme, if any
-	Theme *Theme `json:"theme,omitempty"`
+	Theme *Theme `json:"theme,omitempty" tdproto:"readonly"`
 
 	// Don't show archived users by default
 	HideArchivedUsers bool `json:"hide_archived_users,omitempty"`

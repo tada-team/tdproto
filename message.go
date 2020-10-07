@@ -115,10 +115,10 @@ type Message struct {
 	Content MessageContent `json:"content"`
 
 	// Simple plaintext message representation
-	PushText string `json:"push_text,omitempty"`
+	PushText string `json:"push_text,omitempty" tdproto:"readonly"`
 
 	// Sender contact id
-	From JID `json:"from"`
+	From JID `json:"from" tdproto:"readonly"`
 
 	// Recipient id (group, task or contact)
 	To JID `json:"to"`
@@ -127,49 +127,49 @@ type Message struct {
 	MessageId string `json:"message_id"`
 
 	// Message creation datetime (set by server side)
-	Created string `json:"created"`
+	Created string `json:"created" tdproto:"readonly"`
 
 	// Object version
-	Gentime int64 `json:"gentime"`
+	Gentime int64 `json:"gentime" tdproto:"readonly"`
 
 	// Chat type
-	ChatType ChatType `json:"chat_type"`
+	ChatType ChatType `json:"chat_type" tdproto:"readonly"`
 
 	// Chat id
-	Chat JID `json:"chat"`
+	Chat JID `json:"chat" tdproto:"readonly"`
 
 	// External/internals links
-	Links MessageLinks `json:"links,omitempty"`
+	Links MessageLinks `json:"links,omitempty" tdproto:"readonly"`
 
 	// Importance flag
 	Important bool `json:"important,omitempty"`
 
 	// Datetime of message modification or deletion
-	Edited string `json:"edited,omitempty"`
+	Edited string `json:"edited,omitempty" tdproto:"readonly"`
 
 	// Message was seen by anybody in chat. True or null
-	Received bool `json:"received,omitempty"`
+	Received bool `json:"received,omitempty" tdproto:"readonly"`
 
 	// Unused yet
-	NumReceived int `json:"num_received,omitempty"`
+	NumReceived int `json:"num_received,omitempty" tdproto:"readonly"`
 
 	// Disable link previews. True or null
 	Nopreview bool `json:"nopreview,omitempty"`
 
 	// Has link previews. True or null
-	HasPreviews bool `json:"has_previews,omitempty"`
+	HasPreviews bool `json:"has_previews,omitempty" tdproto:"readonly"`
 
 	// Previous message id in this chat. Uid or null
-	Prev string `json:"prev,omitempty"`
+	Prev string `json:"prev,omitempty" tdproto:"readonly"`
 
 	// This message is first in this chat. True or null
-	IsFirst bool `json:"is_first,omitempty"`
+	IsFirst bool `json:"is_first,omitempty" tdproto:"readonly"`
 
 	// This message is first in this chat. True or null
-	IsLast bool `json:"is_last,omitempty"`
+	IsLast bool `json:"is_last,omitempty" tdproto:"readonly"`
 
 	// Message reactions struct. Can be null
-	Reactions []MessageReaction `json:"reactions,omitempty"`
+	Reactions []MessageReaction `json:"reactions,omitempty" tdproto:"readonly"`
 
 	// Message that was replied to, if any
 	ReplyTo *Message `json:"reply_to,omitempty"`
@@ -178,19 +178,19 @@ type Message struct {
 	LinkedMessages []Message `json:"linked_messages,omitempty"`
 
 	// Has mention (@). True or null
-	Notice bool `json:"notice,omitempty"`
+	Notice bool `json:"notice,omitempty" tdproto:"readonly"`
 
 	// Message has no pushes and did not affect any counters
-	Silently bool `json:"silently,omitempty"`
+	Silently bool `json:"silently,omitempty" tdproto:"readonly"`
 
 	// Author can change this message until date. Can be null
-	EditableUntil string `json:"editable_until,omitempty"`
+	EditableUntil string `json:"editable_until,omitempty" tdproto:"readonly"`
 
 	// Index number of this message. Starts from 0. Null for deleted messages. Changes when any previous message wad deleted.
-	Num *int `json:"num,omitempty"`
+	Num *int `json:"num,omitempty" tdproto:"readonly"`
 
 	// Debug information, if any
-	Debug string `json:"_debug,omitempty"`
+	Debug string `json:"_debug,omitempty" tdproto:"readonly"`
 }
 
 // Website title and description
