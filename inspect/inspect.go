@@ -112,12 +112,16 @@ func Parse() ([]*Struct, error) {
 
 					fieldList := v.Type.(*ast.StructType).Fields
 					for _, field := range fieldList.List {
-						if field.Tag == nil {
-							continue
-						}
+						name := field.Names[0].Name
 
-						tag := reflect.StructTag(strings.Trim(field.Tag.Value, "`"))
-						jsontag := strings.Split(tag.Get("json"), ",")
+						omitempty := false
+						jsonName := name
+						if field.Tag != nil {
+							tag := reflect.StructTag(strings.Trim(field.Tag.Value, "`"))
+							jsontag := strings.Split(tag.Get("json"), ",")
+							omitempty = len(jsontag) == 2 && jsontag[1] == "omitempty"
+							jsonName = jsontag[0]
+						}
 
 						var typeNameBuf bytes.Buffer
 						if err := printer.Fprint(&typeNameBuf, fset, field.Type); err != nil {
@@ -143,13 +147,10 @@ func Parse() ([]*Struct, error) {
 							tsType = typeDescr
 						}
 
-						omitempty := len(jsontag) == 2 && jsontag[1] == "omitempty"
-
 						if nullable && !omitempty && typeDescr == "JID" {
 							nullable = false
 						}
 
-						name := field.Names[0].Name
 						help := cleanHelp(field.Doc.Text())
 
 						if help == "" {
@@ -161,7 +162,7 @@ func Parse() ([]*Struct, error) {
 							Help:      help,
 							JSName:    strings.ToLower(name[:1]) + name[1:],
 							TSType:    tsType,
-							Json:      jsontag[0],
+							Json:      jsonName,
 							Type:      typeDescr,
 							Null:      nullable,
 							List:      list,
