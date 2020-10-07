@@ -1,9 +1,19 @@
 package tdproto
 
+// Custom task status
 type TaskStatus struct {
-	Uid          string `json:"uid,omitempty"`
-	SortOrdering uint   `json:"sort_ordering"`
-	Name         string `json:"name"`
-	Title        string `json:"title"`
-	IsArchive    bool   `json:"is_archive,omitempty"`
+	// Status id
+	Uid string `json:"uid,omitempty"`
+
+	// Status sort ordering
+	SortOrdering uint `json:"sort_ordering"`
+
+	// Status internal name
+	Name string `json:"name"`
+
+	// Status localized name
+	Title string `json:"title"`
+
+	// Status not used anymore
+	IsArchive bool `json:"is_archive,omitempty"`
 }
