@@ -26,124 +26,179 @@ const (
 	//MediaSubtypeSpeech  Mediasubtype = "speech"
 )
 
+// Chat message content
 type MessageContent struct {
-	Text          string       `json:"text"`
-	Type          Mediatype    `json:"type"`
-	Subtype       Mediasubtype `json:"subtype,omitempty"`
-	Upload        string       `mediatype:"audiomsg,image,video,file" json:"upload,omitempty"`
-	MediaUrl      string       `mediatype:"audiomsg,image,video,file" json:"mediaURL,omitempty"`
-	Size          int          `mediatype:"audiomsg,image,video,file" json:"size,omitempty"`
-	Duration      *uint        `mediatype:"audiomsg,video" json:"duration,omitempty"`
-	Processing    bool         `mediatype:"video" json:"processing,omitempty"`
-	PreviewHeight int          `mediatype:"image,video" json:"previewHeight,omitempty"`
-	PreviewWidth  int          `mediatype:"image,video" json:"previewWidth,omitempty"`
-	PreviewUrl    string       `mediatype:"image,video" json:"previewURL,omitempty"`
-	Preview2xUrl  string       `mediatype:"image,video" json:"preview2xURL,omitempty"`
-	Name          string       `mediatype:"image,video,file" json:"name,omitempty"`
-	Animated      bool         `mediatype:"image" json:"animated,omitempty"`
-	Title         string       `mediatype:"change" json:"title,omitempty"`
-	New           *string      `mediatype:"change" json:"new,omitempty"`
-	Old           *string      `mediatype:"change" json:"old,omitempty"`
-	Actor         *JID         `mediatype:"change" json:"actor,omitempty"`
-	Comment       string       `mediatype:"progress" json:"comment,omitempty"`
-	I             uint         `mediatype:"progress" json:"i,omitempty"`
-	Total         uint         `mediatype:"progress" json:"total,omitempty"`
-	GivenName     *string      `mediatype:"contact" json:"given_name,omitempty"`
-	FamilyName    *string      `mediatype:"contact" json:"family_name,omitempty"`
-	Patronymic    *string      `mediatype:"contact" json:"patronymic,omitempty"`
-	Phones        *[]string    `mediatype:"contact" json:"phones,omitempty"`
-	Emails        *[]string    `mediatype:"contact" json:"emails,omitempty"`
-	Stickerpack   string       `mediasubtype:"sticker" json:"stickerpack,omitempty"`
-	PdfVersion    *PdfVersion  `json:"pdf_version,omitempty"`
-	//Deadline      *time.Time   `mediasubtype:"newtask" json:"deadline,omitempty"`
+	// Text repesentation of message
+	Text string `json:"text"`
+
+	// Message type
+	Type Mediatype `json:"type"`
+
+	// Message subtype, if any
+	Subtype Mediasubtype `json:"subtype,omitempty"`
+
+	// Upload id, if any
+	Upload string `mediatype:"audiomsg,image,video,file" json:"upload,omitempty"`
+
+	// Upload url, if any
+	MediaUrl string `mediatype:"audiomsg,image,video,file" json:"mediaURL,omitempty"`
+
+	// Upload size, if any
+	Size int `mediatype:"audiomsg,image,video,file" json:"size,omitempty"`
+
+	// Upload duration, if any
+	Duration *uint `mediatype:"audiomsg,video" json:"duration,omitempty"`
+
+	// Upload stil processing, if any
+	Processing bool `mediatype:"video" json:"processing,omitempty"`
+
+	// Upload preview height, in pixels, if any
+	PreviewHeight int `mediatype:"image,video" json:"previewHeight,omitempty"`
+
+	// Upload width, in pixels, if any
+	PreviewWidth int `mediatype:"image,video" json:"previewWidth,omitempty"`
+
+	// Upload preview absolute url, if any
+	PreviewUrl string `mediatype:"image,video" json:"previewURL,omitempty"`
+
+	// Upload high resolution preview absolute url, if any
+	Preview2xUrl string `mediatype:"image,video" json:"preview2xURL,omitempty"`
+
+	// Upload name, if any
+	Name string `mediatype:"image,video,file" json:"name,omitempty"`
+
+	// Upload is animated image, if any
+	Animated bool `mediatype:"image" json:"animated,omitempty"`
+
+	// Change title (for "change" mediatype)
+	Title string `mediatype:"change" json:"title,omitempty"`
+
+	// Change old value (for "change" mediatype)
+	Old *string `mediatype:"change" json:"old,omitempty"`
+
+	// Change new value (for "change" mediatype)
+	New *string `mediatype:"change" json:"new,omitempty"`
+
+	// Change actor contact id (for "change" mediatype)
+	Actor *JID `mediatype:"change" json:"actor,omitempty"`
+
+	// Comment. For audimessage.
+	Comment string `mediatype:"progress" json:"comment,omitempty"`
+
+	// Given name (for "contact"  mediatype)
+	GivenName *string `mediatype:"contact" json:"given_name,omitempty"`
+
+	// Family name (for "contact"  mediatype)
+	FamilyName *string `mediatype:"contact" json:"family_name,omitempty"`
+
+	// Patronymic name (for "contact"  mediatype)
+	Patronymic *string `mediatype:"contact" json:"patronymic,omitempty"`
+
+	// Contact phones list (for "contact"  mediatype)
+	Phones *[]string `mediatype:"contact" json:"phones,omitempty"`
+
+	// Emails list (for "contact"  mediatype)
+	Emails *[]string `mediatype:"contact" json:"emails,omitempty"`
+
+	// Stickerpack name (for "sticker" subtype)
+	Stickerpack string `mediasubtype:"sticker" json:"stickerpack,omitempty"`
+
+	// Pdf version, if any
+	PdfVersion *PdfVersion `json:"pdf_version,omitempty"`
+
+	//Deadline *time.Time   `mediasubtype:"newtask" json:"deadline,omitempty"`
 }
 
+// Chat message
 type Message struct {
-	// message content struct
+	// Message content struct
 	Content MessageContent `json:"content"`
 
-	// simple plaintext message representation
+	// Simple plaintext message representation
 	PushText string `json:"push_text,omitempty"`
 
-	// sender jid
+	// Sender contact id
 	From JID `json:"from"`
 
-	// recipient jid
+	// Recipient id (group, task or contact)
 	To JID `json:"to"`
 
-	// message uid
+	// Message uid
 	MessageId string `json:"message_id"`
 
-	// message creation datetime (set by server side)
+	// Message creation datetime (set by server side)
 	Created string `json:"created"`
 
-	// object version
+	// Object version
 	Gentime int64 `json:"gentime"`
 
-	// chat type
+	// Chat type
 	ChatType ChatType `json:"chat_type"`
 
-	// chat jid
-	Chat JID `json:"chat,omitempty"`
+	// Chat id
+	Chat JID `json:"chat"`
 
-	// external/internals links
+	// External/internals links
 	Links MessageLinks `json:"links,omitempty"`
 
-	// importance flag
+	// Importance flag
 	Important bool `json:"important,omitempty"`
 
-	// datetime of message modification or deletion
+	// Datetime of message modification or deletion
 	Edited string `json:"edited,omitempty"`
 
-	// message was seen by anybody in chat. True or null
+	// Message was seen by anybody in chat. True or null
 	Received bool `json:"received,omitempty"`
 
-	// unused yet
+	// Unused yet
 	NumReceived int `json:"num_received,omitempty"`
 
-	// disable link previews. True or null
+	// Disable link previews. True or null
 	Nopreview bool `json:"nopreview,omitempty"`
 
-	// has link previews. True or null
+	// Has link previews. True or null
 	HasPreviews bool `json:"has_previews,omitempty"`
 
-	// previous message id in this chat. Uid or null
+	// Previous message id in this chat. Uid or null
 	Prev string `json:"prev,omitempty"`
 
-	// this message is first in this chat. True or null
+	// This message is first in this chat. True or null
 	IsFirst bool `json:"is_first,omitempty"`
 
-	// this message is first in this chat. True or null
+	// This message is first in this chat. True or null
 	IsLast bool `json:"is_last,omitempty"`
 
-	// message reactions struct. Can be null
+	// Message reactions struct. Can be null
 	Reactions []MessageReaction `json:"reactions,omitempty"`
 
-	// message that was replied to, if any
+	// Message that was replied to, if any
 	ReplyTo *Message `json:"reply_to,omitempty"`
 
-	// forwarded messages. Can be null. Also contains double of ReplyTo for backward compatibility
+	// Forwarded messages. Can be null. Also contains double of ReplyTo for backward compatibility
 	LinkedMessages []Message `json:"linked_messages,omitempty"`
 
-	// has mention (@). True or null
+	// Has mention (@). True or null
 	Notice bool `json:"notice,omitempty"`
 
-	// message has no pushes and did not affect any counters
+	// Message has no pushes and did not affect any counters
 	Silently bool `json:"silently,omitempty"`
 
-	// author can change this message until date. Can be null
+	// Author can change this message until date. Can be null
 	EditableUntil string `json:"editable_until,omitempty"`
 
-	// index number of this message. Starts from 0. Null for deleted messages. Changes when any previous message wad deleted.
+	// Index number of this message. Starts from 0. Null for deleted messages. Changes when any previous message wad deleted.
 	Num *int `json:"num,omitempty"`
 
-	// debug information if any
+	// Debug information, if any
 	Debug string `json:"_debug,omitempty"`
 }
 
 // Website title and description
 type MessageLinkPreview struct {
-	Title       string `json:"title"`
+	// Website title or og:title content
+	Title string `json:"title"`
+
+	// Website description
 	Description string `json:"description,omitempty"`
 }
 
@@ -179,14 +234,26 @@ func (links MessageLinks) Sort() {
 	})
 }
 
+// Message emoji reaction
 type MessageReaction struct {
-	Name    string                  `json:"name"`
-	Counter int                     `json:"counter"`
+	// Emoji
+	Name string `json:"name"`
+
+	// Number of reactions
+	Counter int `json:"counter"`
+
+	// Details
 	Details []MessageReactionDetail `json:"details"`
 }
 
+// Message reaction detail
 type MessageReactionDetail struct {
+	// When reaction added, iso datetime
 	Created string `json:"created"`
-	Sender  *JID   `json:"sender"`
-	Name    string `json:"name"`
+
+	// Reaction author
+	Sender *JID `json:"sender"`
+
+	// Reaction emoji
+	Name string `json:"name"`
 }

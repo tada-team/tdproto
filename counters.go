@@ -9,16 +9,26 @@ type ChatCounters struct {
 	LastReadMessageUid *string  `json:"last_read_message_id"`
 }
 
+// Unread message counters
 type Unread struct {
-	NumMessages       uint `json:"messages"`
+	// Total unread messages
+	NumMessages uint `json:"messages"`
+
+	// Total unread messages with mentions
 	NumNoticeMessages uint `json:"notice_messages"`
-	NumChats          uint `json:"chats"`
+
+	// Total chats with unread messages
+	NumChats uint `json:"chats"`
 }
 
 type TeamUnread map[ChatType]*Unread
 
+// Unread message counters
 type TeamCounter struct {
-	Uid     string     `json:"uid"`
+	// Team id
+	Uid string `json:"uid"`
+
+	// Unread message counters
 	Unreads TeamUnread `json:"unread"`
 }
 

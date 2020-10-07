@@ -5,9 +5,17 @@ package tdproto
 //	Editor  JID    `json:"editor"`
 //}
 
+// Wiki page. Experimental
 type WikiPage struct {
-	Gentime int64  `json:"gentime"`
+	// Object version
+	Gentime int64 `json:"gentime"`
+
+	// Update time, iso
 	Updated string `json:"updated"`
-	Editor  JID    `json:"editor"`
-	Text    string `json:"text"`
+
+	// Last editor contact id
+	Editor JID `json:"editor"`
+
+	// Page text
+	Text string `json:"text"`
 }
