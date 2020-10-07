@@ -192,7 +192,7 @@ type Chat struct {
 	Tabs *[]TaskTabKey `chattype:"task" json:"tabs,omitempty"`
 
 	// My status in group chat
-	Status GroupStatus `chattype:"group" json:"status,omitempty"`
+	Status *GroupStatus `chattype:"group" json:"status,omitempty"`
 
 	// Group chat members
 	Members []GroupMembership `chattype:"group" json:"members,omitempty"`
