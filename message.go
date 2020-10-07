@@ -120,7 +120,7 @@ type Message struct {
 	// Sender contact id
 	From JID `json:"from"`
 
-	// Recipient jid
+	// Recipient id (group, task or contact)
 	To JID `json:"to"`
 
 	// Message uid
@@ -135,61 +135,61 @@ type Message struct {
 	// Chat type
 	ChatType ChatType `json:"chat_type"`
 
-	// chat jid
-	Chat JID `json:"chat,omitempty"`
+	// Chat id
+	Chat JID `json:"chat"`
 
-	// external/internals links
+	// External/internals links
 	Links MessageLinks `json:"links,omitempty"`
 
-	// importance flag
+	// Importance flag
 	Important bool `json:"important,omitempty"`
 
-	// datetime of message modification or deletion
+	// Datetime of message modification or deletion
 	Edited string `json:"edited,omitempty"`
 
-	// message was seen by anybody in chat. True or null
+	// Message was seen by anybody in chat. True or null
 	Received bool `json:"received,omitempty"`
 
-	// unused yet
+	// Unused yet
 	NumReceived int `json:"num_received,omitempty"`
 
-	// disable link previews. True or null
+	// Disable link previews. True or null
 	Nopreview bool `json:"nopreview,omitempty"`
 
-	// has link previews. True or null
+	// Has link previews. True or null
 	HasPreviews bool `json:"has_previews,omitempty"`
 
-	// previous message id in this chat. Uid or null
+	// Previous message id in this chat. Uid or null
 	Prev string `json:"prev,omitempty"`
 
-	// this message is first in this chat. True or null
+	// This message is first in this chat. True or null
 	IsFirst bool `json:"is_first,omitempty"`
 
-	// this message is first in this chat. True or null
+	// This message is first in this chat. True or null
 	IsLast bool `json:"is_last,omitempty"`
 
-	// message reactions struct. Can be null
+	// Message reactions struct. Can be null
 	Reactions []MessageReaction `json:"reactions,omitempty"`
 
-	// message that was replied to, if any
+	// Message that was replied to, if any
 	ReplyTo *Message `json:"reply_to,omitempty"`
 
-	// forwarded messages. Can be null. Also contains double of ReplyTo for backward compatibility
+	// Forwarded messages. Can be null. Also contains double of ReplyTo for backward compatibility
 	LinkedMessages []Message `json:"linked_messages,omitempty"`
 
-	// has mention (@). True or null
+	// Has mention (@). True or null
 	Notice bool `json:"notice,omitempty"`
 
-	// message has no pushes and did not affect any counters
+	// Message has no pushes and did not affect any counters
 	Silently bool `json:"silently,omitempty"`
 
-	// author can change this message until date. Can be null
+	// Author can change this message until date. Can be null
 	EditableUntil string `json:"editable_until,omitempty"`
 
-	// index number of this message. Starts from 0. Null for deleted messages. Changes when any previous message wad deleted.
+	// Index number of this message. Starts from 0. Null for deleted messages. Changes when any previous message wad deleted.
 	Num *int `json:"num,omitempty"`
 
-	// debug information if any
+	// Debug information, if any
 	Debug string `json:"_debug,omitempty"`
 }
 

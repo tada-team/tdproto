@@ -26,6 +26,7 @@ type Field struct {
 	InternalType bool   `json:"internal_type,omitempty"`
 	Omitempty    bool   `json:"omitempty,omitempty"`
 	TSType       string `json:"ts_type"`
+	TSDefault    string `json:"ts_default"`
 }
 
 type Struct struct {
@@ -42,6 +43,14 @@ var tsTypeMap = map[string]string{
 	"uint":        "number",
 	"bool":        "boolean",
 	"interface{}": "any",
+}
+
+var tsDefaultMap = map[string]string{
+	"string":       `''`,
+	"number":       `0`,
+	"boolean":      `false`,
+	"MessageLinks": `[]`,
+	"Mediasubtype": `''`,
 }
 
 func Render(wr io.Writer, s string) error {
@@ -157,11 +166,24 @@ func Parse() ([]*Struct, error) {
 							help = name
 						}
 
+						tsDefault := ""
+						if omitempty {
+							if nullable {
+								tsDefault = "null"
+							} else {
+								tsDefault = tsDefaultMap[tsType]
+								if tsDefault == "" {
+									tsDefault = "unknown: " + tsType
+								}
+							}
+						}
+
 						s.Fields = append(s.Fields, &Field{
 							Name:      name,
 							Help:      help,
 							JSName:    strings.ToLower(name[:1]) + name[1:],
 							TSType:    tsType,
+							TSDefault: tsDefault,
 							Json:      jsonName,
 							Type:      typeDescr,
 							Null:      nullable,
