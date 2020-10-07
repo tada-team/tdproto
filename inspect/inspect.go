@@ -98,7 +98,7 @@ func Parse() ([]*Struct, error) {
 					Fields: make([]*Field, 0),
 				}
 
-				if s.Help == "" || strings.HasPrefix(s.Help, "deprecated") {
+				if s.Help == "" || strings.HasPrefix(strings.ToLower(s.Help), "deprecated") {
 					continue
 				}
 

@@ -1,10 +1,16 @@
 package tdproto
 
+// Task tag
 type Tag struct {
+	// Tag id
+	Uid string `json:"uid"`
+
+	// Tag name
 	Name string `json:"name"`
-	Uid  string `json:"uid"`
 }
 
+// Delete tag message
 type DeletedTag struct {
+	// Tag id
 	Uid string `json:"uid"`
 }
