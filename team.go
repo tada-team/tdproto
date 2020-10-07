@@ -99,7 +99,7 @@ type Team struct {
 	HideArchivedUsers bool `json:"hide_archived_users,omitempty"`
 }
 
-// Short team representation. For invites, push notifications, etc
+// Short team representation. For invites, push notifications, etc. Readonly.
 type TeamShort struct {
 	// Team id
 	Uid string `json:"uid"`
@@ -111,7 +111,7 @@ type TeamShort struct {
 	Icons IconData `json:"icons"`
 }
 
-// Team deletion message
+// Team deletion message. Readonly.
 type DeletedTeam struct {
 	// Team id
 	Uid string `json:"uid"`

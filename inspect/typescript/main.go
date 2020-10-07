@@ -91,7 +91,7 @@ declare namespace TdProto {
 
 const undef = (v: any): boolean => (typeof v === 'undefined')
 
-{{- range $s := .Structs}}
+{{ range $s := .Structs}}
 /**
  * Create New{{$s.Name}} from raw json.
  */
@@ -107,7 +107,7 @@ export const New{{$s.Name}} = (e: any): TdProto.{{$s.Name}} => ({
 	 */}}
 {{- end }}
 })
-
+{{if not $s.Readonly}}
 /**
  * Export {{$s.Name}} to json.
  */
@@ -124,7 +124,7 @@ export const Export{{$s.Name}} = (e: TdProto.{{$s.Name}}|null): any => (e === nu
 	{{- end }},
 {{- end }}{{- end }}
 })
-{{end}}
+{{end}}{{end}}
 
 `); err != nil {
 		fmt.Println(err)

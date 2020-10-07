@@ -31,9 +31,10 @@ type Field struct {
 }
 
 type Struct struct {
-	Name   string   `json:"name"`
-	Help   string   `json:"help"`
-	Fields []*Field `json:"fields"`
+	Name     string   `json:"name"`
+	Help     string   `json:"help"`
+	Fields   []*Field `json:"fields"`
+	Readonly bool     `json:"readonly,omitempty"`
 }
 
 var tsTypeMap = map[string]string{
@@ -111,6 +112,8 @@ func Parse() ([]*Struct, error) {
 				if s.Help == "" || strings.HasPrefix(strings.ToLower(s.Help), "deprecated") {
 					continue
 				}
+
+				s.Readonly = strings.Contains(s.Help, "Readonly") // XXX
 
 				for _, spec := range gen.Specs {
 					v, ok := spec.(*ast.TypeSpec)

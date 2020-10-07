@@ -1,15 +1,37 @@
 package tdproto
 
+// Push message over websockets. Readonly.
 type MessagePush struct {
-	Title       string `json:"title"`
-	Subtitle    string `json:"subtitle"`
-	Message     string `json:"message"`
-	IconUrl     string `json:"icon_url"`
+	// Push title
+	Title string `json:"title"`
+
+	// Push subtitle
+	Subtitle string `json:"subtitle"`
+
+	// Push body
+	Message string `json:"message"`
+
+	// Absolute url to push icon
+	IconUrl string `json:"icon_url"`
+
+	// Url opened on click
 	ClickAction string `json:"click_action"`
-	Tag         string `json:"tag"`
-	Team        string `json:"team"`
-	Sender      *JID   `json:"sender"`
-	Chat        *JID   `json:"chat"`
-	MessageId   string `json:"message_id"`
-	Created     string `json:"created"`
+
+	// Push tag (for join pushes)
+	Tag string `json:"tag"`
+
+	// Team uid
+	Team string `json:"team"`
+
+	// Sender contact id
+	Sender *JID `json:"sender"`
+
+	// Chat id
+	Chat *JID `json:"chat"`
+
+	// Message id
+	MessageId string `json:"message_id"`
+
+	// Message creation iso datetime
+	Created string `json:"created"`
 }

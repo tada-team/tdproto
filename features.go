@@ -1,6 +1,6 @@
 package tdproto
 
-// {hostname}/features.js / {hostname}/features.json structure
+// Server information. Readonly.
 type Features struct {
 	// Current host
 	Host string `json:"host"`
@@ -165,13 +165,13 @@ type Features struct {
 	TaskTags bool `json:"task_tags"`
 }
 
-// Interactive Connectivity Establishment Server for WEB Rtc connection
+// Interactive Connectivity Establishment Server for WEB Rtc connection. Readonly.
 type ICEServer struct {
 	// URls
 	Urls string `json:"urls"`
 }
 
-// Exprtimental translation fields for "team" entity renaming
+// Exprtimental translation fields for "team" entity renaming. Readonly.
 type Terms struct {
 	EnInTeam       string
 	EnTeam         string
