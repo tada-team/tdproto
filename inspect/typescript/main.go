@@ -72,6 +72,8 @@ declare namespace TdProto {
    }
 
    type MessageLinks = MessageLink[];
+   
+   type TeamUnread = [ChatType:Unread]
 
 {{- range $s := .Structs}}
    /**

@@ -1,5 +1,6 @@
 package tdproto
 
+// Color theme
 type Theme struct {
 	BgColor                string
 	BgHoverColor           string

@@ -150,9 +150,15 @@ func Parse() ([]*Struct, error) {
 						}
 
 						name := field.Names[0].Name
+						help := cleanHelp(field.Doc.Text())
+
+						if help == "" {
+							help = name
+						}
+
 						s.Fields = append(s.Fields, &Field{
-							Help:      cleanHelp(field.Doc.Text()),
 							Name:      name,
+							Help:      help,
 							JSName:    strings.ToLower(name[:1]) + name[1:],
 							TSType:    tsType,
 							Json:      jsontag[0],
