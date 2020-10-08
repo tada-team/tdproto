@@ -136,6 +136,10 @@ func Parse() ([]*Struct, error) {
 							omitempty = len(jsontag) == 2 && jsontag[1] == "omitempty"
 							jsonName = jsontag[0]
 
+							if jsonName == "-" {
+								continue
+							}
+
 							for _, tag := range strings.Split(tag.Get("tdproto"), ",") {
 								if tag == "readonly" {
 									readonly = true

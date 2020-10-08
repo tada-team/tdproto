@@ -1,40 +1,71 @@
 package tdproto
 
+// Integration form field
 type IntegrationField struct {
-	Label    string `json:"label"`
-	Readonly bool   `json:"readonly"`
-	Value    string `json:"value"`
+	// Label
+	Label string `json:"label"`
+
+	// Is field readonly
+	Readonly bool `json:"readonly"`
+
+	// Current value
+	Value string `json:"value"`
 }
 
+// Integration form
 type IntegrationForm struct {
-	ApiKey     *IntegrationField `json:"api_key,omitempty"`
+	// Api key field, if any
+	ApiKey *IntegrationField `json:"api_key,omitempty"`
+
+	// Webhook url, if any
 	WebhookUrl *IntegrationField `json:"webhook_url,omitempty"`
-	Url        *IntegrationField `json:"url,omitempty"`
+
+	// Url, if any
+	Url *IntegrationField `json:"url,omitempty"`
 }
 
+// Integration for concrete chat
 type Integration struct {
-	Comment string          `json:"comment"`
-	Created string          `json:"created,omitempty"`
-	Enabled bool            `json:"enabled"`
-	Form    IntegrationForm `json:"form"`
-	Group   *JID            `json:"group,omitempty"`
-	Title   string          `json:"-"`
-	Help    string          `json:"help,omitempty"`
-	Kind    string          `json:"kind"`
-	Uid     string          `json:"uid,omitempty"`
+	// Id
+	Uid string `json:"uid,omitempty"`
+
+	// Comment, if any
+	Comment string `json:"comment"`
+
+	// Creation datetime, iso
+	Created string `json:"created,omitempty"`
+
+	// Integration enabled
+	Enabled bool `json:"enabled"`
+
+	// Integration form
+	Form IntegrationForm `json:"form"`
+
+	// Chat id
+	Group *JID `json:"group,omitempty"`
+
+	// Full description
+	Help string `json:"help,omitempty"`
+
+	// Unique integration name
+	Kind string `json:"kind"`
+
+	Title string `json:"-"`
 }
 
-type IntegrationList []Integration
-
+// Integration kind
 type IntegrationKind struct {
-	Kind     string      `json:"kind"`
-	Template Integration `json:"template"`
-	Title    string      `json:"title"`
-}
+	// Integration unique name
+	Kind string `json:"kind"`
 
-type IntegrationKindList []IntegrationKind
+	// Integration title
+	Title string `json:"title"`
+
+	// Integration template
+	Template Integration `json:"template"`
+}
 
 type Integrations struct {
-	Integrations IntegrationList     `json:"integrations"`
-	Kinds        IntegrationKindList `json:"kinds"`
+	Integrations []Integration     `json:"integrations"`
+	Kinds        []IntegrationKind `json:"kinds"`
 }
