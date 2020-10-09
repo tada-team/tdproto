@@ -1,5 +1,6 @@
 package tdproto
 
+// Set of rules to apply to tasks for coloring.
 type ColorRule struct {
 	Uid                   string   `json:"uid"`
 	Priority              int      `json:"priority"`
