@@ -74,18 +74,17 @@ type MessageLinks = MessageLink[];
 type TeamUnread = Record<ChatType, Unread>
 
 {{- range $s := .Structs}}
+/**
+ * {{$s.Help}}.
+ */
+export interface {{$s.Name}} { {{- range $f := $s.Fields }}
    /**
-    * {{$s.Help}}.
+    * {{$f.Help}}.{{if $f.Readonly}} Readonly.{{end}}
     */
-   export interface {{$s.Name}} { {{- range $f := $s.Fields }}
-      /**
-       * {{$f.Help}}.{{if $f.Readonly}} Readonly.{{end}}
-       */
-      {{$f.JSName}}: {{$f.TSType}}{{ if $f.List }}[]{{end}}{{ if $f.Null }} | null{{ end }};
-{{end}}
-   }
+   {{$f.JSName}}: {{$f.TSType}}{{ if $f.List }}[]{{end}}{{ if $f.Null }} | null{{ end }};
 {{end}}
 }
+{{end}}
 
 const undef = (v: any): boolean => (typeof v === 'undefined')
 
@@ -93,7 +92,7 @@ const undef = (v: any): boolean => (typeof v === 'undefined')
 /**
  * Create New{{$s.Name}} from raw json.
  */
-export const New{{$s.Name}} = (e: any): TdProto.{{$s.Name}} => ({  
+export const New{{$s.Name}} = (e: any): {{$s.Name}} => ({  
 {{- range $f := $s.Fields }}
     {{$f.JSName}}: {{ if $f.InternalType -}}
 	{{- if $f.Omitempty }}undef(e['{{$f.Json}}']) ? {{ if $f.List }}[]{{ else }}{{$f.TSDefault}}{{ end }} : {{ end }}e['{{$f.Json}}'].map(New{{ $f.TSType }})
@@ -109,7 +108,7 @@ export const New{{$s.Name}} = (e: any): TdProto.{{$s.Name}} => ({
 /**
  * Export {{$s.Name}} to json.
  */
-export const Export{{$s.Name}} = (e: TdProto.{{$s.Name}}|null): any => (e === null ? null : {  
+export const Export{{$s.Name}} = (e: {{$s.Name}}|null): any => (e === null ? null : {  
 {{- range $f := $s.Fields }}{{ if not $f.Readonly }}
 	'{{$f.Json}}': {{ if $f.InternalType -}}
 		{{- if $f.List -}}
