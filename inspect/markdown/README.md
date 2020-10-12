@@ -25,402 +25,6 @@ Icon data. Contains sm+lg (for uploaded image) OR stub+letters+color (for icon g
  * **color** (string, omitempty) — Stub icon background color.
 
 
-### <a name="TaskColor"></a>TaskColor
-Task color rules color.
-
- * **regular** (string) — Regular.
-
- * **dark** (string) — Dark.
-
- * **light** (string) — Light.
-
-
-### <a name="Theme"></a>Theme
-Color theme.
-
- * **BgColor** (string) — BgColor.
-
- * **BgHoverColor** (string) — BgHoverColor.
-
- * **TextColor** (string) — TextColor.
-
- * **MutedTextColor** (string) — MutedTextColor.
-
- * **AccentColor** (string) — AccentColor.
-
- * **AccentHoverColor** (string) — AccentHoverColor.
-
- * **TextOnAccentHoverColor** (string) — TextOnAccentHoverColor.
-
- * **MainAccent** (string) — MainAccent.
-
- * **MainAccentHover** (string) — MainAccentHover.
-
- * **MainLightAccent** (string) — MainLightAccent.
-
- * **MainLink** (string) — MainLink.
-
- * **AppAccentColor** (string) — AppAccentColor.
-
- * **AppPrimaryColor** (string) — AppPrimaryColor.
-
-
-### <a name="Upload"></a>Upload
-Uploaded media.
-
- * **uid** (string) — Upload id.
-
- * **size** (int) — Upload size in bytes.
-
- * **duration** (uint, omitempty) — Mediafile duration (for audio/video only).
-
- * **name** (string) — Filename.
-
- * **url** (string) — Absolute url.
-
- * **preview** ([UploadPreview](#UploadPreview), nullable, omitempty) — Preview details.
-
- * **content_type** (string) — Content type.
-
- * **animated** (bool, omitempty) — Is animated (images only).
-
- * **processing** (bool, omitempty) — File still processing (video only).
-
- * **pdf_version** ([PdfVersion](#PdfVersion), nullable, omitempty) — PDF version of file. Experimental.
-
-
-### <a name="UploadPreview"></a>UploadPreview
-Upload preview.
-
- * **url** (string) — Absolute url to image.
-
- * **url_2x** (string) — Absolute url to high resolution image (retina).
-
- * **width** (int) — Width in pixels.
-
- * **height** (int) — Height in pixels.
-
-
-### <a name="MessageContent"></a>MessageContent
-Chat message content.
-
- * **text** (string) — Text repesentation of message.
-
- * **type** (Mediatype) — Message type.
-
- * **subtype** (Mediasubtype, omitempty) — Message subtype, if any.
-
- * **upload** (string, omitempty) — Upload id, if any.
-
- * **mediaURL** (string, omitempty) — Upload url, if any.
-
- * **size** (int, omitempty) — Upload size, if any.
-
- * **duration** (uint, nullable, omitempty) — Upload duration, if any.
-
- * **processing** (bool, omitempty) — Upload stil processing, if any.
-
- * **previewHeight** (int, omitempty) — Upload preview height, in pixels, if any.
-
- * **previewWidth** (int, omitempty) — Upload width, in pixels, if any.
-
- * **previewURL** (string, omitempty) — Upload preview absolute url, if any.
-
- * **preview2xURL** (string, omitempty) — Upload high resolution preview absolute url, if any.
-
- * **name** (string, omitempty) — Upload name, if any.
-
- * **animated** (bool, omitempty) — Upload is animated image, if any.
-
- * **title** (string, omitempty) — Change title (for "change" mediatype).
-
- * **old** (string, nullable, omitempty) — Change old value (for "change" mediatype).
-
- * **new** (string, nullable, omitempty) — Change new value (for "change" mediatype).
-
- * **actor** (JID, nullable, omitempty) — Change actor contact id (for "change" mediatype).
-
- * **comment** (string, omitempty) — Comment. For audimessage.
-
- * **given_name** (string, nullable, omitempty) — Given name (for "contact" mediatype).
-
- * **family_name** (string, nullable, omitempty) — Family name (for "contact" mediatype).
-
- * **patronymic** (string, nullable, omitempty) — Patronymic name (for "contact" mediatype).
-
- * **phones** (string, nullable, list, omitempty) — Contact phones list (for "contact" mediatype).
-
- * **emails** (string, nullable, list, omitempty) — Emails list (for "contact" mediatype).
-
- * **stickerpack** (string, omitempty) — Stickerpack name (for "sticker" subtype).
-
- * **pdf_version** ([PdfVersion](#PdfVersion), nullable, omitempty) — Pdf version, if any.
-
-
-### <a name="Message"></a>Message
-Chat message.
-
- * **content** ([MessageContent](#MessageContent)) — Message content struct.
-
- * **push_text** (string, readonly for clients, omitempty) — Simple plaintext message representation.
-
- * **from** (JID, readonly for clients) — Sender contact id.
-
- * **to** (JID) — Recipient id (group, task or contact).
-
- * **message_id** (string) — Message uid.
-
- * **created** (string, readonly for clients) — Message creation datetime (set by server side).
-
- * **gentime** (int64, readonly for clients) — Object version.
-
- * **chat_type** (ChatType, readonly for clients) — Chat type.
-
- * **chat** (JID, readonly for clients) — Chat id.
-
- * **links** (MessageLinks, readonly for clients, omitempty) — External/internals links.
-
- * **important** (bool, omitempty) — Importance flag.
-
- * **edited** (string, readonly for clients, omitempty) — Datetime of message modification or deletion.
-
- * **received** (bool, readonly for clients, omitempty) — Message was seen by anybody in chat. True or null.
-
- * **num_received** (int, readonly for clients, omitempty) — Unused yet.
-
- * **nopreview** (bool, omitempty) — Disable link previews. True or null.
-
- * **has_previews** (bool, readonly for clients, omitempty) — Has link previews. True or null.
-
- * **prev** (string, readonly for clients, omitempty) — Previous message id in this chat. Uid or null.
-
- * **is_first** (bool, readonly for clients, omitempty) — This message is first in this chat. True or null.
-
- * **is_last** (bool, readonly for clients, omitempty) — This message is first in this chat. True or null.
-
- * **reactions** ([MessageReaction](#MessageReaction), readonly for clients, list, omitempty) — Message reactions struct. Can be null.
-
- * **reply_to** ([Message](#Message), nullable, omitempty) — Message that was replied to, if any.
-
- * **linked_messages** ([Message](#Message), list, omitempty) — Forwarded messages. Can be null. Also contains double of ReplyTo for backward compatibility.
-
- * **notice** (bool, readonly for clients, omitempty) — Has mention (@). True or null.
-
- * **silently** (bool, readonly for clients, omitempty) — Message has no pushes and did not affect any counters.
-
- * **editable_until** (string, readonly for clients, omitempty) — Author can change this message until date. Can be null.
-
- * **num** (int, readonly for clients, nullable, omitempty) — Index number of this message. Starts from 0. Null for deleted messages. Changes when any previous message wad deleted.
-
- * **_debug** (string, readonly for clients, omitempty) — Debug information, if any.
-
-
-### <a name="MessageLinkPreview"></a>MessageLinkPreview
-Website title and description.
-
- * **title** (string) — Website title or og:title content.
-
- * **description** (string, omitempty) — Website description.
-
-
-### <a name="MessageLink"></a>MessageLink
-Checked message links. In short: "Click here: {link.Pattern}" => "Click here: <a href='{link.Url}'>{link.Text}</a>".
-
- * **pattern** (string) — Text fragment that should be replaced by link.
-
- * **url** (string) — Internal (tadateam://) or external link.
-
- * **text** (string) — Text replacement.
-
- * **preview** ([MessageLinkPreview](#MessageLinkPreview), nullable, omitempty) — Optional preview info, for websites.
-
- * **uploads** ([Upload](#Upload), list, omitempty) — Optional upload info.
-
- * **nopreview** (bool, omitempty) — Website previews disabled.
-
- * **youtube_id** (string, omitempty) — Optional youtube movie id.
-
-
-### <a name="MessageReaction"></a>MessageReaction
-Message emoji reaction.
-
- * **name** (string) — Emoji.
-
- * **counter** (int) — Number of reactions.
-
- * **details** ([MessageReactionDetail](#MessageReactionDetail), list) — Details.
-
-
-### <a name="MessageReactionDetail"></a>MessageReactionDetail
-Message reaction detail.
-
- * **created** (string) — When reaction added, iso datetime.
-
- * **sender** (JID) — Reaction author.
-
- * **name** (string) — Reaction emoji.
-
-
-### <a name="Contact"></a>Contact
-Contact.
-
- * **jid** (JID) — Contact Id.
-
- * **display_name** (string) — Full name in chats.
-
- * **short_name** (string) — Short name in chats.
-
- * **contact_email** (string) — Contact email in this team.
-
- * **contact_phone** (string) — Contact phone in this team.
-
- * **icons** ([IconData](#IconData), nullable) — Icons data.
-
- * **role** (string) — Role in this team.
-
- * **mood** (string, omitempty) — Mood in this team.
-
- * **status** (TeamStatus) — Status in this team.
-
- * **last_activity** (string, nullable) — Last activity in this team (iso datetime).
-
- * **add_to_team_rights** (bool, omitempty) — Can contact add users to this team.
-
- * **is_archive** (bool, omitempty) — Contact deleted.
-
- * **botname** (string, omitempty) — Bot name. Empty for users.
-
- * **sections** (string, list) — Section ids.
-
- * **can_send_message** (bool, nullable, omitempty) — Can I send message to this contact.
-
- * **cant_send_message_reason** (string, omitempty) — Why I can't send message to this chat (if can't).
-
- * **can_call** (bool, nullable, omitempty) — Can I call to this contact.
-
- * **can_create_task** (bool, nullable, omitempty) — Can I call create task for this contact.
-
- * **can_add_to_group** (bool, nullable, omitempty) — Can I add this contact to group chats.
-
- * **can_delete** (bool, nullable, omitempty) — Can I remove this contact from team.
-
- * **changeable_fields** (string, nullable, list, omitempty) — Changeable fields.
-
- * **family_name** (string, nullable, omitempty) — Family name.
-
- * **given_name** (string, nullable, omitempty) — Given name.
-
- * **patronymic** (string, nullable, omitempty) — Patronymic, if any.
-
- * **default_lang** (string, nullable, omitempty) — Default language code.
-
- * **debug_show_activity** (bool, nullable, omitempty) — Enable debug messages in UI.
-
- * **dropall_enabled** (bool, nullable, omitempty) — Enable remove all messages experimental features.
-
- * **alt_send** (bool, nullable, omitempty) — Use Ctrl/Cmd + Enter insted Enter.
-
- * **always_send_pushes** (bool, nullable, omitempty) — Send push notifications even contact is online.
-
- * **timezone** (string, nullable, omitempty) — Timezone, if any.
-
- * **quiet_time_start** (string, nullable, omitempty) — Quiet time start.
-
- * **quiet_time_finish** (string, nullable, omitempty) — Quiet time finish.
-
- * **group_notifications_enabled** (bool, nullable, omitempty) — Push notifications for group chats.
-
- * **task_notifications_enabled** (bool, nullable, omitempty) — Push notifications for task chats.
-
- * **contact_short_view** (bool, nullable, omitempty) — Short view in contact list.
-
- * **group_short_view** (bool, nullable, omitempty) — Short view in group list.
-
- * **task_short_view** (bool, nullable, omitempty) — Short view in task list.
-
- * **contact_mshort_view** (bool, nullable, omitempty) — Short view in contact list in mobile app.
-
- * **group_mshort_view** (bool, nullable, omitempty) — Short view in group list in mobile app.
-
- * **task_mshort_view** (bool, nullable, omitempty) — Short view in task list in mobile app.
-
- * **contact_show_archived** (bool, nullable, omitempty) — Show archived contacts in contact list.
-
- * **unread_first** (bool, nullable, omitempty) — Show inread chats first in feed.
-
- * **munread_first** (bool, nullable, omitempty) — Show inread chats first in feed in mobile app.
-
- * **can_add_to_team** (bool, nullable, omitempty) — Can I add new members to this team.
-
- * **can_manage_sections** (bool, nullable, omitempty) — Can I manage sections in this team.
-
- * **can_manage_tags** (bool, nullable, omitempty) — Can I manage tags in this team.
-
- * **can_manage_integrations** (bool, nullable, omitempty) — Can I manage integrations in this team.
-
- * **can_manage_color_rules** (bool, nullable, omitempty) — Can I manage color rules in this team.
-
- * **can_create_group** (bool, nullable, omitempty) — Can I create group chats in this team.
-
- * **can_join_public_groups** (bool, nullable, omitempty) — Can I view/join public group in this team.
-
- * **can_join_public_tasks** (bool, nullable, omitempty) — Can I view/join public tasks in this team.
-
- * **can_delete_any_message** (bool, nullable, omitempty) — Deprecated: use CanDeleteAnyMessage in chat object.
-
- * **custom_fields** ([ContactCustomFields](#ContactCustomFields), nullable, omitempty) — Extra contact fields.
-
-
-### <a name="ContactCustomFields"></a>ContactCustomFields
-Extra contact fields.
-
- * **company** (string, omitempty) — Company.
-
- * **department** (string, omitempty) — Department.
-
- * **title** (string, omitempty) — Title.
-
- * **mobile_phone** (string, omitempty) — MobilePhone.
-
-
-### <a name="ContactShort"></a>ContactShort
-Short contact representaion.
-
- * **jid** (JID) — Contact Id.
-
- * **display_name** (string) — Full name in chats.
-
- * **short_name** (string) — Short name in chats.
-
- * **icons** ([IconData](#IconData), nullable) — Icons data.
-
-
-### <a name="MessagePush"></a>MessagePush
-Push message over websockets. Readonly.
-
- * **title** (string) — Push title.
-
- * **subtitle** (string) — Push subtitle.
-
- * **message** (string) — Push body.
-
- * **icon_url** (string) — Absolute url to push icon.
-
- * **click_action** (string) — Url opened on click.
-
- * **tag** (string) — Push tag (for join pushes).
-
- * **team** (string) — Team uid.
-
- * **sender** (JID) — Sender contact id.
-
- * **chat** (JID) — Chat id.
-
- * **message_id** (string) — Message id.
-
- * **created** (string) — Message creation iso datetime.
-
-
 ### <a name="ChatShort"></a>ChatShort
 Mimimal chat representaion.
 
@@ -623,6 +227,166 @@ Group chat membership status.
  * **can_remove** (bool, omitempty) — Can I remove this member.
 
 
+### <a name="MessageContent"></a>MessageContent
+Chat message content.
+
+ * **text** (string) — Text repesentation of message.
+
+ * **type** (Mediatype) — Message type.
+
+ * **subtype** (Mediasubtype, omitempty) — Message subtype, if any.
+
+ * **upload** (string, omitempty) — Upload id, if any.
+
+ * **mediaURL** (string, omitempty) — Upload url, if any.
+
+ * **size** (int, omitempty) — Upload size, if any.
+
+ * **duration** (uint, nullable, omitempty) — Upload duration, if any.
+
+ * **processing** (bool, omitempty) — Upload stil processing, if any.
+
+ * **previewHeight** (int, omitempty) — Upload preview height, in pixels, if any.
+
+ * **previewWidth** (int, omitempty) — Upload width, in pixels, if any.
+
+ * **previewURL** (string, omitempty) — Upload preview absolute url, if any.
+
+ * **preview2xURL** (string, omitempty) — Upload high resolution preview absolute url, if any.
+
+ * **name** (string, omitempty) — Upload name, if any.
+
+ * **animated** (bool, omitempty) — Upload is animated image, if any.
+
+ * **title** (string, omitempty) — Change title (for "change" mediatype).
+
+ * **old** (string, nullable, omitempty) — Change old value (for "change" mediatype).
+
+ * **new** (string, nullable, omitempty) — Change new value (for "change" mediatype).
+
+ * **actor** (JID, nullable, omitempty) — Change actor contact id (for "change" mediatype).
+
+ * **comment** (string, omitempty) — Comment. For audimessage.
+
+ * **given_name** (string, nullable, omitempty) — Given name (for "contact" mediatype).
+
+ * **family_name** (string, nullable, omitempty) — Family name (for "contact" mediatype).
+
+ * **patronymic** (string, nullable, omitempty) — Patronymic name (for "contact" mediatype).
+
+ * **phones** (string, nullable, list, omitempty) — Contact phones list (for "contact" mediatype).
+
+ * **emails** (string, nullable, list, omitempty) — Emails list (for "contact" mediatype).
+
+ * **stickerpack** (string, omitempty) — Stickerpack name (for "sticker" subtype).
+
+ * **pdf_version** ([PdfVersion](#PdfVersion), nullable, omitempty) — Pdf version, if any.
+
+
+### <a name="Message"></a>Message
+Chat message.
+
+ * **content** ([MessageContent](#MessageContent)) — Message content struct.
+
+ * **push_text** (string, readonly for clients, omitempty) — Simple plaintext message representation.
+
+ * **from** (JID, readonly for clients) — Sender contact id.
+
+ * **to** (JID) — Recipient id (group, task or contact).
+
+ * **message_id** (string) — Message uid.
+
+ * **created** (string, readonly for clients) — Message creation datetime (set by server side).
+
+ * **gentime** (int64, readonly for clients) — Object version.
+
+ * **chat_type** (ChatType, readonly for clients) — Chat type.
+
+ * **chat** (JID, readonly for clients) — Chat id.
+
+ * **links** (MessageLinks, readonly for clients, omitempty) — External/internals links.
+
+ * **important** (bool, omitempty) — Importance flag.
+
+ * **edited** (string, readonly for clients, omitempty) — Datetime of message modification or deletion.
+
+ * **received** (bool, readonly for clients, omitempty) — Message was seen by anybody in chat. True or null.
+
+ * **num_received** (int, readonly for clients, omitempty) — Unused yet.
+
+ * **nopreview** (bool, omitempty) — Disable link previews. True or null.
+
+ * **has_previews** (bool, readonly for clients, omitempty) — Has link previews. True or null.
+
+ * **prev** (string, readonly for clients, omitempty) — Previous message id in this chat. Uid or null.
+
+ * **is_first** (bool, readonly for clients, omitempty) — This message is first in this chat. True or null.
+
+ * **is_last** (bool, readonly for clients, omitempty) — This message is first in this chat. True or null.
+
+ * **reactions** ([MessageReaction](#MessageReaction), readonly for clients, list, omitempty) — Message reactions struct. Can be null.
+
+ * **reply_to** ([Message](#Message), nullable, omitempty) — Message that was replied to, if any.
+
+ * **linked_messages** ([Message](#Message), list, omitempty) — Forwarded messages. Can be null. Also contains double of ReplyTo for backward compatibility.
+
+ * **notice** (bool, readonly for clients, omitempty) — Has mention (@). True or null.
+
+ * **silently** (bool, readonly for clients, omitempty) — Message has no pushes and did not affect any counters.
+
+ * **editable_until** (string, readonly for clients, omitempty) — Author can change this message until date. Can be null.
+
+ * **num** (int, readonly for clients, nullable, omitempty) — Index number of this message. Starts from 0. Null for deleted messages. Changes when any previous message wad deleted.
+
+ * **_debug** (string, readonly for clients, omitempty) — Debug information, if any.
+
+
+### <a name="MessageLinkPreview"></a>MessageLinkPreview
+Website title and description.
+
+ * **title** (string) — Website title or og:title content.
+
+ * **description** (string, omitempty) — Website description.
+
+
+### <a name="MessageLink"></a>MessageLink
+Checked message links. In short: "Click here: {link.Pattern}" => "Click here: <a href='{link.Url}'>{link.Text}</a>".
+
+ * **pattern** (string) — Text fragment that should be replaced by link.
+
+ * **url** (string) — Internal (tadateam://) or external link.
+
+ * **text** (string) — Text replacement.
+
+ * **preview** ([MessageLinkPreview](#MessageLinkPreview), nullable, omitempty) — Optional preview info, for websites.
+
+ * **uploads** ([Upload](#Upload), list, omitempty) — Optional upload info.
+
+ * **nopreview** (bool, omitempty) — Website previews disabled.
+
+ * **youtube_id** (string, omitempty) — Optional youtube movie id.
+
+
+### <a name="MessageReaction"></a>MessageReaction
+Message emoji reaction.
+
+ * **name** (string) — Emoji.
+
+ * **counter** (int) — Number of reactions.
+
+ * **details** ([MessageReactionDetail](#MessageReactionDetail), list) — Details.
+
+
+### <a name="MessageReactionDetail"></a>MessageReactionDetail
+Message reaction detail.
+
+ * **created** (string) — When reaction added, iso datetime.
+
+ * **sender** (JID) — Reaction author.
+
+ * **name** (string) — Reaction emoji.
+
+
 ### <a name="Tag"></a>Tag
 Task tag.
 
@@ -635,6 +399,334 @@ Task tag.
 Delete tag message.
 
  * **uid** (string) — Tag id.
+
+
+### <a name="MessagePush"></a>MessagePush
+Push message over websockets. Readonly.
+
+ * **title** (string) — Push title.
+
+ * **subtitle** (string) — Push subtitle.
+
+ * **message** (string) — Push body.
+
+ * **icon_url** (string) — Absolute url to push icon.
+
+ * **click_action** (string) — Url opened on click.
+
+ * **tag** (string) — Push tag (for join pushes).
+
+ * **team** (string) — Team uid.
+
+ * **sender** (JID) — Sender contact id.
+
+ * **chat** (JID) — Chat id.
+
+ * **message_id** (string) — Message id.
+
+ * **created** (string) — Message creation iso datetime.
+
+
+### <a name="Theme"></a>Theme
+Color theme.
+
+ * **BgColor** (string) — BgColor.
+
+ * **BgHoverColor** (string) — BgHoverColor.
+
+ * **TextColor** (string) — TextColor.
+
+ * **MutedTextColor** (string) — MutedTextColor.
+
+ * **AccentColor** (string) — AccentColor.
+
+ * **AccentHoverColor** (string) — AccentHoverColor.
+
+ * **TextOnAccentHoverColor** (string) — TextOnAccentHoverColor.
+
+ * **MainAccent** (string) — MainAccent.
+
+ * **MainAccentHover** (string) — MainAccentHover.
+
+ * **MainLightAccent** (string) — MainLightAccent.
+
+ * **MainLink** (string) — MainLink.
+
+ * **AppAccentColor** (string) — AppAccentColor.
+
+ * **AppPrimaryColor** (string) — AppPrimaryColor.
+
+
+### <a name="IntegrationField"></a>IntegrationField
+Integration form field.
+
+ * **label** (string) — Label.
+
+ * **readonly** (bool) — Is field readonly.
+
+ * **value** (string) — Current value.
+
+
+### <a name="IntegrationForm"></a>IntegrationForm
+Integration form.
+
+ * **api_key** ([IntegrationField](#IntegrationField), nullable, omitempty) — Api key field, if any.
+
+ * **webhook_url** ([IntegrationField](#IntegrationField), nullable, omitempty) — Webhook url, if any.
+
+ * **url** ([IntegrationField](#IntegrationField), nullable, omitempty) — Url, if any.
+
+
+### <a name="Integration"></a>Integration
+Integration for concrete chat.
+
+ * **uid** (string, omitempty) — Id.
+
+ * **comment** (string) — Comment, if any.
+
+ * **created** (string, omitempty) — Creation datetime, iso.
+
+ * **enabled** (bool) — Integration enabled.
+
+ * **form** ([IntegrationForm](#IntegrationForm)) — Integration form.
+
+ * **group** (JID, omitempty) — Chat id.
+
+ * **help** (string, omitempty) — Full description.
+
+ * **kind** (string) — Unique integration name.
+
+
+### <a name="IntegrationKind"></a>IntegrationKind
+Integration kind.
+
+ * **kind** (string) — Integration unique name.
+
+ * **title** (string) — Integration title.
+
+ * **template** ([Integration](#Integration)) — Integration template.
+
+
+### <a name="Integrations"></a>Integrations
+Complete integrations data, as received from server.
+
+ * **integrations** ([Integration](#Integration), list) — Currently existing integrations.
+
+ * **kinds** ([IntegrationKind](#IntegrationKind), list) — Types of integrations available for setup.
+
+
+### <a name="Remind"></a>Remind
+Remind.
+
+ * **uid** (string) — Remind id.
+
+ * **chat** (JID) — Chat id.
+
+ * **fire_at** (string) — Activation time, iso.
+
+ * **comment** (string, omitempty) — Comment, if any.
+
+
+### <a name="DeletedRemind"></a>DeletedRemind
+Remind deleted message.
+
+ * **uid** (string) — Remind id.
+
+
+### <a name="PdfVersion"></a>PdfVersion
+PDF preview of mediafile. Experimental.
+
+ * **url** (string) — Absolute url.
+
+ * **text_preview** (string, omitempty) — First string of text content.
+
+
+### <a name="Contact"></a>Contact
+Contact.
+
+ * **jid** (JID) — Contact Id.
+
+ * **display_name** (string) — Full name in chats.
+
+ * **short_name** (string) — Short name in chats.
+
+ * **contact_email** (string) — Contact email in this team.
+
+ * **contact_phone** (string) — Contact phone in this team.
+
+ * **icons** ([IconData](#IconData), nullable) — Icons data.
+
+ * **role** (string) — Role in this team.
+
+ * **mood** (string, omitempty) — Mood in this team.
+
+ * **status** (TeamStatus) — Status in this team.
+
+ * **last_activity** (string, nullable) — Last activity in this team (iso datetime).
+
+ * **add_to_team_rights** (bool, omitempty) — Can contact add users to this team.
+
+ * **is_archive** (bool, omitempty) — Contact deleted.
+
+ * **botname** (string, omitempty) — Bot name. Empty for users.
+
+ * **sections** (string, list) — Section ids.
+
+ * **can_send_message** (bool, nullable, omitempty) — Can I send message to this contact.
+
+ * **cant_send_message_reason** (string, omitempty) — Why I can't send message to this chat (if can't).
+
+ * **can_call** (bool, nullable, omitempty) — Can I call to this contact.
+
+ * **can_create_task** (bool, nullable, omitempty) — Can I call create task for this contact.
+
+ * **can_add_to_group** (bool, nullable, omitempty) — Can I add this contact to group chats.
+
+ * **can_delete** (bool, nullable, omitempty) — Can I remove this contact from team.
+
+ * **changeable_fields** (string, nullable, list, omitempty) — Changeable fields.
+
+ * **family_name** (string, nullable, omitempty) — Family name.
+
+ * **given_name** (string, nullable, omitempty) — Given name.
+
+ * **patronymic** (string, nullable, omitempty) — Patronymic, if any.
+
+ * **default_lang** (string, nullable, omitempty) — Default language code.
+
+ * **debug_show_activity** (bool, nullable, omitempty) — Enable debug messages in UI.
+
+ * **dropall_enabled** (bool, nullable, omitempty) — Enable remove all messages experimental features.
+
+ * **alt_send** (bool, nullable, omitempty) — Use Ctrl/Cmd + Enter insted Enter.
+
+ * **always_send_pushes** (bool, nullable, omitempty) — Send push notifications even contact is online.
+
+ * **timezone** (string, nullable, omitempty) — Timezone, if any.
+
+ * **quiet_time_start** (string, nullable, omitempty) — Quiet time start.
+
+ * **quiet_time_finish** (string, nullable, omitempty) — Quiet time finish.
+
+ * **group_notifications_enabled** (bool, nullable, omitempty) — Push notifications for group chats.
+
+ * **task_notifications_enabled** (bool, nullable, omitempty) — Push notifications for task chats.
+
+ * **contact_short_view** (bool, nullable, omitempty) — Short view in contact list.
+
+ * **group_short_view** (bool, nullable, omitempty) — Short view in group list.
+
+ * **task_short_view** (bool, nullable, omitempty) — Short view in task list.
+
+ * **contact_mshort_view** (bool, nullable, omitempty) — Short view in contact list in mobile app.
+
+ * **group_mshort_view** (bool, nullable, omitempty) — Short view in group list in mobile app.
+
+ * **task_mshort_view** (bool, nullable, omitempty) — Short view in task list in mobile app.
+
+ * **contact_show_archived** (bool, nullable, omitempty) — Show archived contacts in contact list.
+
+ * **unread_first** (bool, nullable, omitempty) — Show inread chats first in feed.
+
+ * **munread_first** (bool, nullable, omitempty) — Show inread chats first in feed in mobile app.
+
+ * **can_add_to_team** (bool, nullable, omitempty) — Can I add new members to this team.
+
+ * **can_manage_sections** (bool, nullable, omitempty) — Can I manage sections in this team.
+
+ * **can_manage_tags** (bool, nullable, omitempty) — Can I manage tags in this team.
+
+ * **can_manage_integrations** (bool, nullable, omitempty) — Can I manage integrations in this team.
+
+ * **can_manage_color_rules** (bool, nullable, omitempty) — Can I manage color rules in this team.
+
+ * **can_create_group** (bool, nullable, omitempty) — Can I create group chats in this team.
+
+ * **can_join_public_groups** (bool, nullable, omitempty) — Can I view/join public group in this team.
+
+ * **can_join_public_tasks** (bool, nullable, omitempty) — Can I view/join public tasks in this team.
+
+ * **can_delete_any_message** (bool, nullable, omitempty) — Deprecated: use CanDeleteAnyMessage in chat object.
+
+ * **custom_fields** ([ContactCustomFields](#ContactCustomFields), nullable, omitempty) — Extra contact fields.
+
+
+### <a name="ContactCustomFields"></a>ContactCustomFields
+Extra contact fields.
+
+ * **company** (string, omitempty) — Company.
+
+ * **department** (string, omitempty) — Department.
+
+ * **title** (string, omitempty) — Title.
+
+ * **mobile_phone** (string, omitempty) — MobilePhone.
+
+
+### <a name="ContactShort"></a>ContactShort
+Short contact representaion.
+
+ * **jid** (JID) — Contact Id.
+
+ * **display_name** (string) — Full name in chats.
+
+ * **short_name** (string) — Short name in chats.
+
+ * **icons** ([IconData](#IconData), nullable) — Icons data.
+
+
+### <a name="Upload"></a>Upload
+Uploaded media.
+
+ * **uid** (string) — Upload id.
+
+ * **size** (int) — Upload size in bytes.
+
+ * **duration** (uint, omitempty) — Mediafile duration (for audio/video only).
+
+ * **name** (string) — Filename.
+
+ * **url** (string) — Absolute url.
+
+ * **preview** ([UploadPreview](#UploadPreview), nullable, omitempty) — Preview details.
+
+ * **content_type** (string) — Content type.
+
+ * **animated** (bool, omitempty) — Is animated (images only).
+
+ * **processing** (bool, omitempty) — File still processing (video only).
+
+ * **pdf_version** ([PdfVersion](#PdfVersion), nullable, omitempty) — PDF version of file. Experimental.
+
+
+### <a name="UploadPreview"></a>UploadPreview
+Upload preview.
+
+ * **url** (string) — Absolute url to image.
+
+ * **url_2x** (string) — Absolute url to high resolution image (retina).
+
+ * **width** (int) — Width in pixels.
+
+ * **height** (int) — Height in pixels.
+
+
+### <a name="Unread"></a>Unread
+Unread message counters.
+
+ * **messages** (uint) — Total unread messages.
+
+ * **notice_messages** (uint) — Total unread messages with mentions.
+
+ * **chats** (uint) — Total chats with unread messages.
+
+
+### <a name="TeamCounter"></a>TeamCounter
+Unread message counters.
+
+ * **uid** (string) — Team id.
+
+ * **unread** (TeamUnread) — Unread message counters.
 
 
 ### <a name="Features"></a>Features
@@ -827,6 +919,18 @@ Exprtimental translation fields for "team" entity renaming. Readonly.
  * **RuToTeam** (string) — RuToTeam.
 
 
+### <a name="WikiPage"></a>WikiPage
+Wiki page. Experimental.
+
+ * **gentime** (int64) — Object version.
+
+ * **updated** (string) — Update time, iso.
+
+ * **editor** (JID) — Last editor contact id.
+
+ * **text** (string) — Page text.
+
+
 ### <a name="TaskStatus"></a>TaskStatus
 Custom task status.
 
@@ -839,6 +943,16 @@ Custom task status.
  * **title** (string) — Status localized name.
 
  * **is_archive** (bool, omitempty) — Status not used anymore.
+
+
+### <a name="TaskColor"></a>TaskColor
+Task color rules color.
+
+ * **regular** (string) — Regular.
+
+ * **dark** (string) — Dark.
+
+ * **light** (string) — Light.
 
 
 ### <a name="CallEvent"></a>CallEvent
@@ -873,120 +987,6 @@ Call participant device.
  * **muted** (bool) — Device muted.
 
  * **useragent** (string) — Device description.
-
-
-### <a name="Unread"></a>Unread
-Unread message counters.
-
- * **messages** (uint) — Total unread messages.
-
- * **notice_messages** (uint) — Total unread messages with mentions.
-
- * **chats** (uint) — Total chats with unread messages.
-
-
-### <a name="TeamCounter"></a>TeamCounter
-Unread message counters.
-
- * **uid** (string) — Team id.
-
- * **unread** (TeamUnread) — Unread message counters.
-
-
-### <a name="PdfVersion"></a>PdfVersion
-PDF preview of mediafile. Experimental.
-
- * **url** (string) — Absolute url.
-
- * **text_preview** (string, omitempty) — First string of text content.
-
-
-### <a name="WikiPage"></a>WikiPage
-Wiki page. Experimental.
-
- * **gentime** (int64) — Object version.
-
- * **updated** (string) — Update time, iso.
-
- * **editor** (JID) — Last editor contact id.
-
- * **text** (string) — Page text.
-
-
-### <a name="IntegrationField"></a>IntegrationField
-Integration form field.
-
- * **label** (string) — Label.
-
- * **readonly** (bool) — Is field readonly.
-
- * **value** (string) — Current value.
-
-
-### <a name="IntegrationForm"></a>IntegrationForm
-Integration form.
-
- * **api_key** ([IntegrationField](#IntegrationField), nullable, omitempty) — Api key field, if any.
-
- * **webhook_url** ([IntegrationField](#IntegrationField), nullable, omitempty) — Webhook url, if any.
-
- * **url** ([IntegrationField](#IntegrationField), nullable, omitempty) — Url, if any.
-
-
-### <a name="Integration"></a>Integration
-Integration for concrete chat.
-
- * **uid** (string, omitempty) — Id.
-
- * **comment** (string) — Comment, if any.
-
- * **created** (string, omitempty) — Creation datetime, iso.
-
- * **enabled** (bool) — Integration enabled.
-
- * **form** ([IntegrationForm](#IntegrationForm)) — Integration form.
-
- * **group** (JID, nullable, omitempty) — Chat id.
-
- * **help** (string, omitempty) — Full description.
-
- * **kind** (string) — Unique integration name.
-
-
-### <a name="IntegrationKind"></a>IntegrationKind
-Integration kind.
-
- * **kind** (string) — Integration unique name.
-
- * **title** (string) — Integration title.
-
- * **template** ([Integration](#Integration)) — Integration template.
-
-
-### <a name="Integrations"></a>Integrations
-Complete integrations data, as received from server.
-
- * **integrations** ([Integration](#Integration), list) — Currently existing integrations.
-
- * **kinds** ([IntegrationKind](#IntegrationKind), list) — Types of integrations available for setup.
-
-
-### <a name="Remind"></a>Remind
-Remind.
-
- * **uid** (string) — Remind id.
-
- * **chat** (JID) — Chat id.
-
- * **fire_at** (string) — Activation time, iso.
-
- * **comment** (string, omitempty) — Comment, if any.
-
-
-### <a name="DeletedRemind"></a>DeletedRemind
-Remind deleted message.
-
- * **uid** (string) — Remind id.
 
 
 ### <a name="Team"></a>Team
