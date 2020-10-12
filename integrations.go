@@ -42,7 +42,7 @@ type Integration struct {
 	Form IntegrationForm `json:"form"`
 
 	// Chat id
-	Group JID `json:"group,omitempty"`
+	Group JID `json:"group"`
 
 	// Full description
 	Help string `json:"help,omitempty"`
