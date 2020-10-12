@@ -42,7 +42,7 @@ type Integration struct {
 	Form IntegrationForm `json:"form"`
 
 	// Chat id
-	Group *JID `json:"group,omitempty"`
+	Group JID `json:"group,omitempty"`
 
 	// Full description
 	Help string `json:"help,omitempty"`
@@ -68,7 +68,7 @@ type IntegrationKind struct {
 // Complete integrations data, as received from server
 type Integrations struct {
 	// Currently existing integrations
-	Integrations []Integration     `json:"integrations"`
+	Integrations []Integration `json:"integrations"`
 	// Types of integrations available for setup
-	Kinds        []IntegrationKind `json:"kinds"`
+	Kinds []IntegrationKind `json:"kinds"`
 }
