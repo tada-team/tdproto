@@ -65,7 +65,10 @@ type IntegrationKind struct {
 	Template Integration `json:"template"`
 }
 
+// Complete integrations data, as received from server
 type Integrations struct {
+	// Currently existing integrations
 	Integrations []Integration     `json:"integrations"`
+	// Types of integrations available for setup
 	Kinds        []IntegrationKind `json:"kinds"`
 }
