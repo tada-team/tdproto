@@ -25,6 +25,402 @@ Icon data. Contains sm+lg (for uploaded image) OR stub+letters+color (for icon g
  * **color** (string, omitempty) — Stub icon background color.
 
 
+### <a name="ColorRule"></a>ColorRule
+Set of rules to apply to tasks for coloring.
+
+ * **uid** (string) — Uid.
+
+ * **priority** (int) — Priority.
+
+ * **color_index** (uint16) — ColorIndex.
+
+ * **section** (string, omitempty) — Section.
+
+ * **tags** (string, list, omitempty) — Tags.
+
+ * **description** (string, omitempty) — Description.
+
+ * **task_status** (string, omitempty) — TaskStatus.
+
+ * **task_importance** (int, nullable, omitempty) — TaskImportance.
+
+ * **task_urgency** (int, nullable, omitempty) — TaskUrgency.
+
+ * **section_enabled** (bool, nullable, omitempty) — SectionEnabled.
+
+ * **task_importance_enabled** (bool, nullable, omitempty) — TaskImportanceEnabled.
+
+ * **task_urgency_enabled** (bool, nullable, omitempty) — TaskUrgencyEnabled.
+
+ * **tags_enabled** (bool, nullable, omitempty) — TagsEnabled.
+
+
+### <a name="Remind"></a>Remind
+Remind.
+
+ * **uid** (string) — Remind id.
+
+ * **chat** (JID) — Chat id.
+
+ * **fire_at** (string) — Activation time, iso.
+
+ * **comment** (string, omitempty) — Comment, if any.
+
+
+### <a name="DeletedRemind"></a>DeletedRemind
+Remind deleted message.
+
+ * **uid** (string) — Remind id.
+
+
+### <a name="Team"></a>Team
+Team.
+
+ * **uid** (string, readonly for clients) — Team id.
+
+ * **is_archive** (bool, readonly for clients, omitempty) — Team deleted.
+
+ * **gentime** (int64, readonly for clients) — Object version.
+
+ * **name** (string) — Team name.
+
+ * **default_task_deadline** (string, omitempty) — Default task deadline.
+
+ * **max_message_update_age** (int) — Max message update/deletion age, in seconds.
+
+ * **icons** ([IconData](#IconData), readonly for clients) — Team icons.
+
+ * **last_active** (bool, readonly for clients) — User last activity was in this team.
+
+ * **changeable_statuses** (TeamStatus, readonly for clients, list, omitempty) — What status I can set to other team mebers.
+
+ * **bad_profile** (bool, readonly for clients, omitempty) — My profile in this team isn't full.
+
+ * **need_confirmation** (bool, readonly for clients) — Neet confirmation after invite to this team.
+
+ * **use_patronymic** (bool, omitempty) — Patronymic in usernames for this team.
+
+ * **user_fields** (string, readonly for clients, list) — Username fields ordering.
+
+ * **display_family_name_first** (bool, omitempty) — Family name should be first in display name.
+
+ * **use_task_importance** (bool, omitempty) — Use importance field in task.
+
+ * **task_importance_min** (int, omitempty) — Minimal value of task imporance. Default is 1.
+
+ * **task_importance_max** (int, omitempty) — Maximum value of task imporance. Default is 5.
+
+ * **task_importance_rev** (bool, omitempty) — Bigger number = bigger importance. Default: lower number = bigger importance.
+
+ * **use_task_urgency** (bool, omitempty) — Use urgency field in task.
+
+ * **use_task_complexity** (bool, omitempty) — Use complexity field in task.
+
+ * **use_task_spent_time** (bool, omitempty) — Use spent time field in task.
+
+ * **uploads_size** (int64, readonly for clients, omitempty) — Total uploads size, bytes.
+
+ * **uploads_size_limit** (int64, readonly for clients, omitempty) — Maximum uploads size, bytes, if any.
+
+ * **unread** (TeamUnread, readonly for clients, nullable) — Unread message counters.
+
+ * **me** ([Contact](#Contact), readonly for clients) — My profile in this team.
+
+ * **contacts** ([Contact](#Contact), readonly for clients, list, omitempty) — Team contacts. Used only for team creation.
+
+ * **single_group** (JID, readonly for clients, nullable, omitempty) — For single group teams, jid of chat.
+
+ * **theme** ([Theme](#Theme), readonly for clients, nullable, omitempty) — Color theme, if any.
+
+ * **hide_archived_users** (bool, omitempty) — Don't show archived users by default.
+
+
+### <a name="TeamShort"></a>TeamShort
+Short team representation. For invites, push notifications, etc. Readonly.
+
+ * **uid** (string) — Team id.
+
+ * **name** (string) — Team name.
+
+ * **icons** ([IconData](#IconData)) — Team icons.
+
+
+### <a name="DeletedTeam"></a>DeletedTeam
+Team deletion message. Readonly.
+
+ * **uid** (string) — Team id.
+
+ * **is_archive** (bool) — Team deleted.
+
+ * **gentime** (int64) — Object version.
+
+
+### <a name="Features"></a>Features
+Server information. Readonly.
+
+ * **host** (string) — Current host.
+
+ * **build** (string) — Build/revision of server side.
+
+ * **desktop_version** (string) — Desktop application version.
+
+ * **front_version** (string) — Webclient version.
+
+ * **app_title** (string) — Application title.
+
+ * **userver** (string) — Static files server address.
+
+ * **ios_app** (string) — Link to AppStore.
+
+ * **android_app** (string) — Link to Google Play.
+
+ * **theme** (string) — Default UI theme.
+
+ * **min_app_version** (string) — Minimal application version required for this server. Used for breaking changes.
+
+ * **free_registration** (bool) — Free registration allowed.
+
+ * **max_upload_mb** (int) — Maximum size of user's upload.
+
+ * **max_linked_messages** (int) — Maximum number of forwarded messages.
+
+ * **max_username_part_length** (int) — Maximum chars for: family_name, given_name, patronymic if any.
+
+ * **max_group_title_length** (int) — Maximum chars for group chat name.
+
+ * **max_role_length** (int) — Maximum chars for role in team.
+
+ * **max_mood_length** (int) — Maximum chars for mood in team.
+
+ * **max_message_length** (int) — Maximum chars for text message.
+
+ * **max_section_length** (int) — Maximum length for project and contact's sections names.
+
+ * **max_tag_length** (int) — Maximum length for tags.
+
+ * **max_task_title_length** (int) — Maximum length for task title.
+
+ * **max_color_rule_description_length** (int) — Maximum length for Color Rule.
+
+ * **max_teams** (int) — Maximum teams for one account.
+
+ * **afk_age** (int) — Max inactivity seconds.
+
+ * **auth_by_password** (bool, omitempty) — Password authentication enabled.
+
+ * **auth_by_qr_code** (bool, omitempty) — QR-code / link authentication enabled.
+
+ * **auth_by_sms** (bool, omitempty) — SMS authentication enabled.
+
+ * **ice_servers** ([ICEServer](#ICEServer), list) — ICE servers for WebRTC.
+
+ * **custom_server** (bool) — True for onpremise installation.
+
+ * **installation_type** (string) — Name of instalation.
+
+ * **is_testing** (bool) — Testing installation.
+
+ * **metrika** (string) — Yandex metrika counter id.
+
+ * **min_search_length** (int) — Minimal chars number for starting global search.
+
+ * **resend_timeout** (int) — Resend message in n seconds if no confirmation from server given.
+
+ * **sentry_dsn_js** (string) — Frontent sentry.io settings.
+
+ * **server_drafts** (bool) — Message drafts saved on server.
+
+ * **firebase_app_id** (string) — Firebase application id for web-push notifacations.
+
+ * **firebase_sender_id** (string) — Firebase sender id for web-push notifacations.
+
+ * **calls** (bool) — Calls functions enabled.
+
+ * **mobile_calls** (bool) — Calls functions enabled for mobile applications.
+
+ * **calls_record** (bool) — Calls record enabled.
+
+ * **only_one_device_per_call** (bool, omitempty) — Disallow call from multiply devices. Experimental.
+
+ * **max_participants_per_call** (int, omitempty) — Maximum number of participants per call.
+
+ * **safari_push_id** (string) — Safari push id for web-push notifacations.
+
+ * **terms** ([Terms](#Terms)) — Team entity naming. Experimental.
+
+ * **single_group_teams** (bool) — Cross team communication. Experimental.
+
+ * **wiki_pages** (bool) — Wiki pages in chats. Experimental.
+
+ * **allow_admin_mute** (bool, omitempty) — Wiki pages in chats. Experimental.
+
+ * **task_checklist** (bool) — Deprecated.
+
+ * **readonly_groups** (bool) — Deprecated.
+
+ * **task_dashboard** (bool) — Deprecated.
+
+ * **task_messages** (bool) — Deprecated.
+
+ * **task_public** (bool) — Deprecated.
+
+ * **task_tags** (bool) — Deprecated.
+
+
+### <a name="ICEServer"></a>ICEServer
+Interactive Connectivity Establishment Server for WEB Rtc connection. Readonly.
+
+ * **urls** (string) — URls.
+
+
+### <a name="Terms"></a>Terms
+Exprtimental translation fields for "team" entity renaming. Readonly.
+
+ * **EnInTeam** (string) — EnInTeam.
+
+ * **EnTeam** (string) — EnTeam.
+
+ * **EnTeamAccess** (string) — EnTeamAccess.
+
+ * **EnTeamAdmin** (string) — EnTeamAdmin.
+
+ * **EnTeamAdmins** (string) — EnTeamAdmins.
+
+ * **EnTeamGuest** (string) — EnTeamGuest.
+
+ * **EnTeamMember** (string) — EnTeamMember.
+
+ * **EnTeamMembers** (string) — EnTeamMembers.
+
+ * **EnTeamOwner** (string) — EnTeamOwner.
+
+ * **EnTeamSettings** (string) — EnTeamSettings.
+
+ * **RuTeamSettings** (string) — RuTeamSettings.
+
+ * **EnTeams** (string) — EnTeams.
+
+ * **EnToTeam** (string) — EnToTeam.
+
+ * **RuInTeam** (string) — RuInTeam.
+
+ * **RuTeam** (string) — RuTeam.
+
+ * **RuTeamAccess** (string) — RuTeamAccess.
+
+ * **RuTeamAdmin** (string) — RuTeamAdmin.
+
+ * **RuTeamAdmins** (string) — RuTeamAdmins.
+
+ * **RuTeamD** (string) — RuTeamD.
+
+ * **RuTeamGuest** (string) — RuTeamGuest.
+
+ * **RuTeamMember** (string) — RuTeamMember.
+
+ * **RuTeamMembers** (string) — RuTeamMembers.
+
+ * **RuTeamOwner** (string) — RuTeamOwner.
+
+ * **RuTeamP** (string) — RuTeamP.
+
+ * **RuTeamR** (string) — RuTeamR.
+
+ * **RuTeams** (string) — RuTeams.
+
+ * **RuTeamsD** (string) — RuTeamsD.
+
+ * **RuTeamsP** (string) — RuTeamsP.
+
+ * **RuTeamsR** (string) — RuTeamsR.
+
+ * **RuTeamsT** (string) — RuTeamsT.
+
+ * **RuTeamsV** (string) — RuTeamsV.
+
+ * **RuTeamT** (string) — RuTeamT.
+
+ * **RuTeamV** (string) — RuTeamV.
+
+ * **RuToTeam** (string) — RuToTeam.
+
+
+### <a name="IntegrationField"></a>IntegrationField
+Integration form field.
+
+ * **label** (string) — Label.
+
+ * **readonly** (bool) — Is field readonly.
+
+ * **value** (string) — Current value.
+
+
+### <a name="IntegrationForm"></a>IntegrationForm
+Integration form.
+
+ * **api_key** ([IntegrationField](#IntegrationField), nullable, omitempty) — Api key field, if any.
+
+ * **webhook_url** ([IntegrationField](#IntegrationField), nullable, omitempty) — Webhook url, if any.
+
+ * **url** ([IntegrationField](#IntegrationField), nullable, omitempty) — Url, if any.
+
+
+### <a name="Integration"></a>Integration
+Integration for concrete chat.
+
+ * **uid** (string, omitempty) — Id.
+
+ * **comment** (string) — Comment, if any.
+
+ * **created** (string, omitempty) — Creation datetime, iso.
+
+ * **enabled** (bool) — Integration enabled.
+
+ * **form** ([IntegrationForm](#IntegrationForm)) — Integration form.
+
+ * **group** (JID) — Chat id.
+
+ * **help** (string, omitempty) — Full description.
+
+ * **kind** (string) — Unique integration name.
+
+
+### <a name="IntegrationKind"></a>IntegrationKind
+Integration kind.
+
+ * **kind** (string) — Integration unique name.
+
+ * **title** (string) — Integration title.
+
+ * **template** ([Integration](#Integration)) — Integration template.
+
+
+### <a name="Integrations"></a>Integrations
+Complete integrations data, as received from server.
+
+ * **integrations** ([Integration](#Integration), list) — Currently existing integrations.
+
+ * **kinds** ([IntegrationKind](#IntegrationKind), list) — Types of integrations available for setup.
+
+
+### <a name="Unread"></a>Unread
+Unread message counters.
+
+ * **messages** (uint) — Total unread messages.
+
+ * **notice_messages** (uint) — Total unread messages with mentions.
+
+ * **chats** (uint) — Total chats with unread messages.
+
+
+### <a name="TeamCounter"></a>TeamCounter
+Unread message counters.
+
+ * **uid** (string) — Team id.
+
+ * **unread** (TeamUnread) — Unread message counters.
+
+
 ### <a name="ChatShort"></a>ChatShort
 Mimimal chat representaion.
 
@@ -227,6 +623,46 @@ Group chat membership status.
  * **can_remove** (bool, omitempty) — Can I remove this member.
 
 
+### <a name="TaskStatus"></a>TaskStatus
+Custom task status.
+
+ * **uid** (string, omitempty) — Status id.
+
+ * **sort_ordering** (uint) — Status sort ordering.
+
+ * **name** (string) — Status internal name.
+
+ * **title** (string) — Status localized name.
+
+ * **is_archive** (bool, omitempty) — Status not used anymore.
+
+
+### <a name="MessagePush"></a>MessagePush
+Push message over websockets. Readonly.
+
+ * **title** (string) — Push title.
+
+ * **subtitle** (string) — Push subtitle.
+
+ * **message** (string) — Push body.
+
+ * **icon_url** (string) — Absolute url to push icon.
+
+ * **click_action** (string) — Url opened on click.
+
+ * **tag** (string) — Push tag (for join pushes).
+
+ * **team** (string) — Team uid.
+
+ * **sender** (JID) — Sender contact id.
+
+ * **chat** (JID) — Chat id.
+
+ * **message_id** (string) — Message id.
+
+ * **created** (string) — Message creation iso datetime.
+
+
 ### <a name="MessageContent"></a>MessageContent
 Chat message content.
 
@@ -387,6 +823,98 @@ Message reaction detail.
  * **name** (string) — Reaction emoji.
 
 
+### <a name="TaskColor"></a>TaskColor
+Task color rules color.
+
+ * **regular** (string) — Regular.
+
+ * **dark** (string) — Dark.
+
+ * **light** (string) — Light.
+
+
+### <a name="Upload"></a>Upload
+Uploaded media.
+
+ * **uid** (string) — Upload id.
+
+ * **size** (int) — Upload size in bytes.
+
+ * **duration** (uint, omitempty) — Mediafile duration (for audio/video only).
+
+ * **name** (string) — Filename.
+
+ * **url** (string) — Absolute url.
+
+ * **preview** ([UploadPreview](#UploadPreview), nullable, omitempty) — Preview details.
+
+ * **content_type** (string) — Content type.
+
+ * **animated** (bool, omitempty) — Is animated (images only).
+
+ * **processing** (bool, omitempty) — File still processing (video only).
+
+ * **pdf_version** ([PdfVersion](#PdfVersion), nullable, omitempty) — PDF version of file. Experimental.
+
+
+### <a name="UploadPreview"></a>UploadPreview
+Upload preview.
+
+ * **url** (string) — Absolute url to image.
+
+ * **url_2x** (string) — Absolute url to high resolution image (retina).
+
+ * **width** (int) — Width in pixels.
+
+ * **height** (int) — Height in pixels.
+
+
+### <a name="CallEvent"></a>CallEvent
+Audiocall information.
+
+ * **start** (string, nullable) — Call start, iso date.
+
+ * **finish** (string, nullable) — Call finish, iso date.
+
+ * **audiorecord** (bool) — Call record enabled.
+
+ * **onliners** ([CallOnliner](#CallOnliner), list) — Call members.
+
+
+### <a name="CallOnliner"></a>CallOnliner
+Call participant.
+
+ * **jid** (JID) — Contact id.
+
+ * **display_name** (string) — Contact name.
+
+ * **icon** (string) — Contact icon.
+
+ * **muted** (bool) — Microphone muted. Computed from devices muted states.
+
+ * **devices** ([CallDevice](#CallDevice), list) — Member devices, strictly one for now.
+
+
+### <a name="CallDevice"></a>CallDevice
+Call participant device.
+
+ * **muted** (bool) — Device muted.
+
+ * **useragent** (string) — Device description.
+
+
+### <a name="WikiPage"></a>WikiPage
+Wiki page. Experimental.
+
+ * **gentime** (int64) — Object version.
+
+ * **updated** (string) — Update time, iso.
+
+ * **editor** (JID) — Last editor contact id.
+
+ * **text** (string) — Page text.
+
+
 ### <a name="Tag"></a>Tag
 Task tag.
 
@@ -399,32 +927,6 @@ Task tag.
 Delete tag message.
 
  * **uid** (string) — Tag id.
-
-
-### <a name="MessagePush"></a>MessagePush
-Push message over websockets. Readonly.
-
- * **title** (string) — Push title.
-
- * **subtitle** (string) — Push subtitle.
-
- * **message** (string) — Push body.
-
- * **icon_url** (string) — Absolute url to push icon.
-
- * **click_action** (string) — Url opened on click.
-
- * **tag** (string) — Push tag (for join pushes).
-
- * **team** (string) — Team uid.
-
- * **sender** (JID) — Sender contact id.
-
- * **chat** (JID) — Chat id.
-
- * **message_id** (string) — Message id.
-
- * **created** (string) — Message creation iso datetime.
 
 
 ### <a name="Theme"></a>Theme
@@ -455,90 +957,6 @@ Color theme.
  * **AppAccentColor** (string) — AppAccentColor.
 
  * **AppPrimaryColor** (string) — AppPrimaryColor.
-
-
-### <a name="IntegrationField"></a>IntegrationField
-Integration form field.
-
- * **label** (string) — Label.
-
- * **readonly** (bool) — Is field readonly.
-
- * **value** (string) — Current value.
-
-
-### <a name="IntegrationForm"></a>IntegrationForm
-Integration form.
-
- * **api_key** ([IntegrationField](#IntegrationField), nullable, omitempty) — Api key field, if any.
-
- * **webhook_url** ([IntegrationField](#IntegrationField), nullable, omitempty) — Webhook url, if any.
-
- * **url** ([IntegrationField](#IntegrationField), nullable, omitempty) — Url, if any.
-
-
-### <a name="Integration"></a>Integration
-Integration for concrete chat.
-
- * **uid** (string, omitempty) — Id.
-
- * **comment** (string) — Comment, if any.
-
- * **created** (string, omitempty) — Creation datetime, iso.
-
- * **enabled** (bool) — Integration enabled.
-
- * **form** ([IntegrationForm](#IntegrationForm)) — Integration form.
-
- * **group** (JID, omitempty) — Chat id.
-
- * **help** (string, omitempty) — Full description.
-
- * **kind** (string) — Unique integration name.
-
-
-### <a name="IntegrationKind"></a>IntegrationKind
-Integration kind.
-
- * **kind** (string) — Integration unique name.
-
- * **title** (string) — Integration title.
-
- * **template** ([Integration](#Integration)) — Integration template.
-
-
-### <a name="Integrations"></a>Integrations
-Complete integrations data, as received from server.
-
- * **integrations** ([Integration](#Integration), list) — Currently existing integrations.
-
- * **kinds** ([IntegrationKind](#IntegrationKind), list) — Types of integrations available for setup.
-
-
-### <a name="Remind"></a>Remind
-Remind.
-
- * **uid** (string) — Remind id.
-
- * **chat** (JID) — Chat id.
-
- * **fire_at** (string) — Activation time, iso.
-
- * **comment** (string, omitempty) — Comment, if any.
-
-
-### <a name="DeletedRemind"></a>DeletedRemind
-Remind deleted message.
-
- * **uid** (string) — Remind id.
-
-
-### <a name="PdfVersion"></a>PdfVersion
-PDF preview of mediafile. Experimental.
-
- * **url** (string) — Absolute url.
-
- * **text_preview** (string, omitempty) — First string of text content.
 
 
 ### <a name="Contact"></a>Contact
@@ -675,428 +1093,10 @@ Short contact representaion.
  * **icons** ([IconData](#IconData), nullable) — Icons data.
 
 
-### <a name="Upload"></a>Upload
-Uploaded media.
-
- * **uid** (string) — Upload id.
-
- * **size** (int) — Upload size in bytes.
-
- * **duration** (uint, omitempty) — Mediafile duration (for audio/video only).
-
- * **name** (string) — Filename.
+### <a name="PdfVersion"></a>PdfVersion
+PDF preview of mediafile. Experimental.
 
  * **url** (string) — Absolute url.
 
- * **preview** ([UploadPreview](#UploadPreview), nullable, omitempty) — Preview details.
-
- * **content_type** (string) — Content type.
-
- * **animated** (bool, omitempty) — Is animated (images only).
-
- * **processing** (bool, omitempty) — File still processing (video only).
-
- * **pdf_version** ([PdfVersion](#PdfVersion), nullable, omitempty) — PDF version of file. Experimental.
-
-
-### <a name="UploadPreview"></a>UploadPreview
-Upload preview.
-
- * **url** (string) — Absolute url to image.
-
- * **url_2x** (string) — Absolute url to high resolution image (retina).
-
- * **width** (int) — Width in pixels.
-
- * **height** (int) — Height in pixels.
-
-
-### <a name="Unread"></a>Unread
-Unread message counters.
-
- * **messages** (uint) — Total unread messages.
-
- * **notice_messages** (uint) — Total unread messages with mentions.
-
- * **chats** (uint) — Total chats with unread messages.
-
-
-### <a name="TeamCounter"></a>TeamCounter
-Unread message counters.
-
- * **uid** (string) — Team id.
-
- * **unread** (TeamUnread) — Unread message counters.
-
-
-### <a name="Features"></a>Features
-Server information. Readonly.
-
- * **host** (string) — Current host.
-
- * **build** (string) — Build/revision of server side.
-
- * **desktop_version** (string) — Desktop application version.
-
- * **front_version** (string) — Webclient version.
-
- * **app_title** (string) — Application title.
-
- * **userver** (string) — Static files server address.
-
- * **ios_app** (string) — Link to AppStore.
-
- * **android_app** (string) — Link to Google Play.
-
- * **theme** (string) — Default UI theme.
-
- * **min_app_version** (string) — Minimal application version required for this server. Used for breaking changes.
-
- * **free_registration** (bool) — Free registration allowed.
-
- * **max_upload_mb** (int) — Maximum size of user's upload.
-
- * **max_linked_messages** (int) — Maximum number of forwarded messages.
-
- * **max_username_part_length** (int) — Maximum chars for: family_name, given_name, patronymic if any.
-
- * **max_group_title_length** (int) — Maximum chars for group chat name.
-
- * **max_role_length** (int) — Maximum chars for role in team.
-
- * **max_mood_length** (int) — Maximum chars for mood in team.
-
- * **max_message_length** (int) — Maximum chars for text message.
-
- * **max_section_length** (int) — Maximum length for project and contact's sections names.
-
- * **max_tag_length** (int) — Maximum length for tags.
-
- * **max_task_title_length** (int) — Maximum length for task title.
-
- * **max_color_rule_description_length** (int) — Maximum length for Color Rule.
-
- * **max_teams** (int) — Maximum teams for one account.
-
- * **afk_age** (int) — Max inactivity seconds.
-
- * **auth_by_password** (bool, omitempty) — Password authentication enabled.
-
- * **auth_by_qr_code** (bool, omitempty) — QR-code / link authentication enabled.
-
- * **auth_by_sms** (bool, omitempty) — SMS authentication enabled.
-
- * **ice_servers** ([ICEServer](#ICEServer), list) — ICE servers for WebRTC.
-
- * **custom_server** (bool) — True for onpremise installation.
-
- * **installation_type** (string) — Name of instalation.
-
- * **is_testing** (bool) — Testing installation.
-
- * **metrika** (string) — Yandex metrika counter id.
-
- * **min_search_length** (int) — Minimal chars number for starting global search.
-
- * **resend_timeout** (int) — Resend message in n seconds if no confirmation from server given.
-
- * **sentry_dsn_js** (string) — Frontent sentry.io settings.
-
- * **server_drafts** (bool) — Message drafts saved on server.
-
- * **firebase_app_id** (string) — Firebase application id for web-push notifacations.
-
- * **firebase_sender_id** (string) — Firebase sender id for web-push notifacations.
-
- * **calls** (bool) — Calls functions enabled.
-
- * **mobile_calls** (bool) — Calls functions enabled for mobile applications.
-
- * **calls_record** (bool) — Calls record enabled.
-
- * **only_one_device_per_call** (bool, omitempty) — Disallow call from multiply devices. Experimental.
-
- * **max_participants_per_call** (int, omitempty) — Maximum number of participants per call.
-
- * **safari_push_id** (string) — Safari push id for web-push notifacations.
-
- * **terms** ([Terms](#Terms)) — Team entity naming. Experimental.
-
- * **single_group_teams** (bool) — Cross team communication. Experimental.
-
- * **wiki_pages** (bool) — Wiki pages in chats. Experimental.
-
- * **allow_admin_mute** (bool, omitempty) — Wiki pages in chats. Experimental.
-
- * **task_checklist** (bool) — Deprecated.
-
- * **readonly_groups** (bool) — Deprecated.
-
- * **task_dashboard** (bool) — Deprecated.
-
- * **task_messages** (bool) — Deprecated.
-
- * **task_public** (bool) — Deprecated.
-
- * **task_tags** (bool) — Deprecated.
-
-
-### <a name="ICEServer"></a>ICEServer
-Interactive Connectivity Establishment Server for WEB Rtc connection. Readonly.
-
- * **urls** (string) — URls.
-
-
-### <a name="Terms"></a>Terms
-Exprtimental translation fields for "team" entity renaming. Readonly.
-
- * **EnInTeam** (string) — EnInTeam.
-
- * **EnTeam** (string) — EnTeam.
-
- * **EnTeamAccess** (string) — EnTeamAccess.
-
- * **EnTeamAdmin** (string) — EnTeamAdmin.
-
- * **EnTeamAdmins** (string) — EnTeamAdmins.
-
- * **EnTeamGuest** (string) — EnTeamGuest.
-
- * **EnTeamMember** (string) — EnTeamMember.
-
- * **EnTeamMembers** (string) — EnTeamMembers.
-
- * **EnTeamOwner** (string) — EnTeamOwner.
-
- * **EnTeamSettings** (string) — EnTeamSettings.
-
- * **RuTeamSettings** (string) — RuTeamSettings.
-
- * **EnTeams** (string) — EnTeams.
-
- * **EnToTeam** (string) — EnToTeam.
-
- * **RuInTeam** (string) — RuInTeam.
-
- * **RuTeam** (string) — RuTeam.
-
- * **RuTeamAccess** (string) — RuTeamAccess.
-
- * **RuTeamAdmin** (string) — RuTeamAdmin.
-
- * **RuTeamAdmins** (string) — RuTeamAdmins.
-
- * **RuTeamD** (string) — RuTeamD.
-
- * **RuTeamGuest** (string) — RuTeamGuest.
-
- * **RuTeamMember** (string) — RuTeamMember.
-
- * **RuTeamMembers** (string) — RuTeamMembers.
-
- * **RuTeamOwner** (string) — RuTeamOwner.
-
- * **RuTeamP** (string) — RuTeamP.
-
- * **RuTeamR** (string) — RuTeamR.
-
- * **RuTeams** (string) — RuTeams.
-
- * **RuTeamsD** (string) — RuTeamsD.
-
- * **RuTeamsP** (string) — RuTeamsP.
-
- * **RuTeamsR** (string) — RuTeamsR.
-
- * **RuTeamsT** (string) — RuTeamsT.
-
- * **RuTeamsV** (string) — RuTeamsV.
-
- * **RuTeamT** (string) — RuTeamT.
-
- * **RuTeamV** (string) — RuTeamV.
-
- * **RuToTeam** (string) — RuToTeam.
-
-
-### <a name="WikiPage"></a>WikiPage
-Wiki page. Experimental.
-
- * **gentime** (int64) — Object version.
-
- * **updated** (string) — Update time, iso.
-
- * **editor** (JID) — Last editor contact id.
-
- * **text** (string) — Page text.
-
-
-### <a name="TaskStatus"></a>TaskStatus
-Custom task status.
-
- * **uid** (string, omitempty) — Status id.
-
- * **sort_ordering** (uint) — Status sort ordering.
-
- * **name** (string) — Status internal name.
-
- * **title** (string) — Status localized name.
-
- * **is_archive** (bool, omitempty) — Status not used anymore.
-
-
-### <a name="TaskColor"></a>TaskColor
-Task color rules color.
-
- * **regular** (string) — Regular.
-
- * **dark** (string) — Dark.
-
- * **light** (string) — Light.
-
-
-### <a name="CallEvent"></a>CallEvent
-Audiocall information.
-
- * **start** (string, nullable) — Call start, iso date.
-
- * **finish** (string, nullable) — Call finish, iso date.
-
- * **audiorecord** (bool) — Call record enabled.
-
- * **onliners** ([CallOnliner](#CallOnliner), list) — Call members.
-
-
-### <a name="CallOnliner"></a>CallOnliner
-Call participant.
-
- * **jid** (JID) — Contact id.
-
- * **display_name** (string) — Contact name.
-
- * **icon** (string) — Contact icon.
-
- * **muted** (bool) — Microphone muted. Computed from devices muted states.
-
- * **devices** ([CallDevice](#CallDevice), list) — Member devices, strictly one for now.
-
-
-### <a name="CallDevice"></a>CallDevice
-Call participant device.
-
- * **muted** (bool) — Device muted.
-
- * **useragent** (string) — Device description.
-
-
-### <a name="Team"></a>Team
-Team.
-
- * **uid** (string, readonly for clients) — Team id.
-
- * **is_archive** (bool, readonly for clients, omitempty) — Team deleted.
-
- * **gentime** (int64, readonly for clients) — Object version.
-
- * **name** (string) — Team name.
-
- * **default_task_deadline** (string, omitempty) — Default task deadline.
-
- * **max_message_update_age** (int) — Max message update/deletion age, in seconds.
-
- * **icons** ([IconData](#IconData), readonly for clients) — Team icons.
-
- * **last_active** (bool, readonly for clients) — User last activity was in this team.
-
- * **changeable_statuses** (TeamStatus, readonly for clients, list, omitempty) — What status I can set to other team mebers.
-
- * **bad_profile** (bool, readonly for clients, omitempty) — My profile in this team isn't full.
-
- * **need_confirmation** (bool, readonly for clients) — Neet confirmation after invite to this team.
-
- * **use_patronymic** (bool, omitempty) — Patronymic in usernames for this team.
-
- * **user_fields** (string, readonly for clients, list) — Username fields ordering.
-
- * **display_family_name_first** (bool, omitempty) — Family name should be first in display name.
-
- * **use_task_importance** (bool, omitempty) — Use importance field in task.
-
- * **task_importance_min** (int, omitempty) — Minimal value of task imporance. Default is 1.
-
- * **task_importance_max** (int, omitempty) — Maximum value of task imporance. Default is 5.
-
- * **task_importance_rev** (bool, omitempty) — Bigger number = bigger importance. Default: lower number = bigger importance.
-
- * **use_task_urgency** (bool, omitempty) — Use urgency field in task.
-
- * **use_task_complexity** (bool, omitempty) — Use complexity field in task.
-
- * **use_task_spent_time** (bool, omitempty) — Use spent time field in task.
-
- * **uploads_size** (int64, readonly for clients, omitempty) — Total uploads size, bytes.
-
- * **uploads_size_limit** (int64, readonly for clients, omitempty) — Maximum uploads size, bytes, if any.
-
- * **unread** (TeamUnread, readonly for clients, nullable) — Unread message counters.
-
- * **me** ([Contact](#Contact), readonly for clients) — My profile in this team.
-
- * **contacts** ([Contact](#Contact), readonly for clients, list, omitempty) — Team contacts. Used only for team creation.
-
- * **single_group** (JID, readonly for clients, nullable, omitempty) — For single group teams, jid of chat.
-
- * **theme** ([Theme](#Theme), readonly for clients, nullable, omitempty) — Color theme, if any.
-
- * **hide_archived_users** (bool, omitempty) — Don't show archived users by default.
-
-
-### <a name="TeamShort"></a>TeamShort
-Short team representation. For invites, push notifications, etc. Readonly.
-
- * **uid** (string) — Team id.
-
- * **name** (string) — Team name.
-
- * **icons** ([IconData](#IconData)) — Team icons.
-
-
-### <a name="DeletedTeam"></a>DeletedTeam
-Team deletion message. Readonly.
-
- * **uid** (string) — Team id.
-
- * **is_archive** (bool) — Team deleted.
-
- * **gentime** (int64) — Object version.
-
-
-### <a name="ColorRule"></a>ColorRule
-Set of rules to apply to tasks for coloring.
-
- * **uid** (string) — Uid.
-
- * **priority** (int) — Priority.
-
- * **color_index** (uint16) — ColorIndex.
-
- * **section** (string, omitempty) — Section.
-
- * **tags** (string, list, omitempty) — Tags.
-
- * **description** (string, omitempty) — Description.
-
- * **task_status** (string, omitempty) — TaskStatus.
-
- * **task_importance** (int, nullable, omitempty) — TaskImportance.
-
- * **task_urgency** (int, nullable, omitempty) — TaskUrgency.
-
- * **section_enabled** (bool, nullable, omitempty) — SectionEnabled.
-
- * **task_importance_enabled** (bool, nullable, omitempty) — TaskImportanceEnabled.
-
- * **task_urgency_enabled** (bool, nullable, omitempty) — TaskUrgencyEnabled.
-
- * **tags_enabled** (bool, nullable, omitempty) — TagsEnabled.
+ * **text_preview** (string, omitempty) — First string of text content.
 
