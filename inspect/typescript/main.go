@@ -95,7 +95,7 @@ const undef = (v: any): boolean => (typeof v === 'undefined')
 export const New{{$s.Name}} = (e: any): {{$s.Name}} => ({  
 {{- range $f := $s.Fields }}
     {{$f.JSName}}: {{ if $f.InternalType -}}
-	{{- if $f.Omitempty }}undef(e['{{$f.Json}}']) ? {{ if $f.List }}[]{{ else }}{{$f.TSDefault}}{{ end }} : {{ end }}e['{{$f.Json}}'].map(New{{ $f.TSType }})
+	{{- if $f.Omitempty }}undef(e['{{$f.Json}}']) ? {{ if $f.List }}[]{{ else }}{{$f.TSDefault}}{{ end }} : {{ end }}{{ if $f.List }}e['{{$f.Json}}'].map(New{{ $f.TSType }}){{ else }}New{{ $f.TSType }}(e['{{$f.Json}}']){{ end }}
 {{- else -}}
 	{{- if $f.Omitempty }}undef(e['{{$f.Json}}']) ? {{ if $f.List }}[]{{ else }}{{$f.TSDefault}}{{ end }} : {{ end }}e['{{$f.Json}}'] 
 {{- end -}},{{/* {{ if $f.Omitempty }}// omitempty{{ end }} 
