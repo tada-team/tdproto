@@ -26,6 +26,8 @@ type OnlineContact struct {
 }
 
 type OnlineCall struct {
-	Jid JID    `json:"jid"`
-	Uid string `json:"uid"`
+	Jid         JID     `json:"jid"`
+	Uid         string  `json:"uid"`
+	Start       *string `json:"start,omitempty"`
+	OnlineCount int     `json:"online_count,omitempty"`
 }
