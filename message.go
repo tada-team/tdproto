@@ -141,6 +141,9 @@ type Message struct {
 	// External/internals links
 	Links MessageLinks `json:"links,omitempty" tdproto:"readonly"`
 
+	// Markup entities. Experimental
+	Markup []MarkupEntity `json:"markup,omitempty" tdproto:"readonly"`
+
 	// Importance flag
 	Important bool `json:"important,omitempty"`
 
