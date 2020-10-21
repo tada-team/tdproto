@@ -13,6 +13,7 @@ const (
 	CodeBlock  = "codeblock"
 	Quote      = "quote"
 	Link       = "link"
+	Unsafe     = "unsafe"
 )
 
 // Markup entity. Experimental
