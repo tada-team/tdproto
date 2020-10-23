@@ -63,6 +63,9 @@ type IntegrationKind struct {
 
 	// Integration template
 	Template Integration `json:"template"`
+
+	// Path to icon
+	Icon string `json:"icon"`
 }
 
 // Complete integrations data, as received from server
