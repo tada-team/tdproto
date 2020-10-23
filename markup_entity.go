@@ -2,6 +2,7 @@ package tdproto
 
 import (
 	"fmt"
+	"time"
 )
 
 const (
@@ -13,6 +14,7 @@ const (
 	CodeBlock  = "codeblock"
 	Quote      = "quote"
 	Link       = "link"
+	Time       = "time"
 	Unsafe     = "unsafe"
 )
 
@@ -33,8 +35,11 @@ type MarkupEntity struct {
 	// Marker type
 	Type string `json:"type"`
 
-	// Link, if any
+	// Url, for Link type
 	Url string `json:"url,omitempty"`
+
+	// Time, for Time type
+	Time *time.Time `json:"time,omitempty"`
 
 	// List of internal markup entities
 	Entities []MarkupEntity `json:"entities,omitempty"`
