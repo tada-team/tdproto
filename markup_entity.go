@@ -21,28 +21,31 @@ const (
 // Markup entity. Experimental
 type MarkupEntity struct {
 	// Open marker offset
-	Open int `json:"open"`
+	Open int `json:"op"`
 
 	// Open marker length
-	OpenLength int `json:"open_length,omitempty"`
+	OpenLength int `json:"oplen,omitempty"`
 
 	// Close marker offset
-	Close int `json:"close"`
+	Close int `json:"cl"`
 
 	// Close marker length
-	CloseLength int `json:"close_length,omitempty"`
+	CloseLength int `json:"cllen,omitempty"`
 
 	// Marker type
-	Type string `json:"type"`
+	Type string `json:"typ"`
 
 	// Url, for Link type
 	Url string `json:"url,omitempty"`
+
+	// Text replacement.
+	Repl string `json:"repl,omitempty"`
 
 	// Time, for Time type
 	Time *time.Time `json:"time,omitempty"`
 
 	// List of internal markup entities
-	Entities []MarkupEntity `json:"entities,omitempty"`
+	Childs []MarkupEntity `json:"childs,omitempty"`
 }
 
 func (e MarkupEntity) String() string {
