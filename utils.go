@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	uuid "github.com/satori/go.uuid"
+	"github.com/google/uuid"
 )
 
 func SourceDir() string {
@@ -24,7 +24,7 @@ func ValidUid(s string) bool {
 	if s == "" {
 		return false
 	}
-	_, err := uuid.FromString(s)
+	_, err := uuid.Parse(s)
 	return err == nil
 }
 
