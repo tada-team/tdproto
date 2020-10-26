@@ -37,37 +37,40 @@ type MessageContent struct {
 	// Message subtype, if any
 	Subtype Mediasubtype `json:"subtype,omitempty"`
 
-	// Upload id, if any
+	// Message uploads
+	Uploads []Upload `json:"uploads,omitempty"`
+
+	// Upload id, if any. Depreacted: use Uploads instead
 	Upload string `mediatype:"audiomsg,image,video,file" json:"upload,omitempty"`
 
-	// Upload url, if any
+	// Upload url, if any. Depreacted: use Uploads instead
 	MediaUrl string `mediatype:"audiomsg,image,video,file" json:"mediaURL,omitempty"`
 
-	// Upload size, if any
+	// Upload size, if any. Depreacted: use Uploads instead
 	Size int `mediatype:"audiomsg,image,video,file" json:"size,omitempty"`
 
-	// Upload duration, if any
+	// Upload duration, if any. Depreacted: use Uploads instead
 	Duration *uint `mediatype:"audiomsg,video" json:"duration,omitempty"`
 
-	// Upload stil processing, if any
+	// Upload stil processing, if any. Depreacted: use Uploads instead
 	Processing bool `mediatype:"video" json:"processing,omitempty"`
 
-	// Upload preview height, in pixels, if any
+	// Upload preview height, in pixels, if any. Depreacted: use Uploads instead
 	PreviewHeight int `mediatype:"image,video" json:"previewHeight,omitempty"`
 
-	// Upload width, in pixels, if any
+	// Upload width, in pixels, if any. Depreacted: use Uploads instead
 	PreviewWidth int `mediatype:"image,video" json:"previewWidth,omitempty"`
 
-	// Upload preview absolute url, if any
+	// Upload preview absolute url, if any. Depreacted: use Uploads instead
 	PreviewUrl string `mediatype:"image,video" json:"previewURL,omitempty"`
 
-	// Upload high resolution preview absolute url, if any
+	// Upload high resolution preview absolute url, if any. Depreacted: use Uploads instead
 	Preview2xUrl string `mediatype:"image,video" json:"preview2xURL,omitempty"`
 
-	// Upload name, if any
+	// Upload name, if any. Depreacted: use Uploads instead
 	Name string `mediatype:"image,video,file" json:"name,omitempty"`
 
-	// Upload is animated image, if any
+	// Upload is animated image, if any. Depreacted: use Uploads instead
 	Animated bool `mediatype:"image" json:"animated,omitempty"`
 
 	// Change title (for "change" mediatype)
