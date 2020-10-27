@@ -171,6 +171,7 @@ type ContactCustomFields struct {
 	Department  string `json:"department,omitempty"`
 	Title       string `json:"title,omitempty"`
 	MobilePhone string `json:"mobile_phone,omitempty"`
+	Source      string `json:"source,omitempty"`
 }
 
 // Short contact representaion
