@@ -2,7 +2,6 @@ package tdproto
 
 import (
 	"fmt"
-	"time"
 )
 
 const (
@@ -42,7 +41,7 @@ type MarkupEntity struct {
 	Repl string `json:"repl,omitempty"`
 
 	// Time, for Time type
-	Time *time.Time `json:"time,omitempty"`
+	Time string `json:"time,omitempty"`
 
 	// List of internal markup entities
 	Childs []MarkupEntity `json:"childs,omitempty"`
