@@ -5,6 +5,9 @@ type Upload struct {
 	// Upload id
 	Uid string `json:"uid"`
 
+	// Uploaded at
+	Created string `json:"created,omitempty"`
+
 	// Upload size in bytes
 	Size int `json:"size"`
 
