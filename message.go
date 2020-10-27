@@ -37,9 +37,6 @@ type MessageContent struct {
 	// Message subtype, if any
 	Subtype Mediasubtype `json:"subtype,omitempty"`
 
-	// Message uploads
-	Uploads []Upload `json:"uploads,omitempty"`
-
 	// Upload id, if any. Depreacted: use Uploads instead
 	Upload string `mediatype:"audiomsg,image,video,file" json:"upload,omitempty"`
 
@@ -173,6 +170,9 @@ type Message struct {
 
 	// This message is first in this chat. True or null
 	IsLast bool `json:"is_last,omitempty" tdproto:"readonly"`
+
+	// Message uploads
+	Uploads []Upload `json:"uploads,omitempty"`
 
 	// Message reactions struct. Can be null
 	Reactions []MessageReaction `json:"reactions,omitempty" tdproto:"readonly"`
