@@ -15,27 +15,33 @@ type ClientMessageUpdated struct {
 func (p ClientMessageUpdated) GetName() string { return "client.message.updated" }
 
 type ClientMessageUpdatedParams struct {
-	// chat, task or contact jid. Required.
+	// Chat, task or contact jid. Required.
 	To JID `json:"to"`
 
-	// message content. Required.
+	// Message content. Required.
 	Content MessageContent `json:"content"`
 
-	// uid created by client. Recommended.
+	// Uid created by client. Recommended.
 	MessageId string `json:"message_id,omitempty"`
 
 	// Replied to message id. Not required.
 	ReplyTo string `json:"reply_to,omitempty"`
 
-	// forwarded messages (previously was for reply too). Not required.
+	// Forwarded messages (previously was for reply too). Not required.
 	LinkedMessages []string `json:"linked_messages,omitempty"`
 
-	// important flag. Not required. Default: false
+	// Important flag. Not required. Default: false
 	Important bool `json:"important,omitempty"`
 
-	// disable links preview generation. Not required. Default: false
+	// Disable links preview generation. Not required. Default: false
 	Nopreview bool `json:"nopreview,omitempty"`
 
-	// deprecated
+	// Message attachments
+	Uploads []string `json:"uploads,omitempty"`
+
+	// Backward compatibility mode
+	OldStyleAttachment bool `json:"old_style_attachment,omitempty"`
+
+	// Deprecated
 	Comment string `json:"comment,omitempty"`
 }
