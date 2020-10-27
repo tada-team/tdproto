@@ -93,10 +93,6 @@ func Parse() ([]*Struct, error) {
 			files = append(files, *file)
 		}
 
-		sort.Slice(files, func(i, j int) bool {
-			return files[i].Name.Name < files[j].Name.Name
-		})
-
 		for _, f := range files {
 			for _, decl := range f.Decls {
 				gen, ok := decl.(*ast.GenDecl)
@@ -215,6 +211,10 @@ func Parse() ([]*Struct, error) {
 			}
 		}
 	}
+
+	sort.Slice(structs, func(i, j int) bool {
+		return structs[i].Name < structs[j].Name
+	})
 
 	for _, s := range structs {
 		for _, f := range s.Fields {
