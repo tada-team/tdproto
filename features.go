@@ -143,6 +143,9 @@ type Features struct {
 	// Safari push id for web-push notifacations
 	SafariPushId string `json:"safari_push_id"`
 
+	// Multiple message uploads
+	MessageUploads bool `json:"message_uploads"`
+
 	// Team entity naming. Experimental.
 	Terms Terms `json:"terms"`
 
