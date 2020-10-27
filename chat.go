@@ -182,6 +182,9 @@ type Chat struct {
 	// Used for "Create task from messages..."
 	LinkedMessages []interface{} `chattype:"task" json:"linked_messages,omitempty"`
 
+	// Upload uids for request, upload objects for response
+	Uploads []Upload `chattype:"task" json:"uploads,omitempty"`
+
 	// Checklist items. Task only
 	Items []TaskItem `chattype:"task" json:"items,omitempty"`
 
