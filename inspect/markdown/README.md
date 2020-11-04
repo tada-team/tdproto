@@ -168,9 +168,9 @@ Chat (direct, group, task) representaion.
 
  * **can_join** (bool, omitempty) — Can I join to this public group/task.
 
- * **can_delete_any_message** (bool, nullable, omitempty) — Can I delete any message in this chat.
+ * **can_delete_any_message** (bool, omitempty) — Can I delete any message in this chat.
 
- * **can_set_important_any_message** (bool, nullable, omitempty) — Can I change Important flag in any message in this chat.
+ * **can_set_important_any_message** (bool, omitempty) — Can I change Important flag in any message in this chat.
 
 
 ### <a name="ChatShort"></a>ChatShort
@@ -246,17 +246,17 @@ Contact.
 
  * **sections** (string, list) — Section ids.
 
- * **can_send_message** (bool, nullable, omitempty) — Can I send message to this contact.
+ * **can_send_message** (bool, omitempty) — Can I send message to this contact.
 
  * **cant_send_message_reason** (string, omitempty) — Why I can't send message to this chat (if can't).
 
- * **can_call** (bool, nullable, omitempty) — Can I call to this contact.
+ * **can_call** (bool, omitempty) — Can I call to this contact.
 
- * **can_create_task** (bool, nullable, omitempty) — Can I call create task for this contact.
+ * **can_create_task** (bool, omitempty) — Can I call create task for this contact.
 
- * **can_add_to_group** (bool, nullable, omitempty) — Can I add this contact to group chats.
+ * **can_add_to_group** (bool, omitempty) — Can I add this contact to group chats.
 
- * **can_delete** (bool, nullable, omitempty) — Can I remove this contact from team.
+ * **can_delete** (bool, omitempty) — Can I remove this contact from team.
 
  * **changeable_fields** (string, nullable, list, omitempty) — Changeable fields.
 
@@ -306,23 +306,23 @@ Contact.
 
  * **munread_first** (bool, nullable, omitempty) — Show inread chats first in feed in mobile app.
 
- * **can_add_to_team** (bool, nullable, omitempty) — Can I add new members to this team.
+ * **can_add_to_team** (bool, omitempty) — Can I add new members to this team.
 
- * **can_manage_sections** (bool, nullable, omitempty) — Can I manage sections in this team.
+ * **can_manage_sections** (bool, omitempty) — Can I manage sections in this team.
 
- * **can_manage_tags** (bool, nullable, omitempty) — Can I manage tags in this team.
+ * **can_manage_tags** (bool, omitempty) — Can I manage tags in this team.
 
- * **can_manage_integrations** (bool, nullable, omitempty) — Can I manage integrations in this team.
+ * **can_manage_integrations** (bool, omitempty) — Can I manage integrations in this team.
 
- * **can_manage_color_rules** (bool, nullable, omitempty) — Can I manage color rules in this team.
+ * **can_manage_color_rules** (bool, omitempty) — Can I manage color rules in this team.
 
- * **can_create_group** (bool, nullable, omitempty) — Can I create group chats in this team.
+ * **can_create_group** (bool, omitempty) — Can I create group chats in this team.
 
- * **can_join_public_groups** (bool, nullable, omitempty) — Can I view/join public group in this team.
+ * **can_join_public_groups** (bool, omitempty) — Can I view/join public group in this team.
 
- * **can_join_public_tasks** (bool, nullable, omitempty) — Can I view/join public tasks in this team.
+ * **can_join_public_tasks** (bool, omitempty) — Can I view/join public tasks in this team.
 
- * **can_delete_any_message** (bool, nullable, omitempty) — Deprecated: use CanDeleteAnyMessage in chat object.
+ * **can_delete_any_message** (bool, omitempty) — Deprecated: use CanDeleteAnyMessage in chat object.
 
  * **custom_fields** ([ContactCustomFields](#ContactCustomFields), nullable, omitempty) — Extra contact fields.
 
