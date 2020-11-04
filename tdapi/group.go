@@ -7,7 +7,7 @@ type GroupMember struct {
 	Jid tdproto.JID `json:"jid"`
 
 	// Status: member or admin
-	Status string `json:"status,omitempty"`
+	Status tdproto.GroupStatus `json:"status,omitempty"`
 }
 
 type Group struct {
