@@ -3,6 +3,9 @@ package tdapi
 import "github.com/tada-team/tdproto"
 
 type MessageFilter struct {
+	UserParams
+	Paginator
+
 	// ?chat=jid,jid
 	Chat string `schema:"chat"`
 
