@@ -228,10 +228,10 @@ type Chat struct {
 	CanJoin bool `chattype:"group,task" json:"can_join,omitempty"`
 
 	// Can I delete any message in this chat
-	CanDeleteAnyMessage *bool `json:"can_delete_any_message,omitempty"`
+	CanDeleteAnyMessage bool `json:"can_delete_any_message,omitempty"`
 
 	// Can I change Important flag in any message in this chat
-	CanSetImportantAnyMessage *bool `json:"can_set_important_any_message,omitempty"`
+	CanSetImportantAnyMessage bool `json:"can_set_important_any_message,omitempty"`
 
 	// Wiki page in this chat
 	//WikiPage *ShortWikiPage `chattype:"group" json:"wiki_page,omitempty"`

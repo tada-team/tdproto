@@ -45,22 +45,22 @@ type Contact struct {
 	Sections []string `json:"sections"`
 
 	// Can I send message to this contact
-	CanSendMessage *bool `json:"can_send_message,omitempty"`
+	CanSendMessage bool `json:"can_send_message,omitempty"`
 
 	// Why I can't send message to this chat (if can't)
 	CantSendMessageReason string `json:"cant_send_message_reason,omitempty"`
 
 	// Can I call to this contact
-	CanCall *bool `json:"can_call,omitempty"`
+	CanCall bool `json:"can_call,omitempty"`
 
 	// Can I call create task for this contact
-	CanCreateTask *bool `json:"can_create_task,omitempty"`
+	CanCreateTask bool `json:"can_create_task,omitempty"`
 
 	// Can I add this contact to group chats
-	CanAddToGroup *bool `json:"can_add_to_group,omitempty"`
+	CanAddToGroup bool `json:"can_add_to_group,omitempty"`
 
 	// Can I remove this contact from team
-	CanDelete *bool `json:"can_delete,omitempty"`
+	CanDelete bool `json:"can_delete,omitempty"`
 
 	// Changeable fields
 	ChangeableFields *[]string `json:"changeable_fields,omitempty"`
@@ -135,31 +135,31 @@ type Contact struct {
 	MUnreadFirst *bool `json:"munread_first,omitempty"`
 
 	// Can I add new members to this team
-	CanAddToTeam *bool `json:"can_add_to_team,omitempty"`
+	CanAddToTeam bool `json:"can_add_to_team,omitempty"`
 
 	// Can I manage sections in this team
-	CanManageSections *bool `json:"can_manage_sections,omitempty"`
+	CanManageSections bool `json:"can_manage_sections,omitempty"`
 
 	// Can I manage tags in this team
-	CanManageTags *bool `json:"can_manage_tags,omitempty"`
+	CanManageTags bool `json:"can_manage_tags,omitempty"`
 
 	// Can I manage integrations in this team
-	CanManageIntegrations *bool `json:"can_manage_integrations,omitempty"`
+	CanManageIntegrations bool `json:"can_manage_integrations,omitempty"`
 
 	// Can I manage color rules in this team
-	CanManageColorRules *bool `json:"can_manage_color_rules,omitempty"`
+	CanManageColorRules bool `json:"can_manage_color_rules,omitempty"`
 
 	// Can I create group chats in this team
-	CanCreateGroup *bool `json:"can_create_group,omitempty"`
+	CanCreateGroup bool `json:"can_create_group,omitempty"`
 
 	// Can I view/join public group in this team
-	CanJoinPublicGroups *bool `json:"can_join_public_groups,omitempty"`
+	CanJoinPublicGroups bool `json:"can_join_public_groups,omitempty"`
 
 	// Can I view/join public tasks in this team
-	CanJoinPublicTasks *bool `json:"can_join_public_tasks,omitempty"`
+	CanJoinPublicTasks bool `json:"can_join_public_tasks,omitempty"`
 
 	// Deprecated: use CanDeleteAnyMessage in chat object
-	CanDeleteAnyMessage *bool `json:"can_delete_any_message,omitempty"`
+	CanDeleteAnyMessage bool `json:"can_delete_any_message,omitempty"`
 
 	// Extra contact fields
 	CustomFields *ContactCustomFields `json:"custom_fields,omitempty"`
