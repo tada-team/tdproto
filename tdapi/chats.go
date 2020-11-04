@@ -1,6 +1,8 @@
 package tdapi
 
 type ChatFilter struct {
+	Paginator
+
 	// ?unread_first=true|false (default: false)
 	UnreadFirst string `schema:"unread_first"`
 
