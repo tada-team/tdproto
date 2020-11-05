@@ -6,6 +6,6 @@ type Paginator struct {
 }
 
 type UserParams struct {
-	Lang     int `schema:"lang"`
-	Timezone int `schema:"timezone"`
+	Lang     string `schema:"lang"`
+	Timezone string `schema:"timezone"`
 }
