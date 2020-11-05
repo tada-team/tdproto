@@ -58,7 +58,7 @@ type IntegrationKind struct {
 	// Integration unique name
 	Kind string `json:"kind"`
 
-	// Integration title
+	// Plugin title
 	Title string `json:"title"`
 
 	// Integration template
@@ -66,6 +66,9 @@ type IntegrationKind struct {
 
 	// Path to icon
 	Icon string `json:"icon"`
+
+	// Plugin description
+	Description string `json:"description"`
 }
 
 // Complete integrations data, as received from server
