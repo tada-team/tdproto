@@ -22,7 +22,7 @@ type MessageFilter struct {
 	Text string `schema:"text"`
 
 	// ?type=image,video,plain,file
-	Type string `schema:"type"`
+	Type tdproto.Mediatype `schema:"type"`
 
 	// ?important=true|any
 	Important string `schema:"important"`
