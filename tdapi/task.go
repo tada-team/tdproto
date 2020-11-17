@@ -7,7 +7,7 @@ type Task struct {
 	Description      string           `json:"description,omitempty"`
 	Tags             []string         `json:"tags,omitempty"`
 	SectionUid       string           `json:"section,omitempty"`
-	Observers        []tdproto.JID    `json:"observers,omitempty"`
+	Observers        []tdproto.JID    `json:"observers,omitempty"` // TODO: rename to "followers"
 	Items            []string         `json:"items,omitempty"`
 	Assignee         tdproto.JID      `json:"assignee,omitempty"`
 	Deadline         string           `json:"deadline,omitempty"`

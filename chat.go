@@ -137,7 +137,7 @@ type Chat struct {
 	// Task number in this team
 	Num uint `chattype:"task" json:"num,omitempty"`
 
-	// Task observers id's
+	// Task followers id's. TODO: rename to "followers"
 	Observers *[]JID `chattype:"task" json:"observers,omitempty"`
 
 	// Task creator
