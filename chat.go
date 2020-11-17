@@ -116,6 +116,9 @@ type Chat struct {
 	// Group or task description
 	Description string `json:"description,omitempty"`
 
+	// Markup entities for description field. Experimental
+	Markup []MarkupEntity `json:"markup,omitempty" tdproto:"readonly"`
+
 	// Present in feed (main screen)
 	Feed bool `json:"feed,omitempty"`
 
