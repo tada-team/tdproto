@@ -94,6 +94,8 @@ Chat (direct, group, task) representaion.
 
  * **description** (string, omitempty) — Group or task description.
 
+ * **markup** ([MarkupEntity](#MarkupEntity), readonly for clients, list, omitempty) — Markup entities for description field. Experimental.
+
  * **feed** (bool, omitempty) — Present in feed (main screen).
 
  * **pinned_message** ([Message](#Message), nullable, omitempty) — Pinned message for this chat.
@@ -108,7 +110,7 @@ Chat (direct, group, task) representaion.
 
  * **num** (uint, omitempty) — Task number in this team.
 
- * **observers** (JID, nullable, list, omitempty) — Task observers id's.
+ * **observers** (JID, nullable, list, omitempty) — Task followers id's. TODO: rename to "followers".
 
  * **owner** (JID, nullable, omitempty) — Task creator.
 
@@ -274,7 +276,7 @@ Contact.
 
  * **alt_send** (bool, nullable, omitempty) — Use Ctrl/Cmd + Enter insted Enter.
 
- * **asterisk_mention** (bool, nullable) — Use * as @ for mentions.
+ * **asterisk_mention** (bool, nullable, omitempty) — Use * as @ for mentions.
 
  * **always_send_pushes** (bool, nullable, omitempty) — Send push notifications even contact is online.
 
@@ -582,11 +584,13 @@ Integration kind.
 
  * **kind** (string) — Integration unique name.
 
- * **title** (string) — Integration title.
+ * **title** (string) — Plugin title.
 
  * **template** ([Integration](#Integration)) — Integration template.
 
  * **icon** (string) — Path to icon.
+
+ * **description** (string) — Plugin description.
 
 
 ### <a name="Integrations"></a>Integrations

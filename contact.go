@@ -87,7 +87,7 @@ type Contact struct {
 	AltSend *bool `json:"alt_send,omitempty"`
 
 	// Use * as @ for mentions
-	AsteriskMention *bool `json:"asterisk_mention"`
+	AsteriskMention *bool `json:"asterisk_mention,omitempty"`
 
 	// Send push notifications even contact is online
 	AlwaysSendPushes *bool `json:"always_send_pushes,omitempty"`
