@@ -636,7 +636,9 @@ Chat message.
 
  * **message_id** (string) — Message uid.
 
- * **created** (string, readonly for clients) — Message creation datetime (set by server side).
+ * **created** (string, readonly for clients) — Message creation datetime (set by server side) or sending datetime in future for draft messages.
+
+ * **drafted** (string, readonly for clients, omitempty) — Creation datetime for draft messages.
 
  * **gentime** (int64, readonly for clients) — Object version.
 
@@ -895,6 +897,16 @@ Task color rules color.
  * **dark** (string) — Dark.
 
  * **light** (string) — Light.
+
+
+### <a name="TaskCounters"></a>TaskCounters
+Tasks counters.
+
+ * **jid** (JID) — task jid.
+
+ * **num_unread** (uint) — unread counter.
+
+ * **num_unread_notice** (uint) — unread notice counter.
 
 
 ### <a name="TaskItem"></a>TaskItem

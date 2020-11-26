@@ -126,8 +126,11 @@ type Message struct {
 	// Message uid
 	MessageId string `json:"message_id"`
 
-	// Message creation datetime (set by server side)
+	// Message creation datetime (set by server side) or sending datetime in future for draft messages
 	Created string `json:"created" tdproto:"readonly"`
+
+	// Creation datetime for draft messages
+	Drafted string `json:"drafted,omitempty" tdproto:"readonly"`
 
 	// Object version
 	Gentime int64 `json:"gentime" tdproto:"readonly"`
