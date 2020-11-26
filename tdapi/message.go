@@ -67,6 +67,9 @@ type MessageUpdate struct {
 
 	// Disable links preview generation. Not required. Default: false
 	Nopreview bool `json:"nopreview,omitempty"`
+
+	// Draft message, send later
+	SendAt string `json:"send_at,omitempty"`
 }
 
 type Message struct {
