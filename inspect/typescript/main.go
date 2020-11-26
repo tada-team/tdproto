@@ -70,8 +70,10 @@ export const enum Mediasubtype {
 }
 
 type MessageLinks = MessageLink[];
-
 type TeamUnread = Record<ChatType, Unread>
+type TaskFilterKey = string;
+type TaskSortKey = string;
+type TaskTabKey = string;
 
 {{- range $s := .Structs}}
 /**

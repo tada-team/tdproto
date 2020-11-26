@@ -10,37 +10,59 @@ func (key TaskFilterKey) String() string {
 	return string(key)
 }
 
+// Task sort type
 type TaskSort struct {
-	Key   TaskSortKey `json:"key"`
-	Title string      `json:"title"`
+	// Field
+	Key TaskSortKey `json:"key"`
+
+	// Sort title
+	Title string `json:"title"`
 }
 
+// Task filter
 type TaskFilter struct {
+	// Task filter field
 	Field TaskFilterKey `json:"field"`
-	Title string        `json:"title"`
+
+	// Filter title
+	Title string `json:"title"`
 }
 
 // Tasks counters
 type TaskCounters struct {
-	// task jid
+	// Task jid
 	Jid JID `json:"jid"`
 
-	// unread counter
-	NumUnread uint `json:"num_unread"`
+	// Unreads conuter
+	NumUnread uint `json:"num_unread,omitempty"`
 
-	//unread notice counter
-	NumUnreadNotice uint `json:"num_unread_notice"`
+	// Mentions (@) counter
+	NumUnreadNotices uint `json:"num_unread_notices,omitempty"`
 }
 
+// Task tab
 type TaskTab struct {
-	Key         TaskTabKey   `json:"key"`
-	Title       string       `json:"title"`
-	HideEmpty   bool         `json:"hide_empty"`
-	ShowCounter bool         `json:"show_counter"`
-	Pagination  bool         `json:"pagination"`
-	Filters     []TaskFilter `json:"filters"`
-	Sort        []TaskSort   `json:"sort"`
+	// Tab name
+	Key TaskTabKey `json:"key"`
 
-	// unread tasks with jid and counters
+	// Tab title
+	Title string `json:"title"`
+
+	// Disable this tab when it has no contents
+	HideEmpty bool `json:"hide_empty"`
+
+	// Show unread badge
+	ShowCounter bool `json:"show_counter"`
+
+	// Enable pagination
+	Pagination bool `json:"pagination"`
+
+	// Filters inside tab
+	Filters []TaskFilter `json:"filters"`
+
+	// Sort available in tab
+	Sort []TaskSort `json:"sort"`
+
+	// Unread tasks with jid and counters
 	UnreadTasks []TaskCounters `json:"unread_tasks"`
 }

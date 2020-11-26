@@ -902,11 +902,19 @@ Task color rules color.
 ### <a name="TaskCounters"></a>TaskCounters
 Tasks counters.
 
- * **jid** (JID) — task jid.
+ * **jid** (JID) — Task jid.
 
- * **num_unread** (uint) — unread counter.
+ * **num_unread** (uint, omitempty) — Unreads conuter.
 
- * **num_unread_notice** (uint) — unread notice counter.
+ * **num_unread_notices** (uint, omitempty) — Mentions (@) counter.
+
+
+### <a name="TaskFilter"></a>TaskFilter
+Task filter.
+
+ * **field** (TaskFilterKey) — Task filter field.
+
+ * **title** (string) — Filter title.
 
 
 ### <a name="TaskItem"></a>TaskItem
@@ -925,6 +933,14 @@ Task checklist item.
  * **subtask** ([Subtask](#Subtask), nullable, omitempty) — Link to subtask. Optional.
 
 
+### <a name="TaskSort"></a>TaskSort
+Task sort type.
+
+ * **key** (TaskSortKey) — Field.
+
+ * **title** (string) — Sort title.
+
+
 ### <a name="TaskStatus"></a>TaskStatus
 Custom task status.
 
@@ -937,6 +953,26 @@ Custom task status.
  * **title** (string) — Status localized name.
 
  * **is_archive** (bool, omitempty) — Status not used anymore.
+
+
+### <a name="TaskTab"></a>TaskTab
+Task tab.
+
+ * **key** (TaskTabKey) — Tab name.
+
+ * **title** (string) — Tab title.
+
+ * **hide_empty** (bool) — Disable this tab when it has no contents.
+
+ * **show_counter** (bool) — Show unread badge.
+
+ * **pagination** (bool) — Enable pagination.
+
+ * **filters** ([TaskFilter](#TaskFilter), list) — Filters inside tab.
+
+ * **sort** ([TaskSort](#TaskSort), list) — Sort available in tab.
+
+ * **unread_tasks** ([TaskCounters](#TaskCounters), list) — Unread tasks with jid and counters.
 
 
 ### <a name="Team"></a>Team
