@@ -28,38 +28,55 @@ type TaskFilter struct {
 
 	//* ?sort = [ "created" | "-created" | "last_message" | "-last_message" | "deadline" | "-deadline" ]
 	Sort string `schema:"sort"`
+
 	//* ?task_status = ["new" | "done" ]
 	TaskStatus string `schema:"task_status"`
+
 	//* ?num=num1,num2,num3...
 	Num string `schema:"task_status"`
+
 	//* ?observer=jid,jid   // TODO: rename to ?follower=
 	Observer string `schema:"observer"`
+
 	//* ?member=jid,jid
 	Member string `schema:"member"`
+
 	//* ?assignee=jid,jid
 	Assignee string `schema:"assignee"`
+
 	//* ?owner=jid,jid
 	Owner string `schema:"owner"`
+
 	//* ?section=[ uid,uid... | "-" ]
 	Section string `schema:"section"`
+
 	//* ?tag=[ tag,tag,tag... | "-" ]
 	Tag string `schema:"tag"`
+
 	//* ?q=
 	Q string `schema:"q"`
+
 	//* ?public=true|false
 	Public string `schema:"public"`
+
 	//* ?deadline_gte=<isodate>
-	Deadline_gte string `schema:"deadline_gte"`
+	DeadlineGTE string `schema:"deadline_gte"`
+
 	//* ?deadline_lte=<isodate>
-	Deadline_lte string `schema:"deadline_lte"`
+	DeadlineLTE string `schema:"deadline_lte"`
+
 	//* ?done_gte=<isodate>
-	Done_gte string `schema:"done_gte"`
+	DoneGTE string `schema:"done_gte"`
+
 	//* ?done_lte=<isodate>
-	Done_lte string `schema:"done_lte"`
+	DoneLTE string `schema:"done_lte"`
+
 	//* ?created_gte=<isodate>
-	Created_gte string `schema:"created_gte"`
+	CreatedGTE string `schema:"created_gte"`
+
 	//* ?created_lte=<isodate>
-	Created_lte string `schema:"created_lte"`
+	CreatedLTE string `schema:"created_lte"`
+
 	//* ?short=true|false
 	Short string `schema:"short"`
 }
