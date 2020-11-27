@@ -6,6 +6,7 @@ dest=../../tdproto_dart/lib/src
 go run dart/main.go $dest
 
 cd $dest
+dartfmt -w .
 flutter pub get
 flutter packages pub run build_runner build --delete-conflicting-outputs
 
