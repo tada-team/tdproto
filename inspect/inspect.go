@@ -12,6 +12,7 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/iancoleman/strcase"
 	"github.com/tada-team/tdproto"
 )
 
@@ -27,6 +28,7 @@ type Field struct {
 	InternalType bool   `json:"internal_type,omitempty"`
 	Omitempty    bool   `json:"omitempty,omitempty"`
 	TSType       string `json:"ts_type"`
+	DartType     string `json:"dart_type"`
 	TSDefault    string `json:"ts_default"`
 }
 
@@ -37,6 +39,10 @@ type Struct struct {
 	Readonly bool     `json:"readonly,omitempty"`
 }
 
+func (s Struct) SnakeName() string {
+	return strcase.ToSnake(s.Name)
+}
+
 var tsTypeMap = map[string]string{
 	"str":         "string",
 	"int":         "number",
@@ -45,6 +51,16 @@ var tsTypeMap = map[string]string{
 	"uint":        "number",
 	"bool":        "boolean",
 	"interface{}": "any",
+}
+
+var dartTypeMap = map[string]string{
+	"str":         "String",
+	"int":         "int",
+	"int64":       "int",
+	"uint16":      "int",
+	"uint":        "int",
+	"bool":        "bool",
+	"interface{}": "dynamic",
 }
 
 var tsDefaultMap = map[string]string{
@@ -167,6 +183,11 @@ func Parse() ([]*Struct, error) {
 							tsType = typeDescr
 						}
 
+						dartType := dartTypeMap[typeDescr]
+						if dartType == "" {
+							dartType = typeDescr
+						}
+
 						if nullable && !omitempty && typeDescr == "JID" { // XXX:
 							nullable = false
 						}
@@ -195,6 +216,7 @@ func Parse() ([]*Struct, error) {
 							JSName:    strings.ToLower(name[:1]) + name[1:],
 							TSType:    tsType,
 							TSDefault: tsDefault,
+							DartType:  dartType,
 							Json:      jsonName,
 							Type:      typeDescr,
 							Null:      nullable,
