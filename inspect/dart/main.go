@@ -17,8 +17,7 @@ func main() {
 }
 
 var dartFile = template.Must(template.New("").Parse(`import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../tdproto_dart.dart';
+import 'package:tdproto_dart/tdproto_dart.dart';
 
 part '{{.Struct.SnakeName}}.freezed.dart';
 part '{{.Struct.SnakeName}}.g.dart';
