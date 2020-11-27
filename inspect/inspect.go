@@ -44,7 +44,7 @@ func (s Struct) SnakeName() string {
 }
 
 var tsTypeMap = map[string]string{
-	"str":         "string",
+	"string":      "string",
 	"int":         "number",
 	"int64":       "number",
 	"uint16":      "number",
@@ -54,7 +54,7 @@ var tsTypeMap = map[string]string{
 }
 
 var dartTypeMap = map[string]string{
-	"str":         "String",
+	"string":      "String",
 	"int":         "int",
 	"int64":       "int",
 	"uint16":      "int",
