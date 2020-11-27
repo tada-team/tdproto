@@ -18,6 +18,8 @@ func main() {
 
 var dartFile = template.Must(template.New("").Parse(`import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../tdproto_dart.dart';
+
 part '{{.Struct.SnakeName}}.freezed.dart';
 part '{{.Struct.SnakeName}}.g.dart';
 
@@ -56,7 +58,7 @@ func do() error {
 
 	for _, s := range structs {
 		switch s.Name {
-		case "UploadPreview", "PdfVersion":
+		case "UploadPreview", "PdfVersion", "Upload":
 			log.Println("export:", s.Name)
 			if err := save(path, s); err != nil {
 				return err
