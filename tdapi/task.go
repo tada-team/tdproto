@@ -33,7 +33,7 @@ type TaskFilter struct {
 	TaskStatus string `schema:"task_status"`
 
 	//* ?num=num1,num2,num3...
-	Num string `schema:"task_status"`
+	Num string `schema:"num"`
 
 	//* ?observer=jid,jid   // TODO: rename to ?follower=
 	Observer string `schema:"observer"`
