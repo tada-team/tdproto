@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"text/template"
 
-	"github.com/tada-team/tdproto/inspect"
+	"github.com/tada-team/tdproto/codegen"
 )
 
 func main() {
@@ -37,7 +37,7 @@ abstract class {{.Struct.Name}} with _${{.Struct.Name}} {
 `))
 
 type tplContext struct {
-	Struct *inspect.Struct
+	Struct *codegen.Struct
 }
 
 func do() error {
@@ -50,7 +50,7 @@ func do() error {
 		return err
 	}
 
-	structs, err := inspect.Parse()
+	structs, err := codegen.Parse()
 	if err != nil {
 		return err
 	}
@@ -68,7 +68,7 @@ func do() error {
 	return nil
 }
 
-func save(path string, s *inspect.Struct) error {
+func save(path string, s *codegen.Struct) error {
 	dist := filepath.Join(path, s.SnakeName())
 	if _, err := os.Stat(dist); os.IsNotExist(err) {
 		log.Println("mkdir:", dist)
