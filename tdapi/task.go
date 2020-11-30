@@ -29,6 +29,9 @@ type TaskFilter struct {
 	//* ?sort = [ "created" | "-created" | "last_message" | "-last_message" | "deadline" | "-deadline" ]
 	Sort string `schema:"sort"`
 
+	//* ?groupby ="task_status"
+	GroupBy string `schema:"groupby"`
+
 	//* ?task_status = ["new" | "done" ]
 	TaskStatus string `schema:"task_status"`
 
