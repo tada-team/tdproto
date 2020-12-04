@@ -26,10 +26,13 @@ part '{{.Struct.SnakeName}}.g.dart';
 @freezed
 abstract class {{.Struct.Name}} with _${{.Struct.Name}} {
   const factory {{.Struct.Name}}({
-  {{range $f := .Struct.Fields }}
+{{range $f := .Struct.Fields }}
     /// {{$f.Help}}.{{if $f.Readonly}} Readonly.{{end}}
-    @JsonKey(name: '{{$f.Json}}') {{ if not $f.Null }}@required{{ end }} {{ if $f.List }}List<{{ $f.DartType }}>{{ else }}{{ $f.DartType }}{{ end }} {{ $f.JSName }},
-  {{end}}
+    @JsonKey(name: '{{$f.Json}}')
+	{{- if eq $f.DartType "DateTime" }} @DateTimeConverter(){{ end -}}
+	{{- if $f.DartRequired }} @required{{ end -}}
+    {{- if $f.List }} List<{{ $f.DartType }}>{{ else }} {{ $f.DartType }}{{ end }} {{ $f.JSName }},
+{{end}}
   }) = _{{.Struct.Name}};
 
   factory {{.Struct.Name}}.fromJson(Map<String, dynamic> json) => _${{.Struct.Name}}FromJson(json);

@@ -32,6 +32,10 @@ type Field struct {
 	TSDefault    string `json:"ts_default"`
 }
 
+func (f Field) DartRequired() bool {
+	return !(f.Null || f.Omitempty)
+}
+
 type Struct struct {
 	Name     string   `json:"name"`
 	Help     string   `json:"help"`
@@ -51,6 +55,7 @@ var tsTypeMap = map[string]string{
 	"uint":        "number",
 	"bool":        "boolean",
 	"interface{}": "any",
+	"DateTime":    "string",
 }
 
 var dartTypeMap = map[string]string{
@@ -61,6 +66,7 @@ var dartTypeMap = map[string]string{
 	"uint":        "int",
 	"bool":        "bool",
 	"interface{}": "dynamic",
+	"DateTime":    "DateTime",
 }
 
 var tsDefaultMap = map[string]string{
