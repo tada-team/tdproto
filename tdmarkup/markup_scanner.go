@@ -7,7 +7,7 @@ import (
 	"github.com/tada-team/tdproto"
 )
 
-var opInlines = map[rune]string{
+var opInlines = map[rune]tdproto.MarkupType{
 	'*': tdproto.Bold,
 	'/': tdproto.Italic,
 	'_': tdproto.Underscore,
@@ -20,17 +20,17 @@ var (
 	opQuoteBlock = []rune("> ")
 )
 
-func contains(s, substring string) bool {
+func contains(s string, typ tdproto.MarkupType) bool {
 	for s := NewMarkupScanner(s); s.Rest() > 0; {
 		_, e := s.Scan(nil)
-		if doContains(e, substring) {
+		if doContains(e, typ) {
 			return true
 		}
 	}
 	return false
 }
 
-func doContains(e *tdproto.MarkupEntity, substring string) bool {
+func doContains(e *tdproto.MarkupEntity, substring tdproto.MarkupType) bool {
 	if e == nil {
 		return false
 	}
@@ -199,7 +199,7 @@ func (s *MarkupScanner) scanTime() (string, *tdproto.MarkupEntity) {
 
 }
 
-func (s *MarkupScanner) scanInline(marker rune, typ string, allowWhitespaceAround bool) (string, *tdproto.MarkupEntity) {
+func (s *MarkupScanner) scanInline(marker rune, typ tdproto.MarkupType, allowWhitespaceAround bool) (string, *tdproto.MarkupEntity) {
 	start := s.Position()
 
 	var b strings.Builder
@@ -244,7 +244,7 @@ func (s *MarkupScanner) scanInline(marker rune, typ string, allowWhitespaceAroun
 	return "", nil
 }
 
-func (s *MarkupScanner) scanBlock(op, cl []rune, typ string) (string, *tdproto.MarkupEntity) {
+func (s *MarkupScanner) scanBlock(op, cl []rune, typ tdproto.MarkupType) (string, *tdproto.MarkupEntity) {
 	start := s.Position()
 
 	t := s.ScanUntil(op)

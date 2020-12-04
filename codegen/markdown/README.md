@@ -28,6 +28,8 @@ Call participant.
 
  * **display_name** (string) — Contact name.
 
+ * **role** (string) — Contact role.
+
  * **icon** (string) — Contact icon.
 
  * **muted** (bool) — Microphone muted. Computed from devices muted states.
@@ -46,7 +48,7 @@ Chat (direct, group, task) representaion.
 
  * **gentime** (int64) — Chat fields related to concrete participan) version.
 
- * **created** (string) — Creation date, iso datetime.
+ * **created** (ISODateTimeString) — Creation date, iso datetime.
 
  * **display_name** (string) — Title.
 
@@ -546,7 +548,7 @@ Integration for concrete chat.
 
  * **comment** (string) — Comment, if any.
 
- * **created** (string, omitempty) — Creation datetime, iso.
+ * **created** (ISODateTimeString, omitempty) — Creation datetime, iso.
 
  * **enabled** (bool) — Integration enabled.
 
@@ -612,7 +614,7 @@ Markup entity. Experimental.
 
  * **cllen** (int, omitempty) — Close marker length.
 
- * **typ** (string) — Marker type.
+ * **typ** ([MarkupType](#MarkupType)) — Marker type.
 
  * **url** (string, omitempty) — Url, for Link type.
 
@@ -621,6 +623,10 @@ Markup entity. Experimental.
  * **time** (string, omitempty) — Time, for Time type.
 
  * **childs** ([MarkupEntity](#MarkupEntity), list, omitempty) — List of internal markup entities.
+
+
+### <a name="MarkupType"></a>MarkupType
+Markup type.
 
 
 ### <a name="Message"></a>Message
@@ -636,9 +642,9 @@ Chat message.
 
  * **message_id** (string) — Message uid.
 
- * **created** (string, readonly for clients) — Message creation datetime (set by server side) or sending datetime in future for draft messages.
+ * **created** (ISODateTimeString, readonly for clients) — Message creation datetime (set by server side) or sending datetime in future for draft messages.
 
- * **drafted** (string, readonly for clients, omitempty) — Creation datetime for draft messages.
+ * **drafted** (ISODateTimeString, readonly for clients, omitempty) — Creation datetime for draft messages.
 
  * **gentime** (int64, readonly for clients) — Object version.
 
@@ -652,7 +658,7 @@ Chat message.
 
  * **important** (bool, omitempty) — Importance flag.
 
- * **edited** (string, readonly for clients, omitempty) — Datetime of message modification or deletion.
+ * **edited** (ISODateTimeString, readonly for clients, omitempty) — ISODateTimeString of message modification or deletion.
 
  * **received** (bool, readonly for clients, omitempty) — Message was seen by anybody in chat. True or null.
 
@@ -680,7 +686,7 @@ Chat message.
 
  * **silently** (bool, readonly for clients, omitempty) — Message has no pushes and did not affect any counters.
 
- * **editable_until** (string, readonly for clients, omitempty) — Author can change this message until date. Can be null.
+ * **editable_until** (ISODateTimeString, readonly for clients, omitempty) — Author can change this message until date. Can be null.
 
  * **num** (int, readonly for clients, nullable, omitempty) — Index number of this message. Starts from 0. Null for deleted messages. Changes when any previous message wad deleted.
 
@@ -792,7 +798,7 @@ Push message over websockets. Readonly.
 
  * **message_id** (string) — Message id.
 
- * **created** (string) — Message creation iso datetime.
+ * **created** (ISODateTimeString) — Message creation iso datetime.
 
 
 ### <a name="MessageReaction"></a>MessageReaction
@@ -808,7 +814,7 @@ Message emoji reaction.
 ### <a name="MessageReactionDetail"></a>MessageReactionDetail
 Message reaction detail.
 
- * **created** (string) — When reaction added, iso datetime.
+ * **created** (ISODateTimeString) — When reaction added, iso datetime.
 
  * **sender** (JID) — Reaction author.
 
@@ -840,7 +846,7 @@ Websocket session.
 
  * **uid** (string) — Session id.
 
- * **created** (string) — Creation datetime.
+ * **created** (ISODateTimeString) — Creation datetime.
 
  * **lang** (string, omitempty) — Language code.
 
@@ -1172,7 +1178,7 @@ Uploaded media.
 
  * **uid** (string) — Upload id.
 
- * **created** (string, omitempty) — Uploaded at.
+ * **created** (ISODateTimeString) — Uploaded at.
 
  * **size** (int) — Upload size in bytes.
 

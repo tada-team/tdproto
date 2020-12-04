@@ -4,19 +4,6 @@ import (
 	"fmt"
 )
 
-const (
-	Bold       = "bold"
-	Italic     = "italic"
-	Underscore = "underscore"
-	Strike     = "strike"
-	Code       = "code"
-	CodeBlock  = "codeblock"
-	Quote      = "quote"
-	Link       = "link"
-	Time       = "time"
-	Unsafe     = "unsafe"
-)
-
 // Markup entity. Experimental
 type MarkupEntity struct {
 	// Open marker offset
@@ -32,7 +19,7 @@ type MarkupEntity struct {
 	CloseLength int `json:"cllen,omitempty"`
 
 	// Marker type
-	Type string `json:"typ"`
+	Type MarkupType `json:"typ"`
 
 	// Url, for Link type
 	Url string `json:"url,omitempty"`
