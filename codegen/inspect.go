@@ -23,6 +23,9 @@ type EnumValue struct {
 	Help  string `json:"help"`
 }
 
+func (e EnumValue) DartValue() string { return strings.ReplaceAll(e.Value, `"`, `'`) }
+func (e EnumValue) DartName() string  { return strcase.ToLowerCamel(e.Name) }
+
 type Field struct {
 	Name         string `json:"name"`
 	JSName       string `json:"js_name"`
@@ -51,9 +54,8 @@ type Struct struct {
 	EnumValues []EnumValue `json:"enum_values,omitempty"`
 }
 
-func (s Struct) SnakeName() string {
-	return strcase.ToSnake(s.Name)
-}
+func (s Struct) SnakeName() string { return strcase.ToSnake(s.Name) }
+func (s Struct) IsEnum() bool      { return len(s.EnumValues) > 0 }
 
 var tsTypeMap = map[string]string{
 	"string":            "string",
@@ -132,7 +134,7 @@ func Parse() (structs []*Struct, err error) {
 			enumsMap[typeName] = append(enumsMap[typeName], EnumValue{
 				Name:  name.Name,
 				Value: val.Value,
-				Help:  valueSpec.Doc.Text(),
+				Help:  cleanHelp(valueSpec.Doc.Text()),
 			})
 		}
 		return nil

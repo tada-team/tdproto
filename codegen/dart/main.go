@@ -22,21 +22,36 @@ import 'package:tdproto_dart/tdproto_dart.dart';
 part '{{.Struct.SnakeName}}.freezed.dart';
 part '{{.Struct.SnakeName}}.g.dart';
 
+{{ if $.Struct.IsEnum -}}
+
+/// {{.Struct.Help}}
+enum {{.Struct.Name}} {
+  {{ range $v := $.Struct.EnumValues }}
+  // {{$v.Help}}
+  @JsonValue({{ $v.DartValue }})
+  {{ $v.DartName }},
+  {{ end }}
+}
+
+{{- else -}}
+
 /// {{.Struct.Help}}
 @freezed
 abstract class {{.Struct.Name}} with _${{.Struct.Name}} {
   const factory {{.Struct.Name}}({
-{{range $f := .Struct.Fields }}
+{{ range $f := .Struct.Fields }}
     /// {{$f.Help}}.{{if $f.Readonly}} Readonly.{{end}}
     @JsonKey(name: '{{$f.Json}}')
 	{{- if eq $f.DartType "DateTime" }} @DateTimeConverter(){{ end -}}
 	{{- if $f.DartRequired }} @required{{ end -}}
     {{- if $f.List }} List<{{ $f.DartType }}>{{ else }} {{ $f.DartType }}{{ end }} {{ $f.JSName }},
-{{end}}
+{{ end }}
   }) = _{{.Struct.Name}};
 
   factory {{.Struct.Name}}.fromJson(Map<String, dynamic> json) => _${{.Struct.Name}}FromJson(json);
 }
+
+{{- end -}}
 `))
 
 type tplContext struct {
@@ -60,7 +75,7 @@ func do() error {
 
 	for _, s := range structs {
 		switch s.Name {
-		case "UploadPreview", "PdfVersion", "Upload", "MarkupEntity":
+		case "UploadPreview", "PdfVersion", "Upload", "MarkupEntity", "MarkupType":
 			log.Println("export:", s.Name)
 			if err := save(path, s); err != nil {
 				return err
