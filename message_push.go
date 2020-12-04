@@ -33,5 +33,5 @@ type MessagePush struct {
 	MessageId string `json:"message_id"`
 
 	// Message creation iso datetime
-	Created DateTime `json:"created"`
+	Created ISODateTimeString `json:"created"`
 }

@@ -45,7 +45,7 @@ type Chat struct {
 	Gentime int64 `json:"gentime"`
 
 	// Creation date, iso datetime
-	Created DateTime `json:"created"`
+	Created ISODateTimeString `json:"created"`
 
 	// Title
 	DisplayName string `json:"display_name"`

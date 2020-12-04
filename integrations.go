@@ -33,7 +33,7 @@ type Integration struct {
 	Comment string `json:"comment"`
 
 	// Creation datetime, iso
-	Created DateTime `json:"created,omitempty"`
+	Created ISODateTimeString `json:"created,omitempty"`
 
 	// Integration enabled
 	Enabled bool `json:"enabled"`

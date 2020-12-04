@@ -48,25 +48,25 @@ func (s Struct) SnakeName() string {
 }
 
 var tsTypeMap = map[string]string{
-	"string":      "string",
-	"int":         "number",
-	"int64":       "number",
-	"uint16":      "number",
-	"uint":        "number",
-	"bool":        "boolean",
-	"interface{}": "any",
-	"DateTime":    "string",
+	"string":            "string",
+	"int":               "number",
+	"int64":             "number",
+	"uint16":            "number",
+	"uint":              "number",
+	"bool":              "boolean",
+	"interface{}":       "any",
+	"ISODateTimeString": "string",
 }
 
 var dartTypeMap = map[string]string{
-	"string":      "String",
-	"int":         "int",
-	"int64":       "int",
-	"uint16":      "int",
-	"uint":        "int",
-	"bool":        "bool",
-	"interface{}": "dynamic",
-	"DateTime":    "DateTime",
+	"string":            "String",
+	"int":               "int",
+	"int64":             "int",
+	"uint16":            "int",
+	"uint":              "int",
+	"bool":              "bool",
+	"interface{}":       "dynamic",
+	"ISODateTimeString": "DateTime",
 }
 
 var tsDefaultMap = map[string]string{

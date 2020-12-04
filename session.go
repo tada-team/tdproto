@@ -6,7 +6,7 @@ type Session struct {
 	Uid string `json:"uid"`
 
 	// Creation datetime
-	Created DateTime `json:"created"`
+	Created ISODateTimeString `json:"created"`
 
 	// Language code
 	Lang string `json:"lang,omitempty"`

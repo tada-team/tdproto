@@ -6,7 +6,7 @@ type Upload struct {
 	Uid string `json:"uid"`
 
 	// Uploaded at
-	Created DateTime `json:"created"`
+	Created ISODateTimeString `json:"created"`
 
 	// Upload size in bytes
 	Size int `json:"size"`

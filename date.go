@@ -1,3 +1,3 @@
 package tdproto
 
-type DateTime = string
+type ISODateTimeString = string
