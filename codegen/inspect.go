@@ -131,6 +131,7 @@ func Parse() (structs []*Struct, err error) {
 			if enumsMap[typeName] == nil {
 				enumsMap[typeName] = []EnumValue{}
 			}
+
 			enumsMap[typeName] = append(enumsMap[typeName], EnumValue{
 				Name:  name.Name,
 				Value: val.Value,
@@ -160,98 +161,104 @@ func Parse() (structs []*Struct, err error) {
 			types[s.Name] = struct{}{}
 
 			s.EnumValues = enumsMap[s.Name]
+			if len(s.EnumValues) > 0 {
+				for i := range s.EnumValues {
+					s.EnumValues[i].Name = strings.TrimSuffix(s.EnumValues[i].Name, s.Name)
+				}
+			} else {
 
-			switch typeSpec.Type.(type) {
-			case *ast.StructType:
-				fieldList := typeSpec.Type.(*ast.StructType).Fields
-				for _, field := range fieldList.List {
-					name := field.Names[0].Name
+				switch typeSpec.Type.(type) {
+				case *ast.StructType:
+					fieldList := typeSpec.Type.(*ast.StructType).Fields
+					for _, field := range fieldList.List {
+						name := field.Names[0].Name
 
-					omitempty := false
-					jsonName := name
-					readonly := false
-					if field.Tag != nil {
-						tag := reflect.StructTag(strings.Trim(field.Tag.Value, "`"))
-						jsontag := strings.Split(tag.Get("json"), ",")
-						omitempty = len(jsontag) == 2 && jsontag[1] == "omitempty"
-						jsonName = jsontag[0]
+						omitempty := false
+						jsonName := name
+						readonly := false
+						if field.Tag != nil {
+							tag := reflect.StructTag(strings.Trim(field.Tag.Value, "`"))
+							jsontag := strings.Split(tag.Get("json"), ",")
+							omitempty = len(jsontag) == 2 && jsontag[1] == "omitempty"
+							jsonName = jsontag[0]
 
-						if jsonName == "-" {
-							continue
-						}
+							if jsonName == "-" {
+								continue
+							}
 
-						for _, tag := range strings.Split(tag.Get("tdproto"), ",") {
-							if tag == "readonly" {
-								readonly = true
+							for _, tag := range strings.Split(tag.Get("tdproto"), ",") {
+								if tag == "readonly" {
+									readonly = true
+								}
 							}
 						}
-					}
 
-					var typeNameBuf bytes.Buffer
-					if err := printer.Fprint(&typeNameBuf, fset, field.Type); err != nil {
-						return err
-					}
+						var typeNameBuf bytes.Buffer
+						if err := printer.Fprint(&typeNameBuf, fset, field.Type); err != nil {
+							return err
+						}
 
-					nullable := false
-					list := false
+						nullable := false
+						list := false
 
-					typeDescr := typeNameBuf.String()
-					if strings.HasPrefix(typeDescr, "*") {
-						nullable = true
-						typeDescr = typeDescr[1:]
-					}
+						typeDescr := typeNameBuf.String()
+						if strings.HasPrefix(typeDescr, "*") {
+							nullable = true
+							typeDescr = typeDescr[1:]
+						}
 
-					if strings.HasPrefix(typeDescr, "[]") {
-						list = true
-						typeDescr = typeDescr[2:]
-					}
+						if strings.HasPrefix(typeDescr, "[]") {
+							list = true
+							typeDescr = typeDescr[2:]
+						}
 
-					tsType := tsTypeMap[typeDescr]
-					if tsType == "" {
-						tsType = typeDescr
-					}
+						tsType := tsTypeMap[typeDescr]
+						if tsType == "" {
+							tsType = typeDescr
+						}
 
-					dartType := dartTypeMap[typeDescr]
-					if dartType == "" {
-						dartType = typeDescr
-					}
+						dartType := dartTypeMap[typeDescr]
+						if dartType == "" {
+							dartType = typeDescr
+						}
 
-					if nullable && !omitempty && typeDescr == "JID" { // XXX:
-						nullable = false
-					}
+						if nullable && !omitempty && typeDescr == "JID" { // XXX:
+							nullable = false
+						}
 
-					help := cleanHelp(field.Doc.Text())
+						help := cleanHelp(field.Doc.Text())
 
-					if help == "" {
-						help = name
-					}
+						if help == "" {
+							help = name
+						}
 
-					tsDefault := ""
-					if omitempty {
-						if nullable {
-							tsDefault = "null"
-						} else {
-							tsDefault = tsDefaultMap[tsType]
-							if tsDefault == "" {
-								tsDefault = "unknown: " + tsType
+						tsDefault := ""
+						if omitempty {
+							if nullable {
+								tsDefault = "null"
+							} else {
+								tsDefault = tsDefaultMap[tsType]
+								if tsDefault == "" {
+									tsDefault = "unknown: " + tsType
+								}
 							}
 						}
-					}
 
-					s.Fields = append(s.Fields, &Field{
-						Name:      name,
-						Help:      help,
-						JSName:    strings.ToLower(name[:1]) + name[1:],
-						TSType:    tsType,
-						TSDefault: tsDefault,
-						DartType:  dartType,
-						Json:      jsonName,
-						Type:      typeDescr,
-						Null:      nullable,
-						List:      list,
-						Omitempty: omitempty,
-						Readonly:  readonly,
-					})
+						s.Fields = append(s.Fields, &Field{
+							Name:      name,
+							Help:      help,
+							JSName:    strings.ToLower(name[:1]) + name[1:],
+							TSType:    tsType,
+							TSDefault: tsDefault,
+							DartType:  dartType,
+							Json:      jsonName,
+							Type:      typeDescr,
+							Null:      nullable,
+							List:      list,
+							Omitempty: omitempty,
+							Readonly:  readonly,
+						})
+					}
 				}
 			}
 

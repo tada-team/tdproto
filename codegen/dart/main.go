@@ -17,11 +17,6 @@ func main() {
 }
 
 var dartFile = template.Must(template.New("").Parse(`import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tdproto_dart/tdproto_dart.dart';
-
-part '{{.Struct.SnakeName}}.freezed.dart';
-part '{{.Struct.SnakeName}}.g.dart';
-
 {{ if $.Struct.IsEnum -}}
 
 /// {{.Struct.Help}}
@@ -34,6 +29,10 @@ enum {{.Struct.Name}} {
 }
 
 {{- else -}}
+import 'package:tdproto_dart/tdproto_dart.dart';
+
+part '{{.Struct.SnakeName}}.freezed.dart';
+part '{{.Struct.SnakeName}}.g.dart';
 
 /// {{.Struct.Help}}
 @freezed
@@ -75,11 +74,13 @@ func do() error {
 
 	for _, s := range structs {
 		switch s.Name {
-		case "UploadPreview", "PdfVersion", "Upload", "MarkupEntity", "MarkupType":
+		case "UploadPreview", "PdfVersion", "Upload", "MarkupEntity", "MarkupType", "ChatType", "TeamStatus", "GroupStatus":
 			log.Println("export:", s.Name)
 			if err := save(path, s); err != nil {
 				return err
 			}
+		default:
+			log.Println("skip:", s.Name)
 		}
 	}
 
