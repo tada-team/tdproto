@@ -232,7 +232,7 @@ var MarkupTestCases = []struct {
 		Title: "link only",
 		Raw:   "123 https://ya.ru 456",
 		Html:  `123 <a href="https://ya.ru">ya.ru</a> 456`,
-		Plain: `123 https://ya.ru 456`,
+		Plain: `123 ya.ru 456`,
 		Links: []tdproto.MessageLink{
 			{
 				Pattern: "https://ya.ru",
@@ -258,12 +258,25 @@ var MarkupTestCases = []struct {
 		Title: "link only with trailing slash",
 		Raw:   "123 https://ya.ru/? 456",
 		Html:  `123 <a href="https://ya.ru">ya.ru</a> 456`,
-		Plain: "123 https://ya.ru 456",
+		Plain: "123 ya.ru 456",
 		Links: []tdproto.MessageLink{
 			{
 				Pattern: "https://ya.ru/?",
 				Url:     "https://ya.ru",
 				Text:    "ya.ru",
+			},
+		},
+	},
+	{
+		Title: "manage.py",
+		Raw:   "123 manage.py 456",
+		Html:  `123 <a href="http://manage.py">manage.py</a> 456`,
+		Plain: "123 manage.py 456",
+		Links: []tdproto.MessageLink{
+			{
+				Pattern: "manage.py",
+				Url:     "http://manage.py",
+				Text:    "manage.py",
 			},
 		},
 	},

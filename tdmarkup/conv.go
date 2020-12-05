@@ -61,16 +61,17 @@ func ToPlain(s string, e []tdproto.MarkupEntity, opts *ToPlainOpts) string {
 			}
 			return []rune("> "), middle, []rune("\n")
 		case tdproto.Link:
-			for _, prefix := range [...]string{
-				"tadateam://",
-				"tel:",
-				"mailto:",
-			} {
-				if strings.HasPrefix(e.Url, prefix) {
-					return []rune(""), []rune(e.Repl), []rune("")
-				}
-			}
-			return []rune(""), []rune(e.Url), []rune("")
+			//for _, prefix := range [...]string{
+			//	"tadateam://",
+			//	"tel:",
+			//	"mailto:",
+			//} {
+			//	if strings.HasPrefix(e.Url, prefix) {
+			//		return []rune(""), []rune(e.Repl), []rune("")
+			//	}
+			//}
+			//return []rune(""), []rune(e.Url), []rune("")
+			return []rune(""), []rune(e.Repl), []rune("")
 		case tdproto.Time:
 			t := mustTime(e.Time)
 			if loc := opts.Location; loc != nil {
