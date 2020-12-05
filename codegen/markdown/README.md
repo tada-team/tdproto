@@ -42,7 +42,7 @@ Chat (direct, group, task) representaion.
 
  * **jid** (JID) — Group/Task/Contact id.
 
- * **chat_type** (ChatType) — Chat type.
+ * **chat_type** ([ChatType](#ChatType)) — Chat type.
 
  * **base_gentime** (int64, omitempty) — Base fields (not related to concrete participant) version.
 
@@ -150,7 +150,7 @@ Chat (direct, group, task) representaion.
 
  * **tabs** (TaskTabKey, nullable, list, omitempty) — Tab names.
 
- * **status** (GroupStatus, nullable, omitempty) — My status in group chat.
+ * **status** ([GroupStatus](#GroupStatus), nullable, omitempty) — My status in group chat.
 
  * **members** ([GroupMembership](#GroupMembership), list, omitempty) — Group chat members.
 
@@ -182,12 +182,19 @@ Mimimal chat representaion.
 
  * **jid** (JID) — Group/Task/Contact id.
 
- * **chat_type** (ChatType) — Chat type.
+ * **chat_type** ([ChatType](#ChatType)) — Chat type.
 
  * **display_name** (string) — Title.
 
  * **icons** ([IconData](#IconData), nullable) — Icon data.
 
+
+### <a name="ChatType"></a>ChatType
+Chat type.
+
+ * **"direct"** Direct chat
+ * **"group"** Group chat
+ * **"task"** Task
 
 ### <a name="ColorRule"></a>ColorRule
 Set of rules to apply to tasks for coloring.
@@ -238,7 +245,7 @@ Contact.
 
  * **mood** (string, omitempty) — Mood in this team.
 
- * **status** (TeamStatus) — Status in this team.
+ * **status** ([TeamStatus](#TeamStatus)) — Status in this team.
 
  * **last_activity** (string, nullable) — Last activity in this team (iso datetime).
 
@@ -357,12 +364,24 @@ Short contact representaion.
  * **icons** ([IconData](#IconData), nullable) — Icons data.
 
 
+### <a name="Country"></a>Country
+Country for phone numbers selection on login screen.
+
+ * **code** (string) — Country code.
+
+ * **name** (string) — Country name.
+
+ * **default** (bool, omitempty) — Selected by default.
+
+ * **popular** (bool, omitempty) — Is popular, need to cache.
+
+
 ### <a name="DeletedChat"></a>DeletedChat
 Mimimal chat representaion for deletion.
 
  * **jid** (JID) — Group/Task/Contact id.
 
- * **chat_type** (ChatType) — Chat type.
+ * **chat_type** ([ChatType](#ChatType)) — Chat type.
 
  * **gentime** (int64) — Chat fields (related to concrete participan) version.
 
@@ -516,10 +535,16 @@ Group chat membership status.
 
  * **jid** (JID) — Contact id.
 
- * **status** (GroupStatus) — Status in group.
+ * **status** ([GroupStatus](#GroupStatus)) — Status in group.
 
  * **can_remove** (bool, omitempty) — Can I remove this member.
 
+
+### <a name="GroupStatus"></a>GroupStatus
+Status in team.
+
+ * **"admin"** Group administrator
+ * **"member"** Group member
 
 ### <a name="ICEServer"></a>ICEServer
 Interactive Connectivity Establishment Server for WEB Rtc connection. Readonly.
@@ -628,6 +653,16 @@ Markup entity. Experimental.
 ### <a name="MarkupType"></a>MarkupType
 Markup type.
 
+ * **"bold"** Bold text
+ * **"italic"** Italic text
+ * **"underscore"** Underscore text
+ * **"strike"** Striked text
+ * **"code"** Inlined code
+ * **"codeblock"** Code block
+ * **"quote"** Quote
+ * **"link"** Link
+ * **"time"** Datetime
+ * **"unsafe"** Unsafe html element
 
 ### <a name="Message"></a>Message
 Chat message.
@@ -648,7 +683,7 @@ Chat message.
 
  * **gentime** (int64, readonly for clients) — Object version.
 
- * **chat_type** (ChatType, readonly for clients) — Chat type.
+ * **chat_type** ([ChatType](#ChatType), readonly for clients) — Chat type.
 
  * **chat** (JID, readonly for clients) — Chat id.
 
@@ -1000,7 +1035,7 @@ Team.
 
  * **last_active** (bool, readonly for clients) — User last activity was in this team.
 
- * **changeable_statuses** (TeamStatus, readonly for clients, list, omitempty) — What status I can set to other team mebers.
+ * **changeable_statuses** ([TeamStatus](#TeamStatus), readonly for clients, list, omitempty) — What status I can set to other team mebers.
 
  * **bad_profile** (bool, readonly for clients, omitempty) — My profile in this team isn't full.
 
@@ -1060,6 +1095,14 @@ Short team representation. For invites, push notifications, etc. Readonly.
 
  * **icons** ([IconData](#IconData)) — Team icons.
 
+
+### <a name="TeamStatus"></a>TeamStatus
+Team status.
+
+ * **"owner"** Team owner. Can do anything
+ * **"admin"** Team administrator
+ * **"member"** Team member
+ * **"guest"** Team guest. Restricted account
 
 ### <a name="Terms"></a>Terms
 Exprtimental translation fields for "team" entity renaming. Readonly.
@@ -1247,4 +1290,5 @@ Wiki page. Experimental.
  * **editor** (JID) — Last editor contact id.
 
  * **text** (string) — Page text.
+
 

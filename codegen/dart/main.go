@@ -43,7 +43,7 @@ abstract class {{.Struct.Name}} with _${{.Struct.Name}} {
     @JsonKey(name: '{{$f.Json}}')
 	{{- if eq $f.DartType "DateTime" }} @DateTimeConverter(){{ end -}}
 	{{- if $f.DartRequired }} @required{{ end -}}
-    {{- if $f.List }} List<{{ $f.DartType }}>{{ else }} {{ $f.DartType }}{{ end }} {{ $f.JSName }},
+    {{- if $f.List }} List<{{ $f.DartType }}>{{ else }} {{ $f.DartType }}{{ end }} {{ $f.DartName }},
 {{ end }}
   }) = _{{.Struct.Name}};
 
@@ -74,7 +74,9 @@ func do() error {
 
 	for _, s := range structs {
 		switch s.Name {
-		case "UploadPreview", "PdfVersion", "Upload", "MarkupEntity", "MarkupType", "ChatType", "TeamStatus", "GroupStatus":
+		case "UploadPreview", "PdfVersion", "Upload", "MarkupEntity", "MarkupType",
+			"ChatType", "TeamStatus", "GroupStatus",
+			"Country":
 			log.Println("export:", s.Name)
 			if err := save(path, s); err != nil {
 				return err

@@ -46,6 +46,15 @@ func (f Field) DartRequired() bool {
 	return !(f.Null || f.Omitempty)
 }
 
+func (f Field) DartName() string {
+	switch f.JSName {
+	case "default":
+		return "isDefault"
+	default:
+		return f.JSName
+	}
+}
+
 type Struct struct {
 	Name       string      `json:"name"`
 	Help       string      `json:"help"`
