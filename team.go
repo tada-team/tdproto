@@ -1,14 +1,5 @@
 package tdproto
 
-type TeamStatus string
-
-const (
-	TeamOwner  = TeamStatus("owner")
-	TeamAdmin  = TeamStatus("admin")
-	TeamMember = TeamStatus("member")
-	TeamGuest  = TeamStatus("guest")
-)
-
 // Team
 type Team struct {
 	// Team id

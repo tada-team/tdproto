@@ -30,7 +30,6 @@ type ClientCallReject struct {
 }
 
 type ClientCallLeave struct {
-	Jid                 tdproto.JID `json:"jid"`
-	Reason              string      `json:"reason"`
-	LeaveWithoutClosing bool        `json:"test_not_in_room,omitempty"`
+	Jid    tdproto.JID `json:"jid"`
+	Reason string      `json:"reason"`
 }

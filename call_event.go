@@ -23,6 +23,9 @@ type CallOnliner struct {
 	// Contact name
 	DisplayName string `json:"display_name"`
 
+	// Contact role
+	Role string `json:"role"`
+
 	// Contact icon
 	Icon string `json:"icon"`
 

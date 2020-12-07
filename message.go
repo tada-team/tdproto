@@ -126,8 +126,11 @@ type Message struct {
 	// Message uid
 	MessageId string `json:"message_id"`
 
-	// Message creation datetime (set by server side)
-	Created string `json:"created" tdproto:"readonly"`
+	// Message creation datetime (set by server side) or sending datetime in future for draft messages
+	Created ISODateTimeString `json:"created" tdproto:"readonly"`
+
+	// Creation datetime for draft messages
+	Drafted ISODateTimeString `json:"drafted,omitempty" tdproto:"readonly"`
 
 	// Object version
 	Gentime int64 `json:"gentime" tdproto:"readonly"`
@@ -147,8 +150,8 @@ type Message struct {
 	// Importance flag
 	Important bool `json:"important,omitempty"`
 
-	// Datetime of message modification or deletion
-	Edited string `json:"edited,omitempty" tdproto:"readonly"`
+	// ISODateTimeString of message modification or deletion
+	Edited ISODateTimeString `json:"edited,omitempty" tdproto:"readonly"`
 
 	// Message was seen by anybody in chat. True or null
 	Received bool `json:"received,omitempty" tdproto:"readonly"`
@@ -190,7 +193,7 @@ type Message struct {
 	Silently bool `json:"silently,omitempty" tdproto:"readonly"`
 
 	// Author can change this message until date. Can be null
-	EditableUntil string `json:"editable_until,omitempty" tdproto:"readonly"`
+	EditableUntil ISODateTimeString `json:"editable_until,omitempty" tdproto:"readonly"`
 
 	// Index number of this message. Starts from 0. Null for deleted messages. Changes when any previous message wad deleted.
 	Num *int `json:"num,omitempty" tdproto:"readonly"`
@@ -255,7 +258,7 @@ type MessageReaction struct {
 // Message reaction detail
 type MessageReactionDetail struct {
 	// When reaction added, iso datetime
-	Created string `json:"created"`
+	Created ISODateTimeString `json:"created"`
 
 	// Reaction author
 	Sender *JID `json:"sender"`

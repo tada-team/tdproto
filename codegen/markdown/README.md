@@ -28,6 +28,8 @@ Call participant.
 
  * **display_name** (string) — Contact name.
 
+ * **role** (string) — Contact role.
+
  * **icon** (string) — Contact icon.
 
  * **muted** (bool) — Microphone muted. Computed from devices muted states.
@@ -40,13 +42,13 @@ Chat (direct, group, task) representaion.
 
  * **jid** (JID) — Group/Task/Contact id.
 
- * **chat_type** (ChatType) — Chat type.
+ * **chat_type** ([ChatType](#ChatType)) — Chat type.
 
  * **base_gentime** (int64, omitempty) — Base fields (not related to concrete participant) version.
 
  * **gentime** (int64) — Chat fields related to concrete participan) version.
 
- * **created** (string) — Creation date, iso datetime.
+ * **created** (ISODateTimeString) — Creation date, iso datetime.
 
  * **display_name** (string) — Title.
 
@@ -148,7 +150,7 @@ Chat (direct, group, task) representaion.
 
  * **tabs** (TaskTabKey, nullable, list, omitempty) — Tab names.
 
- * **status** (GroupStatus, nullable, omitempty) — My status in group chat.
+ * **status** ([GroupStatus](#GroupStatus), nullable, omitempty) — My status in group chat.
 
  * **members** ([GroupMembership](#GroupMembership), list, omitempty) — Group chat members.
 
@@ -180,12 +182,19 @@ Mimimal chat representaion.
 
  * **jid** (JID) — Group/Task/Contact id.
 
- * **chat_type** (ChatType) — Chat type.
+ * **chat_type** ([ChatType](#ChatType)) — Chat type.
 
  * **display_name** (string) — Title.
 
  * **icons** ([IconData](#IconData), nullable) — Icon data.
 
+
+### <a name="ChatType"></a>ChatType
+Chat type.
+
+ * **"direct"** Direct chat
+ * **"group"** Group chat
+ * **"task"** Task
 
 ### <a name="ColorRule"></a>ColorRule
 Set of rules to apply to tasks for coloring.
@@ -236,7 +245,7 @@ Contact.
 
  * **mood** (string, omitempty) — Mood in this team.
 
- * **status** (TeamStatus) — Status in this team.
+ * **status** ([TeamStatus](#TeamStatus)) — Status in this team.
 
  * **last_activity** (string, nullable) — Last activity in this team (iso datetime).
 
@@ -355,12 +364,24 @@ Short contact representaion.
  * **icons** ([IconData](#IconData), nullable) — Icons data.
 
 
+### <a name="Country"></a>Country
+Country for phone numbers selection on login screen.
+
+ * **code** (string) — Country code.
+
+ * **name** (string) — Country name.
+
+ * **default** (bool, omitempty) — Selected by default.
+
+ * **popular** (bool, omitempty) — Is popular, need to cache.
+
+
 ### <a name="DeletedChat"></a>DeletedChat
 Mimimal chat representaion for deletion.
 
  * **jid** (JID) — Group/Task/Contact id.
 
- * **chat_type** (ChatType) — Chat type.
+ * **chat_type** ([ChatType](#ChatType)) — Chat type.
 
  * **gentime** (int64) — Chat fields (related to concrete participan) version.
 
@@ -514,10 +535,16 @@ Group chat membership status.
 
  * **jid** (JID) — Contact id.
 
- * **status** (GroupStatus) — Status in group.
+ * **status** ([GroupStatus](#GroupStatus)) — Status in group.
 
  * **can_remove** (bool, omitempty) — Can I remove this member.
 
+
+### <a name="GroupStatus"></a>GroupStatus
+Status in team.
+
+ * **"admin"** Group administrator
+ * **"member"** Group member
 
 ### <a name="ICEServer"></a>ICEServer
 Interactive Connectivity Establishment Server for WEB Rtc connection. Readonly.
@@ -546,7 +573,7 @@ Integration for concrete chat.
 
  * **comment** (string) — Comment, if any.
 
- * **created** (string, omitempty) — Creation datetime, iso.
+ * **created** (ISODateTimeString, omitempty) — Creation datetime, iso.
 
  * **enabled** (bool) — Integration enabled.
 
@@ -612,7 +639,7 @@ Markup entity. Experimental.
 
  * **cllen** (int, omitempty) — Close marker length.
 
- * **typ** (string) — Marker type.
+ * **typ** ([MarkupType](#MarkupType)) — Marker type.
 
  * **url** (string, omitempty) — Url, for Link type.
 
@@ -622,6 +649,20 @@ Markup entity. Experimental.
 
  * **childs** ([MarkupEntity](#MarkupEntity), list, omitempty) — List of internal markup entities.
 
+
+### <a name="MarkupType"></a>MarkupType
+Markup type.
+
+ * **"bold"** Bold text
+ * **"italic"** Italic text
+ * **"underscore"** Underscore text
+ * **"strike"** Striked text
+ * **"code"** Inlined code
+ * **"codeblock"** Code block
+ * **"quote"** Quote
+ * **"link"** Link
+ * **"time"** Datetime
+ * **"unsafe"** Unsafe html element
 
 ### <a name="Message"></a>Message
 Chat message.
@@ -636,11 +677,13 @@ Chat message.
 
  * **message_id** (string) — Message uid.
 
- * **created** (string, readonly for clients) — Message creation datetime (set by server side).
+ * **created** (ISODateTimeString, readonly for clients) — Message creation datetime (set by server side) or sending datetime in future for draft messages.
+
+ * **drafted** (ISODateTimeString, readonly for clients, omitempty) — Creation datetime for draft messages.
 
  * **gentime** (int64, readonly for clients) — Object version.
 
- * **chat_type** (ChatType, readonly for clients) — Chat type.
+ * **chat_type** ([ChatType](#ChatType), readonly for clients) — Chat type.
 
  * **chat** (JID, readonly for clients) — Chat id.
 
@@ -650,7 +693,7 @@ Chat message.
 
  * **important** (bool, omitempty) — Importance flag.
 
- * **edited** (string, readonly for clients, omitempty) — Datetime of message modification or deletion.
+ * **edited** (ISODateTimeString, readonly for clients, omitempty) — ISODateTimeString of message modification or deletion.
 
  * **received** (bool, readonly for clients, omitempty) — Message was seen by anybody in chat. True or null.
 
@@ -678,7 +721,7 @@ Chat message.
 
  * **silently** (bool, readonly for clients, omitempty) — Message has no pushes and did not affect any counters.
 
- * **editable_until** (string, readonly for clients, omitempty) — Author can change this message until date. Can be null.
+ * **editable_until** (ISODateTimeString, readonly for clients, omitempty) — Author can change this message until date. Can be null.
 
  * **num** (int, readonly for clients, nullable, omitempty) — Index number of this message. Starts from 0. Null for deleted messages. Changes when any previous message wad deleted.
 
@@ -790,7 +833,7 @@ Push message over websockets. Readonly.
 
  * **message_id** (string) — Message id.
 
- * **created** (string) — Message creation iso datetime.
+ * **created** (ISODateTimeString) — Message creation iso datetime.
 
 
 ### <a name="MessageReaction"></a>MessageReaction
@@ -806,7 +849,7 @@ Message emoji reaction.
 ### <a name="MessageReactionDetail"></a>MessageReactionDetail
 Message reaction detail.
 
- * **created** (string) — When reaction added, iso datetime.
+ * **created** (ISODateTimeString) — When reaction added, iso datetime.
 
  * **sender** (JID) — Reaction author.
 
@@ -838,7 +881,7 @@ Websocket session.
 
  * **uid** (string) — Session id.
 
- * **created** (string) — Creation datetime.
+ * **created** (ISODateTimeString) — Creation datetime.
 
  * **lang** (string, omitempty) — Language code.
 
@@ -897,6 +940,24 @@ Task color rules color.
  * **light** (string) — Light.
 
 
+### <a name="TaskCounters"></a>TaskCounters
+Tasks counters.
+
+ * **jid** (JID) — Task jid.
+
+ * **num_unread** (uint, omitempty) — Unreads conuter.
+
+ * **num_unread_notices** (uint, omitempty) — Mentions (@) counter.
+
+
+### <a name="TaskFilter"></a>TaskFilter
+Task filter.
+
+ * **field** (TaskFilterKey) — Task filter field.
+
+ * **title** (string) — Filter title.
+
+
 ### <a name="TaskItem"></a>TaskItem
 Task checklist item.
 
@@ -913,6 +974,14 @@ Task checklist item.
  * **subtask** ([Subtask](#Subtask), nullable, omitempty) — Link to subtask. Optional.
 
 
+### <a name="TaskSort"></a>TaskSort
+Task sort type.
+
+ * **key** (TaskSortKey) — Field.
+
+ * **title** (string) — Sort title.
+
+
 ### <a name="TaskStatus"></a>TaskStatus
 Custom task status.
 
@@ -925,6 +994,26 @@ Custom task status.
  * **title** (string) — Status localized name.
 
  * **is_archive** (bool, omitempty) — Status not used anymore.
+
+
+### <a name="TaskTab"></a>TaskTab
+Task tab.
+
+ * **key** (TaskTabKey) — Tab name.
+
+ * **title** (string) — Tab title.
+
+ * **hide_empty** (bool) — Disable this tab when it has no contents.
+
+ * **show_counter** (bool) — Show unread badge.
+
+ * **pagination** (bool) — Enable pagination.
+
+ * **filters** ([TaskFilter](#TaskFilter), list) — Filters inside tab.
+
+ * **sort** ([TaskSort](#TaskSort), list) — Sort available in tab.
+
+ * **unread_tasks** ([TaskCounters](#TaskCounters), list) — Unread tasks with jid and counters.
 
 
 ### <a name="Team"></a>Team
@@ -946,7 +1035,7 @@ Team.
 
  * **last_active** (bool, readonly for clients) — User last activity was in this team.
 
- * **changeable_statuses** (TeamStatus, readonly for clients, list, omitempty) — What status I can set to other team mebers.
+ * **changeable_statuses** ([TeamStatus](#TeamStatus), readonly for clients, list, omitempty) — What status I can set to other team mebers.
 
  * **bad_profile** (bool, readonly for clients, omitempty) — My profile in this team isn't full.
 
@@ -1006,6 +1095,14 @@ Short team representation. For invites, push notifications, etc. Readonly.
 
  * **icons** ([IconData](#IconData)) — Team icons.
 
+
+### <a name="TeamStatus"></a>TeamStatus
+Team status.
+
+ * **"owner"** Team owner. Can do anything
+ * **"admin"** Team administrator
+ * **"member"** Team member
+ * **"guest"** Team guest. Restricted account
 
 ### <a name="Terms"></a>Terms
 Exprtimental translation fields for "team" entity renaming. Readonly.
@@ -1124,7 +1221,7 @@ Uploaded media.
 
  * **uid** (string) — Upload id.
 
- * **created** (string, omitempty) — Uploaded at.
+ * **created** (ISODateTimeString) — Uploaded at.
 
  * **size** (int) — Upload size in bytes.
 
@@ -1193,4 +1290,5 @@ Wiki page. Experimental.
  * **editor** (JID) — Last editor contact id.
 
  * **text** (string) — Page text.
+
 

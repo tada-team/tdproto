@@ -1,8 +1,16 @@
 package tdproto
 
+// Country for phone numbers selection on login screen
 type Country struct {
-	Code    string `json:"code"`
-	Name    string `json:"name"`
-	Default bool   `json:"default,omitempty"`
-	Popular bool   `json:"popular,omitempty"`
+	// Country code
+	Code string `json:"code"`
+
+	// Country name
+	Name string `json:"name"`
+
+	// Selected by default
+	Default bool `json:"default,omitempty"`
+
+	// Is popular, need to cache
+	Popular bool `json:"popular,omitempty"`
 }

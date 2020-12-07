@@ -4,12 +4,18 @@ import (
 	"log"
 )
 
+// Chat type
 type ChatType string
 
 const (
-	DirectChatType = ChatType("direct")
-	GroupChatType  = ChatType("group")
-	TaskChatType   = ChatType("task")
+	// Direct chat
+	DirectChatType ChatType = "direct"
+
+	// Group chat
+	GroupChatType ChatType = "group"
+
+	// Task
+	TaskChatType ChatType = "task"
 )
 
 func (ct ChatType) JidPrefix() string {
