@@ -1,8 +1,8 @@
 package tdproto
 
-func NewServerRemindUpdated(remind Remind) (r ServerRemindUpdated) {
+func NewServerRemindUpdated(reminds ...Remind) (r ServerRemindUpdated) {
 	r.Name = r.GetName()
-	r.Params.Reminds = []Remind{remind}
+	r.Params.Reminds = reminds
 	return r
 }
 
