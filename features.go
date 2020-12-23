@@ -17,6 +17,9 @@ type Features struct {
 	// Application title
 	AppTitle string `json:"app_title"`
 
+	// Local applications urls
+	AppSchemes []string `json:"app_schemes"`
+
 	// Static files server address
 	Userver string `json:"userver"`
 
