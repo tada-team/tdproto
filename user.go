@@ -3,13 +3,22 @@ package tdproto
 // Account data
 type User struct {
 	// Phone for login
-	Phone *string `json:"phone"`
+	Phone string `json:"phone,omitempty"`
 
 	// Email for login
-	Email *string `json:"email"`
+	Email string `json:"email,omitempty"`
+
+	// Family name
+	FamilyName string `json:"family_name,omitempty"`
+
+	// Given name
+	GivenName string `json:"given_name,omitempty"`
+
+	// Patronymic, if any
+	Patronymic string `json:"patronymic,omitempty"`
 
 	// Default language code
-	DefaultLang *string `json:"default_lang"`
+	DefaultLang string `json:"default_lang,omitempty"`
 
 	// Use Ctrl/Cmd + Enter instead Enter
 	AltSend bool `json:"alt_send"`
