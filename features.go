@@ -119,11 +119,26 @@ type Features struct {
 	// Message drafts saved on server
 	ServerDrafts bool `json:"server_drafts"`
 
-	// Firebase application id for web-push notifacations
+	// Firebase settings for web-push notifacations
 	FirebaseAppId string `json:"firebase_app_id"`
 
-	// Firebase sender id for web-push notifacations
+	// Firebase settings for web-push notifacations
 	FirebaseSenderId string `json:"firebase_sender_id"`
+
+	// Firebase settings for web-push notifacations
+	FirebaseApiKey string `json:"firebase_api_key"`
+
+	// Firebase settings for web-push notifacations
+	FirebaseAuthDomain string `json:"firebase_auth_domain"`
+
+	// Firebase settings for web-push notifacations
+	FirebaseDatabaseUrl string `json:"firebase_database_url"`
+
+	// Firebase settings for web-push notifacations
+	FirebaseProjectId string `json:"firebase_project_id"`
+
+	// Firebase settings for web-push notifacations
+	FirebaseStorageBucket string `json:"firebase_storage_bucket"`
 
 	// Calls functions enabled
 	Calls bool `json:"calls"`
