@@ -198,6 +198,9 @@ type Message struct {
 	// Index number of this message. Starts from 0. Null for deleted messages. Changes when any previous message wad deleted.
 	Num *int `json:"num,omitempty" tdproto:"readonly"`
 
+	// This message is archive. True or null
+	IsArchive bool `json:"is_archive,omitempty" tdproto:"readonly"`
+
 	// Debug information, if any
 	Debug string `json:"_debug,omitempty" tdproto:"readonly"`
 }
