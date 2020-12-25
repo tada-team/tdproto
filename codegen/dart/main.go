@@ -22,7 +22,7 @@ var dartFile = template.Must(template.New("").Parse(`import 'package:freezed_ann
 /// {{.Struct.Help}}
 enum {{.Struct.Name}} {
   {{ range $v := $.Struct.EnumValues }}
-  // {{$v.Help}}
+  /// {{$v.Help}}
   @JsonValue({{ $v.DartValue }})
   {{ $v.DartName }},
   {{ end }}
