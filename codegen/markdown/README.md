@@ -491,9 +491,9 @@ Server information. Readonly.
 
  * **server_drafts** (bool) — Message drafts saved on server.
 
- * **firebase_app_id** (string) — Firebase application id for web-push notifacations.
+ * **firebase_app_id** (string) — Firebase application id for web-push notifications.
 
- * **firebase_sender_id** (string) — Firebase sender id for web-push notifacations.
+ * **firebase_sender_id** (string) — Firebase sender id for web-push notifications.
 
  * **calls** (bool) — Calls functions enabled.
 
@@ -505,7 +505,7 @@ Server information. Readonly.
 
  * **max_participants_per_call** (int, omitempty) — Maximum number of participants per call.
 
- * **safari_push_id** (string) — Safari push id for web-push notifacations.
+ * **safari_push_id** (string) — Safari push id for web-push notifications.
 
  * **message_uploads** (bool) — Multiple message uploads.
 

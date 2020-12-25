@@ -122,25 +122,25 @@ type Features struct {
 	// Message drafts saved on server
 	ServerDrafts bool `json:"server_drafts"`
 
-	// Firebase settings for web-push notifacations
+	// Firebase settings for web-push notifications
 	FirebaseAppId string `json:"firebase_app_id"`
 
-	// Firebase settings for web-push notifacations
+	// Firebase settings for web-push notifications
 	FirebaseSenderId string `json:"firebase_sender_id"`
 
-	// Firebase settings for web-push notifacations
+	// Firebase settings for web-push notifications
 	FirebaseApiKey string `json:"firebase_api_key"`
 
-	// Firebase settings for web-push notifacations
+	// Firebase settings for web-push notifications
 	FirebaseAuthDomain string `json:"firebase_auth_domain"`
 
-	// Firebase settings for web-push notifacations
+	// Firebase settings for web-push notifications
 	FirebaseDatabaseUrl string `json:"firebase_database_url"`
 
-	// Firebase settings for web-push notifacations
+	// Firebase settings for web-push notifications
 	FirebaseProjectId string `json:"firebase_project_id"`
 
-	// Firebase settings for web-push notifacations
+	// Firebase settings for web-push notifications
 	FirebaseStorageBucket string `json:"firebase_storage_bucket"`
 
 	// Calls functions enabled
@@ -158,7 +158,7 @@ type Features struct {
 	// Maximum number of participants per call
 	MaxParticipantsPerCall int `json:"max_participants_per_call,omitempty"`
 
-	// Safari push id for web-push notifacations
+	// Safari push id for web-push notifications
 	SafariPushId string `json:"safari_push_id"`
 
 	// Multiple message uploads
