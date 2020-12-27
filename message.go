@@ -44,7 +44,7 @@ type MessageContent struct {
 	// Upload duration, if any. Deprecated: use Uploads instead
 	Duration *uint `mediatype:"audiomsg,video" json:"duration,omitempty"`
 
-	// Upload stil processing, if any. Deprecated: use Uploads instead
+	// Upload still processing, if any. Deprecated: use Uploads instead
 	Processing bool `mediatype:"video" json:"processing,omitempty"`
 
 	// Upload preview height, in pixels, if any. Deprecated: use Uploads instead
@@ -77,7 +77,7 @@ type MessageContent struct {
 	// Change actor contact id (for "change" mediatype)
 	Actor *JID `mediatype:"change" json:"actor,omitempty"`
 
-	// Comment. For audimessage.
+	// Comment. For audio message.
 	Comment string `mediatype:"progress" json:"comment,omitempty"`
 
 	// Given name (for "contact"  mediatype)
@@ -212,7 +212,7 @@ type MessageLink struct {
 	// Text fragment that should be replaced by link
 	Pattern string `json:"pattern"`
 
-	// Internal (tadateam://) or external link
+	// Internal or external link
 	Url string `json:"url"`
 
 	// Text replacement.
