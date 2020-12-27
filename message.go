@@ -14,8 +14,6 @@ const (
 	MediatypeAudiomsg Mediatype = "audiomsg"
 	MediatypeContact  Mediatype = "contact"
 	MediatypePdf      Mediatype = "pdf"
-	//MediatypeNewtask  Mediatype = "newtask"
-	//MediatypeProgress Mediatype = "progress"
 )
 
 type Mediasubtype string
@@ -23,12 +21,11 @@ type Mediasubtype string
 const (
 	MediaSubtypeSticker Mediasubtype = "sticker"
 	MediaSubtypeNewtask Mediasubtype = "newtask"
-	//MediaSubtypeSpeech  Mediasubtype = "speech"
 )
 
 // Chat message content
 type MessageContent struct {
-	// Text repesentation of message
+	// Text representation of message
 	Text string `json:"text"`
 
 	// Message type
@@ -37,37 +34,37 @@ type MessageContent struct {
 	// Message subtype, if any
 	Subtype Mediasubtype `json:"subtype,omitempty"`
 
-	// Upload id, if any. Depreacted: use Uploads instead
+	// Upload id, if any. Deprecated: use Uploads instead
 	Upload string `mediatype:"audiomsg,image,video,file" json:"upload,omitempty"`
 
-	// Upload url, if any. Depreacted: use Uploads instead
+	// Upload url, if any. Deprecated: use Uploads instead
 	MediaUrl string `mediatype:"audiomsg,image,video,file" json:"mediaURL,omitempty"`
 
-	// Upload size, if any. Depreacted: use Uploads instead
+	// Upload size, if any. Deprecated: use Uploads instead
 	Size int `mediatype:"audiomsg,image,video,file" json:"size,omitempty"`
 
-	// Upload duration, if any. Depreacted: use Uploads instead
+	// Upload duration, if any. Deprecated: use Uploads instead
 	Duration *uint `mediatype:"audiomsg,video" json:"duration,omitempty"`
 
-	// Upload stil processing, if any. Depreacted: use Uploads instead
+	// Upload stil processing, if any. Deprecated: use Uploads instead
 	Processing bool `mediatype:"video" json:"processing,omitempty"`
 
-	// Upload preview height, in pixels, if any. Depreacted: use Uploads instead
+	// Upload preview height, in pixels, if any. Deprecated: use Uploads instead
 	PreviewHeight int `mediatype:"image,video" json:"previewHeight,omitempty"`
 
-	// Upload width, in pixels, if any. Depreacted: use Uploads instead
+	// Upload width, in pixels, if any. Deprecated: use Uploads instead
 	PreviewWidth int `mediatype:"image,video" json:"previewWidth,omitempty"`
 
-	// Upload preview absolute url, if any. Depreacted: use Uploads instead
+	// Upload preview absolute url, if any. Deprecated: use Uploads instead
 	PreviewUrl string `mediatype:"image,video" json:"previewURL,omitempty"`
 
-	// Upload high resolution preview absolute url, if any. Depreacted: use Uploads instead
+	// Upload high resolution preview absolute url, if any. Deprecated: use Uploads instead
 	Preview2xUrl string `mediatype:"image,video" json:"preview2xURL,omitempty"`
 
-	// Upload name, if any. Depreacted: use Uploads instead
+	// Upload name, if any. Deprecated: use Uploads instead
 	Name string `mediatype:"image,video,file" json:"name,omitempty"`
 
-	// Upload is animated image, if any. Depreacted: use Uploads instead
+	// Upload is animated image, if any. Deprecated: use Uploads instead
 	Animated bool `mediatype:"image" json:"animated,omitempty"`
 
 	// Change title (for "change" mediatype)
@@ -105,8 +102,6 @@ type MessageContent struct {
 
 	// Pdf version, if any
 	PdfVersion *PdfVersion `json:"pdf_version,omitempty"`
-
-	//Deadline *time.Time   `mediasubtype:"newtask" json:"deadline,omitempty"`
 }
 
 // Chat message
