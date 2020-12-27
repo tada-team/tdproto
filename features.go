@@ -95,13 +95,16 @@ type Features struct {
 	// SMS authentication enabled
 	AuthBySms bool `json:"auth_by_sms,omitempty"`
 
+	// External services
+	OAuthServices []OAuthService `json:"oauth_services,omitempty"`
+
 	// ICE servers for WebRTC
 	ICEServers []ICEServer `json:"ice_servers"`
 
-	// True for onpremise installation
+	// True for premise installation
 	CustomServer bool `json:"custom_server"`
 
-	// Name of instalation
+	// Name of installation
 	InstallationType string `json:"installation_type"`
 
 	// Testing installation
@@ -116,31 +119,31 @@ type Features struct {
 	// Resend message in n seconds if no confirmation from server given
 	ResendTimeout int `json:"resend_timeout"`
 
-	// Frontent sentry.io settings
+	// Frontend sentry.io settings
 	SentryDsnJS string `json:"sentry_dsn_js"`
 
 	// Message drafts saved on server
 	ServerDrafts bool `json:"server_drafts"`
 
-	// Firebase settings for web-push notifacations
+	// Firebase settings for web-push notifications
 	FirebaseAppId string `json:"firebase_app_id"`
 
-	// Firebase settings for web-push notifacations
+	// Firebase settings for web-push notifications
 	FirebaseSenderId string `json:"firebase_sender_id"`
 
-	// Firebase settings for web-push notifacations
+	// Firebase settings for web-push notifications
 	FirebaseApiKey string `json:"firebase_api_key"`
 
-	// Firebase settings for web-push notifacations
+	// Firebase settings for web-push notifications
 	FirebaseAuthDomain string `json:"firebase_auth_domain"`
 
-	// Firebase settings for web-push notifacations
+	// Firebase settings for web-push notifications
 	FirebaseDatabaseUrl string `json:"firebase_database_url"`
 
-	// Firebase settings for web-push notifacations
+	// Firebase settings for web-push notifications
 	FirebaseProjectId string `json:"firebase_project_id"`
 
-	// Firebase settings for web-push notifacations
+	// Firebase settings for web-push notifications
 	FirebaseStorageBucket string `json:"firebase_storage_bucket"`
 
 	// Calls functions enabled
@@ -158,7 +161,7 @@ type Features struct {
 	// Maximum number of participants per call
 	MaxParticipantsPerCall int `json:"max_participants_per_call,omitempty"`
 
-	// Safari push id for web-push notifacations
+	// Safari push id for web-push notifications
 	SafariPushId string `json:"safari_push_id"`
 
 	// Multiple message uploads
@@ -201,7 +204,7 @@ type ICEServer struct {
 	Urls string `json:"urls"`
 }
 
-// Exprtimental translation fields for "team" entity renaming. Readonly.
+// Experimental translation fields for "team" entity renaming. Readonly.
 type Terms struct {
 	EnInTeam       string
 	EnTeam         string
