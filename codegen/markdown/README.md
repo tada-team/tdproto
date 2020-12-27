@@ -423,6 +423,8 @@ Server information. Readonly.
 
  * **app_title** (string) — Application title.
 
+ * **app_schemes** (string, list) — Local applications urls.
+
  * **userver** (string) — Static files server address.
 
  * **ios_app** (string) — Link to AppStore.
@@ -473,11 +475,13 @@ Server information. Readonly.
 
  * **auth_by_sms** (bool, omitempty) — SMS authentication enabled.
 
+ * **oauth_services** ([OAuthService](#OAuthService), list, omitempty) — External services.
+
  * **ice_servers** ([ICEServer](#ICEServer), list) — ICE servers for WebRTC.
 
- * **custom_server** (bool) — True for onpremise installation.
+ * **custom_server** (bool) — True for premise installation.
 
- * **installation_type** (string) — Name of instalation.
+ * **installation_type** (string) — Name of installation.
 
  * **is_testing** (bool) — Testing installation.
 
@@ -487,13 +491,23 @@ Server information. Readonly.
 
  * **resend_timeout** (int) — Resend message in n seconds if no confirmation from server given.
 
- * **sentry_dsn_js** (string) — Frontent sentry.io settings.
+ * **sentry_dsn_js** (string) — Frontend sentry.io settings.
 
  * **server_drafts** (bool) — Message drafts saved on server.
 
- * **firebase_app_id** (string) — Firebase application id for web-push notifacations.
+ * **firebase_app_id** (string) — Firebase settings for web-push notifications.
 
- * **firebase_sender_id** (string) — Firebase sender id for web-push notifacations.
+ * **firebase_sender_id** (string) — Firebase settings for web-push notifications.
+
+ * **firebase_api_key** (string) — Firebase settings for web-push notifications.
+
+ * **firebase_auth_domain** (string) — Firebase settings for web-push notifications.
+
+ * **firebase_database_url** (string) — Firebase settings for web-push notifications.
+
+ * **firebase_project_id** (string) — Firebase settings for web-push notifications.
+
+ * **firebase_storage_bucket** (string) — Firebase settings for web-push notifications.
 
  * **calls** (bool) — Calls functions enabled.
 
@@ -505,7 +519,7 @@ Server information. Readonly.
 
  * **max_participants_per_call** (int, omitempty) — Maximum number of participants per call.
 
- * **safari_push_id** (string) — Safari push id for web-push notifacations.
+ * **safari_push_id** (string) — Safari push id for web-push notifications.
 
  * **message_uploads** (bool) — Multiple message uploads.
 
@@ -725,39 +739,41 @@ Chat message.
 
  * **num** (int, readonly for clients, nullable, omitempty) — Index number of this message. Starts from 0. Null for deleted messages. Changes when any previous message wad deleted.
 
+ * **is_archive** (bool, readonly for clients, omitempty) — This message is archive. True or null.
+
  * **_debug** (string, readonly for clients, omitempty) — Debug information, if any.
 
 
 ### <a name="MessageContent"></a>MessageContent
 Chat message content.
 
- * **text** (string) — Text repesentation of message.
+ * **text** (string) — Text representation of message.
 
  * **type** (Mediatype) — Message type.
 
  * **subtype** (Mediasubtype, omitempty) — Message subtype, if any.
 
- * **upload** (string, omitempty) — Upload id, if any. Depreacted: use Uploads instead.
+ * **upload** (string, omitempty) — Upload id, if any. Deprecated: use Uploads instead.
 
- * **mediaURL** (string, omitempty) — Upload url, if any. Depreacted: use Uploads instead.
+ * **mediaURL** (string, omitempty) — Upload url, if any. Deprecated: use Uploads instead.
 
- * **size** (int, omitempty) — Upload size, if any. Depreacted: use Uploads instead.
+ * **size** (int, omitempty) — Upload size, if any. Deprecated: use Uploads instead.
 
- * **duration** (uint, nullable, omitempty) — Upload duration, if any. Depreacted: use Uploads instead.
+ * **duration** (uint, nullable, omitempty) — Upload duration, if any. Deprecated: use Uploads instead.
 
- * **processing** (bool, omitempty) — Upload stil processing, if any. Depreacted: use Uploads instead.
+ * **processing** (bool, omitempty) — Upload still processing, if any. Deprecated: use Uploads instead.
 
- * **previewHeight** (int, omitempty) — Upload preview height, in pixels, if any. Depreacted: use Uploads instead.
+ * **previewHeight** (int, omitempty) — Upload preview height, in pixels, if any. Deprecated: use Uploads instead.
 
- * **previewWidth** (int, omitempty) — Upload width, in pixels, if any. Depreacted: use Uploads instead.
+ * **previewWidth** (int, omitempty) — Upload width, in pixels, if any. Deprecated: use Uploads instead.
 
- * **previewURL** (string, omitempty) — Upload preview absolute url, if any. Depreacted: use Uploads instead.
+ * **previewURL** (string, omitempty) — Upload preview absolute url, if any. Deprecated: use Uploads instead.
 
- * **preview2xURL** (string, omitempty) — Upload high resolution preview absolute url, if any. Depreacted: use Uploads instead.
+ * **preview2xURL** (string, omitempty) — Upload high resolution preview absolute url, if any. Deprecated: use Uploads instead.
 
- * **name** (string, omitempty) — Upload name, if any. Depreacted: use Uploads instead.
+ * **name** (string, omitempty) — Upload name, if any. Deprecated: use Uploads instead.
 
- * **animated** (bool, omitempty) — Upload is animated image, if any. Depreacted: use Uploads instead.
+ * **animated** (bool, omitempty) — Upload is animated image, if any. Deprecated: use Uploads instead.
 
  * **title** (string, omitempty) — Change title (for "change" mediatype).
 
@@ -767,7 +783,7 @@ Chat message content.
 
  * **actor** (JID, nullable, omitempty) — Change actor contact id (for "change" mediatype).
 
- * **comment** (string, omitempty) — Comment. For audimessage.
+ * **comment** (string, omitempty) — Comment. For audio message.
 
  * **given_name** (string, nullable, omitempty) — Given name (for "contact" mediatype).
 
@@ -789,7 +805,7 @@ Checked message links. In short: "Click here: {link.Pattern}" => "Click here: <a
 
  * **pattern** (string) — Text fragment that should be replaced by link.
 
- * **url** (string) — Internal (tadateam://) or external link.
+ * **url** (string) — Internal or external link.
 
  * **text** (string) — Text replacement.
 
@@ -854,6 +870,14 @@ Message reaction detail.
  * **sender** (JID) — Reaction author.
 
  * **name** (string) — Reaction emoji.
+
+
+### <a name="OAuthService"></a>OAuthService
+Auth service.
+
+ * **Name** (string) — Integration title.
+
+ * **Url** (string) — Redirect url.
 
 
 ### <a name="PdfVersion"></a>PdfVersion
@@ -1105,7 +1129,7 @@ Team status.
  * **"guest"** Team guest. Restricted account
 
 ### <a name="Terms"></a>Terms
-Exprtimental translation fields for "team" entity renaming. Readonly.
+Experimental translation fields for "team" entity renaming. Readonly.
 
  * **EnInTeam** (string) — EnInTeam.
 
@@ -1257,11 +1281,17 @@ Upload preview.
 ### <a name="User"></a>User
 Account data.
 
- * **phone** (string, nullable) — Phone for login.
+ * **phone** (string, omitempty) — Phone for login.
 
- * **email** (string, nullable) — Email for login.
+ * **email** (string, omitempty) — Email for login.
 
- * **default_lang** (string, nullable) — Default language code.
+ * **family_name** (string, omitempty) — Family name.
+
+ * **given_name** (string, omitempty) — Given name.
+
+ * **patronymic** (string, omitempty) — Patronymic, if any.
+
+ * **default_lang** (string, omitempty) — Default language code.
 
  * **alt_send** (bool) — Use Ctrl/Cmd + Enter instead Enter.
 
