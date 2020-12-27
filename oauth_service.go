@@ -1,10 +1,10 @@
 package tdproto
 
-// Auth service
+// OAuth service
 type OAuthService struct {
 	// Integration title
-	Name string
+	Name string `json:"name"`
 
 	// Redirect url
-	Url  string
+	Url  string `json:"url"`
 }
