@@ -1,6 +1,6 @@
 package tdproto
 
-// Audiocall information
+// Audio call information
 type CallEvent struct {
 	// Call start, iso date
 	Start *string `json:"start"`

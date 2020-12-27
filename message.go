@@ -1,7 +1,5 @@
 package tdproto
 
-import "sort"
-
 type Mediatype string
 
 const (
@@ -14,8 +12,6 @@ const (
 	MediatypeAudiomsg Mediatype = "audiomsg"
 	MediatypeContact  Mediatype = "contact"
 	MediatypePdf      Mediatype = "pdf"
-	//MediatypeNewtask  Mediatype = "newtask"
-	//MediatypeProgress Mediatype = "progress"
 )
 
 type Mediasubtype string
@@ -23,12 +19,11 @@ type Mediasubtype string
 const (
 	MediaSubtypeSticker Mediasubtype = "sticker"
 	MediaSubtypeNewtask Mediasubtype = "newtask"
-	//MediaSubtypeSpeech  Mediasubtype = "speech"
 )
 
 // Chat message content
 type MessageContent struct {
-	// Text repesentation of message
+	// Text representation of message
 	Text string `json:"text"`
 
 	// Message type
@@ -37,37 +32,37 @@ type MessageContent struct {
 	// Message subtype, if any
 	Subtype Mediasubtype `json:"subtype,omitempty"`
 
-	// Upload id, if any. Depreacted: use Uploads instead
+	// Upload id, if any. Deprecated: use Uploads instead
 	Upload string `mediatype:"audiomsg,image,video,file" json:"upload,omitempty"`
 
-	// Upload url, if any. Depreacted: use Uploads instead
+	// Upload url, if any. Deprecated: use Uploads instead
 	MediaUrl string `mediatype:"audiomsg,image,video,file" json:"mediaURL,omitempty"`
 
-	// Upload size, if any. Depreacted: use Uploads instead
+	// Upload size, if any. Deprecated: use Uploads instead
 	Size int `mediatype:"audiomsg,image,video,file" json:"size,omitempty"`
 
-	// Upload duration, if any. Depreacted: use Uploads instead
+	// Upload duration, if any. Deprecated: use Uploads instead
 	Duration *uint `mediatype:"audiomsg,video" json:"duration,omitempty"`
 
-	// Upload stil processing, if any. Depreacted: use Uploads instead
+	// Upload still processing, if any. Deprecated: use Uploads instead
 	Processing bool `mediatype:"video" json:"processing,omitempty"`
 
-	// Upload preview height, in pixels, if any. Depreacted: use Uploads instead
+	// Upload preview height, in pixels, if any. Deprecated: use Uploads instead
 	PreviewHeight int `mediatype:"image,video" json:"previewHeight,omitempty"`
 
-	// Upload width, in pixels, if any. Depreacted: use Uploads instead
+	// Upload width, in pixels, if any. Deprecated: use Uploads instead
 	PreviewWidth int `mediatype:"image,video" json:"previewWidth,omitempty"`
 
-	// Upload preview absolute url, if any. Depreacted: use Uploads instead
+	// Upload preview absolute url, if any. Deprecated: use Uploads instead
 	PreviewUrl string `mediatype:"image,video" json:"previewURL,omitempty"`
 
-	// Upload high resolution preview absolute url, if any. Depreacted: use Uploads instead
+	// Upload high resolution preview absolute url, if any. Deprecated: use Uploads instead
 	Preview2xUrl string `mediatype:"image,video" json:"preview2xURL,omitempty"`
 
-	// Upload name, if any. Depreacted: use Uploads instead
+	// Upload name, if any. Deprecated: use Uploads instead
 	Name string `mediatype:"image,video,file" json:"name,omitempty"`
 
-	// Upload is animated image, if any. Depreacted: use Uploads instead
+	// Upload is animated image, if any. Deprecated: use Uploads instead
 	Animated bool `mediatype:"image" json:"animated,omitempty"`
 
 	// Change title (for "change" mediatype)
@@ -82,7 +77,7 @@ type MessageContent struct {
 	// Change actor contact id (for "change" mediatype)
 	Actor *JID `mediatype:"change" json:"actor,omitempty"`
 
-	// Comment. For audimessage.
+	// Comment. For audio message.
 	Comment string `mediatype:"progress" json:"comment,omitempty"`
 
 	// Given name (for "contact"  mediatype)
@@ -105,8 +100,6 @@ type MessageContent struct {
 
 	// Pdf version, if any
 	PdfVersion *PdfVersion `json:"pdf_version,omitempty"`
-
-	//Deadline *time.Time   `mediasubtype:"newtask" json:"deadline,omitempty"`
 }
 
 // Chat message
@@ -198,6 +191,9 @@ type Message struct {
 	// Index number of this message. Starts from 0. Null for deleted messages. Changes when any previous message wad deleted.
 	Num *int `json:"num,omitempty" tdproto:"readonly"`
 
+	// This message is archive. True or null
+	IsArchive bool `json:"is_archive,omitempty" tdproto:"readonly"`
+
 	// Debug information, if any
 	Debug string `json:"_debug,omitempty" tdproto:"readonly"`
 }
@@ -216,7 +212,7 @@ type MessageLink struct {
 	// Text fragment that should be replaced by link
 	Pattern string `json:"pattern"`
 
-	// Internal (tadateam://) or external link
+	// Internal or external link
 	Url string `json:"url"`
 
 	// Text replacement.
@@ -236,12 +232,6 @@ type MessageLink struct {
 }
 
 type MessageLinks []MessageLink
-
-func (links MessageLinks) Sort() {
-	sort.Slice(links, func(i, j int) bool {
-		return links[i].Pattern < links[j].Pattern
-	})
-}
 
 // Message emoji reaction
 type MessageReaction struct {

@@ -5,8 +5,8 @@ type GroupStatus string
 
 const (
 	// Group administrator
-	GroupAdmin GroupStatus = "admin" // 3
+	GroupAdmin GroupStatus = "admin" // 2
 
 	// Group member
-	GroupMember GroupStatus = "member" // 2
+	GroupMember GroupStatus = "member" // 3
 )

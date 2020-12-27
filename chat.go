@@ -1,6 +1,6 @@
 package tdproto
 
-// Mimimal chat representaion
+// Minimal chat representation
 type ChatShort struct {
 	// Group/Task/Contact id
 	Jid JID `json:"jid"`
@@ -15,7 +15,7 @@ type ChatShort struct {
 	Icons *IconData `json:"icons"`
 }
 
-// Mimimal chat representaion for deletion
+// Minimal chat representation for deletion
 type DeletedChat struct {
 	// Group/Task/Contact id
 	Jid JID `json:"jid"`
@@ -23,14 +23,14 @@ type DeletedChat struct {
 	// Chat type
 	ChatType ChatType `json:"chat_type"`
 
-	// Chat fields (related to concrete participan) version
+	// Chat fields (related to concrete participant) version
 	Gentime int64 `json:"gentime"`
 
 	// Archive flag. Always true for this structure
 	IsArchive bool `json:"is_archive"`
 }
 
-// Chat (direct, group, task) representaion
+// Chat (direct, group, task) representation
 type Chat struct {
 	// Group/Task/Contact id
 	Jid JID `json:"jid"`
@@ -41,7 +41,7 @@ type Chat struct {
 	// Base fields (not related to concrete participant) version
 	BaseGentime int64 `json:"base_gentime,omitempty"`
 
-	// Chat fields related to concrete participan) version
+	// Chat fields related to concrete participant) version
 	Gentime int64 `json:"gentime"`
 
 	// Creation date, iso datetime
@@ -80,10 +80,10 @@ type Chat struct {
 	// Push notifications enabled
 	NotificationsEnabled bool `json:"notifications_enabled,omitempty"`
 
-	// Number of importants messages
+	// Number of important messages
 	NumImportants int `json:"num_importants,omitempty"`
 
-	// Unreads conuter
+	// Unread counter
 	NumUnread uint `json:"num_unread,omitempty"`
 
 	// Mentions (@) counter
@@ -104,7 +104,7 @@ type Chat struct {
 	// Is chat pinned on top
 	Pinned bool `json:"pinned,omitempty"`
 
-	// Sort oreding for pinned chat
+	// Sort ordering for pinned chat
 	PinnedSortOrdering int `json:"pinned_sort_ordering,omitempty"`
 
 	// Non-archive participants number
@@ -221,7 +221,7 @@ type Chat struct {
 	// Readonly for non-admins group chat (Like Channels in Telegram bug switchable)
 	ReadonlyForMembers bool `chattype:"group" json:"readonly_for_members,omitempty"`
 
-	// Delete messages in this chat in seconds. Experemental function
+	// Delete messages in this chat in seconds. Experimental function
 	AutocleanupAge *int `chattype:"group" json:"autocleanup_age,omitempty"`
 
 	// Can other team member see this task/group chat

@@ -95,13 +95,16 @@ type Features struct {
 	// SMS authentication enabled
 	AuthBySms bool `json:"auth_by_sms,omitempty"`
 
+	// External services
+	OAuthServices []OAuthService `json:"oauth_services,omitempty"`
+
 	// ICE servers for WebRTC
 	ICEServers []ICEServer `json:"ice_servers"`
 
-	// True for onpremise installation
+	// True for premise installation
 	CustomServer bool `json:"custom_server"`
 
-	// Name of instalation
+	// Name of installation
 	InstallationType string `json:"installation_type"`
 
 	// Testing installation
@@ -116,7 +119,7 @@ type Features struct {
 	// Resend message in n seconds if no confirmation from server given
 	ResendTimeout int `json:"resend_timeout"`
 
-	// Frontent sentry.io settings
+	// Frontend sentry.io settings
 	SentryDsnJS string `json:"sentry_dsn_js"`
 
 	// Message drafts saved on server
@@ -201,7 +204,7 @@ type ICEServer struct {
 	Urls string `json:"urls"`
 }
 
-// Exprtimental translation fields for "team" entity renaming. Readonly.
+// Experimental translation fields for "team" entity renaming. Readonly.
 type Terms struct {
 	EnInTeam       string
 	EnTeam         string

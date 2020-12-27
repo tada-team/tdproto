@@ -83,7 +83,7 @@ type Contact struct {
 	// Enable remove all messages experimental features
 	DropallEnabled *bool `json:"dropall_enabled,omitempty"`
 
-	// Use Ctrl/Cmd + Enter insted Enter
+	// Use Ctrl/Cmd + Enter instead Enter
 	AltSend *bool `json:"alt_send,omitempty"`
 
 	// Use * as @ for mentions
@@ -128,10 +128,10 @@ type Contact struct {
 	// Show archived contacts in contact list
 	ContactShowArchived *bool `json:"contact_show_archived,omitempty"`
 
-	// Show inread chats first in feed
+	// Show unread chats first in feed
 	UnreadFirst *bool `json:"unread_first,omitempty"`
 
-	// Show inread chats first in feed in mobile app
+	// Show unread chats first in feed in mobile app
 	MUnreadFirst *bool `json:"munread_first,omitempty"`
 
 	// Can I add new members to this team
@@ -174,7 +174,7 @@ type ContactCustomFields struct {
 	Source      string `json:"source,omitempty"`
 }
 
-// Short contact representaion
+// Short contact representation
 type ContactShort struct {
 	// Contact Id
 	Jid JID `json:"jid"`

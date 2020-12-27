@@ -10,7 +10,7 @@ Call participant device.
 
 
 ### <a name="CallEvent"></a>CallEvent
-Audiocall information.
+Audio call information.
 
  * **start** (string, nullable) — Call start, iso date.
 
@@ -38,7 +38,7 @@ Call participant.
 
 
 ### <a name="Chat"></a>Chat
-Chat (direct, group, task) representaion.
+Chat (direct, group, task) representation.
 
  * **jid** (JID) — Group/Task/Contact id.
 
@@ -46,7 +46,7 @@ Chat (direct, group, task) representaion.
 
  * **base_gentime** (int64, omitempty) — Base fields (not related to concrete participant) version.
 
- * **gentime** (int64) — Chat fields related to concrete participan) version.
+ * **gentime** (int64) — Chat fields related to concrete participant) version.
 
  * **created** (ISODateTimeString) — Creation date, iso datetime.
 
@@ -72,9 +72,9 @@ Chat (direct, group, task) representaion.
 
  * **notifications_enabled** (bool, omitempty) — Push notifications enabled.
 
- * **num_importants** (int, omitempty) — Number of importants messages.
+ * **num_importants** (int, omitempty) — Number of important messages.
 
- * **num_unread** (uint, omitempty) — Unreads conuter.
+ * **num_unread** (uint, omitempty) — Unread counter.
 
  * **num_unread_notices** (uint, omitempty) — Mentions (@) counter.
 
@@ -88,7 +88,7 @@ Chat (direct, group, task) representaion.
 
  * **pinned** (bool, omitempty) — Is chat pinned on top.
 
- * **pinned_sort_ordering** (int, omitempty) — Sort oreding for pinned chat.
+ * **pinned_sort_ordering** (int, omitempty) — Sort ordering for pinned chat.
 
  * **num_members** (uint, nullable, omitempty) — Non-archive participants number.
 
@@ -166,7 +166,7 @@ Chat (direct, group, task) representaion.
 
  * **readonly_for_members** (bool, omitempty) — Readonly for non-admins group chat (Like Channels in Telegram bug switchable).
 
- * **autocleanup_age** (int, nullable, omitempty) — Delete messages in this chat in seconds. Experemental function.
+ * **autocleanup_age** (int, nullable, omitempty) — Delete messages in this chat in seconds. Experimental function.
 
  * **public** (bool, omitempty) — Can other team member see this task/group chat.
 
@@ -178,7 +178,7 @@ Chat (direct, group, task) representaion.
 
 
 ### <a name="ChatShort"></a>ChatShort
-Mimimal chat representaion.
+Minimal chat representation.
 
  * **jid** (JID) — Group/Task/Contact id.
 
@@ -283,7 +283,7 @@ Contact.
 
  * **dropall_enabled** (bool, nullable, omitempty) — Enable remove all messages experimental features.
 
- * **alt_send** (bool, nullable, omitempty) — Use Ctrl/Cmd + Enter insted Enter.
+ * **alt_send** (bool, nullable, omitempty) — Use Ctrl/Cmd + Enter instead Enter.
 
  * **asterisk_mention** (bool, nullable, omitempty) — Use * as @ for mentions.
 
@@ -313,9 +313,9 @@ Contact.
 
  * **contact_show_archived** (bool, nullable, omitempty) — Show archived contacts in contact list.
 
- * **unread_first** (bool, nullable, omitempty) — Show inread chats first in feed.
+ * **unread_first** (bool, nullable, omitempty) — Show unread chats first in feed.
 
- * **munread_first** (bool, nullable, omitempty) — Show inread chats first in feed in mobile app.
+ * **munread_first** (bool, nullable, omitempty) — Show unread chats first in feed in mobile app.
 
  * **can_add_to_team** (bool, omitempty) — Can I add new members to this team.
 
@@ -353,7 +353,7 @@ Extra contact fields.
 
 
 ### <a name="ContactShort"></a>ContactShort
-Short contact representaion.
+Short contact representation.
 
  * **jid** (JID) — Contact Id.
 
@@ -377,13 +377,13 @@ Country for phone numbers selection on login screen.
 
 
 ### <a name="DeletedChat"></a>DeletedChat
-Mimimal chat representaion for deletion.
+Minimal chat representation for deletion.
 
  * **jid** (JID) — Group/Task/Contact id.
 
  * **chat_type** ([ChatType](#ChatType)) — Chat type.
 
- * **gentime** (int64) — Chat fields (related to concrete participan) version.
+ * **gentime** (int64) — Chat fields (related to concrete participant) version.
 
  * **is_archive** (bool) — Archive flag. Always true for this structure.
 
@@ -422,6 +422,8 @@ Server information. Readonly.
  * **front_version** (string) — Webclient version.
 
  * **app_title** (string) — Application title.
+
+ * **app_schemes** (string, list) — Local applications urls.
 
  * **userver** (string) — Static files server address.
 
@@ -473,11 +475,13 @@ Server information. Readonly.
 
  * **auth_by_sms** (bool, omitempty) — SMS authentication enabled.
 
+ * **oauth_services** ([OAuthService](#OAuthService), list, omitempty) — External services.
+
  * **ice_servers** ([ICEServer](#ICEServer), list) — ICE servers for WebRTC.
 
- * **custom_server** (bool) — True for onpremise installation.
+ * **custom_server** (bool) — True for premise installation.
 
- * **installation_type** (string) — Name of instalation.
+ * **installation_type** (string) — Name of installation.
 
  * **is_testing** (bool) — Testing installation.
 
@@ -487,13 +491,27 @@ Server information. Readonly.
 
  * **resend_timeout** (int) — Resend message in n seconds if no confirmation from server given.
 
- * **sentry_dsn_js** (string) — Frontent sentry.io settings.
+ * **sentry_dsn_js** (string) — Frontend sentry.io settings.
 
  * **server_drafts** (bool) — Message drafts saved on server.
 
- * **firebase_app_id** (string) — Firebase application id for web-push notifications.
+ * **firebase_app_id** (string) — Firebase settings for web-push notifications.
 
- * **firebase_sender_id** (string) — Firebase sender id for web-push notifications.
+ * **firebase_sender_id** (string) — Firebase settings for web-push notifications.
+
+ * **firebase_api_key** (string) — Firebase settings for web-push notifications.
+
+ * **firebase_auth_domain** (string) — Firebase settings for web-push notifications.
+
+ * **firebase_database_url** (string) — Firebase settings for web-push notifications.
+
+ * **firebase_project_id** (string) — Firebase settings for web-push notifications.
+
+ * **firebase_storage_bucket** (string) — Firebase settings for web-push notifications.
+
+
+
+
 
  * **calls** (bool) — Calls functions enabled.
 
@@ -725,39 +743,41 @@ Chat message.
 
  * **num** (int, readonly for clients, nullable, omitempty) — Index number of this message. Starts from 0. Null for deleted messages. Changes when any previous message wad deleted.
 
+ * **is_archive** (bool, readonly for clients, omitempty) — This message is archive. True or null.
+
  * **_debug** (string, readonly for clients, omitempty) — Debug information, if any.
 
 
 ### <a name="MessageContent"></a>MessageContent
 Chat message content.
 
- * **text** (string) — Text repesentation of message.
+ * **text** (string) — Text representation of message.
 
  * **type** (Mediatype) — Message type.
 
  * **subtype** (Mediasubtype, omitempty) — Message subtype, if any.
 
- * **upload** (string, omitempty) — Upload id, if any. Depreacted: use Uploads instead.
+ * **upload** (string, omitempty) — Upload id, if any. Deprecated: use Uploads instead.
 
- * **mediaURL** (string, omitempty) — Upload url, if any. Depreacted: use Uploads instead.
+ * **mediaURL** (string, omitempty) — Upload url, if any. Deprecated: use Uploads instead.
 
- * **size** (int, omitempty) — Upload size, if any. Depreacted: use Uploads instead.
+ * **size** (int, omitempty) — Upload size, if any. Deprecated: use Uploads instead.
 
- * **duration** (uint, nullable, omitempty) — Upload duration, if any. Depreacted: use Uploads instead.
+ * **duration** (uint, nullable, omitempty) — Upload duration, if any. Deprecated: use Uploads instead.
 
- * **processing** (bool, omitempty) — Upload stil processing, if any. Depreacted: use Uploads instead.
+ * **processing** (bool, omitempty) — Upload still processing, if any. Deprecated: use Uploads instead.
 
- * **previewHeight** (int, omitempty) — Upload preview height, in pixels, if any. Depreacted: use Uploads instead.
+ * **previewHeight** (int, omitempty) — Upload preview height, in pixels, if any. Deprecated: use Uploads instead.
 
- * **previewWidth** (int, omitempty) — Upload width, in pixels, if any. Depreacted: use Uploads instead.
+ * **previewWidth** (int, omitempty) — Upload width, in pixels, if any. Deprecated: use Uploads instead.
 
- * **previewURL** (string, omitempty) — Upload preview absolute url, if any. Depreacted: use Uploads instead.
+ * **previewURL** (string, omitempty) — Upload preview absolute url, if any. Deprecated: use Uploads instead.
 
- * **preview2xURL** (string, omitempty) — Upload high resolution preview absolute url, if any. Depreacted: use Uploads instead.
+ * **preview2xURL** (string, omitempty) — Upload high resolution preview absolute url, if any. Deprecated: use Uploads instead.
 
- * **name** (string, omitempty) — Upload name, if any. Depreacted: use Uploads instead.
+ * **name** (string, omitempty) — Upload name, if any. Deprecated: use Uploads instead.
 
- * **animated** (bool, omitempty) — Upload is animated image, if any. Depreacted: use Uploads instead.
+ * **animated** (bool, omitempty) — Upload is animated image, if any. Deprecated: use Uploads instead.
 
  * **title** (string, omitempty) — Change title (for "change" mediatype).
 
@@ -767,7 +787,7 @@ Chat message content.
 
  * **actor** (JID, nullable, omitempty) — Change actor contact id (for "change" mediatype).
 
- * **comment** (string, omitempty) — Comment. For audimessage.
+ * **comment** (string, omitempty) — Comment. For audio message.
 
  * **given_name** (string, nullable, omitempty) — Given name (for "contact" mediatype).
 
@@ -789,7 +809,7 @@ Checked message links. In short: "Click here: {link.Pattern}" => "Click here: <a
 
  * **pattern** (string) — Text fragment that should be replaced by link.
 
- * **url** (string) — Internal (tadateam://) or external link.
+ * **url** (string) — Internal or external link.
 
  * **text** (string) — Text replacement.
 
@@ -854,6 +874,14 @@ Message reaction detail.
  * **sender** (JID) — Reaction author.
 
  * **name** (string) — Reaction emoji.
+
+
+### <a name="OAuthService"></a>OAuthService
+OAuth service.
+
+ * **name** (string) — Integration title.
+
+ * **url** (string) — Redirect url.
 
 
 ### <a name="PdfVersion"></a>PdfVersion
@@ -1105,7 +1133,7 @@ Team status.
  * **"guest"** Team guest. Restricted account
 
 ### <a name="Terms"></a>Terms
-Exprtimental translation fields for "team" entity renaming. Readonly.
+Experimental translation fields for "team" entity renaming. Readonly.
 
  * **EnInTeam** (string) — EnInTeam.
 
@@ -1257,11 +1285,17 @@ Upload preview.
 ### <a name="User"></a>User
 Account data.
 
- * **phone** (string, nullable) — Phone for login.
+ * **phone** (string, omitempty) — Phone for login.
 
- * **email** (string, nullable) — Email for login.
+ * **email** (string, omitempty) — Email for login.
 
- * **default_lang** (string, nullable) — Default language code.
+ * **family_name** (string, omitempty) — Family name.
+
+ * **given_name** (string, omitempty) — Given name.
+
+ * **patronymic** (string, omitempty) — Patronymic, if any.
+
+ * **default_lang** (string, omitempty) — Default language code.
 
  * **alt_send** (bool) — Use Ctrl/Cmd + Enter instead Enter.
 
