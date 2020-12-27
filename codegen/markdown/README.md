@@ -10,7 +10,7 @@ Call participant device.
 
 
 ### <a name="CallEvent"></a>CallEvent
-Audiocall information.
+Audio call information.
 
  * **start** (string, nullable) — Call start, iso date.
 
@@ -38,7 +38,7 @@ Call participant.
 
 
 ### <a name="Chat"></a>Chat
-Chat (direct, group, task) representaion.
+Chat (direct, group, task) representation.
 
  * **jid** (JID) — Group/Task/Contact id.
 
@@ -46,7 +46,7 @@ Chat (direct, group, task) representaion.
 
  * **base_gentime** (int64, omitempty) — Base fields (not related to concrete participant) version.
 
- * **gentime** (int64) — Chat fields related to concrete participan) version.
+ * **gentime** (int64) — Chat fields related to concrete participant) version.
 
  * **created** (ISODateTimeString) — Creation date, iso datetime.
 
@@ -72,9 +72,9 @@ Chat (direct, group, task) representaion.
 
  * **notifications_enabled** (bool, omitempty) — Push notifications enabled.
 
- * **num_importants** (int, omitempty) — Number of importants messages.
+ * **num_importants** (int, omitempty) — Number of important messages.
 
- * **num_unread** (uint, omitempty) — Unreads conuter.
+ * **num_unread** (uint, omitempty) — Unread counter.
 
  * **num_unread_notices** (uint, omitempty) — Mentions (@) counter.
 
@@ -88,7 +88,7 @@ Chat (direct, group, task) representaion.
 
  * **pinned** (bool, omitempty) — Is chat pinned on top.
 
- * **pinned_sort_ordering** (int, omitempty) — Sort oreding for pinned chat.
+ * **pinned_sort_ordering** (int, omitempty) — Sort ordering for pinned chat.
 
  * **num_members** (uint, nullable, omitempty) — Non-archive participants number.
 
@@ -166,7 +166,7 @@ Chat (direct, group, task) representaion.
 
  * **readonly_for_members** (bool, omitempty) — Readonly for non-admins group chat (Like Channels in Telegram bug switchable).
 
- * **autocleanup_age** (int, nullable, omitempty) — Delete messages in this chat in seconds. Experemental function.
+ * **autocleanup_age** (int, nullable, omitempty) — Delete messages in this chat in seconds. Experimental function.
 
  * **public** (bool, omitempty) — Can other team member see this task/group chat.
 
@@ -178,7 +178,7 @@ Chat (direct, group, task) representaion.
 
 
 ### <a name="ChatShort"></a>ChatShort
-Mimimal chat representaion.
+Minimal chat representation.
 
  * **jid** (JID) — Group/Task/Contact id.
 
@@ -283,7 +283,7 @@ Contact.
 
  * **dropall_enabled** (bool, nullable, omitempty) — Enable remove all messages experimental features.
 
- * **alt_send** (bool, nullable, omitempty) — Use Ctrl/Cmd + Enter insted Enter.
+ * **alt_send** (bool, nullable, omitempty) — Use Ctrl/Cmd + Enter instead Enter.
 
  * **asterisk_mention** (bool, nullable, omitempty) — Use * as @ for mentions.
 
@@ -313,9 +313,9 @@ Contact.
 
  * **contact_show_archived** (bool, nullable, omitempty) — Show archived contacts in contact list.
 
- * **unread_first** (bool, nullable, omitempty) — Show inread chats first in feed.
+ * **unread_first** (bool, nullable, omitempty) — Show unread chats first in feed.
 
- * **munread_first** (bool, nullable, omitempty) — Show inread chats first in feed in mobile app.
+ * **munread_first** (bool, nullable, omitempty) — Show unread chats first in feed in mobile app.
 
  * **can_add_to_team** (bool, omitempty) — Can I add new members to this team.
 
@@ -353,7 +353,7 @@ Extra contact fields.
 
 
 ### <a name="ContactShort"></a>ContactShort
-Short contact representaion.
+Short contact representation.
 
  * **jid** (JID) — Contact Id.
 
@@ -377,13 +377,13 @@ Country for phone numbers selection on login screen.
 
 
 ### <a name="DeletedChat"></a>DeletedChat
-Mimimal chat representaion for deletion.
+Minimal chat representation for deletion.
 
  * **jid** (JID) — Group/Task/Contact id.
 
  * **chat_type** ([ChatType](#ChatType)) — Chat type.
 
- * **gentime** (int64) — Chat fields (related to concrete participan) version.
+ * **gentime** (int64) — Chat fields (related to concrete participant) version.
 
  * **is_archive** (bool) — Archive flag. Always true for this structure.
 
@@ -873,11 +873,11 @@ Message reaction detail.
 
 
 ### <a name="OAuthService"></a>OAuthService
-Auth service.
+OAuth service.
 
- * **Name** (string) — Integration title.
+ * **name** (string) — Integration title.
 
- * **Url** (string) — Redirect url.
+ * **url** (string) — Redirect url.
 
 
 ### <a name="PdfVersion"></a>PdfVersion
