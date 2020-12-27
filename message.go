@@ -1,7 +1,5 @@
 package tdproto
 
-import "sort"
-
 type Mediatype string
 
 const (
@@ -234,12 +232,6 @@ type MessageLink struct {
 }
 
 type MessageLinks []MessageLink
-
-func (links MessageLinks) Sort() {
-	sort.Slice(links, func(i, j int) bool {
-		return links[i].Pattern < links[j].Pattern
-	})
-}
 
 // Message emoji reaction
 type MessageReaction struct {
