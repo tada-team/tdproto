@@ -467,6 +467,8 @@ Server information. Readonly.
 
  * **max_teams** (int) — Maximum teams for one account.
 
+ * **max_message_search_limit** (int) — Maximum search result.
+
  * **afk_age** (int) — Max inactivity seconds.
 
  * **auth_by_password** (bool, omitempty) — Password authentication enabled.
