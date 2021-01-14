@@ -83,6 +83,9 @@ type Features struct {
 	// Maximum teams for one account
 	MaxTeams int `json:"max_teams"`
 
+	// Maximum search result
+	MaxMessageSearchLimit int `json:"max_message_search_limit"`
+
 	// Max inactivity seconds
 	AfkAge int `json:"afk_age"`
 
