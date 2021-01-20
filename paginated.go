@@ -25,3 +25,10 @@ type PaginatedContacts struct {
 type ChatMessages struct {
 	Messages []Message `json:"messages"`
 }
+
+type PaginatedUploads struct {
+	Objects []UploadShortMessage `json:"objects"`
+	Count   int                  `json:"count"`
+	Limit   int                  `json:"limit"`
+	Offset  int                  `json:"offset"`
+}
