@@ -26,7 +26,7 @@ type ChatMessages struct {
 	Messages []Message `json:"messages"`
 }
 
-type PaginatedUploads struct {
+type PaginatedUploadShortMessages struct {
 	Objects []UploadShortMessage `json:"objects"`
 	Count   int                  `json:"count"`
 	Limit   int                  `json:"limit"`
