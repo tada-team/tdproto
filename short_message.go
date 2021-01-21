@@ -27,6 +27,7 @@ type ShortMessage struct {
 	IsArchive bool `json:"is_archive,omitempty" tdproto:"readonly"`
 }
 
+// Upload + ShortMessage
 type UploadShortMessage struct {
 	Upload  Upload       `json:"upload"`
 	Message ShortMessage `json:"message"`
