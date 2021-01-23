@@ -131,10 +131,23 @@ var MarkupTestCases = []struct {
 		Plain: "123/ 456 /789",
 	},
 	{
-		Title: "not italic 4",
+		Title: "not italic 4 without links",
 		Raw:   "https://ya.ru/",
 		Html:  "https://ya.ru/",
 		Plain: "https://ya.ru/",
+	},
+	{
+		Title: "not italic 4 with links",
+		Raw:   "https://ya.ru/",
+		Html:  `<a href="https://ya.ru">ya.ru</a>`,
+		Plain: "ya.ru",
+		Links: []tdproto.MessageLink{
+			{
+				Pattern: "https://ya.ru/",
+				Url:     "https://ya.ru",
+				Text:    "ya.ru",
+			},
+		},
 	},
 	{
 		Title: "bold italic",
