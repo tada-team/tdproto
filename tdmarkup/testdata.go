@@ -214,7 +214,7 @@ var MarkupTestCases = []struct {
 		Html:  "\n<blockquote>b</blockquote>\n",
 	},
 	{
-		Title: "miltiquotes",
+		Title: "multiquotes",
 		Raw: `> 1
 2
 > 3
