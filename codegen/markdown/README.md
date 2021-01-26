@@ -533,6 +533,8 @@ Server information. Readonly.
 
  * **allow_admin_mute** (bool, omitempty) — Wiki pages in chats. Experimental.
 
+ * **default_wallpaper** (string, omitempty) — Default wallpaper url for mobile apps, if any.
+
  * **task_checklist** (bool) — Deprecated.
 
  * **readonly_groups** (bool) — Deprecated.
