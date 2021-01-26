@@ -922,6 +922,26 @@ Websocket session.
  * **addr** (string, omitempty) — IP address.
 
 
+### <a name="ShortMessage"></a>ShortMessage
+Short message based on chat message.
+
+ * **from** (JID, readonly for clients) — Sender contact id.
+
+ * **to** (JID) — Recipient id (group, task or contact).
+
+ * **message_id** (string) — Message uid.
+
+ * **created** (ISODateTimeString, readonly for clients) — Message creation datetime (set by server side) or sending datetime in future for draft messages.
+
+ * **gentime** (int64, readonly for clients) — Object version.
+
+ * **chat_type** ([ChatType](#ChatType), readonly for clients) — Chat type.
+
+ * **chat** (JID, readonly for clients) — Chat id.
+
+ * **is_archive** (bool, readonly for clients, omitempty) — This message is archive. True or null.
+
+
 ### <a name="SingleIcon"></a>SingleIcon
 Small or large icon.
 
@@ -1280,6 +1300,14 @@ Upload preview.
  * **height** (int) — Height in pixels.
 
 
+### <a name="UploadShortMessage"></a>UploadShortMessage
+Upload + ShortMessage.
+
+ * **upload** ([Upload](#Upload)) — Upload.
+
+ * **message** ([ShortMessage](#ShortMessage)) — Message.
+
+
 ### <a name="User"></a>User
 Account data.
 
@@ -1310,6 +1338,14 @@ Account data.
  * **quiet_time_start** (string, nullable) — Start silently time (no pushes, no sounds).
 
  * **quiet_time_finish** (string, nullable) — Finish silently time (no pushes, no sounds).
+
+
+### <a name="Wallpaper"></a>Wallpaper
+Chat wallpaper.
+
+ * **name** (string) — Localized description.
+
+ * **url** (string) — Url to jpg or png.
 
 
 ### <a name="WikiPage"></a>WikiPage
