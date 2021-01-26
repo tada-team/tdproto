@@ -183,7 +183,7 @@ type Features struct {
 	AllowAdminMute bool `json:"allow_admin_mute,omitempty"`
 
 	// Default wallpaper url for mobile apps, if any
-	DefaultWallpaper string `json:"default_wallpaper,omitempty"`
+	DefaultWallpaper *Wallpaper `json:"default_wallpaper,omitempty"`
 
 	// Deprecated
 	TaskChecklist bool `json:"task_checklist"`
