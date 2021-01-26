@@ -182,6 +182,9 @@ type Features struct {
 	// Wiki pages in chats. Experimental
 	AllowAdminMute bool `json:"allow_admin_mute,omitempty"`
 
+	// Default wallpaper url for mobile apps, if any
+	DefaultWallpaper string `json:"default_wallpaper,omitempty"`
+
 	// Deprecated
 	TaskChecklist bool `json:"task_checklist"`
 
