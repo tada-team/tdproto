@@ -26,5 +26,5 @@ type ChatFilter struct {
 	Q string `schema:"q"`
 
 	// gentime great than
-	GentimeGT int `schema:"gentime_gt"`
+	GentimeGT int64 `schema:"gentime_gt"`
 }
