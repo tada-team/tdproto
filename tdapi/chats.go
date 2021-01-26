@@ -24,4 +24,7 @@ type ChatFilter struct {
 
 	// ?q=search-text
 	Q string `schema:"q"`
+
+	// gentime great than
+	GentimeGT int `schema:"gentime_gt"`
 }
