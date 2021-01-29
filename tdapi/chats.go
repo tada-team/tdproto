@@ -13,9 +13,6 @@ type ChatFilter struct {
 	// ?hidden=true|false|any (default: false)
 	Hidden string `schema:"hidden"`
 
-	// ?feed=true|false|any (default: any)
-	Feed string `schema:"feed"`
-
 	// ?has_messages=true|false|any (default: any)
 	HasMessages string `schema:"has_messages"`
 
