@@ -10,7 +10,7 @@ type ChatFilter struct {
 	// ?unread_only=true|false (default: false)
 	UnreadOnly string `schema:"unread_only"`
 
-	// ?hidden=true|false|any (default: any)
+	// ?hidden=true|false|any (default: false)
 	Hidden string `schema:"hidden"`
 
 	// ?feed=true|false|any (default: any)

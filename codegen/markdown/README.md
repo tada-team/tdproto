@@ -533,7 +533,7 @@ Server information. Readonly.
 
  * **allow_admin_mute** (bool, omitempty) — Wiki pages in chats. Experimental.
 
- * **default_wallpaper** (string, omitempty) — Default wallpaper url for mobile apps, if any.
+ * **default_wallpaper** ([Wallpaper](#Wallpaper), nullable, omitempty) — Default wallpaper url for mobile apps, if any.
 
  * **task_checklist** (bool) — Deprecated.
 
@@ -1344,6 +1344,8 @@ Account data.
 
 ### <a name="Wallpaper"></a>Wallpaper
 Chat wallpaper.
+
+ * **key** (string) — Unique identifier.
 
  * **name** (string) — Localized description.
 
