@@ -240,7 +240,7 @@ type Chat struct {
 	//WikiPage *ShortWikiPage `chattype:"group" json:"wiki_page,omitempty"`
 
 	// Date of the last message sent even if it was deleted
-	LastActivity ISODateTimeString `json:"last_activity"`
+	LastActivity ISODateTimeString `json:"last_activity,omitempty"`
 }
 
 // Link to sub/sup task
