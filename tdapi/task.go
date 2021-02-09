@@ -80,6 +80,6 @@ type TaskFilter struct {
 	//* ?short=true|false
 	Short string `schema:"short"`
 
-	// gentime great than
+	// gentime great than group/chat
 	GentimeGT int64 `schema:"gentime_gt"`
 }
