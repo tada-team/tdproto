@@ -1,9 +1,11 @@
-package tdproto
+package tdapi
 
-type Auth2faRequiredResponse struct {
-	Token       string     `json:"token,omitempty"`
-	Me          UserWithMe `json:"me"`
-	Required2fa bool       `json:"required2fa"`
+import "github.com/tada-team/tdproto"
+
+type Auth struct {
+	Token       string             `json:"token,omitempty"`
+	Me          tdproto.UserWithMe `json:"me"`
+	Required2fa bool               `json:"required2fa"`
 }
 
 type Auth2faForm struct {
