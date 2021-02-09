@@ -79,4 +79,7 @@ type TaskFilter struct {
 
 	//* ?short=true|false
 	Short string `schema:"short"`
+
+	// gentime great than
+	GentimeGT int64 `schema:"gentime_gt"`
 }
