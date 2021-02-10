@@ -51,7 +51,7 @@ type Theme struct {
 	ErrorLight     string `json:error_light`
 	Success        string `json:success`
 	SuccessLight   string `json:success_light`
-	Backgroud      string `json:background`
+	Background     string `json:background`
 	Attention      string `json:attention`
 	AttentionLight string `json:attention_light`
 	Button         ButtonColors
