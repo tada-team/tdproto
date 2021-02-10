@@ -39,22 +39,22 @@ type Theme struct {
 	AppAccentColor  string
 	AppPrimaryColor string
 
-	Brand          string `json:brand`
-	BrandDark      string `json:brand_dark`
-	BrandLight     string `json:brand_light`
-	Text           string `json:text`
-	Sub            string `json:sub`
-	Back           string `json:back`
-	BackLight      string `json:back_light`
-	BackDark       string `json:back_dark`
-	Error          string `json:error`
-	ErrorLight     string `json:error_light`
-	Success        string `json:success`
-	SuccessLight   string `json:success_light`
-	Background     string `json:background`
-	Attention      string `json:attention`
-	AttentionLight string `json:attention_light`
-	Button         ButtonColors
-	Input          InputColors
-	Switcher       SwitcherColors
+	Brand          string          `json:brand`
+	BrandDark      string          `json:brand_dark`
+	BrandLight     string          `json:brand_light`
+	Text           string          `json:text`
+	Sub            string          `json:sub`
+	Back           string          `json:back`
+	BackLight      string          `json:back_light`
+	BackDark       string          `json:back_dark`
+	Error          string          `json:error`
+	ErrorLight     string          `json:error_light`
+	Success        string          `json:success`
+	SuccessLight   string          `json:success_light`
+	Background     string          `json:background`
+	Attention      string          `json:attention`
+	AttentionLight string          `json:attention_light`
+	Button         *ButtonColors   `json:button`
+	Input          *InputColors    `json:input`
+	Switcher       *SwitcherColors `json:switcher`
 }
