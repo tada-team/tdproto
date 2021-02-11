@@ -1,5 +1,10 @@
 package tdproto
 
+const (
+	SupportedFeaturesHeader = "X-Supported-Features"
+	Feature2FactorAuth      = "2FactorAuth"
+)
+
 // Server information. Readonly.
 type Features struct {
 	// Current host
@@ -97,6 +102,9 @@ type Features struct {
 
 	// SMS authentication enabled
 	AuthBySms bool `json:"auth_by_sms,omitempty"`
+
+	// Two-factor authentication (2FA) enabled
+	Auth2fa bool `json:"auth_2fa,omitempty"`
 
 	// External services
 	OAuthServices []OAuthService `json:"oauth_services,omitempty"`
