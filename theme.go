@@ -42,31 +42,35 @@ type Theme struct {
 	MainLightAccent        string
 	MainLink               string
 
-	// App colors
-
 	// Deprecated
 	AppAccentColor string
 
 	// Deprecated
 	AppPrimaryColor string
 
-	Brand          string          `json:"brand"`
-	BrandDark      string          `json:"brand_dark"`
-	BrandLight     string          `json:"brand_light"`
-	Text           string          `json:"text"`
-	Sub            string          `json:"sub"`
-	Back           string          `json:"back"`
-	BackLight      string          `json:"back_light"`
-	BackDark       string          `json:"back_dark"`
-	Error          string          `json:"error"`
-	ErrorLight     string          `json:"error_light"`
-	Success        string          `json:"success"`
-	SuccessLight   string          `json:"success_light"`
-	Background     string          `json:"background"`
-	Attention      string          `json:"attention"`
-	AttentionLight string          `json:"attention_light"`
-	Button         *ButtonColors   `json:"button"`
-	Input          *InputColors    `json:"input"`
-	Switcher       *SwitcherColors `json:"switcher"`
-	Ic             *IconColors     `json:"ic"`
+	// App colors
+	Brand      string        `json:"brand"`
+	Text       string        `json:"text"`
+	Title      string        `json:"title"`
+	Sub        string        `json:"sub"`
+	BackLight  string        `json:"back_light"`
+	Error      string        `json:"error"`
+	Background string        `json:"background"`
+	Attention  string        `json:"attention"`
+	Button     *ButtonColors `json:"button"`
+	Input      *InputColors  `json:"input"`
+	Ic         *IconColors   `json:"ic"`
+
+	// TODO: Not used, auxiliary colors, reserved for future use
+	// BrandDark           string          `json:"brand_dark"`
+	// BrandLight          string          `json:"brand_light"`
+	// BackDark            string          `json:"back_dark"`
+	// Back                string        `json:"back"`
+	// ErrorLight          string          `json:"error_light"`
+	// Success             string          `json:"success"`
+	// SuccessLight        string          `json:"success_light"`
+	// AttentionLight      string          `json:"attention_light"`
+	// TabBackground       string          `json:"tab_background"`
+	// ChatInputBackground string        `json:"chat_input_background"`
+	// Switcher            *SwitcherColors `json:"switcher"`
 }
