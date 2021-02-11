@@ -15,9 +15,16 @@ type InputColors struct {
 	Disable string `json:"disable"`
 	Error   string `json:"error"`
 }
+
 type SwitcherColors struct {
 	On  string `json:"on"`
 	Off string `json:"off"`
+}
+
+type IconColors struct {
+	Title string `json:"title"`
+	Brand string `json:"brand"`
+	Other string `json:"other"`
 }
 
 // Color theme
@@ -36,7 +43,11 @@ type Theme struct {
 	MainLink               string
 
 	// App colors
-	AppAccentColor  string
+
+	// Deprecated
+	AppAccentColor string
+
+	// Deprecated
 	AppPrimaryColor string
 
 	Brand          string          `json:"brand"`
@@ -57,4 +68,5 @@ type Theme struct {
 	Button         *ButtonColors   `json:"button"`
 	Input          *InputColors    `json:"input"`
 	Switcher       *SwitcherColors `json:"switcher"`
+	Ic             *IconColors     `json:"ic"`
 }
