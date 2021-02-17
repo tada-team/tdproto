@@ -1,7 +1,35 @@
 package tdproto
 
+type ButtonColors struct {
+	BrandStatic   string `json:"brand_static"`
+	BrandActive   string `json:"brand_active"`
+	BrandDisable  string `json:"brand_disable"`
+	SimpleStatic  string `json:"simple_static"`
+	SimpleActive  string `json:"simple_active"`
+	SimpleDisable string `json:"simple_disable"`
+}
+
+type InputColors struct {
+	Static  string `json:"static"`
+	Active  string `json:"active"`
+	Disable string `json:"disable"`
+	Error   string `json:"error"`
+}
+
+type SwitcherColors struct {
+	On  string `json:"on"`
+	Off string `json:"off"`
+}
+
+type IconColors struct {
+	Title string `json:"title"`
+	Brand string `json:"brand"`
+	Other string `json:"other"`
+}
+
 // Color theme
 type Theme struct {
+	// Web colors
 	BgColor                string
 	BgHoverColor           string
 	TextColor              string
@@ -13,6 +41,34 @@ type Theme struct {
 	MainAccentHover        string
 	MainLightAccent        string
 	MainLink               string
-	AppAccentColor         string
-	AppPrimaryColor        string
+
+	// Deprecated
+	AppAccentColor string
+
+	// Deprecated
+	AppPrimaryColor string
+
+	// App colors
+	Brand               string          `json:"brand"`
+	BrandDark           string          `json:"brand_dark"`
+	BrandLight          string          `json:"brand_light"`
+	Text                string          `json:"text"`
+	Title               string          `json:"title"`
+	Sub                 string          `json:"sub"`
+	Back                string          `json:"back"`
+	BackLight           string          `json:"back_light"`
+	BackDark            string          `json:"back_dark"`
+	Success             string          `json:"success"`
+	SuccessLight        string          `json:"success_light"`
+	Error               string          `json:"error"`
+	ErrorLight          string          `json:"error_light"`
+	Background          string          `json:"background"`
+	TabBackground       string          `json:"tab_background"`
+	ChatInputBackground string          `json:"chat_input_background"`
+	Attention           string          `json:"attention"`
+	AttentionLight      string          `json:"attention_light"`
+	Switcher            *SwitcherColors `json:"switcher"`
+	Button              *ButtonColors   `json:"button"`
+	Input               *InputColors    `json:"input"`
+	Icon                *IconColors     `json:"ic"`
 }

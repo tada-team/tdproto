@@ -1,12 +1,13 @@
 package tdproto
 
 type ChatCounters struct {
-	Jid                JID      `json:"jid"`
-	ChatType           ChatType `json:"chat_type"`
-	Gentime            int64    `json:"gentime"`
-	NumUnread          uint     `json:"num_unread"`
-	NumUnreadNotices   uint     `json:"num_unread_notices"`
-	LastReadMessageUid *string  `json:"last_read_message_id"`
+	Jid                JID               `json:"jid"`
+	ChatType           ChatType          `json:"chat_type"`
+	Gentime            int64             `json:"gentime"`
+	NumUnread          uint              `json:"num_unread"`
+	NumUnreadNotices   uint              `json:"num_unread_notices"`
+	LastReadMessageUid *string           `json:"last_read_message_id"`
+	LastActivity       ISODateTimeString `json:"last_activity,omitempty"`
 }
 
 // Unread message counters
