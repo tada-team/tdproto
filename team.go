@@ -26,13 +26,13 @@ type Team struct {
 	// User last activity was in this team
 	LastActive bool `json:"last_active" tdproto:"readonly"`
 
-	// What status I can set to other team mebers
+	// What status I can set to other team members
 	ChangeableStatuses []TeamStatus `json:"changeable_statuses,omitempty" tdproto:"readonly"`
 
 	// My profile in this team isn't full
 	BadProfile bool `json:"bad_profile,omitempty" tdproto:"readonly"`
 
-	// Neet confirmation after invite to this team
+	// Need confirmation after invite to this team
 	NeedConfirmation bool `json:"need_confirmation" tdproto:"readonly"`
 
 	// Patronymic in usernames for this team
@@ -47,10 +47,10 @@ type Team struct {
 	// Use importance field in task
 	UseTaskImportance bool `json:"use_task_importance,omitempty"`
 
-	// Minimal value of task imporance. Default is 1
+	// Minimal value of task importance. Default is 1
 	TaskImportanceMin int `json:"task_importance_min,omitempty"`
 
-	// Maximum value of task imporance. Default is 5
+	// Maximum value of task importance. Default is 5
 	TaskImportanceMax int `json:"task_importance_max,omitempty"`
 
 	// Bigger number = bigger importance. Default: lower number = bigger importance
