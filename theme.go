@@ -9,6 +9,18 @@ type ButtonColors struct {
 	SimpleDisable string `json:"simple_disable"`
 }
 
+type FontColors struct {
+	Text  string `json:"text"`
+	Title string `json:"title"`
+	Sub   string `json:"sub"`
+}
+
+type MessageColors struct {
+	BubbleSent     string `json:"bubble_sent"`
+	BubbleReceived string `json:"bubble_received"`
+	Allocated      string `json:"allocated"`
+}
+
 type InputColors struct {
 	Static  string `json:"static"`
 	Active  string `json:"active"`
@@ -52,9 +64,6 @@ type Theme struct {
 	Brand               string          `json:"brand"`
 	BrandDark           string          `json:"brand_dark"`
 	BrandLight          string          `json:"brand_light"`
-	Text                string          `json:"text"`
-	Title               string          `json:"title"`
-	Sub                 string          `json:"sub"`
 	Back                string          `json:"back"`
 	BackLight           string          `json:"back_light"`
 	BackDark            string          `json:"back_dark"`
@@ -67,6 +76,8 @@ type Theme struct {
 	ChatInputBackground string          `json:"chat_input_background"`
 	Attention           string          `json:"attention"`
 	AttentionLight      string          `json:"attention_light"`
+	Font                *FontColors     `json:"font"`
+	Message             *MessageColors  `json:"message"`
 	Switcher            *SwitcherColors `json:"switcher"`
 	Button              *ButtonColors   `json:"button"`
 	Input               *InputColors    `json:"input"`
