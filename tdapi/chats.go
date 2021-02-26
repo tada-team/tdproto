@@ -16,8 +16,8 @@ type ChatFilter struct {
 	// ?feed=true|false|any (default: any)
 	Feed string `schema:"feed"`
 
-	// ?has_messages=true|false|any (default: any)
-	HasMessages string `schema:"has_messages"`
+	// ?has_activity=true|false|any (default: any)
+	HasActivity string `schema:"has_activity"`
 
 	// ?chat_type=task,group,direct|any (default: any)
 	ChatType string `schema:"chat_type"`
@@ -36,4 +36,7 @@ type ChatFilter struct {
 
 	// deprecated
 	HiddenOnly string `schema:"hidden_only"`
+
+	// deprecated: use ?has_activity=
+	HasMessages string `schema:"has_messages"`
 }
