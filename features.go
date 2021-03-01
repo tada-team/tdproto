@@ -193,6 +193,9 @@ type Features struct {
 	// Default wallpaper url for mobile apps, if any
 	DefaultWallpaper *Wallpaper `json:"default_wallpaper,omitempty"`
 
+	// Access to change team/server theme for user. Experimental
+	CanChangeUserTheme bool `json:"can_change_user_theme,omitempty"`
+
 	// Deprecated
 	TaskChecklist bool `json:"task_checklist"`
 
