@@ -36,7 +36,7 @@ type Upload struct {
 	PdfVersion *PdfVersion `json:"pdf_version,omitempty"`
 
 	// ?type=file,image,audio,video
-	MediaType string `json:"media_type"`
+	MediaType UploadMediaType `json:"type"`
 }
 
 // Upload preview

@@ -1,17 +1,14 @@
 package tdproto
 
-type UploadMediaType int16
+type UploadMediaType string
 
 const (
-	MediaTypeFile  = UploadMediaType(0)
-	MediaTypeImage = UploadMediaType(1)
-	MediaTypeVideo = UploadMediaType(2)
-	MediaTypeAudio = UploadMediaType(3)
+	MediaTypeFile      UploadMediaType = "file"
+	MediaTypeImage     UploadMediaType = "image"
+	MediaTypeVideo     UploadMediaType = "video"
+	MediaTypeAudio     UploadMediaType = "audio"
+	MediaTypeFileImage UploadMediaType = "imagefile"
 )
-
-func (u UploadMediaType) DbValue() int16 {
-	return int16(u)
-}
 
 func (u UploadMediaType) String() string {
 	switch u {
@@ -23,11 +20,9 @@ func (u UploadMediaType) String() string {
 		return "video"
 	case MediaTypeAudio:
 		return "audio"
+	case MediaTypeFileImage:
+		return "fileimage"
 	default:
 		return ""
 	}
-}
-
-func (u UploadMediaType) Ref() *UploadMediaType {
-	return &u
 }
