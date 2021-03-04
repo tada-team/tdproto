@@ -2,6 +2,14 @@ package tdapi
 
 import "github.com/tada-team/tdproto"
 
+// RecoveryStatus:
+const (
+	Unknown2fa     = "unknown"
+	Unconfirmed2fa = "unconfirmed"
+	Confirmed2fa   = "confirmed"
+	Declined2fa    = "declined"
+)
+
 type Auth struct {
 	Token       string             `json:"token,omitempty"`
 	Me          tdproto.UserWithMe `json:"me"`
