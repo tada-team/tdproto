@@ -34,6 +34,9 @@ type Upload struct {
 
 	// PDF version of file. Experimental
 	PdfVersion *PdfVersion `json:"pdf_version,omitempty"`
+
+	// ?type=file,image,audio,video
+	MediaType UploadMediaType `json:"type"`
 }
 
 // Upload preview
