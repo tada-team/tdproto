@@ -6,5 +6,5 @@ type OAuthService struct {
 	Name string `json:"name"`
 
 	// Redirect url
-	Url  string `json:"url"`
+	Url string `json:"url"`
 }

@@ -9,5 +9,5 @@ type Wallpaper struct {
 	Name string `json:"name"`
 
 	// Url to jpg or png
-	Url  string `json:"url"`
+	Url string `json:"url"`
 }
