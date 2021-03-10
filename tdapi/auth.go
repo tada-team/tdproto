@@ -14,6 +14,7 @@ type Auth struct {
 	Token       string             `json:"token,omitempty"`
 	Me          tdproto.UserWithMe `json:"me"`
 	Required2fa bool               `json:"required2fa"`
+	Method2fa   string             `json:"method2fa"`
 }
 
 type Auth2faSettingsResponse struct {
