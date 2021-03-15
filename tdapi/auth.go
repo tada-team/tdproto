@@ -27,6 +27,7 @@ type Auth2faMailRecovery struct {
 	CodeValidUntil string `json:"code_valid_until"`
 	NextCodeAt     string `json:"next_code_at"`
 	CodeLength     int    `json:"code_length"`
+	Email          string `json:"email"`
 }
 
 type Auth2faSettingsMailValidation struct {
