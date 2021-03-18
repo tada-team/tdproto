@@ -33,7 +33,7 @@ type TaskCounters struct {
 	// Task jid
 	Jid JID `json:"jid"`
 
-	// Unreads conuter
+	// Unreads counter
 	NumUnread uint `json:"num_unread,omitempty"`
 
 	// Mentions (@) counter
