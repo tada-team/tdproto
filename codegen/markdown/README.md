@@ -176,6 +176,8 @@ Chat (direct, group, task) representation.
 
  * **can_set_important_any_message** (bool, omitempty) — Can I change Important flag in any message in this chat.
 
+ * **last_activity** (ISODateTimeString, omitempty) — Date of the last message sent even if it was deleted.
+
 
 ### <a name="ChatShort"></a>ChatShort
 Minimal chat representation.
@@ -476,6 +478,8 @@ Server information. Readonly.
  * **auth_by_qr_code** (bool, omitempty) — QR-code / link authentication enabled.
 
  * **auth_by_sms** (bool, omitempty) — SMS authentication enabled.
+
+ * **auth_2fa** (bool, omitempty) — Two-factor authentication (2FA) enabled.
 
  * **oauth_services** ([OAuthService](#OAuthService), list, omitempty) — External services.
 
@@ -993,7 +997,7 @@ Tasks counters.
 
  * **jid** (JID) — Task jid.
 
- * **num_unread** (uint, omitempty) — Unreads conuter.
+ * **num_unread** (uint, omitempty) — Unreads counter.
 
  * **num_unread_notices** (uint, omitempty) — Mentions (@) counter.
 
@@ -1083,11 +1087,11 @@ Team.
 
  * **last_active** (bool, readonly for clients) — User last activity was in this team.
 
- * **changeable_statuses** ([TeamStatus](#TeamStatus), readonly for clients, list, omitempty) — What status I can set to other team mebers.
+ * **changeable_statuses** ([TeamStatus](#TeamStatus), readonly for clients, list, omitempty) — What status I can set to other team members.
 
  * **bad_profile** (bool, readonly for clients, omitempty) — My profile in this team isn't full.
 
- * **need_confirmation** (bool, readonly for clients) — Neet confirmation after invite to this team.
+ * **need_confirmation** (bool, readonly for clients) — Need confirmation after invite to this team.
 
  * **use_patronymic** (bool, omitempty) — Patronymic in usernames for this team.
 
@@ -1097,9 +1101,9 @@ Team.
 
  * **use_task_importance** (bool, omitempty) — Use importance field in task.
 
- * **task_importance_min** (int, omitempty) — Minimal value of task imporance. Default is 1.
+ * **task_importance_min** (int, omitempty) — Minimal value of task importance. Default is 1.
 
- * **task_importance_max** (int, omitempty) — Maximum value of task imporance. Default is 5.
+ * **task_importance_max** (int, omitempty) — Maximum value of task importance. Default is 5.
 
  * **task_importance_rev** (bool, omitempty) — Bigger number = bigger importance. Default: lower number = bigger importance.
 
@@ -1227,7 +1231,7 @@ Experimental translation fields for "team" entity renaming. Readonly.
 ### <a name="Theme"></a>Theme
 Color theme.
 
- * **BgColor** (string) — BgColor.
+ * **BgColor** (string) — Web colors.
 
  * **BgHoverColor** (string) — BgHoverColor.
 
@@ -1249,9 +1253,51 @@ Color theme.
 
  * **MainLink** (string) — MainLink.
 
- * **AppAccentColor** (string) — AppAccentColor.
+ * **AppAccentColor** (string) — Deprecated.
 
- * **AppPrimaryColor** (string) — AppPrimaryColor.
+ * **AppPrimaryColor** (string) — Deprecated.
+
+ * **brand** (string) — App colors.
+
+ * **brand_dark** (string) — BrandDark.
+
+ * **brand_light** (string) — BrandLight.
+
+ * **back** (string) — Back.
+
+ * **back_light** (string) — BackLight.
+
+ * **back_dark** (string) — BackDark.
+
+ * **success** (string) — Success.
+
+ * **success_light** (string) — SuccessLight.
+
+ * **error** (string) — Error.
+
+ * **error_light** (string) — ErrorLight.
+
+ * **background** (string) — Background.
+
+ * **tab_background** (string) — TabBackground.
+
+ * **chat_input_background** (string) — ChatInputBackground.
+
+ * **attention** (string) — Attention.
+
+ * **attention_light** (string) — AttentionLight.
+
+ * **font** (FontColors, nullable) — Font.
+
+ * **message** (MessageColors, nullable) — Message.
+
+ * **switcher** (SwitcherColors, nullable) — Switcher.
+
+ * **button** (ButtonColors, nullable) — Button.
+
+ * **input** (InputColors, nullable) — Input.
+
+ * **ic** (IconColors, nullable) — Icon.
 
 
 ### <a name="Unread"></a>Unread
@@ -1288,6 +1334,8 @@ Uploaded media.
  * **processing** (bool, omitempty) — File still processing (video only).
 
  * **pdf_version** ([PdfVersion](#PdfVersion), nullable, omitempty) — PDF version of file. Experimental.
+
+ * **type** (UploadMediaType) — ?type=file,image,audio,video.
 
 
 ### <a name="UploadPreview"></a>UploadPreview

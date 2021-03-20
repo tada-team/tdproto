@@ -1,5 +1,11 @@
 package tdproto
 
+//// for codegen
+//type (
+//	ClientEventName = string
+//	ServerEventName = string
+//)
+
 type BaseEvent struct {
 	Name      string `json:"event"`
 	ConfirmId string `json:"confirm_id,omitempty"`
