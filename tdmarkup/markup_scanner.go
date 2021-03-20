@@ -51,6 +51,8 @@ func ParseString(text string, links tdproto.MessageLinks) (string, []tdproto.Mar
 	text = strings.ReplaceAll(text, "\r", "")
 
 	b := new(strings.Builder)
+	b.Grow(len(text))
+
 	entities := make([]tdproto.MarkupEntity, 0)
 
 	for s := NewMarkupScanner(text); s.Rest() > 0; {
