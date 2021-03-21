@@ -266,6 +266,10 @@ func Parse() (p Parsed, err error) {
 		return p.Structs[i].Name < p.Structs[j].Name
 	})
 
+	sort.Slice(p.Events, func(i, j int) bool {
+		return p.Events[i].Name < p.Events[j].Name
+	})
+
 	for _, s := range p.Structs {
 		for _, f := range s.Fields {
 			_, f.InternalType = types[f.Type]
