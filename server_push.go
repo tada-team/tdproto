@@ -6,6 +6,7 @@ func NewServerMessagePush(p MessagePush) (r ServerMessagePush) {
 	return r
 }
 
+// Push replacement for desktop application
 type ServerMessagePush struct {
 	BaseEvent
 	Params MessagePush `json:"params"`

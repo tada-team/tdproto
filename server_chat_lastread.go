@@ -8,6 +8,7 @@ func NewServerChatLastread(counters ChatCounters, teamUnread *TeamUnread, badge 
 	return r
 }
 
+// Changed last read message in chat
 type ServerChatLastread struct {
 	BaseEvent
 	Params serverChatLastreadParams `json:"params"`

@@ -21,6 +21,7 @@ func NewServerCallBuzz(teamShort TeamShort, chatShort ChatShort, actorShort Cont
 	return r
 }
 
+// Call buzzing
 type ServerCallBuzz struct {
 	BaseEvent
 	Params serverCallBuzzParams `json:"params"`

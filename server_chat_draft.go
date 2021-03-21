@@ -8,6 +8,7 @@ func NewServerChatDraft(jid *JID, draft string, draftNum int64) (r ServerChatDra
 	return r
 }
 
+// Changed draft message in chan
 type ServerChatDraft struct {
 	BaseEvent
 	Params serverChatDraftParams `json:"params"`

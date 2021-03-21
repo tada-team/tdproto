@@ -8,6 +8,7 @@ func NewServerCallBuzzcancel(chat *JID, teamUid string, uid string) (r ServerCal
 	return r
 }
 
+// Call cancelled on buzzing
 type ServerCallBuzzcancel struct {
 	BaseEvent
 	Params serverCallBuzzcancelParams `json:"params"`

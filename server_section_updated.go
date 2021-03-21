@@ -8,6 +8,7 @@ func NewServerSectionUpdated(ct ChatType, sections ...Section) (r ServerSectionU
 	return r
 }
 
+// Contact section or task project created or changed
 type ServerSectionUpdated struct {
 	BaseEvent
 	Params serverSectionUpdatedParams `json:"params"`

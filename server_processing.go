@@ -10,6 +10,7 @@ func NewServerProcessing(num, total int, action, message string, hasError bool) 
 	return r
 }
 
+// Status of background operation
 type ServerProcessing struct {
 	BaseEvent
 	Params serverProcessingParams `json:"params"`

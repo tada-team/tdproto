@@ -8,6 +8,7 @@ func NewServerCallTalking(talking bool, chat, actor *JID) (r ServerCallTalking) 
 	return r
 }
 
+// Someone talks in call
 type ServerCallTalking struct {
 	BaseEvent
 	Params serverCallTalkingParams `json:"params"`

@@ -8,6 +8,7 @@ func NewServerChatUpdated(chat Chat, teamUnread *TeamUnread, badge uint) (r Serv
 	return r
 }
 
+// Chat created or updated
 type ServerChatUpdated struct {
 	BaseEvent
 	Params serverChatUpdatedParams `json:"params"`

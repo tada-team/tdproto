@@ -8,6 +8,7 @@ func NewServerRemindDeleted(uid string) (r ServerRemindDeleted) {
 	return r
 }
 
+// Task or group remind deleted
 type ServerRemindDeleted struct {
 	BaseEvent
 	Params serverRemindDeletedParams `json:"params"`

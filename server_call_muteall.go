@@ -7,6 +7,7 @@ func NewServerCallMuteall(jid JID, muted bool) (r ServerCallMuteall) {
 	return r
 }
 
+// All participants in call muted
 type ServerCallMuteall struct {
 	BaseEvent
 	Params serverCallMuteallParams `json:"params"`

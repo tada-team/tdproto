@@ -6,6 +6,7 @@ func NewServerTagUpdated(tags ...Tag) (r ServerTagUpdated) {
 	return r
 }
 
+// Tag created or changed
 type ServerTagUpdated struct {
 	BaseEvent
 	Params serverTagUpdatedParams `json:"params"`

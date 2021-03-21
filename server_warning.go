@@ -7,6 +7,7 @@ func NewServerWarning(message, orig string) (r ServerWarning) {
 	return r
 }
 
+// Something went wrong with client message
 type ServerWarning struct {
 	BaseEvent
 	Params serverWarningParams `json:"params"`

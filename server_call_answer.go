@@ -10,6 +10,7 @@ func NewServerCallAnswer(jid JID, sdp string, onliners []CallOnliner, uid string
 	return r
 }
 
+// Call parameters
 type ServerCallAnswer struct {
 	BaseEvent
 	Params serverCallAnswerParams `json:"params"`

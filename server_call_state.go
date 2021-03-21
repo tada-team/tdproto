@@ -24,6 +24,7 @@ func NewServerCallState(chat HasJid, startCall, finishCall *time.Time, onliners 
 	return r
 }
 
+// Call participant number or parameters changed
 type ServerCallState struct {
 	BaseEvent
 	Params serverCallStateParams `json:"params"`

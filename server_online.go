@@ -7,6 +7,7 @@ func NewServerOnline(contacts []OnlineContact, calls []OnlineCall) (r ServerOnli
 	return r
 }
 
+// Online team members and current active calls
 type ServerOnline struct {
 	BaseEvent
 	Params serverOnlineParams `json:"params"`

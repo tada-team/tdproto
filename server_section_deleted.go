@@ -8,6 +8,7 @@ func NewServerSectionDeleted(ct ChatType, section DeletedSection) (r ServerSecti
 	return r
 }
 
+// Contact section or task project deleted
 type ServerSectionDeleted struct {
 	BaseEvent
 	Params serverSectionDeletedParams `json:"params"`

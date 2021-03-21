@@ -6,6 +6,7 @@ func NewServerUploadUpdated(uploads ...Upload) (r ServerUploadUpdated) {
 	return r
 }
 
+// Upload object created or changed
 type ServerUploadUpdated struct {
 	BaseEvent
 	Params serverUploadUpdatedParams `json:"params"`

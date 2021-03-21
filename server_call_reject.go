@@ -8,6 +8,7 @@ func NewServerCallReject(jid JID, reason string, uid string) (r ServerCallReject
 	return r
 }
 
+// Call rejected
 type ServerCallReject struct {
 	BaseEvent
 	Params serverCallRejectParams `json:"params"`

@@ -9,6 +9,7 @@ func NewServerTeamCounters(counters []TeamCounter, badge uint) ServerTeamCounter
 	return r
 }
 
+// Counters form other teams
 type ServerTeamCounters struct {
 	BaseEvent
 	Params serverTeamCountersParams `json:"params"`

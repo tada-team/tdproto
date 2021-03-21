@@ -15,6 +15,7 @@ func NewServerMessageReceived(messages []ReceivedMessage) (r ServerMessageReceiv
 	return r
 }
 
+// Message received by someone in chat
 type ServerMessageReceived struct {
 	BaseEvent
 	Params serverMessageReceivedParams `json:"params"`

@@ -11,6 +11,7 @@ func NewServerChatDeleted(chat DeletedChat, teamUnread *TeamUnread, badge uint) 
 	return r
 }
 
+// Chat deleted
 type ServerChatDeleted struct {
 	BaseEvent
 	Params serverChatDeletedParams `json:"params"`

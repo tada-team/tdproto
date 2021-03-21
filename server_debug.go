@@ -6,6 +6,7 @@ func NewServerDebug(text string) (r ServerDebug) {
 	return r
 }
 
+// Debug message
 type ServerDebug struct {
 	BaseEvent
 	Params serverDebugParams `json:"params"`

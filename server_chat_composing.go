@@ -9,6 +9,7 @@ func NewServerChatComposing(composing, isAudio bool, chat, actor *JID) (r Server
 	return r
 }
 
+// Someone typing or recording audiomessage in chat
 type ServerChatComposing struct {
 	BaseEvent
 	Params serverChatComposingParams `json:"params"`

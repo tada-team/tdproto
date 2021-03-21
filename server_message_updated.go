@@ -1,9 +1,5 @@
 package tdproto
 
-import (
-	"log"
-)
-
 func NewServerMessageUpdated(messages []Message, delayed bool, counters *ChatCounters, teamUnread *TeamUnread, badge *uint) (r ServerMessageUpdated) {
 	r.Name = r.GetName()
 	r.ConfirmId = ConfirmId()
@@ -17,7 +13,7 @@ func NewServerMessageUpdated(messages []Message, delayed bool, counters *ChatCou
 
 	if teamUnread != nil {
 		if badge == nil {
-			log.Panicln("empty badge")
+			panic("programming error: empty badge")
 		}
 		r.Params.TeamUnread = teamUnread
 		r.Params.Badge = badge
@@ -26,6 +22,7 @@ func NewServerMessageUpdated(messages []Message, delayed bool, counters *ChatCou
 	return r
 }
 
+// Chat message created, updated or deleted
 type ServerMessageUpdated struct {
 	BaseEvent
 	Params serverMessageUpdatedParams `json:"params"`

@@ -6,7 +6,7 @@ func NewServerConfirm(v string) (r ServerConfirm) {
 	return r
 }
 
-// Server got message from client.
+// Server got message from client
 type ServerConfirm struct {
 	BaseEvent
 	Params serverConfirmParams `json:"params"`

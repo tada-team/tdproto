@@ -8,6 +8,7 @@ func NewServerCallRestart(chat *JID, teamUid string, uid string) (r ServerCallRe
 	return r
 }
 
+// Call restarted
 type ServerCallRestart struct {
 	BaseEvent
 	Params serverCallRestartParams `json:"params"`

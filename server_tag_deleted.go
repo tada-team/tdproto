@@ -6,6 +6,7 @@ func NewServerTagDeleted(tags ...DeletedTag) (r ServerTagDeleted) {
 	return r
 }
 
+// Tag deleted
 type ServerTagDeleted struct {
 	BaseEvent
 	Params serverTagDeletedParams `json:"params"`

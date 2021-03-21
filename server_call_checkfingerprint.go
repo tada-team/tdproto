@@ -6,6 +6,7 @@ func NewServerCallCheckFingerprint(fingerprint string) (r ServerCallCheckFingerp
 	return r
 }
 
+// Experimental function
 type ServerCallCheckFingerprint struct {
 	BaseEvent
 	Params serverCallCheckFingerprintParams `json:"params"`

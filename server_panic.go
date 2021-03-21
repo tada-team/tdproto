@@ -6,6 +6,7 @@ func NewServerPanic(code string) (r ServerPanic) {
 	return r
 }
 
+// Critical server error
 type ServerPanic struct {
 	BaseEvent
 	Params serverPanicParams `json:"params"`
