@@ -89,3 +89,8 @@ func (jid *JID) UnmarshalMsgpack(data []byte) error {
 	jid.val = val
 	return nil
 }
+
+func (jid *JID) UnmarshalText(data []byte) error {
+	jid.val = string(data)
+	return nil
+}
