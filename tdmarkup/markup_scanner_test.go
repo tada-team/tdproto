@@ -139,6 +139,24 @@ func BenchmarkParse(b *testing.B) {
 	})
 }
 
+// BenchmarkNoop-12    	  502996	      2363 ns/op	     432 B/op	      57 allocs/op
+// =>
+// BenchmarkNoop-12    	 2903997	       442.5 ns/op	     192 B/op	       4 allocs/op
+func BenchmarkNoop(b *testing.B) {
+	b.ReportAllocs()
+
+	raw := "bold italic 1234567 3 code"
+	plain := "bold italic 1234567 3 code"
+
+	for i := 0; i < b.N; i++ {
+		s, entities := ParseString(raw, nil)
+		res := ToPlain(s, entities, nil)
+		if res != plain {
+			b.Fatalf("invalid plain, got: %s, want: %s", res, plain)
+		}
+	}
+}
+
 func mask(s string) *regexp.Regexp {
 	return regexp.MustCompile(`(^|\s)` + s + `([^\s` + s + `].*?[^\s` + s + `]|[^\s` + s + `])` + s + `(\s|$|\?|:|\.|,|!)`)
 }

@@ -61,16 +61,6 @@ func ToPlain(s string, e []tdproto.MarkupEntity, opts *ToPlainOpts) string {
 			}
 			return []rune("> "), middle, []rune("\n")
 		case tdproto.Link:
-			//for _, prefix := range [...]string{
-			//	"tadateam://",
-			//	"tel:",
-			//	"mailto:",
-			//} {
-			//	if strings.HasPrefix(e.Url, prefix) {
-			//		return []rune(""), []rune(e.Repl), []rune("")
-			//	}
-			//}
-			//return []rune(""), []rune(e.Url), []rune("")
 			return []rune(""), []rune(e.Repl), []rune("")
 		case tdproto.Time:
 			t := mustTime(e.Time)
@@ -82,13 +72,19 @@ func ToPlain(s string, e []tdproto.MarkupEntity, opts *ToPlainOpts) string {
 			return []rune(""), middle, []rune("")
 		}
 	}))
+
 	if !opts.DisableQuotes {
 		return strings.TrimRight(row, "\n\r")
 	}
+
 	return row
 }
 
 func conv(runes []rune, entities []tdproto.MarkupEntity, rules Rules) []rune {
+	if len(entities) == 0 {
+		return runes
+	}
+
 	offset := 0
 	for _, e := range entities {
 		middleDiff := 0

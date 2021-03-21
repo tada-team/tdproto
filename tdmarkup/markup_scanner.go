@@ -7,6 +7,8 @@ import (
 	"github.com/tada-team/tdproto"
 )
 
+var ops = "*/_~`<>&"
+
 var opInlines = map[rune]tdproto.MarkupType{
 	'*': tdproto.Bold,
 	'/': tdproto.Italic,
@@ -49,6 +51,9 @@ func ContainsTime(s string) bool { return contains(s, tdproto.Time) }
 
 func ParseString(text string, links tdproto.MessageLinks) (string, []tdproto.MarkupEntity) {
 	text = strings.ReplaceAll(text, "\r", "")
+	if !strings.ContainsAny(text, ops) {
+		return text, nil
+	}
 
 	var b strings.Builder
 	b.Grow(len(text))

@@ -78,7 +78,9 @@ func (s *Scanner) TakeNext() rune {
 
 func (s *MarkupScanner) ScanUntil(cl []rune) string {
 	start := s.Position()
+
 	var b strings.Builder
+	//b.Grow(s.Length() - start) // slower!
 
 	switch len(cl) {
 	case 0:
