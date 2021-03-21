@@ -108,8 +108,11 @@ func TestContainsTime(t *testing.T) {
 	}
 }
 
-//BenchmarkParse/markupScanner-12         	  417668	      2644 ns/op	    2304 B/op	      27 allocs/op
-//BenchmarkParse/regex-12                 	   98748	     12080 ns/op	    1087 B/op	      33 allocs/op
+// BenchmarkParse/regex-12                 	  107926	     11367 ns/op	    1129 B/op	      34 allocs/op
+//
+// BenchmarkParse/markupScanner-12         	  238516	      4882 ns/op	    2600 B/op	      71 allocs/op
+// => strings.Builder.Grow
+// BenchmarkParse/markupScanner-12         	  323514	      3734 ns/op	    2584 B/op	      68 allocs/op
 func BenchmarkParse(b *testing.B) {
 	raw := "*bold* /italic/ 1234567 _3_ `code`"
 	plain := "bold italic 1234567 3 code"

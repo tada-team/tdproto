@@ -50,11 +50,10 @@ func ContainsTime(s string) bool { return contains(s, tdproto.Time) }
 func ParseString(text string, links tdproto.MessageLinks) (string, []tdproto.MarkupEntity) {
 	text = strings.ReplaceAll(text, "\r", "")
 
-	b := new(strings.Builder)
+	var b strings.Builder
 	b.Grow(len(text))
 
-	entities := make([]tdproto.MarkupEntity, 0)
-
+	var entities []tdproto.MarkupEntity
 	for s := NewMarkupScanner(text); s.Rest() > 0; {
 		t, e := s.Scan(links)
 		if e != nil {
@@ -205,6 +204,7 @@ func (s *MarkupScanner) scanInline(marker rune, typ tdproto.MarkupType, allowWhi
 	start := s.Position()
 
 	var b strings.Builder
+	b.Grow(s.Length()-start)
 	b.WriteRune(s.TakeNext())
 
 	if !(start == 0 || isWhitespace(s.Prev()) || isEOL(s.Prev()) || allowWhitespaceAround) {
@@ -255,6 +255,7 @@ func (s *MarkupScanner) scanBlock(op, cl []rune, typ tdproto.MarkupType) (string
 	}
 
 	var b strings.Builder
+	b.Grow(s.Length()-start)
 	b.WriteString(t)
 
 	e := &tdproto.MarkupEntity{
@@ -302,6 +303,7 @@ func (s *MarkupScanner) scanQuote() (string, *tdproto.MarkupEntity) {
 	}
 
 	var b strings.Builder
+	b.Grow(s.Length()-s.Position())
 	b.WriteString(t)
 
 	e := &tdproto.MarkupEntity{
