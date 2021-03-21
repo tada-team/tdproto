@@ -10,6 +10,9 @@ func (p ClientCallBuzz) GetName() string { return "client.call.buzz" }
 
 // Call buzzing
 type clientCallBuzzParams struct {
-	Jid     JID   `json:"jid"`
+	// Chat or contact id
+	Jid JID `json:"jid"`
+
+	// List of call participants
 	Members []JID `json:"members"`
 }

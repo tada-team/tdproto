@@ -16,6 +16,9 @@ type ServerWarning struct {
 func (p ServerWarning) GetName() string { return "server.warning" }
 
 type serverWarningParams struct {
-	Message string      `json:"message"`
-	Orig    interface{} `json:"orig"`
+	// Message
+	Message string `json:"message"`
+
+	// Debug information
+	Orig interface{} `json:"orig"`
 }

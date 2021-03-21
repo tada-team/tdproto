@@ -17,7 +17,12 @@ type ServerCallBuzzcancel struct {
 func (p ServerCallBuzzcancel) GetName() string { return "server.call.buzzcancel" }
 
 type serverCallBuzzcancelParams struct {
+	// Chat or contact id
 	Jid  JID    `json:"jid"`
+
+	// Team id
 	Team string `json:"team"`
+
+	// Call id
 	Uid  string `json:"uid"`
 }

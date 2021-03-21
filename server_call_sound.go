@@ -16,6 +16,9 @@ type ServerCallSound struct {
 func (p ServerCallSound) GetName() string { return "server.call.sound" }
 
 type serverCallSoundParams struct {
-	Jid   JID  `json:"jid"`
+	// Chat or contact id
+	Jid JID `json:"jid"`
+
+	// Mute state
 	Muted bool `json:"muted"`
 }

@@ -1,11 +1,20 @@
 package tdproto
 
 type ReceivedMessage struct {
-	Chat        JID    `json:"chat"`
-	MessageId   string `json:"message_id"`
-	Received    bool   `json:"received"`
-	NumReceived int    `json:"num_received,omitempty"`
-	Debug       string `json:"_debug,omitempty"`
+	// Chat or contact id
+	Chat JID `json:"chat"`
+
+	// Message id
+	MessageId string `json:"message_id"`
+
+	// Is received
+	Received bool `json:"received"`
+
+	// Number of contacts received this message. Experimental.
+	NumReceived int `json:"num_received,omitempty"`
+
+	// Debug message, if any
+	Debug string `json:"_debug,omitempty"`
 }
 
 func NewServerMessageReceived(messages []ReceivedMessage) (r ServerMessageReceived) {
@@ -24,5 +33,6 @@ type ServerMessageReceived struct {
 func (p ServerMessageReceived) GetName() string { return "server.message.received" }
 
 type serverMessageReceivedParams struct {
+	// received message data
 	Messages []ReceivedMessage `json:"messages"`
 }

@@ -16,6 +16,9 @@ type ServerCallMuteall struct {
 func (p ServerCallMuteall) GetName() string { return "server.call.muteall" }
 
 type serverCallMuteallParams struct {
-	Jid   JID  `json:"jid"`
+	// Chat or contact id
+	Jid JID `json:"jid"`
+
+	// Mute state
 	Muted bool `json:"muted"`
 }

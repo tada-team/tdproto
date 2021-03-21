@@ -16,6 +16,9 @@ type ServerCallLeave struct {
 func (p ServerCallLeave) GetName() string { return "server.call.leave" }
 
 type serverCallLeaveParams struct {
-	Jid JID    `json:"jid"`
+	// Chat or contact id
+	Jid JID `json:"jid"`
+
+	// Call uid
 	Uid string `json:"uid"`
 }

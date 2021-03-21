@@ -15,5 +15,6 @@ type ServerUploadUpdated struct {
 func (p ServerUploadUpdated) GetName() string { return "server.upload.updated" }
 
 type serverUploadUpdatedParams struct {
+	// Uploads data
 	Uploads []Upload `json:"uploads"`
 }

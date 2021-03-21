@@ -17,7 +17,12 @@ type ServerChatDraft struct {
 func (p ServerChatDraft) GetName() string { return "server.chat.draft" }
 
 type serverChatDraftParams struct {
-	Jid      *JID   `json:"jid"`
-	Draft    string `json:"draft"`
-	DraftNum int64  `json:"draft_num"`
+	// Chat or contact id
+	Jid *JID `json:"jid"`
+
+	// Draft text
+	Draft string `json:"draft"`
+
+	// Draft version
+	DraftNum int64 `json:"draft_num"`
 }

@@ -1,9 +1,11 @@
 package tdproto
 
 func NewServerSectionDeleted(ct ChatType, section DeletedSection) (r ServerSectionDeleted) {
+	section.Gentime = Gentime() // XXX
+
 	r.Name = r.GetName()
 	r.Params.ChatType = ct
-	r.Params.Gentime = Gentime() // XXX
+	r.Params.Gentime = section.Gentime
 	r.Params.Sections = []DeletedSection{section}
 	return r
 }
@@ -17,7 +19,12 @@ type ServerSectionDeleted struct {
 func (p ServerSectionDeleted) GetName() string { return "server.section.deleted" }
 
 type serverSectionDeletedParams struct {
-	ChatType ChatType         `json:"chat_type"`
-	Gentime  int64            `json:"gentime"`
+	// Chat type
+	ChatType ChatType `json:"chat_type"`
+
+	// Section/project info
 	Sections []DeletedSection `json:"sections"`
+
+	// Deprecated
+	Gentime int64 `json:"gentime"`
 }

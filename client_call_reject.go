@@ -9,6 +9,9 @@ type ClientCallReject struct {
 func (p ClientCallReject) GetName() string { return "client.call.reject" }
 
 type clientCallRejectParams struct {
-	Jid    JID    `json:"jid"`
+	// Chat or contact id
+	Jid JID `json:"jid"`
+
+	// Reason, if any
 	Reason string `json:"reason"`
 }

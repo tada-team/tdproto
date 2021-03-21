@@ -19,5 +19,6 @@ type ServerTeamDeleted struct {
 func (p ServerTeamDeleted) GetName() string { return "server.team.deleted" }
 
 type serverTeamDeletedParams struct {
+	// Teams info
 	Teams []DeletedTeam `json:"teams"`
 }

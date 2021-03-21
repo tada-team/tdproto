@@ -17,7 +17,12 @@ type ServerChatUpdated struct {
 func (p ServerChatUpdated) GetName() string { return "server.chat.updated" }
 
 type serverChatUpdatedParams struct {
-	Chats      []Chat      `json:"chats"`
+	// Chat counters
+	Chats []Chat `json:"chats"`
+
+	// Current team counters
 	TeamUnread *TeamUnread `json:"team_unread"`
-	Badge      uint        `json:"badge"`
+
+	// Total number of unreads
+	Badge uint `json:"badge"`
 }

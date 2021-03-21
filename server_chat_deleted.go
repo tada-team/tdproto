@@ -20,7 +20,12 @@ type ServerChatDeleted struct {
 func (p ServerChatDeleted) GetName() string { return "server.chat.deleted" }
 
 type serverChatDeletedParams struct {
-	Chats      []DeletedChat `json:"chats"`
-	TeamUnread *TeamUnread   `json:"team_unread"`
-	Badge      uint          `json:"badge"`
+	// List of deleted chats
+	Chats []DeletedChat `json:"chats"`
+
+	// Current team counters
+	TeamUnread *TeamUnread `json:"team_unread"`
+
+	// Total number of unreads
+	Badge uint `json:"badge"`
 }

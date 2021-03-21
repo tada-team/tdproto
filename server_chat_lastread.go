@@ -17,7 +17,12 @@ type ServerChatLastread struct {
 func (p ServerChatLastread) GetName() string { return "server.chat.lastread" }
 
 type serverChatLastreadParams struct {
-	Chats      []ChatCounters `json:"chats"`
-	TeamUnread *TeamUnread    `json:"team_unread"`
-	Badge      uint           `json:"badge"`
+	// Chat counters
+	Chats []ChatCounters `json:"chats"`
+
+	// Current team counters
+	TeamUnread *TeamUnread `json:"team_unread"`
+
+	// Total number of unreads
+	Badge uint `json:"badge"`
 }

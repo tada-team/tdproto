@@ -19,11 +19,20 @@ type ServerCallAnswer struct {
 func (p ServerCallAnswer) GetName() string { return "server.call.answer" }
 
 type serverCallAnswerParams struct {
-	Jid        JID                         `json:"jid"`
+	// Chat or contact id
+	Jid JID `json:"jid"`
+
+	// List of ICE candidates (when trickle = false)
 	Candidates []serverCallAnswerCandidate `json:"candidates"`
-	Onliners   []CallOnliner               `json:"onliners"`
-	JSEP       JSEP                        `json:"jsep"`
-	Uid        string                      `json:"uid"`
+
+	// Current call participants
+	Onliners []CallOnliner `json:"onliners"`
+
+	// SDP data
+	JSEP JSEP `json:"jsep"`
+
+	// Call id
+	Uid string `json:"uid"`
 }
 
 type JSEP struct {

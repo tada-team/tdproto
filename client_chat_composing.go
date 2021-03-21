@@ -17,8 +17,15 @@ type ClientChatComposing struct {
 func (p ClientChatComposing) GetName() string { return "client.chat.composing" }
 
 type clientChatComposingParams struct {
-	Jid       JID     `json:"jid"`
-	IsAudio   bool    `json:"is_audio,omitempty"`
-	Composing bool    `json:"composing,omitempty"`
-	Draft     *string `json:"draft,omitempty"`
+	// Chat or contact id
+	Jid JID `json:"jid"`
+
+	// true = audiomessage, false = text typing
+	IsAudio bool `json:"is_audio,omitempty"`
+
+	// true = start typing / audio recording, false = stop
+	Composing bool `json:"composing,omitempty"`
+
+	// Message draft data
+	Draft *string `json:"draft,omitempty"`
 }

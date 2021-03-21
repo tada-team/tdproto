@@ -33,12 +33,27 @@ type ServerCallState struct {
 func (p ServerCallState) GetName() string { return "server.call.state" }
 
 type serverCallStateParams struct {
-	Jid         JID           `json:"jid"`
-	Onliners    []CallOnliner `json:"onliners"`
-	Start       *string       `json:"start"`
-	Finish      *string       `json:"finish"`
-	Audiorecord bool          `json:"audiorecord"`
-	Buzz        bool          `json:"buzz,omitempty"`
-	Uid         string        `json:"uid"`
-	Timestamp   int64         `json:"timestamp"`
+	// Chat or contact id
+	Jid JID `json:"jid"`
+
+	// Call id
+	Uid string `json:"uid"`
+
+	// Call participants
+	Onliners []CallOnliner `json:"onliners"`
+
+	// Call start, if any
+	Start *ISODateTimeString `json:"start"`
+
+	// Call finish, if any
+	Finish *ISODateTimeString `json:"finish"`
+
+	// Call record enabled
+	Audiorecord bool `json:"audiorecord"`
+
+	// Call buzzing
+	Buzz bool `json:"buzz,omitempty"`
+
+	// Event start. FIXME: why not gentime?
+	Timestamp int64 `json:"timestamp"`
 }

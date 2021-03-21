@@ -9,6 +9,9 @@ type ClientCallSound struct {
 func (p ClientCallSound) GetName() string { return "client.call.sound" }
 
 type clientCallSoundParams struct {
-	Jid   JID  `json:"jid"`
+	// Chat or contact id
+	Jid JID `json:"jid"`
+
+	// Mute state
 	Muted bool `json:"muted"`
 }

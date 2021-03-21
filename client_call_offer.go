@@ -9,8 +9,15 @@ type ClientCallOffer struct {
 func (p ClientCallOffer) GetName() string { return "client.call.offer" }
 
 type clientCallOfferParams struct {
-	Jid     JID    `json:"jid"`
-	Muted   bool   `json:"muted"`
-	Trickle bool   `json:"trickle"`
-	Sdp     string `json:"sdp"`
+	// Chat or contact id
+	Jid JID `json:"jid"`
+
+	// Mute state
+	Muted bool `json:"muted"`
+
+	// Is trickle mode enabled
+	Trickle bool `json:"trickle"`
+
+	// SDP (session description protocol) data
+	Sdp string `json:"sdp"`
 }
