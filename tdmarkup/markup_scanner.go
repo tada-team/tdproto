@@ -51,7 +51,7 @@ func ContainsTime(s string) bool { return contains(s, tdproto.Time) }
 
 func ParseString(text string, links tdproto.MessageLinks) (string, []tdproto.MarkupEntity) {
 	text = strings.ReplaceAll(text, "\r", "")
-	if !strings.ContainsAny(text, ops) {
+	if len(links) == 0 && !strings.ContainsAny(text, ops) {
 		return text, nil
 	}
 
