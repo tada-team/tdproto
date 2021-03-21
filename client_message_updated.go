@@ -7,6 +7,7 @@ func NewClientMessageUpdated(p ClientMessageUpdatedParams) (r ClientMessageUpdat
 	return r
 }
 
+// Message created or changed
 type ClientMessageUpdated struct {
 	BaseEvent
 	Params ClientMessageUpdatedParams `json:"params"`

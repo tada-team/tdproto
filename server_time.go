@@ -8,6 +8,7 @@ func NewServerTime() (r ServerTime) {
 	return r
 }
 
+// Current server time
 type ServerTime struct {
 	BaseEvent
 	Params serverTimeParams `json:"params"`
@@ -16,5 +17,6 @@ type ServerTime struct {
 func (p ServerTime) GetName() string { return "server.time" }
 
 type serverTimeParams struct {
-	Time string `json:"time"`
+	// Current time
+	Time ISODateTimeString `json:"time"`
 }

@@ -6,6 +6,7 @@ func NewServerRemindUpdated(reminds ...Remind) (r ServerRemindUpdated) {
 	return r
 }
 
+// Task/group remind created or changed
 type ServerRemindUpdated struct {
 	BaseEvent
 	Params serverRemindUpdatedParams `json:"params"`
@@ -14,5 +15,6 @@ type ServerRemindUpdated struct {
 func (p ServerRemindUpdated) GetName() string { return "server.remind.updated" }
 
 type serverRemindUpdatedParams struct {
+	// Remind information
 	Reminds []Remind `json:"reminds"`
 }

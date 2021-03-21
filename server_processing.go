@@ -10,6 +10,7 @@ func NewServerProcessing(num, total int, action, message string, hasError bool) 
 	return r
 }
 
+// Status of background operation
 type ServerProcessing struct {
 	BaseEvent
 	Params serverProcessingParams `json:"params"`
@@ -18,9 +19,18 @@ type ServerProcessing struct {
 func (p ServerProcessing) GetName() string { return "server.processing" }
 
 type serverProcessingParams struct {
-	Action   string `json:"action"`
-	Message  string `json:"message"`
-	HasError bool   `json:"has_error"`
-	Num      int    `json:"num"`
-	Total    int    `json:"total"`
+	// Action name
+	Action string `json:"action"`
+
+	// Message
+	Message string `json:"message"`
+
+	// Has error
+	HasError bool `json:"has_error"`
+
+	// Current processing item
+	Num int `json:"num"`
+
+	// Total processing items
+	Total int `json:"total"`
 }

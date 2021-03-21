@@ -6,6 +6,7 @@ func NewServerLogin(deviceName string) (r ServerLogin) {
 	return r
 }
 
+// Login from other device
 type ServerLogin struct {
 	BaseEvent
 	Params serverLoginParams `json:"params"`
@@ -14,5 +15,6 @@ type ServerLogin struct {
 func (p ServerLogin) GetName() string { return "server.login" }
 
 type serverLoginParams struct {
+	// Device name
 	DeviceName string `json:"device_name"`
 }

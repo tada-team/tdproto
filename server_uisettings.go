@@ -6,6 +6,7 @@ func NewServerUiSettings(v *UiSettings) (r ServerUiSettings) {
 	return r
 }
 
+// Part of UI settings changed
 type ServerUiSettings struct {
 	BaseEvent
 	Params *UiSettings `json:"params"`

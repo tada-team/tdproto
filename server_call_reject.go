@@ -8,6 +8,7 @@ func NewServerCallReject(jid JID, reason string, uid string) (r ServerCallReject
 	return r
 }
 
+// Call rejected
 type ServerCallReject struct {
 	BaseEvent
 	Params serverCallRejectParams `json:"params"`
@@ -16,7 +17,12 @@ type ServerCallReject struct {
 func (p ServerCallReject) GetName() string { return "server.call.reject" }
 
 type serverCallRejectParams struct {
-	Jid    JID    `json:"jid"`
+	// Chat or contact id
+	Jid JID `json:"jid"`
+
+	// Call id
+	Uid string `json:"uid"`
+
+	// Reason, if any
 	Reason string `json:"reason"`
-	Uid    string `json:"uid"`
 }

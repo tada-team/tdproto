@@ -9,6 +9,7 @@ func NewServerChatComposing(composing, isAudio bool, chat, actor *JID) (r Server
 	return r
 }
 
+// Someone typing or recording audiomessage in chat
 type ServerChatComposing struct {
 	BaseEvent
 	Params serverChatComposingParams `json:"params"`
@@ -17,9 +18,18 @@ type ServerChatComposing struct {
 func (p ServerChatComposing) GetName() string { return "server.chat.composing" }
 
 type serverChatComposingParams struct {
-	Jid        JID               `json:"jid"`
-	Actor      JID               `json:"actor"`
-	Composing  bool              `json:"composing"`
-	IsAudio    bool              `json:"is_audio,omitempty"`
+	// Chat or contact id
+	Jid JID `json:"jid"`
+
+	// Actor id
+	Actor JID `json:"actor"`
+
+	// true = start typing / audio recording, false = stop
+	Composing bool `json:"composing"`
+
+	// true = audiomessage, false = text typing
+	IsAudio bool `json:"is_audio,omitempty"`
+
+	// Composing event max lifetime
 	ValidUntil ISODateTimeString `json:"valid_until,omitempty"`
 }

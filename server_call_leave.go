@@ -7,6 +7,7 @@ func NewServerCallLeave(jid JID, uid string) (r ServerCallLeave) {
 	return r
 }
 
+// Participant leave a call
 type ServerCallLeave struct {
 	BaseEvent
 	Params serverCallLeaveParams `json:"params"`
@@ -15,6 +16,9 @@ type ServerCallLeave struct {
 func (p ServerCallLeave) GetName() string { return "server.call.leave" }
 
 type serverCallLeaveParams struct {
-	Jid JID    `json:"jid"`
+	// Chat or contact id
+	Jid JID `json:"jid"`
+
+	// Call uid
 	Uid string `json:"uid"`
 }

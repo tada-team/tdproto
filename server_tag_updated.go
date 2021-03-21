@@ -6,6 +6,7 @@ func NewServerTagUpdated(tags ...Tag) (r ServerTagUpdated) {
 	return r
 }
 
+// Tag created or changed
 type ServerTagUpdated struct {
 	BaseEvent
 	Params serverTagUpdatedParams `json:"params"`
@@ -14,5 +15,6 @@ type ServerTagUpdated struct {
 func (p ServerTagUpdated) GetName() string { return "server.tag.updated" }
 
 type serverTagUpdatedParams struct {
+	// Tags info
 	Tags []Tag `json:"tags"`
 }

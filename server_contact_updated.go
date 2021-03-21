@@ -6,6 +6,7 @@ func NewServerContactUpdated(contacts ...Contact) (r ServerContactUpdated) {
 	return r
 }
 
+// Contact created or updated
 type ServerContactUpdated struct {
 	BaseEvent
 	Params serverContactUpdatedParams `json:"params"`
@@ -14,5 +15,6 @@ type ServerContactUpdated struct {
 func (p ServerContactUpdated) GetName() string { return "server.contact.updated" }
 
 type serverContactUpdatedParams struct {
+	// Contact info
 	Contacts []Contact `json:"contacts"`
 }

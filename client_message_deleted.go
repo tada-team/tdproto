@@ -7,6 +7,7 @@ func NewClientMessageDeleted(messageId string) (r ClientMessageDeleted) {
 	return r
 }
 
+// Message deleted
 type ClientMessageDeleted struct {
 	BaseEvent
 	Params clientMessageDeletedParams `json:"params"`
@@ -15,5 +16,6 @@ type ClientMessageDeleted struct {
 func (p ClientMessageDeleted) GetName() string { return "client.message.deleted" }
 
 type clientMessageDeletedParams struct {
+	// Message id
 	MessageId string `json:"message_id,omitempty"`
 }

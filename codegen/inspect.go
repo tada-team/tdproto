@@ -24,7 +24,8 @@ type EnumValue struct {
 }
 
 func (e EnumValue) DartValue() string { return strings.ReplaceAll(e.Value, `"`, `'`) }
-func (e EnumValue) DartName() string  { return strcase.ToLowerCamel(e.Name) }
+
+func (e EnumValue) DartName() string { return strcase.ToLowerCamel(e.Name) }
 
 type Field struct {
 	Name         string `json:"name"`
@@ -63,63 +64,38 @@ type Struct struct {
 	EnumValues []EnumValue `json:"enum_values,omitempty"`
 }
 
+type Event struct {
+	Name string `json:"name"`
+	Help string `json:"help"`
+}
+
 func (s Struct) SnakeName() string { return strcase.ToSnake(s.Name) }
-func (s Struct) IsEnum() bool      { return len(s.EnumValues) > 0 }
 
-var tsTypeMap = map[string]string{
-	"string":            "string",
-	"int":               "number",
-	"int64":             "number",
-	"uint16":            "number",
-	"uint":              "number",
-	"bool":              "boolean",
-	"interface{}":       "any",
-	"ISODateTimeString": "string",
-}
+func (s Struct) IsEnum() bool { return len(s.EnumValues) > 0 }
 
-var dartTypeMap = map[string]string{
-	"string":            "String",
-	"int":               "int",
-	"int64":             "int",
-	"uint16":            "int",
-	"uint":              "int",
-	"bool":              "bool",
-	"interface{}":       "dynamic",
-	"ISODateTimeString": "DateTime",
-}
-
-var tsDefaultMap = map[string]string{
-	"string":       `''`,
-	"number":       `0`,
-	"boolean":      `false`,
-	"MessageLinks": `[]`,
-	"Mediasubtype": `''`,
+type Parsed struct {
+	Structs []Struct
+	Events  []Event
 }
 
 func Render(wr io.Writer, s string) error {
-	type tplContext struct {
-		Structs []*Struct
-	}
-
 	tpl, err := template.New("").Parse(s)
 	if err != nil {
 		return err
 	}
 
-	structs, err := Parse()
+	p, err := Parse()
 	if err != nil {
 		return err
 	}
 
-	return tpl.Execute(wr, tplContext{
-		Structs: structs,
-	})
+	return tpl.Execute(wr, p)
 }
 
-func Parse() (structs []*Struct, err error) {
+func Parse() (p Parsed, err error) {
 	fset := token.NewFileSet()
 	enumsMap := make(map[string][]EnumValue)
-	if err := doParse(fset, token.CONST, func(gen *ast.GenDecl) error {
+	if err := doParse(fset, token.CONST, func(gen *ast.GenDecl, eventNames map[string]*ast.FuncDecl) error {
 		for _, spec := range gen.Specs {
 			valueSpec, ok := spec.(*ast.ValueSpec)
 			if !ok || valueSpec.Type == nil {
@@ -149,11 +125,11 @@ func Parse() (structs []*Struct, err error) {
 		}
 		return nil
 	}); err != nil {
-		return nil, err
+		return p, err
 	}
 
 	types := make(map[string]struct{})
-	if err := doParse(fset, token.TYPE, func(gen *ast.GenDecl) error {
+	if err := doParse(fset, token.TYPE, func(gen *ast.GenDecl, eventNames map[string]*ast.FuncDecl) error {
 		s := Struct{Help: cleanHelp(gen.Doc.Text())}
 		if s.Help == "" || strings.HasPrefix(strings.ToLower(s.Help), "deprecated") {
 			return nil
@@ -167,30 +143,38 @@ func Parse() (structs []*Struct, err error) {
 			}
 
 			s.Name = typeSpec.Name.Name
-			types[s.Name] = struct{}{}
+			if eventNames[s.Name] != nil {
+				p.Events = append(p.Events, Event{
+					Name: strcase.ToDelimited(s.Name, '.'),
+					Help: s.Help,
+				})
+				continue
+			}
 
+			types[s.Name] = struct{}{}
 			s.EnumValues = enumsMap[s.Name]
 			if len(s.EnumValues) > 0 {
 				for i := range s.EnumValues {
 					s.EnumValues[i].Name = strings.TrimSuffix(s.EnumValues[i].Name, s.Name)
 				}
 			} else {
-
 				switch typeSpec.Type.(type) {
 				case *ast.StructType:
-					fieldList := typeSpec.Type.(*ast.StructType).Fields
-					for _, field := range fieldList.List {
+
+					st := typeSpec.Type.(*ast.StructType)
+					for _, field := range st.Fields.List {
 						name := field.Names[0].Name
 
 						omitempty := false
-						jsonName := name
 						readonly := false
+						jsonName := name
 						if field.Tag != nil {
 							tag := reflect.StructTag(strings.Trim(field.Tag.Value, "`"))
 							jsontag := strings.Split(tag.Get("json"), ",")
-							omitempty = len(jsontag) == 2 && jsontag[1] == "omitempty"
-							jsonName = jsontag[0]
 
+							omitempty = len(jsontag) == 2 && jsontag[1] == "omitempty"
+
+							jsonName = jsontag[0]
 							if jsonName == "-" {
 								continue
 							}
@@ -198,6 +182,7 @@ func Parse() (structs []*Struct, err error) {
 							for _, tag := range strings.Split(tag.Get("tdproto"), ",") {
 								if tag == "readonly" {
 									readonly = true
+									break
 								}
 							}
 						}
@@ -221,12 +206,12 @@ func Parse() (structs []*Struct, err error) {
 							typeDescr = typeDescr[2:]
 						}
 
-						tsType := tsTypeMap[typeDescr]
+						tsType := typesMap[typeDescr].TypeScript
 						if tsType == "" {
 							tsType = typeDescr
 						}
 
-						dartType := dartTypeMap[typeDescr]
+						dartType := typesMap[typeDescr].Dart
 						if dartType == "" {
 							dartType = typeDescr
 						}
@@ -236,7 +221,6 @@ func Parse() (structs []*Struct, err error) {
 						}
 
 						help := cleanHelp(field.Doc.Text())
-
 						if help == "" {
 							help = name
 						}
@@ -271,27 +255,31 @@ func Parse() (structs []*Struct, err error) {
 				}
 			}
 
-			structs = append(structs, &s)
+			p.Structs = append(p.Structs, s)
 		}
 		return nil
 	}); err != nil {
-		return nil, err
+		return p, err
 	}
 
-	sort.Slice(structs, func(i, j int) bool {
-		return structs[i].Name < structs[j].Name
+	sort.Slice(p.Structs, func(i, j int) bool {
+		return p.Structs[i].Name < p.Structs[j].Name
 	})
 
-	for _, s := range structs {
+	sort.Slice(p.Events, func(i, j int) bool {
+		return p.Events[i].Name < p.Events[j].Name
+	})
+
+	for _, s := range p.Structs {
 		for _, f := range s.Fields {
 			_, f.InternalType = types[f.Type]
 		}
 	}
 
-	return structs, nil
+	return p, nil
 }
 
-func doParse(fset *token.FileSet, tok token.Token, fn func(gen *ast.GenDecl) error) error {
+func doParse(fset *token.FileSet, tok token.Token, fn func(gen *ast.GenDecl, eventNames map[string]*ast.FuncDecl) error) error {
 	path := tdproto.SourceDir()
 	d, err := parser.ParseDir(fset, path, nil, parser.ParseComments)
 	if err != nil {
@@ -302,14 +290,25 @@ func doParse(fset *token.FileSet, tok token.Token, fn func(gen *ast.GenDecl) err
 		for _, file := range f.Files {
 			files = append(files, *file)
 		}
+
 		for _, f := range files {
+			eventNames := make(map[string]*ast.FuncDecl)
+			ast.Inspect(&f, func(n ast.Node) bool {
+				if fun, ok := n.(*ast.FuncDecl); ok {
+					if fun.Name.IsExported() && fun.Recv != nil && len(fun.Recv.List) == 1 && fun.Name.Name == "GetName" {
+						eventNames[toString(fun.Recv.List[0].Type)] = fun
+					}
+				}
+				return true
+			})
+
 			for _, decl := range f.Decls {
 				gen, ok := decl.(*ast.GenDecl)
 				if !ok {
 					continue
 				}
 				if gen.Tok == tok {
-					if err := fn(gen); err != nil {
+					if err := fn(gen, eventNames); err != nil {
 						return err
 					}
 				}
@@ -317,6 +316,10 @@ func doParse(fset *token.FileSet, tok token.Token, fn func(gen *ast.GenDecl) err
 		}
 	}
 	return nil
+}
+
+func toString(v interface{}) string {
+	return fmt.Sprintf("%s", v)
 }
 
 func cleanHelp(s string) string {

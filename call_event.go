@@ -11,7 +11,7 @@ type CallEvent struct {
 	// Call record enabled
 	Audiorecord bool `json:"audiorecord"`
 
-	// Call members
+	// Call participants
 	Onliners []CallOnliner `json:"onliners"`
 }
 

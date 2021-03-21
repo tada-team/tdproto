@@ -12,15 +12,13 @@ func NewServerCallBuzz(teamShort TeamShort, chatShort ChatShort, actorShort Cont
 	r.Params.Uid = uid
 	r.Params.Jid = chatShort.Jid
 	r.Params.BuzzTimeout = int(timeout.Seconds())
-
 	r.Params.Icons = chatShort.Icons
-
-	// Set as Deprecated or just leave for backward compatibility?
-	r.Params.Team = teamShort.Uid
 	r.Params.DisplayName = chatShort.DisplayName
+	r.Params.Team = teamShort.Uid
 	return r
 }
 
+// Call buzzing
 type ServerCallBuzz struct {
 	BaseEvent
 	Params serverCallBuzzParams `json:"params"`
@@ -29,13 +27,30 @@ type ServerCallBuzz struct {
 func (p ServerCallBuzz) GetName() string { return "server.call.buzz" }
 
 type serverCallBuzzParams struct {
-	TeamShort   TeamShort    `json:"teaminfo"`
-	ChatShort   ChatShort    `json:"chat"`
-	ActorShort  ContactShort `json:"actor"`
-	Uid         string       `json:"uid"`
-	Jid         JID          `json:"jid"`
-	BuzzTimeout int          `json:"buzz_timeout"`
-	Icons       *IconData    `json:"icons"`
-	Team        string       `json:"team"`
-	DisplayName string       `json:"display_name"`
+	// Chat or contact id
+	Jid JID `json:"jid"`
+
+	// Chat icons
+	Icons *IconData `json:"icons"`
+
+	// Chat title
+	DisplayName string `json:"display_name"`
+
+	// Short team information
+	TeamShort TeamShort `json:"teaminfo"`
+
+	// Short chat information
+	ChatShort ChatShort `json:"chat"`
+
+	// Short call creator information
+	ActorShort ContactShort `json:"actor"`
+
+	// Call id
+	Uid string `json:"uid"`
+
+	// Number of seconds for stop buzzing
+	BuzzTimeout int `json:"buzz_timeout"`
+
+	// Deprecated
+	Team string `json:"team"`
 }

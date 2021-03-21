@@ -6,6 +6,7 @@ func NewServerTeamUpdated(team Team) (r ServerTeamUpdated) {
 	return r
 }
 
+// Team created or changed
 type ServerTeamUpdated struct {
 	BaseEvent
 	Params serverTeamUpdatedParams `json:"params"`

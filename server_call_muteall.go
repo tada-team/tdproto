@@ -7,6 +7,7 @@ func NewServerCallMuteall(jid JID, muted bool) (r ServerCallMuteall) {
 	return r
 }
 
+// All participants in call muted
 type ServerCallMuteall struct {
 	BaseEvent
 	Params serverCallMuteallParams `json:"params"`
@@ -15,6 +16,9 @@ type ServerCallMuteall struct {
 func (p ServerCallMuteall) GetName() string { return "server.call.muteall" }
 
 type serverCallMuteallParams struct {
-	Jid   JID  `json:"jid"`
+	// Chat or contact id
+	Jid JID `json:"jid"`
+
+	// Mute state
 	Muted bool `json:"muted"`
 }

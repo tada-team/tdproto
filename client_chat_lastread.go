@@ -8,6 +8,7 @@ func NewClientChatLastread(jid JID, messageId *string) (r ClientChatLastread) {
 	return r
 }
 
+// Last read message in chat changed
 type ClientChatLastread struct {
 	BaseEvent
 	Params clientChatLastreadParams `json:"params"`
@@ -16,6 +17,9 @@ type ClientChatLastread struct {
 func (p ClientChatLastread) GetName() string { return "client.chat.lastread" }
 
 type clientChatLastreadParams struct {
-	Jid               JID     `json:"jid"`
+	// Chat or contact id
+	Jid JID `json:"jid"`
+
+	// Last read message id. Omitted = last message in chat
 	LastReadMessageId *string `json:"last_read_message_id,omitempty"`
 }

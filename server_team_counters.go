@@ -9,6 +9,7 @@ func NewServerTeamCounters(counters []TeamCounter, badge uint) ServerTeamCounter
 	return r
 }
 
+// Counters form other teams
 type ServerTeamCounters struct {
 	BaseEvent
 	Params serverTeamCountersParams `json:"params"`
@@ -17,6 +18,9 @@ type ServerTeamCounters struct {
 func (p ServerTeamCounters) GetName() string { return "server.team.counters" }
 
 type serverTeamCountersParams struct {
+	// Counters
 	Teams []TeamCounter `json:"teams"`
-	Badge uint          `json:"badge"`
+
+	// Total number of unreads
+	Badge uint `json:"badge"`
 }

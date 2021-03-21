@@ -10,6 +10,7 @@ func NewServerTeamDeleted(uid string, gentime int64) (r ServerTeamDeleted) {
 	return r
 }
 
+// Team archived
 type ServerTeamDeleted struct {
 	BaseEvent
 	Params serverTeamDeletedParams `json:"params"`
@@ -18,5 +19,6 @@ type ServerTeamDeleted struct {
 func (p ServerTeamDeleted) GetName() string { return "server.team.deleted" }
 
 type serverTeamDeletedParams struct {
+	// Teams info
 	Teams []DeletedTeam `json:"teams"`
 }

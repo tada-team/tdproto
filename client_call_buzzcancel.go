@@ -1,6 +1,6 @@
 package tdproto
 
-// deprecated: use http api
+// Call buzzing cancelled
 type ClientCallBuzzCancel struct {
 	BaseEvent
 	Params clientCallBuzzCancelParams `json:"params"`
@@ -9,5 +9,6 @@ type ClientCallBuzzCancel struct {
 func (p ClientCallBuzzCancel) GetName() string { return "client.call.buzzcancel" }
 
 type clientCallBuzzCancelParams struct {
+	// Chat or contact id
 	Jid JID `json:"jid"`
 }

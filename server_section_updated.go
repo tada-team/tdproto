@@ -8,6 +8,7 @@ func NewServerSectionUpdated(ct ChatType, sections ...Section) (r ServerSectionU
 	return r
 }
 
+// Contact section or task project created or changed
 type ServerSectionUpdated struct {
 	BaseEvent
 	Params serverSectionUpdatedParams `json:"params"`
@@ -16,7 +17,12 @@ type ServerSectionUpdated struct {
 func (p ServerSectionUpdated) GetName() string { return "server.section.updated" }
 
 type serverSectionUpdatedParams struct {
+	// Chat type
 	ChatType ChatType  `json:"chat_type"`
-	Gentime  int64     `json:"gentime"`
+
+	// Section/project info
 	Sections []Section `json:"sections"`
+
+	// deprecated
+	Gentime  int64     `json:"gentime"`
 }

@@ -6,6 +6,7 @@ func NewServerPanic(code string) (r ServerPanic) {
 	return r
 }
 
+// Critical server error
 type ServerPanic struct {
 	BaseEvent
 	Params serverPanicParams `json:"params"`
@@ -14,6 +15,9 @@ type ServerPanic struct {
 func (p ServerPanic) GetName() string { return "server.panic" }
 
 type serverPanicParams struct {
-	Code  string `json:"code"`
+	// Error code
+	Code string `json:"code"`
+
+	// Debug message
 	Debug string `json:"debug,omitempty"`
 }
