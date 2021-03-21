@@ -6,6 +6,7 @@ func NewClientConfirm(confirmId string) (r ClientConfirm) {
 	return r
 }
 
+// Client confirmed server message
 type ClientConfirm struct {
 	BaseEvent
 	Params clientConfirmParams `json:"params"`

@@ -6,6 +6,7 @@ func NewClientActivity(afk bool) (r ClientActivity) {
 	return r
 }
 
+// Change AFG (away from keyboard) status
 type ClientActivity struct {
 	BaseEvent
 	Params clientActivityParams `json:"params"`

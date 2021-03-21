@@ -8,6 +8,7 @@ func NewClientChatLastread(jid JID, messageId *string) (r ClientChatLastread) {
 	return r
 }
 
+// Last read message in chat changed
 type ClientChatLastread struct {
 	BaseEvent
 	Params clientChatLastreadParams `json:"params"`

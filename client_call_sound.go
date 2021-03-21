@@ -1,6 +1,6 @@
 package tdproto
 
-// deprecated: use http api
+// Change mute state in call
 type ClientCallSound struct {
 	BaseEvent
 	Params clientCallSoundParams `json:"params"`

@@ -1,6 +1,6 @@
 package tdproto
 
-// deprecated: use http api
+// Start a call
 type ClientCallOffer struct {
 	BaseEvent
 	Params clientCallOfferParams `json:"params"`

@@ -8,6 +8,7 @@ func NewClientChatComposing(jid JID, composing bool, draft *string) (r ClientCha
 	return r
 }
 
+// Typing or recording audiomessage
 type ClientChatComposing struct {
 	BaseEvent
 	Params clientChatComposingParams `json:"params"`

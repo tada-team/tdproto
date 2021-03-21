@@ -6,6 +6,7 @@ func NewClientPing() (r ClientPing) {
 	return r
 }
 
+// Empty message for checking server connection
 type ClientPing struct {
 	BaseEvent
 }

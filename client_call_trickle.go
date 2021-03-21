@@ -1,6 +1,6 @@
 package tdproto
 
-// deprecated: use http api
+// Send trickle candidate for webrtc connection
 type ClientCallTrickle struct {
 	BaseEvent
 	Params clientCallTrickleParams `json:"params"`

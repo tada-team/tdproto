@@ -1412,8 +1412,58 @@ Wiki page. Experimental.
  * **text** (string) — Page text.
 
 
+### <a name="clientCallBuzzParams"></a>clientCallBuzzParams
+Call buzzing.
+
+ * **jid** (JID) — Jid.
+
+ * **members** (JID, list) — Members.
+
+
 
 ## Events
+
+### <a name="client.activity"></a>client.activity
+Change AFG (away from keyboard) status.
+
+### <a name="client.call.buzz.cancel"></a>client.call.buzz.cancel
+Call buzzing cancelled.
+
+### <a name="client.call.leave"></a>client.call.leave
+Leave call.
+
+### <a name="client.call.mute.all"></a>client.call.mute.all
+Mute all other call participants.
+
+### <a name="client.call.offer"></a>client.call.offer
+Start a call.
+
+### <a name="client.call.reject"></a>client.call.reject
+Reject the call.
+
+### <a name="client.call.sound"></a>client.call.sound
+Change mute state in call.
+
+### <a name="client.call.trickle"></a>client.call.trickle
+Send trickle candidate for webrtc connection.
+
+### <a name="client.chat.composing"></a>client.chat.composing
+Typing or recording audiomessage.
+
+### <a name="client.chat.lastread"></a>client.chat.lastread
+Last read message in chat changed.
+
+### <a name="client.confirm"></a>client.confirm
+Client confirmed server message.
+
+### <a name="client.message.deleted"></a>client.message.deleted
+Message deleted.
+
+### <a name="client.message.updated"></a>client.message.updated
+Message created or changed.
+
+### <a name="client.ping"></a>client.ping
+Empty message for checking server connection.
 
 ### <a name="server.call.answer"></a>server.call.answer
 Call parameters.
@@ -1464,7 +1514,7 @@ Changed last read message in chat.
 Chat created or updated.
 
 ### <a name="server.confirm"></a>server.confirm
-Server got message from client.
+Server confirmed client message.
 
 ### <a name="server.contact.updated"></a>server.contact.updated
 Contact created or updated.

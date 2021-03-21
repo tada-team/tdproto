@@ -1,6 +1,6 @@
 package tdproto
 
-// deprecated: use http api
+// Reject the call
 type ClientCallReject struct {
 	BaseEvent
 	Params clientCallRejectParams `json:"params"`

@@ -1,6 +1,6 @@
 package tdproto
 
-// deprecated: use http api
+// Call buzzing cancelled
 type ClientCallBuzzCancel struct {
 	BaseEvent
 	Params clientCallBuzzCancelParams `json:"params"`

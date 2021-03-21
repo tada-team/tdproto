@@ -1,6 +1,6 @@
 package tdproto
 
-// deprecated: use http api
+// Leave call
 type ClientCallLeave struct {
 	BaseEvent
 	Params clientCallLeaveParams `json:"params"`

@@ -1,6 +1,6 @@
 package tdproto
 
-// deprecated: use http api
+// Mute all other call participants
 type ClientCallMuteAll struct {
 	BaseEvent
 	Params clientCallMuteAllParams `json:"params"`
