@@ -122,6 +122,9 @@ type Contact struct {
 	// Short view in group list in mobile app
 	GroupMshortView *bool `json:"group_mshort_view,omitempty"`
 
+	// Two-factor authentication is configured and confirmed
+	Auth2faEnabled bool `json:"auth_2fa_enabled,omitempty"`
+
 	// Short view in task list in mobile app
 	TaskMshortView *bool `json:"task_mshort_view,omitempty"`
 
