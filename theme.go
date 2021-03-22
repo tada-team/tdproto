@@ -10,15 +10,22 @@ type ButtonColors struct {
 }
 
 type FontColors struct {
-	Text  string `json:"text"`
-	Title string `json:"title"`
-	Sub   string `json:"sub"`
+	Text           string `json:"text"`
+	Title          string `json:"title"`
+	Sub            string `json:"sub"`
+	BrandButton    string `json:"brand_button"`
+	SimpleButton   string `json:"simple_button"`
+	BubbleSent     string `json:"bubble_sent"`
+	BubbleReceived string `json:"bubble_received"`
 }
 
 type MessageColors struct {
-	BubbleSent     string `json:"bubble_sent"`
-	BubbleReceived string `json:"bubble_received"`
-	Allocated      string `json:"allocated"`
+	BubbleSent      string `json:"bubble_sent"`
+	BubbleReceived  string `json:"bubble_received"`
+	BubbleImportant string `json:"bubble_important"`
+	StatusFeed      string `json:"status_feed"`
+	StatusBubble    string `json:"status_bubble"`
+	Allocated       string `json:"allocated"`
 }
 
 type InputColors struct {
@@ -74,6 +81,9 @@ type Theme struct {
 	Background          string          `json:"background"`
 	TabBackground       string          `json:"tab_background"`
 	ChatInputBackground string          `json:"chat_input_background"`
+	SubstrateBackground string          `json:"substrate_background"`
+	ModalBackground     string          `json:"modal_background"`
+	TitleBackground     string          `json:"title_background"`
 	Attention           string          `json:"attention"`
 	AttentionLight      string          `json:"attention_light"`
 	Font                *FontColors     `json:"font"`
