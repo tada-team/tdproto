@@ -126,7 +126,7 @@ type Contact struct {
 	Auth2faEnabled bool `json:"auth_2fa_enabled,omitempty"`
 
 	// Two-factor authentication status
-	Auth2faStatus string `json:"auth_2fa_string,omitempty"`
+	Auth2faStatus string `json:"auth_2fa_status,omitempty"`
 
 	// Short view in task list in mobile app
 	TaskMshortView *bool `json:"task_mshort_view,omitempty"`
