@@ -125,6 +125,9 @@ type Contact struct {
 	// Two-factor authentication is configured and confirmed
 	Auth2faEnabled bool `json:"auth_2fa_enabled,omitempty"`
 
+	// Two-factor authentication status
+	Auth2faStatus string `json:"auth_2fa_string,omitempty"`
+
 	// Short view in task list in mobile app
 	TaskMshortView *bool `json:"task_mshort_view,omitempty"`
 
