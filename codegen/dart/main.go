@@ -72,13 +72,13 @@ func do() error {
 		return err
 	}
 
-	for _, s := range structs {
+	for _, s := range structs.Structs {
 		switch s.Name {
 		case "UploadPreview", "PdfVersion", "Upload", "MarkupEntity", "MarkupType",
 			"ChatType", "TeamStatus", "GroupStatus",
 			"Country":
 			log.Println("export:", s.Name)
-			if err := save(path, s); err != nil {
+			if err := save(path, &s); err != nil {
 				return err
 			}
 		default:
