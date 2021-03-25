@@ -83,7 +83,7 @@ export interface {{$s.Name}} { {{- range $f := $s.Fields }}
    /**
     * {{$f.Help}}.{{if $f.Readonly}} Readonly.{{end}}
     */
-   {{$f.JSName}}: {{$f.TSType}}{{ if $f.List }}[]{{end}}{{ if $f.Null }} | null{{ end }};
+   {{$f.JSName}}{{ if $f.Omitempty }}?{{end}}:  {{$f.TSType}}{{ if $f.List }}[]{{end}}{{ if $f.Null }} | null{{ end }};
 {{end}}
 }
 {{end}}
