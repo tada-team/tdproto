@@ -84,7 +84,7 @@ func Render(wr io.Writer, s string) error {
 		return err
 	}
 
-	p, err := Parse()
+	p, err := ParseTdProto()
 	if err != nil {
 		return err
 	}
@@ -92,7 +92,7 @@ func Render(wr io.Writer, s string) error {
 	return tpl.Execute(wr, p)
 }
 
-func Parse() (p TadaInfo, err error) {
+func ParseTdProto() (p TadaInfo, err error) {
 	fset := token.NewFileSet()
 	enumsMap := make(map[string][]EnumValue)
 	if err := doParse(fset, token.CONST, func(gen *ast.GenDecl, eventNames map[string]*ast.FuncDecl) error {

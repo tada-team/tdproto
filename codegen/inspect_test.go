@@ -5,5 +5,5 @@ import (
 )
 
 func TestParsing(t *testing.T) {
-	Parse()
+	ParseTdProto()
 }
