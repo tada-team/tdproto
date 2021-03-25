@@ -27,7 +27,7 @@ func (e EnumValue) DartValue() string { return strings.ReplaceAll(e.Value, `"`, 
 
 func (e EnumValue) DartName() string { return strcase.ToLowerCamel(e.Name) }
 
-type Field struct {
+type TadaField struct {
 	Name         string `json:"name"`
 	JSName       string `json:"js_name"`
 	Help         string `json:"help"`
@@ -43,11 +43,11 @@ type Field struct {
 	TSDefault    string `json:"ts_default"`
 }
 
-func (f Field) DartRequired() bool {
+func (f TadaField) DartRequired() bool {
 	return !(f.Null || f.Omitempty)
 }
 
-func (f Field) DartName() string {
+func (f TadaField) DartName() string {
 	switch f.JSName {
 	case "default":
 		return "isDefault"
@@ -59,7 +59,7 @@ func (f Field) DartName() string {
 type TadaStruct struct {
 	Name       string      `json:"name"`
 	Help       string      `json:"help"`
-	Fields     []*Field    `json:"fields"`
+	Fields     []*TadaField    `json:"fields"`
 	Readonly   bool        `json:"readonly,omitempty"`
 	EnumValues []EnumValue `json:"enum_values,omitempty"`
 }
@@ -75,7 +75,7 @@ func (s TadaStruct) IsEnum() bool { return len(s.EnumValues) > 0 }
 
 type Parsed struct {
 	TadaStructs []TadaStruct
-	Events  []Event
+	Events      []Event
 }
 
 func Render(wr io.Writer, s string) error {
@@ -237,7 +237,7 @@ func Parse() (p Parsed, err error) {
 							}
 						}
 
-						s.Fields = append(s.Fields, &Field{
+						s.Fields = append(s.Fields, &TadaField{
 							Name:      name,
 							Help:      help,
 							JSName:    strings.ToLower(name[:1]) + name[1:],
