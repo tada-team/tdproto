@@ -73,7 +73,7 @@ func (s TadaStruct) SnakeName() string { return strcase.ToSnake(s.Name) }
 
 func (s TadaStruct) IsEnum() bool { return len(s.EnumValues) > 0 }
 
-type Parsed struct {
+type TadaInfo struct {
 	TadaStructs []TadaStruct
 	Events      []TadaEvent
 }
@@ -92,7 +92,7 @@ func Render(wr io.Writer, s string) error {
 	return tpl.Execute(wr, p)
 }
 
-func Parse() (p Parsed, err error) {
+func Parse() (p TadaInfo, err error) {
 	fset := token.NewFileSet()
 	enumsMap := make(map[string][]EnumValue)
 	if err := doParse(fset, token.CONST, func(gen *ast.GenDecl, eventNames map[string]*ast.FuncDecl) error {
