@@ -64,7 +64,7 @@ type TadaStruct struct {
 	EnumValues []EnumValue `json:"enum_values,omitempty"`
 }
 
-type Event struct {
+type TadaEvent struct {
 	Name string `json:"name"`
 	Help string `json:"help"`
 }
@@ -75,7 +75,7 @@ func (s TadaStruct) IsEnum() bool { return len(s.EnumValues) > 0 }
 
 type Parsed struct {
 	TadaStructs []TadaStruct
-	Events      []Event
+	Events      []TadaEvent
 }
 
 func Render(wr io.Writer, s string) error {
@@ -144,7 +144,7 @@ func Parse() (p Parsed, err error) {
 
 			s.Name = typeSpec.Name.Name
 			if eventNames[s.Name] != nil {
-				p.Events = append(p.Events, Event{
+				p.Events = append(p.Events, TadaEvent{
 					Name: strcase.ToDelimited(s.Name, '.'),
 					Help: s.Help,
 				})
