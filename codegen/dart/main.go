@@ -17,11 +17,11 @@ func main() {
 }
 
 var dartFile = template.Must(template.New("").Parse(`import 'package:freezed_annotation/freezed_annotation.dart';
-{{ if $.Struct.IsEnum -}}
+{{ if $.TadaStruct.IsEnum -}}
 
-/// {{.Struct.Help}}
-enum {{.Struct.Name}} {
-  {{ range $v := $.Struct.EnumValues }}
+/// {{.TadaStruct.Help}}
+enum {{.TadaStruct.Name}} {
+  {{ range $v := $.TadaStruct.EnumValues }}
   /// {{$v.Help}}
   @JsonValue({{ $v.DartValue }})
   {{ $v.DartName }},
@@ -31,30 +31,30 @@ enum {{.Struct.Name}} {
 {{- else -}}
 import 'package:tdproto_dart/tdproto_dart.dart';
 
-part '{{.Struct.SnakeName}}.freezed.dart';
-part '{{.Struct.SnakeName}}.g.dart';
+part '{{.TadaStruct.SnakeName}}.freezed.dart';
+part '{{.TadaStruct.SnakeName}}.g.dart';
 
-/// {{.Struct.Help}}
+/// {{.TadaStruct.Help}}
 @freezed
-abstract class {{.Struct.Name}} with _${{.Struct.Name}} {
-  const factory {{.Struct.Name}}({
-{{ range $f := .Struct.Fields }}
+abstract class {{.TadaStruct.Name}} with _${{.TadaStruct.Name}} {
+  const factory {{.TadaStruct.Name}}({
+{{ range $f := .TadaStruct.Fields }}
     /// {{$f.Help}}.{{if $f.Readonly}} Readonly.{{end}}
     @JsonKey(name: '{{$f.Json}}')
 	{{- if eq $f.DartType "DateTime" }} @DateTimeConverter(){{ end -}}
 	{{- if $f.DartRequired }} @required{{ end -}}
     {{- if $f.List }} List<{{ $f.DartType }}>{{ else }} {{ $f.DartType }}{{ end }} {{ $f.DartName }},
 {{ end }}
-  }) = _{{.Struct.Name}};
+  }) = _{{.TadaStruct.Name}};
 
-  factory {{.Struct.Name}}.fromJson(Map<String, dynamic> json) => _${{.Struct.Name}}FromJson(json);
+  factory {{.TadaStruct.Name}}.fromJson(Map<String, dynamic> json) => _${{.TadaStruct.Name}}FromJson(json);
 }
 
 {{- end -}}
 `))
 
 type tplContext struct {
-	Struct *codegen.Struct
+	TadaStruct *codegen.TadaStruct
 }
 
 func do() error {
@@ -72,7 +72,7 @@ func do() error {
 		return err
 	}
 
-	for _, s := range structs.Structs {
+	for _, s := range structs.TadaStructs {
 		switch s.Name {
 		case "UploadPreview", "PdfVersion", "Upload", "MarkupEntity", "MarkupType",
 			"ChatType", "TeamStatus", "GroupStatus",
@@ -89,7 +89,7 @@ func do() error {
 	return nil
 }
 
-func save(path string, s *codegen.Struct) error {
+func save(path string, s *codegen.TadaStruct) error {
 	dist := filepath.Join(path, s.SnakeName())
 	if _, err := os.Stat(dist); os.IsNotExist(err) {
 		log.Println("mkdir:", dist)
@@ -109,7 +109,7 @@ func save(path string, s *codegen.Struct) error {
 	}
 	defer f.Close()
 
-	if err := dartFile.Execute(f, tplContext{Struct: s}); err != nil {
+	if err := dartFile.Execute(f, tplContext{TadaStruct: s}); err != nil {
 		return err
 	}
 

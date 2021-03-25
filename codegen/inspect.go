@@ -56,7 +56,7 @@ func (f Field) DartName() string {
 	}
 }
 
-type Struct struct {
+type TadaStruct struct {
 	Name       string      `json:"name"`
 	Help       string      `json:"help"`
 	Fields     []*Field    `json:"fields"`
@@ -69,12 +69,12 @@ type Event struct {
 	Help string `json:"help"`
 }
 
-func (s Struct) SnakeName() string { return strcase.ToSnake(s.Name) }
+func (s TadaStruct) SnakeName() string { return strcase.ToSnake(s.Name) }
 
-func (s Struct) IsEnum() bool { return len(s.EnumValues) > 0 }
+func (s TadaStruct) IsEnum() bool { return len(s.EnumValues) > 0 }
 
 type Parsed struct {
-	Structs []Struct
+	TadaStructs []TadaStruct
 	Events  []Event
 }
 
@@ -130,7 +130,7 @@ func Parse() (p Parsed, err error) {
 
 	types := make(map[string]struct{})
 	if err := doParse(fset, token.TYPE, func(gen *ast.GenDecl, eventNames map[string]*ast.FuncDecl) error {
-		s := Struct{Help: cleanHelp(gen.Doc.Text())}
+		s := TadaStruct{Help: cleanHelp(gen.Doc.Text())}
 		if s.Help == "" || strings.HasPrefix(strings.ToLower(s.Help), "deprecated") {
 			return nil
 		}
@@ -255,22 +255,22 @@ func Parse() (p Parsed, err error) {
 				}
 			}
 
-			p.Structs = append(p.Structs, s)
+			p.TadaStructs = append(p.TadaStructs, s)
 		}
 		return nil
 	}); err != nil {
 		return p, err
 	}
 
-	sort.Slice(p.Structs, func(i, j int) bool {
-		return p.Structs[i].Name < p.Structs[j].Name
+	sort.Slice(p.TadaStructs, func(i, j int) bool {
+		return p.TadaStructs[i].Name < p.TadaStructs[j].Name
 	})
 
 	sort.Slice(p.Events, func(i, j int) bool {
 		return p.Events[i].Name < p.Events[j].Name
 	})
 
-	for _, s := range p.Structs {
+	for _, s := range p.TadaStructs {
 		for _, f := range s.Fields {
 			_, f.InternalType = types[f.Type]
 		}

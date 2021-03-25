@@ -75,7 +75,7 @@ type TaskFilterKey = string;
 type TaskSortKey = string;
 type TaskTabKey = string;
 
-{{- range $s := .Structs}}
+{{- range $s := .TadaStructs}}
 /**
  * {{$s.Help}}.
  */
@@ -90,7 +90,7 @@ export interface {{$s.Name}} { {{- range $f := $s.Fields }}
 
 const undef = (v: any): boolean => (typeof v === 'undefined')
 
-{{ range $s := .Structs}}
+{{ range $s := .TadaStructs}}
 /**
  * Create New{{$s.Name}} from raw json.
  */
