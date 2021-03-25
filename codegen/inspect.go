@@ -57,11 +57,11 @@ func (f TadaField) DartName() string {
 }
 
 type TadaStruct struct {
-	Name       string      `json:"name"`
-	Help       string      `json:"help"`
-	Fields     []*TadaField    `json:"fields"`
-	Readonly   bool        `json:"readonly,omitempty"`
-	EnumValues []EnumValue `json:"enum_values,omitempty"`
+	Name       string       `json:"name"`
+	Help       string       `json:"help"`
+	Fields     []*TadaField `json:"fields"`
+	Readonly   bool         `json:"readonly,omitempty"`
+	EnumValues []EnumValue  `json:"enum_values,omitempty"`
 }
 
 type TadaEvent struct {
@@ -95,7 +95,7 @@ func Render(wr io.Writer, s string) error {
 func ParseTdProto() (p TadaInfo, err error) {
 	fset := token.NewFileSet()
 	enumsMap := make(map[string][]EnumValue)
-	if err := doParse(fset, token.CONST, func(gen *ast.GenDecl, eventNames map[string]*ast.FuncDecl) error {
+	if err := extractTdprotoAst(fset, token.CONST, func(gen *ast.GenDecl, eventNames map[string]*ast.FuncDecl) error {
 		for _, spec := range gen.Specs {
 			valueSpec, ok := spec.(*ast.ValueSpec)
 			if !ok || valueSpec.Type == nil {
@@ -129,7 +129,7 @@ func ParseTdProto() (p TadaInfo, err error) {
 	}
 
 	types := make(map[string]struct{})
-	if err := doParse(fset, token.TYPE, func(gen *ast.GenDecl, eventNames map[string]*ast.FuncDecl) error {
+	if err := extractTdprotoAst(fset, token.TYPE, func(gen *ast.GenDecl, eventNames map[string]*ast.FuncDecl) error {
 		s := TadaStruct{Help: cleanHelp(gen.Doc.Text())}
 		if s.Help == "" || strings.HasPrefix(strings.ToLower(s.Help), "deprecated") {
 			return nil
@@ -279,47 +279,14 @@ func ParseTdProto() (p TadaInfo, err error) {
 	return p, nil
 }
 
-func doParse(fset *token.FileSet, tok token.Token, fn func(gen *ast.GenDecl, eventNames map[string]*ast.FuncDecl) error) error {
-	path := tdproto.SourceDir()
-	d, err := parser.ParseDir(fset, path, nil, parser.ParseComments)
+func extractTdprotoAst(fset *token.FileSet, tok token.Token, fn func(gen *ast.GenDecl, eventNames map[string]*ast.FuncDecl) error) error {
+	tdProtoPath := tdproto.SourceDir()
+	_, err := parser.ParseDir(fset, tdProtoPath, nil, parser.ParseComments)
 	if err != nil {
 		return err
 	}
-	for _, f := range d {
-		files := make([]ast.File, 0, len(f.Files))
-		for _, file := range f.Files {
-			files = append(files, *file)
-		}
 
-		for _, f := range files {
-			eventNames := make(map[string]*ast.FuncDecl)
-			ast.Inspect(&f, func(n ast.Node) bool {
-				if fun, ok := n.(*ast.FuncDecl); ok {
-					if fun.Name.IsExported() && fun.Recv != nil && len(fun.Recv.List) == 1 && fun.Name.Name == "GetName" {
-						eventNames[toString(fun.Recv.List[0].Type)] = fun
-					}
-				}
-				return true
-			})
-
-			for _, decl := range f.Decls {
-				gen, ok := decl.(*ast.GenDecl)
-				if !ok {
-					continue
-				}
-				if gen.Tok == tok {
-					if err := fn(gen, eventNames); err != nil {
-						return err
-					}
-				}
-			}
-		}
-	}
 	return nil
-}
-
-func toString(v interface{}) string {
-	return fmt.Sprintf("%s", v)
 }
 
 func cleanHelp(s string) string {
