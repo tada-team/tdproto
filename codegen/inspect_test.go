@@ -5,5 +5,8 @@ import (
 )
 
 func TestParsing(t *testing.T) {
-	ParseTdProto()
+	_, err := ParseTdproto()
+	if err != nil {
+		t.Error(err)
+	}
 }
