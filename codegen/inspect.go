@@ -5,11 +5,9 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
-	"io"
 	"os"
 	"reflect"
 	"strings"
-	"text/template"
 
 	"github.com/iancoleman/strcase"
 	"github.com/tada-team/tdproto"
@@ -61,20 +59,6 @@ type TadaInfo struct {
 	TadaTypes   []TadaType
 	Events      []TadaEvent
 	TadaConsts  []TadaConstFields
-}
-
-func Render(wr io.Writer, s string) error {
-	tpl, err := template.New("").Parse(s)
-	if err != nil {
-		return err
-	}
-
-	p, err := ParseTdproto()
-	if err != nil {
-		return err
-	}
-
-	return tpl.Execute(wr, p)
 }
 
 func ParseTdproto() (infoToFill *TadaInfo, err error) {
