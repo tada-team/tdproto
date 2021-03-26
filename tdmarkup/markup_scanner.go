@@ -209,7 +209,7 @@ func (s *MarkupScanner) scanInline(marker rune, typ tdproto.MarkupType, allowWhi
 	start := s.Position()
 
 	var b strings.Builder
-	b.Grow(s.Length()-start)
+	b.Grow(s.Length() - start)
 	b.WriteRune(s.TakeNext())
 
 	if !(start == 0 || isWhitespace(s.Prev()) || isEOL(s.Prev()) || allowWhitespaceAround) {
@@ -260,7 +260,7 @@ func (s *MarkupScanner) scanBlock(op, cl []rune, typ tdproto.MarkupType) (string
 	}
 
 	var b strings.Builder
-	b.Grow(s.Length()-start)
+	b.Grow(s.Length() - start)
 	b.WriteString(t)
 
 	e := &tdproto.MarkupEntity{
@@ -279,22 +279,28 @@ func (s *MarkupScanner) scanBlock(op, cl []rune, typ tdproto.MarkupType) (string
 		b.WriteRune(s.TakeNext())
 	}
 
+	var tail []rune
 	for s.Rest() > 0 {
 		t := s.ScanUntil(cl)
 		if t == "" {
-			b.WriteRune(s.TakeNext())
+			ch := s.TakeNext()
+			b.WriteRune(ch)
+			tail = append(tail, ch)
 			continue
 		}
 		b.WriteString(t)
 		e.Close = s.Position() - len(cl)
 		e.CloseLength = len(cl)
 
-		res := b.String()
-		if strings.HasSuffix(res, "\n"+string(cl)) { // XXX:
+		for i := len(tail) - 1; i >= 0; i-- {
+			ch := tail[i]
+			if !(isWhitespace(ch) || isEOL(ch)) {
+				break
+			}
 			e.Close--
 			e.CloseLength++
 		}
-		return res, e
+		return b.String(), e
 	}
 
 	s.Rewind(start)
@@ -308,7 +314,7 @@ func (s *MarkupScanner) scanQuote() (string, *tdproto.MarkupEntity) {
 	}
 
 	var b strings.Builder
-	b.Grow(s.Length()-s.Position())
+	b.Grow(s.Length() - s.Position())
 	b.WriteString(t)
 
 	e := &tdproto.MarkupEntity{

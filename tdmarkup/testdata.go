@@ -384,4 +384,10 @@ var MarkupTestCases = []struct {
 		Html:  "<u>hey</u> <b>hop😂</b> <u>лалалей</u>",
 		Plain: "hey hop😂 лалалей",
 	},
+	{
+		Title: "multi pre",
+		Raw:   "``` 1 ```2``` ```3",
+		Html:  "<pre>1</pre>2<pre></pre>3",
+		//Plain: "``` 1 ```2``` ```3```",
+	},
 }
