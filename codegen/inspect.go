@@ -7,6 +7,7 @@ import (
 	"go/token"
 	"os"
 	"reflect"
+	"sort"
 	"strings"
 	"unicode"
 
@@ -78,6 +79,8 @@ func ParseTdproto() (infoToFill *TadaInfo, err error) {
 			return infoToFill, err
 		}
 	}
+
+	sort.Slice(infoToFill.TadaStructs, func(i, j int) bool { return infoToFill.TadaStructs[i].Name < infoToFill.TadaStructs[j].Name })
 
 	return infoToFill, nil
 }
@@ -286,6 +289,8 @@ func parseStructDefinitioninfo(infoToFill *TadaInfo, declarationSpec *ast.TypeSp
 			IsPointer:   isPointer,
 		})
 	}
+
+	sort.Slice(fieldsList, func(i, j int) bool { return fieldsList[i].Name < fieldsList[j].Name })
 
 	var newTadaStruct = TadaStruct{
 		Help:     helpString,
