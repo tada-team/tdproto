@@ -151,7 +151,7 @@ func parseTypeDefinition(infoToFill *TadaInfo, declarationSpec *ast.TypeSpec, ty
 		BaseType: typeIndent.Name,
 	}
 
-	_ = append(infoToFill.TadaTypes, newTadaType)
+	infoToFill.TadaTypes = append(infoToFill.TadaTypes, newTadaType)
 	return nil
 }
 
@@ -278,7 +278,7 @@ func parseStructDefinitioninfo(infoToFill *TadaInfo, declarationSpec *ast.TypeSp
 
 		}
 
-		_ = append(fieldsList, TadaStructField{
+		fieldsList = append(fieldsList, TadaStructField{
 			Name:        fieldName,
 			IsReadOnly:  isReadOnly,
 			IsOmitEmpty: isOmitEmpty,
@@ -295,7 +295,7 @@ func parseStructDefinitioninfo(infoToFill *TadaInfo, declarationSpec *ast.TypeSp
 		Name:     structName,
 	}
 
-	_ = append(infoToFill.TadaStructs, newTadaStruct)
+	infoToFill.TadaStructs = append(infoToFill.TadaStructs, newTadaStruct)
 	return nil
 }
 
@@ -329,7 +329,7 @@ func parseConstDeclaration(infoToFill *TadaInfo, genDeclaration *ast.GenDecl) er
 			return fmt.Errorf("could not extract constant value %+v", valueSpec.Values[0])
 		}
 
-		_ = append(infoToFill.TadaConsts, TadaConstFields{
+		infoToFill.TadaConsts = append(infoToFill.TadaConsts, TadaConstFields{
 			Name:  constName,
 			Type:  constTypeName,
 			Value: constValue.Value,
