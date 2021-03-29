@@ -360,3 +360,7 @@ func ToSnakeCase(original string) string {
 
 	return buildStr.String()
 }
+
+func ToCamelCase(original string) string {
+	return strings.ToLower(original[:1]) + original[1:]
+}
