@@ -52,13 +52,43 @@ type TadaEvent struct {
 	Help string `json:"help"`
 }
 
-func (s TadaStruct) IsEnum() bool { return len(s.EnumValues) > 0 }
-
 type TadaInfo struct {
 	TadaStructs []TadaStruct
 	TadaTypes   []TadaType
 	Events      []TadaEvent
 	TadaConsts  []TadaConstFields
+}
+
+type TadaEnum struct {
+	Name   string
+	Values []string
+}
+
+func (selfTadaInfo TadaInfo) GetEnums() []TadaEnum {
+	constMap := make(map[string][]string)
+
+	for _, aConst := range selfTadaInfo.TadaConsts {
+		constType := aConst.Type
+		constValue := aConst.Value
+
+		constValueList, ok := constMap[constType]
+		if ok {
+			constMap[constType] = append(constValueList, constValue)
+		} else {
+			constMap[constType] = []string{constValue}
+		}
+	}
+
+	var listOfEnums []TadaEnum
+
+	for key, value := range constMap {
+		listOfEnums = append(listOfEnums, TadaEnum{
+			Name:   key,
+			Values: value,
+		})
+	}
+
+	return listOfEnums
 }
 
 func ParseTdproto() (infoToFill *TadaInfo, err error) {
