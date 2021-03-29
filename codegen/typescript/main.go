@@ -17,6 +17,7 @@ const TypeScriptClosingBracket = "{"
 const TypeScriptInterfaceHeaderTemplateStr = `export interface {{.Name}}JSON {`
 
 var tsTypesMap = map[string]string{
+	"string":            "string",
 	"int":               "number",
 	"int64":             "number",
 	"uint16":            "number",
@@ -28,19 +29,29 @@ var tsTypesMap = map[string]string{
 
 const TypeScriptInterfaceTemplate = `export interface {{.Name -}}JSON {
   {{- range $field :=  .Fields}}
-  {{ $field.Name }}{{if $field.IsOmitEmpty}}?{{end}}: {{ $field.TypeName}};{{end}}
+  {{ $field.JsonName }}{{if $field.IsOmitEmpty}}?{{end}}: {{$field.TypeName -}}
+    {{- if $field.IsNotPrimitive -}}JSON{{end}}
+      {{- if $field.IsList -}}[]{{end}};{{end}}
 }
 
 export class {{.Name}} implements TDProtoClass<{{- .Name -}}> {
   constructor (
 	{{- range $field :=  .Fields}}
-    public {{if $field.IsReadOnly}}readonly {{end}}{{ $field.Name }}{{if $field.IsOmitEmpty}}?{{end}}: {{ $field.TypeName}},{{end}}
+    public {{if $field.IsReadOnly}}readonly {{end}}{{ $field.Name }}{{if $field.IsOmitEmpty}}?{{end}}: {{ $field.TypeName -}}
+      {{- if $field.IsList -}}[]{{end}},{{end}}
   ) {}
 
   public static fromJSON (raw: {{.Name -}}JSON): {{.Name}} {
     return new {{.Name -}}(
       {{- range $field :=  .Fields}}
-      raw.{{ $field.JsonName }},{{end}}
+      {{- if $field.IsNotPrimitive}}
+      {{if $field.IsOmitEmpty -}} raw.{{- $field.JsonName }} && {{end}}
+        {{- if $field.IsList}}raw.{{- $field.JsonName }}.map({{ $field.Name }}.fromJSON)
+        {{- else -}} {{- $field.TypeName -}}.fromJSON(raw.{{- $field.JsonName -}}){{end}}
+      {{- else}}
+      raw.{{- $field.JsonName -}}
+      {{- end -}}
+	  ,{{end}}
     )
   }
 
@@ -52,7 +63,9 @@ export class {{.Name}} implements TDProtoClass<{{- .Name -}}> {
   readonly #mapper = {
     /* eslint-disable @typescript-eslint/camelcase */
     {{- range $field :=  .Fields}}
-    {{$field.Name -}}: () => ({ {{$field.JsonName -}}: this.{{$field.Name}} }),{{end}}
+    {{$field.Name -}}: () => ({ {{$field.JsonName -}}: this.{{$field.Name}}
+      {{- if $field.IsNotPrimitive -}}{{- if $field.IsOmitEmpty}}?{{end}}
+        {{- if $field.IsList}}.map(u => u.toJSON()){{else}}.toJSON(){{end}}{{end}} }),{{end}}
     /* eslint-enable @typescript-eslint/camelcase */
   }
 
@@ -75,11 +88,13 @@ type TypeScriptTemplate struct {
 }
 
 type TypeScriptFieldInfo struct {
-	Name        string
-	JsonName    string
-	IsReadOnly  bool
-	IsOmitEmpty bool
-	TypeName    string
+	Name           string
+	JsonName       string
+	IsReadOnly     bool
+	IsOmitEmpty    bool
+	TypeName       string
+	IsNotPrimitive bool
+	IsList         bool
 }
 
 type TypeScriptClassInfo struct {
@@ -99,16 +114,21 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TadaInfo) []TypeScriptClas
 		for _, tadaStructField := range tadaStructInfo.Fields {
 			tsTypeName, ok := tsTypesMap[tadaStructField.TypeStr]
 
+			isNotPrimitive := false
+
 			if !ok {
 				tsTypeName = tadaStructField.TypeStr
+				isNotPrimitive = true
 			}
 
 			tsNewClass.Fields = append(tsNewClass.Fields, TypeScriptFieldInfo{
-				Name:        codegen.ToCamelCase(tadaStructField.Name),
-				JsonName:    tadaStructField.JsonName,
-				IsReadOnly:  tadaStructField.IsReadOnly,
-				IsOmitEmpty: tadaStructField.IsOmitEmpty,
-				TypeName:    tsTypeName,
+				Name:           codegen.ToCamelCase(tadaStructField.Name),
+				JsonName:       tadaStructField.JsonName,
+				IsReadOnly:     tadaStructField.IsReadOnly,
+				IsOmitEmpty:    tadaStructField.IsOmitEmpty,
+				TypeName:       tsTypeName,
+				IsNotPrimitive: isNotPrimitive,
+				IsList:         tadaStructField.IsList,
 			})
 		}
 
