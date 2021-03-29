@@ -32,11 +32,11 @@ type TadaStructField struct {
 }
 
 type TadaStruct struct {
-	Name       string             `json:"name"`
-	Help       string             `json:"help"`
-	Fields     []*TadaStructField `json:"fields"`
-	ReadOnly   bool               `json:"readonly,omitempty"`
-	EnumValues []TadaConstFields  `json:"enum_values,omitempty"`
+	Name       string            `json:"name"`
+	Help       string            `json:"help"`
+	Fields     []TadaStructField `json:"fields"`
+	ReadOnly   bool              `json:"readonly,omitempty"`
+	EnumValues []TadaConstFields `json:"enum_values,omitempty"`
 }
 
 type TadaType struct {
@@ -293,6 +293,7 @@ func parseStructDefinitioninfo(infoToFill *TadaInfo, declarationSpec *ast.TypeSp
 		Help:     helpString,
 		ReadOnly: isReadOnly,
 		Name:     structName,
+		Fields:   fieldsList,
 	}
 
 	infoToFill.TadaStructs = append(infoToFill.TadaStructs, newTadaStruct)
