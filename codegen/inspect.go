@@ -43,6 +43,7 @@ type TadaStruct struct {
 type TadaType struct {
 	Name     string `json:"name"`
 	Help     string `json:"help"`
+	IsArray  bool
 	BaseType string
 }
 
@@ -136,10 +137,33 @@ func parseTypeDeclaration(infoToFill *TadaInfo, genDeclaration *ast.GenDecl) err
 		if err != nil {
 			return err
 		}
+	case *ast.ArrayType:
+		err := parseArrayTypeDefinition(infoToFill, declarationSpec, typeAst)
+		if err != nil {
+			return err
+		}
 	default:
 		fmt.Fprintf(os.Stderr, "WARN: Not implemented type declaration %#v\n", typeAst)
 	}
 
+	return nil
+}
+
+func parseArrayTypeDefinition(infoToFill *TadaInfo, declarationSpec *ast.TypeSpec, arrayAst *ast.ArrayType) error {
+
+	var typeName string = declarationSpec.Name.Name
+
+	arrayExpressionAst := arrayAst.Elt.(*ast.Ident)
+
+	arrayTypeStr := arrayExpressionAst.Name
+
+	var newTadaType = TadaType{
+		Name:     typeName,
+		BaseType: arrayTypeStr,
+		IsArray:  true,
+	}
+
+	infoToFill.TadaTypes = append(infoToFill.TadaTypes, newTadaType)
 	return nil
 }
 
