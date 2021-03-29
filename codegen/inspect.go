@@ -261,13 +261,16 @@ func parseStructDefinitioninfo(infoToFill *TadaInfo, declarationSpec *ast.TypeSp
 			fieldTypeStr = fieldTypeAst.Name
 		case *ast.ArrayType:
 			isList = true
-			arrayExprAst, ok := fieldTypeAst.Elt.(*ast.Ident)
-			if !ok {
+
+			switch arrayTypeAst := fieldTypeAst.Elt.(type) {
+			case *ast.Ident:
+				fieldTypeStr = arrayTypeAst.Name
+			case *ast.InterfaceType:
 				// TODO: Implement pointers to array of interfaces
-				continue
+			default:
+				panic(fmt.Errorf("unknown array type %#v", arrayTypeAst))
 			}
 
-			fieldTypeStr = arrayExprAst.Name
 		case *ast.StarExpr:
 			isPointer = true
 
