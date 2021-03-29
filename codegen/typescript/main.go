@@ -33,6 +33,12 @@ const TypeScriptHeaderStr = `interface TDProtoClass<T> {
 
 `
 
+const TypeScriptTypeTemplate = `
+type {{.Name -}}JSON = {{.BaseType -}}JSON{{- if .IsArray }}[]{{end}}
+type {{.Name}} = {{.BaseType}}{{- if .IsArray }}[]{{end}}
+
+`
+
 const TypeScriptInterfaceTemplate = `export interface {{.Name -}}JSON {
   {{- range $field :=  .Fields}}
   {{ $field.JsonName }}{{if $field.IsOmitEmpty}}?{{end}}: {{$field.TypeName -}}
@@ -93,6 +99,12 @@ type TypeScriptTemplate struct {
 	Interface *template.Template
 }
 
+type TypeScriptTypeInfo struct {
+	Name     string
+	IsArray  bool
+	BaseType string
+}
+
 type TypeScriptFieldInfo struct {
 	Name           string
 	JsonName       string
@@ -108,9 +120,14 @@ type TypeScriptClassInfo struct {
 	Fields []TypeScriptFieldInfo
 }
 
-func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TadaInfo) []TypeScriptClassInfo {
+type TypeScriptInfo struct {
+	Classes []TypeScriptClassInfo
+	Types   []TypeScriptTypeInfo
+}
 
-	var tsClassesInfo []TypeScriptClassInfo
+func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TadaInfo) TypeScriptInfo {
+
+	var tsInfo TypeScriptInfo
 
 	for _, tadaStructInfo := range tdprotoInfo.TadaStructs {
 		tsNewClass := TypeScriptClassInfo{
@@ -138,17 +155,40 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TadaInfo) []TypeScriptClas
 			})
 		}
 
-		tsClassesInfo = append(tsClassesInfo, tsNewClass)
+		tsInfo.Classes = append(tsInfo.Classes, tsNewClass)
 	}
 
-	return tsClassesInfo
+	for _, tadaTypeInfo := range tdprotoInfo.TadaTypes {
+		_, isPrimitive := tsTypesMap[tadaTypeInfo.BaseType]
+
+		if isPrimitive {
+			// TODO: Add enums
+			continue
+		}
+
+		tsNewType := TypeScriptTypeInfo{
+			Name:     tadaTypeInfo.Name,
+			IsArray:  tadaTypeInfo.IsArray,
+			BaseType: tadaTypeInfo.BaseType,
+		}
+
+		tsInfo.Types = append(tsInfo.Types, tsNewType)
+	}
+
+	return tsInfo
 }
 
 func generateTypeScript(tdprotoInfo *codegen.TadaInfo) {
 
-	tsClassesInfo := convertTadaInfoToTypeScript(tdprotoInfo)
+	tsInfo := convertTadaInfoToTypeScript(tdprotoInfo)
 
-	tmpl, err := template.New("tsInterface").Parse(TypeScriptInterfaceTemplate)
+	classTemplate, err := template.New("tsInterface").Parse(TypeScriptInterfaceTemplate)
+
+	if err != nil {
+		panic(err)
+	}
+
+	typeTemplate, err := template.New("tsType").Parse(TypeScriptTypeTemplate)
 
 	if err != nil {
 		panic(err)
@@ -156,8 +196,15 @@ func generateTypeScript(tdprotoInfo *codegen.TadaInfo) {
 
 	fmt.Fprint(os.Stdout, TypeScriptHeaderStr)
 
-	for _, tsClassInfo := range tsClassesInfo {
-		err := tmpl.Execute(os.Stdout, tsClassInfo)
+	for _, tsTypeInfo := range tsInfo.Types {
+		err := typeTemplate.Execute(os.Stdout, tsTypeInfo)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	for _, tsClassInfo := range tsInfo.Classes {
+		err := classTemplate.Execute(os.Stdout, tsClassInfo)
 		if err != nil {
 			panic(err)
 		}
