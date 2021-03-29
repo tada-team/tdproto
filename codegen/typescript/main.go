@@ -25,6 +25,7 @@ var tsTypesMap = map[string]string{
 	"bool":              "boolean",
 	"interface{}":       "any",
 	"ISODateTimeString": "string",
+	"time.Time":         "string",
 }
 
 const TypeScriptHeaderStr = `interface TDProtoClass<T> {
