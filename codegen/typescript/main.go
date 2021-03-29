@@ -144,6 +144,20 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TadaInfo) TypeScriptInfo {
 
 	var tsInfo TypeScriptInfo
 
+	for _, tadaEnumInfo := range tdprotoInfo.GetEnums() {
+		var tsEnumValues []string
+		for _, enumValue := range tadaEnumInfo.Values {
+			tsEnumValues = append(tsEnumValues, strings.Trim(enumValue, "\""))
+		}
+
+		tsInfo.SumTypes = append(tsInfo.SumTypes, TypeScriptSumType{
+			Name:   tadaEnumInfo.Name,
+			Values: tsEnumValues,
+		})
+
+		tsTypesMap[tadaEnumInfo.Name] = tadaEnumInfo.Name
+	}
+
 	for _, tadaStructInfo := range tdprotoInfo.TadaStructs {
 		tsNewClass := TypeScriptClassInfo{
 			Name: tadaStructInfo.Name,
@@ -188,18 +202,6 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TadaInfo) TypeScriptInfo {
 		}
 
 		tsInfo.Types = append(tsInfo.Types, tsNewType)
-	}
-
-	for _, tadaEnumInfo := range tdprotoInfo.GetEnums() {
-		var tsEnumValues []string
-		for _, enumValue := range tadaEnumInfo.Values {
-			tsEnumValues = append(tsEnumValues, strings.Trim(enumValue, "\""))
-		}
-
-		tsInfo.SumTypes = append(tsInfo.SumTypes, TypeScriptSumType{
-			Name:   tadaEnumInfo.Name,
-			Values: tsEnumValues,
-		})
 	}
 
 	return tsInfo
