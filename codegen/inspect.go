@@ -8,8 +8,8 @@ import (
 	"os"
 	"reflect"
 	"strings"
+	"unicode"
 
-	"github.com/iancoleman/strcase"
 	"github.com/tada-team/tdproto"
 )
 
@@ -49,8 +49,6 @@ type TadaEvent struct {
 	Name string `json:"name"`
 	Help string `json:"help"`
 }
-
-func (s TadaStruct) SnakeName() string { return strcase.ToSnake(s.Name) }
 
 func (s TadaStruct) IsEnum() bool { return len(s.EnumValues) > 0 }
 
@@ -348,4 +346,17 @@ func extractTdprotoAst(fileSet *token.FileSet) (map[string]*ast.Package, error) 
 
 func cleanHelp(s string) string {
 	return strings.TrimSuffix(strings.TrimSpace(strings.Join(strings.Fields(s), " ")), ".")
+}
+
+func ToSnakeCase(original string) string {
+	var buildStr strings.Builder
+
+	for i, char := range original {
+		if i != 0 && unicode.IsUpper(char) {
+			buildStr.WriteString("_")
+		}
+		buildStr.WriteString(string(unicode.ToLower(char)))
+	}
+
+	return buildStr.String()
 }
