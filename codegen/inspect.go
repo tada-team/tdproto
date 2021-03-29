@@ -375,8 +375,8 @@ func parseConstDeclaration(infoToFill *TadaInfo, genDeclaration *ast.GenDecl) er
 		constName := valueSpec.Names[0].Name
 
 		constTypeName := fmt.Sprintf("%s", valueSpec.Type)
-		if constTypeName == "" {
-			fmt.Printf("WARN: const has no typeName %s\n", constName)
+		if constTypeName == "" || valueSpec.Type == nil {
+			fmt.Fprintf(os.Stderr, "WARN: const has no typeName %s\n", constName)
 			continue
 		}
 
