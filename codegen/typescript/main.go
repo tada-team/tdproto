@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/tada-team/tdproto/codegen"
 	"os"
+	"strings"
 	"text/template"
 )
 
@@ -31,6 +32,13 @@ var tsTypesMap = map[string]string{
 const TypeScriptHeaderStr = `interface TDProtoClass<T> {
   readonly mappableFields: ReadonlyArray<keyof T>;
 }
+
+`
+
+const TypeScriptSumTypeTemplate = `
+type {{.Name}} =
+  {{ range $value := .Values}} | '{{- $value -}}'
+  {{end -}}
 
 `
 
@@ -100,6 +108,11 @@ type TypeScriptTemplate struct {
 	Interface *template.Template
 }
 
+type TypeScriptSumType struct {
+	Name   string
+	Values []string
+}
+
 type TypeScriptTypeInfo struct {
 	Name     string
 	IsArray  bool
@@ -122,8 +135,9 @@ type TypeScriptClassInfo struct {
 }
 
 type TypeScriptInfo struct {
-	Classes []TypeScriptClassInfo
-	Types   []TypeScriptTypeInfo
+	Classes  []TypeScriptClassInfo
+	Types    []TypeScriptTypeInfo
+	SumTypes []TypeScriptSumType
 }
 
 func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TadaInfo) TypeScriptInfo {
@@ -176,6 +190,18 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TadaInfo) TypeScriptInfo {
 		tsInfo.Types = append(tsInfo.Types, tsNewType)
 	}
 
+	for _, tadaEnumInfo := range tdprotoInfo.GetEnums() {
+		var tsEnumValues []string
+		for _, enumValue := range tadaEnumInfo.Values {
+			tsEnumValues = append(tsEnumValues, strings.Trim(enumValue, "\""))
+		}
+
+		tsInfo.SumTypes = append(tsInfo.SumTypes, TypeScriptSumType{
+			Name:   tadaEnumInfo.Name,
+			Values: tsEnumValues,
+		})
+	}
+
 	return tsInfo
 }
 
@@ -195,7 +221,20 @@ func generateTypeScript(tdprotoInfo *codegen.TadaInfo) {
 		panic(err)
 	}
 
+	sumTemplate, err := template.New("tsSumTypes").Parse(TypeScriptSumTypeTemplate)
+
+	if err != nil {
+		panic(err)
+	}
+
 	fmt.Fprint(os.Stdout, TypeScriptHeaderStr)
+
+	for _, tsSumTypeInfo := range tsInfo.SumTypes {
+		err := sumTemplate.Execute(os.Stdout, tsSumTypeInfo)
+		if err != nil {
+			panic(err)
+		}
+	}
 
 	for _, tsTypeInfo := range tsInfo.Types {
 		err := typeTemplate.Execute(os.Stdout, tsTypeInfo)
