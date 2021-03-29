@@ -283,14 +283,13 @@ func parseStructDefinitioninfo(infoToFill *TadaInfo, declarationSpec *ast.TypeSp
 			case *ast.MapType:
 				// TODO: Implement pointers to maps
 			case *ast.SelectorExpr:
-				// TODO: Implement pointers to selectors
+				fieldTypeStr = parseSelectorAst(pointedType)
 			default:
 				panic(fmt.Sprintf("Unknown pointer field of %s type %#v", structName, pointedType))
 			}
 
 		case *ast.SelectorExpr:
-			// TODO: Implement selector expresion. Example time.Time
-			continue
+			fieldTypeStr = parseSelectorAst(fieldTypeAst)
 		case *ast.InterfaceType:
 			// TODO: Implement interface expression.
 			continue
@@ -366,6 +365,14 @@ func parseConstDeclaration(infoToFill *TadaInfo, genDeclaration *ast.GenDecl) er
 	}
 
 	return nil
+}
+
+func parseSelectorAst(selectorNode *ast.SelectorExpr) string {
+
+	expresionIdent := selectorNode.X.(*ast.Ident)
+	expressionStr := expresionIdent.Name
+
+	return expressionStr + "." + selectorNode.Sel.Name
 }
 
 func extractTdprotoAst(fileSet *token.FileSet) (map[string]*ast.Package, error) {
