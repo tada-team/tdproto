@@ -59,7 +59,7 @@ export class {{.Name}} implements TDProtoClass<{{- .Name -}}> {
       {{- range $field :=  .Fields}}
       {{- if $field.IsNotPrimitive}}
       {{if $field.IsOmitEmpty -}} raw.{{- $field.JsonName }} && {{end}}
-        {{- if $field.IsList}}raw.{{- $field.JsonName }}.map({{ $field.Name }}.fromJSON)
+        {{- if $field.IsList}}raw.{{- $field.JsonName }}.map({{ $field.TypeName }}.fromJSON)
         {{- else -}} {{- $field.TypeName -}}.fromJSON(raw.{{- $field.JsonName -}}){{end}}
       {{- else}}
       raw.{{- $field.JsonName -}}
