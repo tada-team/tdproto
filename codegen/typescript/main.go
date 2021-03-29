@@ -1,7 +1,7 @@
 package main
 
 import (
-	//"fmt"
+	"fmt"
 	"github.com/tada-team/tdproto/codegen"
 	"os"
 	"text/template"
@@ -26,6 +26,12 @@ var tsTypesMap = map[string]string{
 	"interface{}":       "any",
 	"ISODateTimeString": "string",
 }
+
+const TypeScriptHeaderStr = `interface TDProtoClass<T> {
+  readonly mappableFields: ReadonlyArray<keyof T>;
+}
+
+`
 
 const TypeScriptInterfaceTemplate = `export interface {{.Name -}}JSON {
   {{- range $field :=  .Fields}}
@@ -147,6 +153,8 @@ func generateTypeScript(tdprotoInfo *codegen.TadaInfo) {
 	if err != nil {
 		panic(err)
 	}
+
+	fmt.Fprint(os.Stdout, TypeScriptHeaderStr)
 
 	for _, tsClassInfo := range tsClassesInfo {
 		err := tmpl.Execute(os.Stdout, tsClassInfo)
