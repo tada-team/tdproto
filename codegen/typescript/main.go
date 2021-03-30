@@ -31,6 +31,7 @@ var tsTypesMap = map[string]string{
 
 var tsFieldNameSubstitutions = map[string]string{
 	"Default": "isDefault",
+	"New":     "isNew",
 }
 
 const TypeScriptHeaderStr = `interface TDProtoClass<T> {
