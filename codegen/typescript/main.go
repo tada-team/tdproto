@@ -143,6 +143,7 @@ type TypeScriptInfo struct {
 func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TadaInfo) TypeScriptInfo {
 
 	var tsInfo TypeScriptInfo
+	var unwrapStructArrays = make(map[string]string)
 
 	for _, tadaEnumInfo := range tdprotoInfo.GetEnums() {
 		var tsEnumValues []string
@@ -156,6 +157,29 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TadaInfo) TypeScriptInfo {
 		})
 
 		tsTypesMap[tadaEnumInfo.Name] = tadaEnumInfo.Name
+	}
+
+	for _, tadaTypeInfo := range tdprotoInfo.TadaTypes {
+		_, isPrimitive := tsTypesMap[tadaTypeInfo.BaseType]
+
+		if isPrimitive {
+			// Enums are handled elsewhere
+			continue
+		}
+
+		// Unwrap arrays of structs
+		if tadaTypeInfo.IsArray {
+			unwrapStructArrays[tadaTypeInfo.Name] = tadaTypeInfo.BaseType
+			continue
+		}
+
+		tsNewType := TypeScriptTypeInfo{
+			Name:     tadaTypeInfo.Name,
+			IsArray:  tadaTypeInfo.IsArray,
+			BaseType: tadaTypeInfo.BaseType,
+		}
+
+		tsInfo.Types = append(tsInfo.Types, tsNewType)
 	}
 
 	for _, tadaStructInfo := range tdprotoInfo.TadaStructs {
@@ -173,6 +197,14 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TadaInfo) TypeScriptInfo {
 				isNotPrimitive = true
 			}
 
+			isList := tadaStructField.IsList
+			unwrappedTypeName, doUnwrap := unwrapStructArrays[tsTypeName]
+
+			if doUnwrap {
+				tsTypeName = unwrappedTypeName
+				isList = true
+			}
+
 			tsNewClass.Fields = append(tsNewClass.Fields, TypeScriptFieldInfo{
 				Name:           codegen.ToCamelCase(tadaStructField.Name),
 				JsonName:       tadaStructField.JsonName,
@@ -180,28 +212,11 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TadaInfo) TypeScriptInfo {
 				IsOmitEmpty:    tadaStructField.IsOmitEmpty,
 				TypeName:       tsTypeName,
 				IsNotPrimitive: isNotPrimitive,
-				IsList:         tadaStructField.IsList,
+				IsList:         isList,
 			})
 		}
 
 		tsInfo.Classes = append(tsInfo.Classes, tsNewClass)
-	}
-
-	for _, tadaTypeInfo := range tdprotoInfo.TadaTypes {
-		_, isPrimitive := tsTypesMap[tadaTypeInfo.BaseType]
-
-		if isPrimitive {
-			// TODO: Add enums
-			continue
-		}
-
-		tsNewType := TypeScriptTypeInfo{
-			Name:     tadaTypeInfo.Name,
-			IsArray:  tadaTypeInfo.IsArray,
-			BaseType: tadaTypeInfo.BaseType,
-		}
-
-		tsInfo.Types = append(tsInfo.Types, tsNewType)
 	}
 
 	return tsInfo
