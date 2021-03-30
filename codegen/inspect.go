@@ -161,7 +161,7 @@ func parseTypeDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl) error
 			return err
 		}
 	default:
-		errorLogger.Printf( "WARN: Not implemented type declaration %#v", typeAst)
+		errorLogger.Printf("WARN: Not implemented type declaration %#v", typeAst)
 	}
 
 	return nil
@@ -190,7 +190,7 @@ func parseTypeDefinition(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, type
 
 func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, structInfo *ast.StructType, helpString string) error {
 	if helpString == "" {
-		errorLogger.Printf( "WARN: TdStruct missing a doc string %+v", structInfo)
+		errorLogger.Printf("WARN: TdStruct missing a doc string %+v", structInfo)
 	}
 
 	if strings.HasPrefix(strings.ToLower(helpString), "deprecated") {
@@ -271,6 +271,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 				fieldTypeStr = arrayTypeAst.Name
 			case *ast.InterfaceType:
 				// TODO: Implement pointers to array of interfaces
+				continue
 			default:
 				panic(fmt.Errorf("unknown array type %#v", arrayTypeAst))
 			}
@@ -289,6 +290,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 				fieldTypeStr = arrayExprAst.Name
 			case *ast.MapType:
 				// TODO: Implement pointers to maps
+				continue
 			case *ast.SelectorExpr:
 				fieldTypeStr = parseSelectorAst(pointedType)
 			default:
@@ -350,7 +352,7 @@ func parseConstDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl) erro
 
 		constTypeName := fmt.Sprintf("%s", valueSpec.Type)
 		if constTypeName == "" || valueSpec.Type == nil {
-			errorLogger.Printf( "WARN: const has no typeName %s", constName)
+			errorLogger.Printf("WARN: const has no typeName %s", constName)
 			continue
 		}
 
