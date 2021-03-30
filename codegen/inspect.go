@@ -129,20 +129,21 @@ func ParseGenericDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl) er
 	case token.CONST:
 		return parseConstDeclaration(infoToFill, genDeclaration)
 	case token.TYPE:
-		return parseTypeDeclaration(infoToFill, genDeclaration)
+		for _, aSpec := range genDeclaration.Specs {
+			aTypeSpec := aSpec.(*ast.TypeSpec)
+			err := parseTypeDeclaration(infoToFill, genDeclaration, aTypeSpec)
+			if err != nil {
+				return err
+			}
+		}
 	}
 	return nil
 }
 
 // parse type Name struct|type {Field} declarations
-func parseTypeDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl) error {
-	if len(genDeclaration.Specs) != 1 {
-		return fmt.Errorf("unsupported number of specs %#v", genDeclaration)
-	}
+func parseTypeDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl, declarationSpec *ast.TypeSpec) error {
 
 	helpString := cleanHelp(genDeclaration.Doc.Text())
-
-	declarationSpec := genDeclaration.Specs[0].(*ast.TypeSpec)
 
 	switch typeAst := declarationSpec.Type.(type) {
 	case *ast.Ident:
