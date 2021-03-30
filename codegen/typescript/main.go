@@ -29,6 +29,10 @@ var tsTypesMap = map[string]string{
 	"time.Time":         "string",
 }
 
+var tsFieldNameSubstitutions = map[string]string{
+	"Default": "isDefault",
+}
+
 const TypeScriptHeaderStr = `interface TDProtoClass<T> {
   readonly mappableFields: ReadonlyArray<keyof T>;
 }
@@ -181,11 +185,17 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TadaInfo) TypeScriptInfo {
 	}
 
 	for _, tadaStructInfo := range tdprotoInfo.TadaStructs {
+
 		tsNewClass := TypeScriptClassInfo{
 			Name: tadaStructInfo.Name,
 		}
 
 		for _, tadaStructField := range tadaStructInfo.Fields {
+			tsFieldName, isSubstituted := tsFieldNameSubstitutions[tadaStructField.Name]
+			if !isSubstituted {
+				tsFieldName = codegen.ToCamelCase(tadaStructField.Name)
+			}
+
 			tsTypeName, ok := tsTypesMap[tadaStructField.TypeStr]
 
 			isNotPrimitive := false
@@ -204,7 +214,7 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TadaInfo) TypeScriptInfo {
 			}
 
 			tsNewClass.Fields = append(tsNewClass.Fields, TypeScriptFieldInfo{
-				Name:           codegen.ToCamelCase(tadaStructField.Name),
+				Name:           tsFieldName,
 				JsonName:       tadaStructField.JsonName,
 				IsReadOnly:     tadaStructField.IsReadOnly,
 				IsOmitEmpty:    tadaStructField.IsOmitEmpty,
