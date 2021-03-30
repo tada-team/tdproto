@@ -35,11 +35,9 @@ const TypeScriptHeaderStr = `interface TDProtoClass<T> {
 
 `
 
-const TypeScriptSumTypeTemplate = `
-type {{.Name}} =
+const TypeScriptSumTypeTemplate = `type {{.Name}} =
   {{ range $value := .Values}} | '{{- $value -}}'
-  {{end -}}
-
+  {{end}}
 `
 
 const TypeScriptTypeTemplate = `
