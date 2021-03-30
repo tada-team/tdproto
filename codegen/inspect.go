@@ -273,8 +273,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 			case *ast.Ident:
 				fieldTypeStr = arrayTypeAst.Name
 			case *ast.InterfaceType:
-				// TODO: Implement pointers to array of interfaces
-				continue
+				fieldTypeStr = "interface{}"
 			default:
 				panic(fmt.Errorf("unknown array type %#v", arrayTypeAst))
 			}
@@ -303,8 +302,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 		case *ast.SelectorExpr:
 			fieldTypeStr = parseSelectorAst(fieldTypeAst)
 		case *ast.InterfaceType:
-			// TODO: Implement interface expression.
-			continue
+			fieldTypeStr = "interface{}"
 		default:
 			return fmt.Errorf("unknown field of %s type %#v", structName, fieldTypeAst)
 		}
