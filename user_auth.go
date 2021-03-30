@@ -17,5 +17,7 @@ type UserAuth struct {
 	Kind       string      `json:"kind"`
 	Addr       string      `json:"addr"`
 	Useragent  string      `json:"user_agent"`
+	Country    string      `json:"country"`
+	Region     string      `json:"region"`
 	Device     *PushDevice `json:"device,omitempty"`
 }
