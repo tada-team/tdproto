@@ -5,7 +5,6 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
-	"os"
 	"reflect"
 	"sort"
 	"strings"
@@ -14,14 +13,14 @@ import (
 	"github.com/tada-team/tdproto"
 )
 
-type TadaConstFields struct {
+type TdConstFields struct {
 	Name  string `json:"name"`
 	Type  string
 	Value string `json:"value"`
 	Help  string `json:"help"`
 }
 
-type TadaStructField struct {
+type TdStructField struct {
 	Name        string
 	Help        string
 	JsonName    string
@@ -32,57 +31,53 @@ type TadaStructField struct {
 	IsOmitEmpty bool
 }
 
-type TadaStruct struct {
-	Name       string            `json:"name"`
-	Help       string            `json:"help"`
-	Fields     []TadaStructField `json:"fields"`
-	ReadOnly   bool              `json:"readonly,omitempty"`
-	EnumValues []TadaConstFields `json:"enum_values,omitempty"`
+type TdStruct struct {
+	Name       string          `json:"name"`
+	Help       string          `json:"help"`
+	Fields     []TdStructField `json:"fields"`
+	ReadOnly   bool            `json:"readonly,omitempty"`
+	EnumValues []TdConstFields `json:"enum_values,omitempty"`
 }
 
-type TadaType struct {
+type TdType struct {
 	Name     string `json:"name"`
 	Help     string `json:"help"`
 	IsArray  bool
 	BaseType string
 }
 
-type TadaEvent struct {
+type TdEvent struct {
 	Name string `json:"name"`
 	Help string `json:"help"`
 }
 
-type TadaInfo struct {
-	TadaStructs []TadaStruct
-	TadaTypes   []TadaType
-	Events      []TadaEvent
-	TadaConsts  []TadaConstFields
+type TdInfo struct {
+	TdStructs []TdStruct
+	TdTypes   []TdType
+	Events    []TdEvent
+	TdConsts  []TdConstFields
 }
 
-type TadaEnum struct {
+type TdEnum struct {
 	Name   string
 	Values []string
 }
 
-func (selfTadaInfo TadaInfo) GetEnums() []TadaEnum {
+func (i TdInfo) GetEnums() []TdEnum {
 	constMap := make(map[string][]string)
 
-	for _, aConst := range selfTadaInfo.TadaConsts {
+	for _, aConst := range i.TdConsts {
 		constType := aConst.Type
 		constValue := aConst.Value
 
-		constValueList, ok := constMap[constType]
-		if ok {
-			constMap[constType] = append(constValueList, constValue)
-		} else {
-			constMap[constType] = []string{constValue}
-		}
+		constValueList := constMap[constType]
+		constMap[constType] = append(constValueList, constValue)
 	}
 
-	var listOfEnums []TadaEnum
+	var listOfEnums []TdEnum
 
 	for key, value := range constMap {
-		listOfEnums = append(listOfEnums, TadaEnum{
+		listOfEnums = append(listOfEnums, TdEnum{
 			Name:   key,
 			Values: value,
 		})
@@ -91,19 +86,17 @@ func (selfTadaInfo TadaInfo) GetEnums() []TadaEnum {
 	return listOfEnums
 }
 
-func ParseTdproto() (infoToFill *TadaInfo, err error) {
+func ParseTdproto() (infoToFill *TdInfo, err error) {
 	tdprotoFileSet := token.NewFileSet()
 
-	infoToFill = new(TadaInfo)
+	infoToFill = new(TdInfo)
 
 	tdprotoNameToAstMap, err := extractTdprotoAst(tdprotoFileSet)
-
 	if err != nil {
 		return nil, err
 	}
 
-	var tdprotoAst = tdprotoNameToAstMap["tdproto"]
-
+	tdprotoAst := tdprotoNameToAstMap["tdproto"]
 	for fileName, fileAst := range tdprotoAst.Files {
 		err = ParseTdprotoFile(infoToFill, fileName, fileAst)
 		if err != nil {
@@ -111,15 +104,15 @@ func ParseTdproto() (infoToFill *TadaInfo, err error) {
 		}
 	}
 
-	sort.Slice(infoToFill.TadaStructs, func(i, j int) bool { return infoToFill.TadaStructs[i].Name < infoToFill.TadaStructs[j].Name })
+	sort.Slice(infoToFill.TdStructs, func(i, j int) bool {
+		return infoToFill.TdStructs[i].Name < infoToFill.TdStructs[j].Name
+	})
 
 	return infoToFill, nil
 }
 
-func ParseTdprotoFile(infoToFill *TadaInfo, fileName string, fileAst *ast.File) error {
-
+func ParseTdprotoFile(infoToFill *TdInfo, fileName string, fileAst *ast.File) error {
 	for _, declaration := range fileAst.Decls {
-
 		switch declarationType := declaration.(type) {
 		case *ast.GenDecl:
 			err := ParseGenericDeclaration(infoToFill, declarationType)
@@ -128,28 +121,22 @@ func ParseTdprotoFile(infoToFill *TadaInfo, fileName string, fileAst *ast.File) 
 			}
 		}
 	}
-
 	return nil
 }
 
-func ParseGenericDeclaration(infoToFill *TadaInfo, genDeclaration *ast.GenDecl) error {
-	var err error = nil
+func ParseGenericDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl) error {
 	switch genDeclaration.Tok {
 	case token.CONST:
-		err = parseConstDeclaration(infoToFill, genDeclaration)
+		return parseConstDeclaration(infoToFill, genDeclaration)
 	case token.TYPE:
-		err = parseTypeDeclaration(infoToFill, genDeclaration)
+		return parseTypeDeclaration(infoToFill, genDeclaration)
 	}
-
-	return err
+	return nil
 }
 
-func parseTypeDeclaration(infoToFill *TadaInfo, genDeclaration *ast.GenDecl) error {
-	// parse type Name struct|type {Field} declarations
-
-	numberOfSpecs := len(genDeclaration.Specs)
-
-	if numberOfSpecs != 1 {
+// parse type Name struct|type {Field} declarations
+func parseTypeDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl) error {
+	if len(genDeclaration.Specs) != 1 {
 		return fmt.Errorf("unsupported number of specs %#v", genDeclaration)
 	}
 
@@ -164,7 +151,7 @@ func parseTypeDeclaration(infoToFill *TadaInfo, genDeclaration *ast.GenDecl) err
 			return err
 		}
 	case *ast.StructType:
-		err := parseStructDefinitioninfo(infoToFill, declarationSpec, typeAst, helpString)
+		err := parseStructDefinitionInfo(infoToFill, declarationSpec, typeAst, helpString)
 		if err != nil {
 			return err
 		}
@@ -174,67 +161,54 @@ func parseTypeDeclaration(infoToFill *TadaInfo, genDeclaration *ast.GenDecl) err
 			return err
 		}
 	default:
-		fmt.Fprintf(os.Stderr, "WARN: Not implemented type declaration %#v\n", typeAst)
+		errorLogger.Printf( "WARN: Not implemented type declaration %#v", typeAst)
 	}
 
 	return nil
 }
 
-func parseArrayTypeDefinition(infoToFill *TadaInfo, declarationSpec *ast.TypeSpec, arrayAst *ast.ArrayType) error {
-
-	var typeName string = declarationSpec.Name.Name
-
+func parseArrayTypeDefinition(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, arrayAst *ast.ArrayType) error {
+	typeName := declarationSpec.Name.Name
 	arrayExpressionAst := arrayAst.Elt.(*ast.Ident)
-
 	arrayTypeStr := arrayExpressionAst.Name
-
-	var newTadaType = TadaType{
+	infoToFill.TdTypes = append(infoToFill.TdTypes, TdType{
 		Name:     typeName,
 		BaseType: arrayTypeStr,
 		IsArray:  true,
-	}
-
-	infoToFill.TadaTypes = append(infoToFill.TadaTypes, newTadaType)
+	})
 	return nil
 }
 
-func parseTypeDefinition(infoToFill *TadaInfo, declarationSpec *ast.TypeSpec, typeIndent *ast.Ident) error {
-
-	var typeName string = declarationSpec.Name.Name
-
-	var newTadaType = TadaType{
+func parseTypeDefinition(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, typeIndent *ast.Ident) error {
+	typeName := declarationSpec.Name.Name
+	infoToFill.TdTypes = append(infoToFill.TdTypes, TdType{
 		Name:     typeName,
 		BaseType: typeIndent.Name,
-	}
-
-	infoToFill.TadaTypes = append(infoToFill.TadaTypes, newTadaType)
+	})
 	return nil
 }
 
-func parseStructDefinitioninfo(infoToFill *TadaInfo, declarationSpec *ast.TypeSpec, structInfo *ast.StructType, helpString string) error {
-
+func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, structInfo *ast.StructType, helpString string) error {
 	if helpString == "" {
-		fmt.Fprintf(os.Stderr, "WARN: TadaStruct missing a doc string %+v\n", structInfo)
+		errorLogger.Printf( "WARN: TdStruct missing a doc string %+v", structInfo)
 	}
 
 	if strings.HasPrefix(strings.ToLower(helpString), "deprecated") {
-
 		return nil
 	}
 
 	structName := declarationSpec.Name.Name
-
 	isReadOnly := strings.Contains(helpString, "Readonly")
 
-	var fieldsList []TadaStructField
+	var fieldsList []TdStructField
 
 	for _, field := range structInfo.Fields.List {
-		fieldNamesLength := len(field.Names)
-		if fieldNamesLength == 0 {
+		switch len(field.Names) {
+		case 0:
 			// TODO: implement inheritance
 			continue
-		} else if fieldNamesLength == 1 {
-		} else {
+		case 1:
+		default:
 			return fmt.Errorf("unexpected struct %s field name amount of %d", structName, len(field.Names))
 		}
 
@@ -247,8 +221,7 @@ func parseStructDefinitioninfo(infoToFill *TadaInfo, declarationSpec *ast.TypeSp
 			structTags := reflect.StructTag(strings.Trim(field.Tag.Value, "`"))
 
 			var jsonTags []string
-			jsonTagsStr, ok := structTags.Lookup("json")
-			if ok {
+			if jsonTagsStr, ok := structTags.Lookup("json"); ok {
 				jsonTags = strings.Split(jsonTagsStr, ",")
 			}
 
@@ -285,7 +258,7 @@ func parseStructDefinitioninfo(infoToFill *TadaInfo, declarationSpec *ast.TypeSp
 
 		isList := false
 		isPointer := false
-		var fieldTypeStr string
+		fieldTypeStr := ""
 
 		switch fieldTypeAst := field.Type.(type) {
 		case *ast.Ident:
@@ -336,7 +309,7 @@ func parseStructDefinitioninfo(infoToFill *TadaInfo, declarationSpec *ast.TypeSp
 
 		}
 
-		fieldsList = append(fieldsList, TadaStructField{
+		fieldsList = append(fieldsList, TdStructField{
 			Name:        fieldName,
 			IsReadOnly:  isReadOnly,
 			IsOmitEmpty: isOmitEmpty,
@@ -347,22 +320,22 @@ func parseStructDefinitioninfo(infoToFill *TadaInfo, declarationSpec *ast.TypeSp
 		})
 	}
 
-	sort.Slice(fieldsList, func(i, j int) bool { return fieldsList[i].Name < fieldsList[j].Name })
+	sort.Slice(fieldsList, func(i, j int) bool {
+		return fieldsList[i].Name < fieldsList[j].Name
+	})
 
-	var newTadaStruct = TadaStruct{
+	infoToFill.TdStructs = append(infoToFill.TdStructs, TdStruct{
 		Help:     helpString,
 		ReadOnly: isReadOnly,
 		Name:     structName,
 		Fields:   fieldsList,
-	}
+	})
 
-	infoToFill.TadaStructs = append(infoToFill.TadaStructs, newTadaStruct)
 	return nil
 }
 
-func parseConstDeclaration(infoToFill *TadaInfo, genDeclaration *ast.GenDecl) error {
-	// Parse const ( name Type = value ...) expressions
-
+// Parse const ( name Type = value ...) expressions
+func parseConstDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl) error {
 	for _, spec := range genDeclaration.Specs {
 		valueSpec, ok := spec.(*ast.ValueSpec)
 		if !ok {
@@ -377,7 +350,7 @@ func parseConstDeclaration(infoToFill *TadaInfo, genDeclaration *ast.GenDecl) er
 
 		constTypeName := fmt.Sprintf("%s", valueSpec.Type)
 		if constTypeName == "" || valueSpec.Type == nil {
-			fmt.Fprintf(os.Stderr, "WARN: const has no typeName %s\n", constName)
+			errorLogger.Printf( "WARN: const has no typeName %s", constName)
 			continue
 		}
 
@@ -390,7 +363,7 @@ func parseConstDeclaration(infoToFill *TadaInfo, genDeclaration *ast.GenDecl) er
 			return fmt.Errorf("could not extract constant value %+v", valueSpec.Values[0])
 		}
 
-		infoToFill.TadaConsts = append(infoToFill.TadaConsts, TadaConstFields{
+		infoToFill.TdConsts = append(infoToFill.TdConsts, TdConstFields{
 			Name:  constName,
 			Type:  constTypeName,
 			Value: constValue.Value,
@@ -402,10 +375,8 @@ func parseConstDeclaration(infoToFill *TadaInfo, genDeclaration *ast.GenDecl) er
 }
 
 func parseSelectorAst(selectorNode *ast.SelectorExpr) string {
-
 	expresionIdent := selectorNode.X.(*ast.Ident)
 	expressionStr := expresionIdent.Name
-
 	return expressionStr + "." + selectorNode.Sel.Name
 }
 

@@ -142,7 +142,7 @@ type TypeScriptInfo struct {
 	SumTypes []TypeScriptSumType
 }
 
-func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TadaInfo) TypeScriptInfo {
+func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo {
 
 	var tsInfo TypeScriptInfo
 	var unwrapStructArrays = make(map[string]string)
@@ -161,7 +161,7 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TadaInfo) TypeScriptInfo {
 		tsTypesMap[tadaEnumInfo.Name] = tadaEnumInfo.Name
 	}
 
-	for _, tadaTypeInfo := range tdprotoInfo.TadaTypes {
+	for _, tadaTypeInfo := range tdprotoInfo.TdTypes {
 		_, isPrimitive := tsTypesMap[tadaTypeInfo.BaseType]
 
 		if isPrimitive {
@@ -184,7 +184,7 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TadaInfo) TypeScriptInfo {
 		tsInfo.Types = append(tsInfo.Types, tsNewType)
 	}
 
-	for _, tadaStructInfo := range tdprotoInfo.TadaStructs {
+	for _, tadaStructInfo := range tdprotoInfo.TdStructs {
 
 		tsNewClass := TypeScriptClassInfo{
 			Name: tadaStructInfo.Name,
@@ -230,7 +230,7 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TadaInfo) TypeScriptInfo {
 	return tsInfo
 }
 
-func generateTypeScript(tdprotoInfo *codegen.TadaInfo) {
+func generateTypeScript(tdprotoInfo *codegen.TdInfo) {
 
 	tsInfo := convertTadaInfoToTypeScript(tdprotoInfo)
 
