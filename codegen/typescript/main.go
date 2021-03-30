@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/tada-team/tdproto/codegen"
 	"os"
+	"sort"
 	"strings"
 	"text/template"
 )
@@ -229,6 +230,16 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo {
 				IsList:         isList,
 			})
 		}
+
+		// Put non-optional arguments before optional
+		sort.Slice(tsNewClass.Fields, func(i, j int) bool {
+			if tsNewClass.Fields[i].IsOmitEmpty != tsNewClass.Fields[j].IsOmitEmpty {
+				return !tsNewClass.Fields[i].IsOmitEmpty && tsNewClass.Fields[j].IsOmitEmpty
+			} else {
+				return (tsNewClass.Fields[i].Name < tsNewClass.Fields[j].Name)
+			}
+
+		})
 
 		tsInfo.Classes = append(tsInfo.Classes, tsNewClass)
 	}
