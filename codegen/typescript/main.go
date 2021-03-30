@@ -61,6 +61,10 @@ const TypeScriptInterfaceTemplate = `export interface {{.Name -}}JSON {
 }
 
 export class {{.Name}} implements TDProtoClass<{{- .Name -}}> {
+  /**
+   * {{.Help}}
+   {{ range $field :=  .Fields}}* {{ $field.Name }} {{ $field.Help }}
+   {{end}}*/
   constructor (
 	{{- range $field :=  .Fields}}
     public {{if $field.IsReadOnly}}readonly {{end}}{{ $field.Name }}{{if $field.IsOmitEmpty}}?{{end}}: {{ $field.TypeName -}}
@@ -131,11 +135,13 @@ type TypeScriptFieldInfo struct {
 	TypeName       string
 	IsNotPrimitive bool
 	IsList         bool
+	Help           string
 }
 
 type TypeScriptClassInfo struct {
 	Name   string
 	Fields []TypeScriptFieldInfo
+	Help   string
 }
 
 type TypeScriptInfo struct {
@@ -195,6 +201,7 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo {
 
 		tsNewClass := TypeScriptClassInfo{
 			Name: tadaStructInfo.Name,
+			Help: tadaStructInfo.Help,
 		}
 
 		for _, tadaStructField := range tadaStructInfo.Fields {
@@ -228,6 +235,7 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo {
 				TypeName:       tsTypeName,
 				IsNotPrimitive: isNotPrimitive,
 				IsList:         isList,
+				Help:           tadaStructField.Help,
 			})
 		}
 
