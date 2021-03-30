@@ -192,6 +192,7 @@ func parseTypeDefinition(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, type
 func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, structInfo *ast.StructType, helpString string) error {
 	if helpString == "" {
 		errorLogger.Printf("WARN: TdStruct missing a doc string %+v", structInfo)
+		helpString = "MISSING CLASS DOCUMENTATION"
 	}
 
 	if strings.HasPrefix(strings.ToLower(helpString), "deprecated") {
@@ -217,6 +218,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 		isOmitEmpty := false
 		isReadOnly := false
 		jsonName := fieldName
+		fieldDoc := cleanHelp(field.Doc.Text())
 
 		if field.Tag != nil {
 			structTags := reflect.StructTag(strings.Trim(field.Tag.Value, "`"))
@@ -312,6 +314,10 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 
 		}
 
+		if fieldDoc == "" {
+			fieldDoc = "DOCUMENTATION MISSING"
+		}
+
 		fieldsList = append(fieldsList, TdStructField{
 			Name:        fieldName,
 			IsReadOnly:  isReadOnly,
@@ -320,6 +326,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 			TypeStr:     fieldTypeStr,
 			IsList:      isList,
 			IsPointer:   isPointer,
+			Help:        fieldDoc,
 		})
 	}
 
