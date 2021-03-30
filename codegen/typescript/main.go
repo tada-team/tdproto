@@ -48,8 +48,7 @@ const TypeScriptSumTypeTemplate = `type {{.Name}} =
 `
 
 const TypeScriptTypeTemplate = `
-type {{.Name -}}JSON = {{.BaseType -}}JSON{{- if .IsArray }}[]{{end}}
-type {{.Name}} = {{.BaseType}}{{- if .IsArray }}[]{{end}}
+type {{.Name}} = {{.BaseType}}
 
 `
 
@@ -118,9 +117,8 @@ type TypeScriptSumType struct {
 	Values []string
 }
 
-type TypeScriptTypeInfo struct {
+type TypeScriptTypeAliasInfo struct {
 	Name     string
-	IsArray  bool
 	BaseType string
 }
 
@@ -140,15 +138,16 @@ type TypeScriptClassInfo struct {
 }
 
 type TypeScriptInfo struct {
-	Classes  []TypeScriptClassInfo
-	Types    []TypeScriptTypeInfo
-	SumTypes []TypeScriptSumType
+	Classes      []TypeScriptClassInfo
+	TypesAliases []TypeScriptTypeAliasInfo
+	SumTypes     []TypeScriptSumType
 }
 
 func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo {
 
 	var tsInfo TypeScriptInfo
 	var unwrapStructArrays = make(map[string]string)
+	var enumTypes = make(map[string]string)
 
 	for _, tadaEnumInfo := range tdprotoInfo.GetEnums() {
 		var tsEnumValues []string
@@ -162,12 +161,13 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo {
 		})
 
 		tsTypesMap[tadaEnumInfo.Name] = tadaEnumInfo.Name
+		enumTypes[tadaEnumInfo.Name] = ""
 	}
 
 	for _, tadaTypeInfo := range tdprotoInfo.TdTypes {
-		_, isPrimitive := tsTypesMap[tadaTypeInfo.BaseType]
+		_, isEnum := enumTypes[tadaTypeInfo.Name]
 
-		if isPrimitive {
+		if isEnum {
 			// Enums are handled elsewhere
 			continue
 		}
@@ -178,13 +178,16 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo {
 			continue
 		}
 
-		tsNewType := TypeScriptTypeInfo{
-			Name:     tadaTypeInfo.Name,
-			IsArray:  tadaTypeInfo.IsArray,
-			BaseType: tadaTypeInfo.BaseType,
+		typeAliasName := tadaTypeInfo.Name
+		typeAliasBaseType := tsTypesMap[tadaTypeInfo.BaseType]
+
+		tsNewTypeAlias := TypeScriptTypeAliasInfo{
+			Name:     typeAliasName,
+			BaseType: typeAliasBaseType,
 		}
 
-		tsInfo.Types = append(tsInfo.Types, tsNewType)
+		tsInfo.TypesAliases = append(tsInfo.TypesAliases, tsNewTypeAlias)
+		tsTypesMap[typeAliasName] = typeAliasName
 	}
 
 	for _, tadaStructInfo := range tdprotoInfo.TdStructs {
@@ -264,8 +267,8 @@ func generateTypeScript(tdprotoInfo *codegen.TdInfo) {
 		}
 	}
 
-	for _, tsTypeInfo := range tsInfo.Types {
-		err := typeTemplate.Execute(os.Stdout, tsTypeInfo)
+	for _, tsTypeAliasInfo := range tsInfo.TypesAliases {
+		err := typeTemplate.Execute(os.Stdout, tsTypeAliasInfo)
 		if err != nil {
 			panic(err)
 		}
