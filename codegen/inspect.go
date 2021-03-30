@@ -118,17 +118,18 @@ func ParseTdproto() (infoToFill *TadaInfo, err error) {
 
 func ParseTdprotoFile(infoToFill *TadaInfo, fileName string, fileAst *ast.File) error {
 
-	var err error = nil
-
 	for _, declaration := range fileAst.Decls {
 
 		switch declarationType := declaration.(type) {
 		case *ast.GenDecl:
-			err = ParseGenericDeclaration(infoToFill, declarationType)
+			err := ParseGenericDeclaration(infoToFill, declarationType)
+			if err != nil {
+				return err
+			}
 		}
 	}
 
-	return err
+	return nil
 }
 
 func ParseGenericDeclaration(infoToFill *TadaInfo, genDeclaration *ast.GenDecl) error {
@@ -318,7 +319,7 @@ func parseStructDefinitioninfo(infoToFill *TadaInfo, declarationSpec *ast.TypeSp
 			case *ast.SelectorExpr:
 				fieldTypeStr = parseSelectorAst(pointedType)
 			default:
-				panic(fmt.Sprintf("Unknown pointer field of %s type %#v", structName, pointedType))
+				return fmt.Errorf("unknown pointer field of %s type %#v", structName, pointedType)
 			}
 
 		case *ast.SelectorExpr:
