@@ -10,12 +10,12 @@ func NewServerCallSound(jid JID, muted bool) (r ServerCallSound) {
 // Mute/unmute call participant
 type ServerCallSound struct {
 	BaseEvent
-	Params serverCallSoundParams `json:"params"`
+	Params ServerCallSoundParams `json:"params"`
 }
 
 func (p ServerCallSound) GetName() string { return "server.call.sound" }
 
-type serverCallSoundParams struct {
+type ServerCallSoundParams struct {
 	// Chat or contact id
 	Jid JID `json:"jid"`
 
