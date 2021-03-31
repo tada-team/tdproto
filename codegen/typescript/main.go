@@ -154,29 +154,29 @@ type TypeScriptInfo struct {
 	SumTypes     []TypeScriptSumType
 }
 
-func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo {
+func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo {
 
 	var tsInfo TypeScriptInfo
 	var unwrapStructArrays = make(map[string]string)
 	var enumTypes = make(map[string]string)
 
-	for _, tadaEnumInfo := range tdprotoInfo.GetEnums() {
+	for _, tdprotoEnumInfo := range tdprotoInfo.GetEnums() {
 		var tsEnumValues []string
-		for _, enumValue := range tadaEnumInfo.Values {
+		for _, enumValue := range tdprotoEnumInfo.Values {
 			tsEnumValues = append(tsEnumValues, strings.Trim(enumValue, "\""))
 		}
 
 		tsInfo.SumTypes = append(tsInfo.SumTypes, TypeScriptSumType{
-			Name:   tadaEnumInfo.Name,
+			Name:   tdprotoEnumInfo.Name,
 			Values: tsEnumValues,
 		})
 
-		tsTypesMap[tadaEnumInfo.Name] = tadaEnumInfo.Name
-		enumTypes[tadaEnumInfo.Name] = ""
+		tsTypesMap[tdprotoEnumInfo.Name] = tdprotoEnumInfo.Name
+		enumTypes[tdprotoEnumInfo.Name] = ""
 	}
 
-	for _, tadaTypeInfo := range tdprotoInfo.TdTypes {
-		_, isEnum := enumTypes[tadaTypeInfo.Name]
+	for _, tdprotoTypeInfo := range tdprotoInfo.TdTypes {
+		_, isEnum := enumTypes[tdprotoTypeInfo.Name]
 
 		if isEnum {
 			// Enums are handled elsewhere
@@ -184,13 +184,13 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo {
 		}
 
 		// Unwrap arrays of structs
-		if tadaTypeInfo.IsArray {
-			unwrapStructArrays[tadaTypeInfo.Name] = tadaTypeInfo.BaseType
+		if tdprotoTypeInfo.IsArray {
+			unwrapStructArrays[tdprotoTypeInfo.Name] = tdprotoTypeInfo.BaseType
 			continue
 		}
 
-		typeAliasName := tadaTypeInfo.Name
-		typeAliasBaseType := tsTypesMap[tadaTypeInfo.BaseType]
+		typeAliasName := tdprotoTypeInfo.Name
+		typeAliasBaseType := tsTypesMap[tdprotoTypeInfo.BaseType]
 
 		tsNewTypeAlias := TypeScriptTypeAliasInfo{
 			Name:     typeAliasName,
@@ -207,11 +207,11 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo {
 		BaseType: "string",
 	})
 
-	for _, tadaStructInfo := range tdprotoInfo.TdStructs {
+	for _, tdprotoStructInfo := range tdprotoInfo.TdStructs {
 
 		tsNewClass := TypeScriptClassInfo{
-			Name: codegen.ToCamelCase(tadaStructInfo.Name),
-			Help: tadaStructInfo.Help,
+			Name: codegen.ToCamelCase(tdprotoStructInfo.Name),
+			Help: tdprotoStructInfo.Help,
 		}
 
 		// Skip JID class
@@ -219,22 +219,22 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo {
 			continue
 		}
 
-		for _, tadaStructField := range tadaStructInfo.Fields {
-			tsFieldName, isSubstituted := tsFieldNameSubstitutions[tadaStructField.Name]
+		for _, tdprotoStructField := range tdprotoStructInfo.Fields {
+			tsFieldName, isSubstituted := tsFieldNameSubstitutions[tdprotoStructField.Name]
 			if !isSubstituted {
-				tsFieldName = codegen.ToLowerCamelCase(tadaStructField.Name)
+				tsFieldName = codegen.ToLowerCamelCase(tdprotoStructField.Name)
 			}
 
-			tsTypeName, ok := tsTypesMap[tadaStructField.TypeStr]
+			tsTypeName, ok := tsTypesMap[tdprotoStructField.TypeStr]
 
 			isNotPrimitive := false
 
 			if !ok {
-				tsTypeName = codegen.ToCamelCase(tadaStructField.TypeStr)
+				tsTypeName = codegen.ToCamelCase(tdprotoStructField.TypeStr)
 				isNotPrimitive = true
 			}
 
-			isList := tadaStructField.IsList
+			isList := tdprotoStructField.IsList
 			unwrappedTypeName, doUnwrap := unwrapStructArrays[tsTypeName]
 
 			if doUnwrap {
@@ -244,13 +244,13 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo {
 
 			tsNewClass.Fields = append(tsNewClass.Fields, TypeScriptFieldInfo{
 				Name:           tsFieldName,
-				JsonName:       tadaStructField.JsonName,
-				IsReadOnly:     tadaStructField.IsReadOnly,
-				IsOmitEmpty:    tadaStructField.IsOmitEmpty,
+				JsonName:       tdprotoStructField.JsonName,
+				IsReadOnly:     tdprotoStructField.IsReadOnly,
+				IsOmitEmpty:    tdprotoStructField.IsOmitEmpty,
 				TypeName:       tsTypeName,
 				IsNotPrimitive: isNotPrimitive,
 				IsList:         isList,
-				Help:           tadaStructField.Help,
+				Help:           tdprotoStructField.Help,
 			})
 		}
 
@@ -272,7 +272,7 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo {
 
 func generateTypeScript(tdprotoInfo *codegen.TdInfo) {
 
-	tsInfo := convertTadaInfoToTypeScript(tdprotoInfo)
+	tsInfo := convertTdprotoInfoToTypeScript(tdprotoInfo)
 
 	classTemplate, err := template.New("tsInterface").Parse(TypeScriptInterfaceTemplate)
 
