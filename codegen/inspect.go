@@ -451,6 +451,10 @@ func ToSnakeCase(original string) string {
 	return buildStr.String()
 }
 
-func ToCamelCase(original string) string {
+func ToLowerCamelCase(original string) string {
 	return strings.ToLower(original[:1]) + original[1:]
+}
+
+func ToCamelCase(original string) string {
+	return strings.ToUpper(original[:1]) + original[1:]
 }
