@@ -214,6 +214,11 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo {
 			Help: tadaStructInfo.Help,
 		}
 
+		// Skip JID class
+		if tsNewClass.Name == "JID" {
+			continue
+		}
+
 		for _, tadaStructField := range tadaStructInfo.Fields {
 			tsFieldName, isSubstituted := tsFieldNameSubstitutions[tadaStructField.Name]
 			if !isSubstituted {
