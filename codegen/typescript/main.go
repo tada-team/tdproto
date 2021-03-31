@@ -9,15 +9,6 @@ import (
 	"text/template"
 )
 
-const TypeScriptIndent = "  "
-const TypeScriptClassHeaderTemplateStr = (`export class {{.Name}} implements TDProtoClass<{{.Name}}> {`)
-const TypeScriptClassFieldTemplateStr = (`{{.Name}}{{if .IsOmitEmpty}} ? {{endif}}: {{ $data.TypeStr }}`)
-const TypeScriptClassConstructorField = "constructor ("
-const TypeScriptConstructorClose = ") {}"
-
-const TypeScriptClosingBracket = "{"
-const TypeScriptInterfaceHeaderTemplateStr = `export interface {{.Name}}JSON {`
-
 var tsTypesMap = map[string]string{
 	"JID":               "JID",
 	"string":            "string",
@@ -48,7 +39,7 @@ const TypeScriptHeaderStr = `interface TDProtoClass<T> {
 `
 
 const TypeScriptSumTypeTemplate = `type {{.Name}} =
-  {{ range $value := .Values}} | '{{- $value -}}'
+  {{range $value := .Values}} | '{{- $value -}}'
   {{end}}
 `
 
@@ -59,7 +50,7 @@ type {{.Name}} = {{.BaseType}}
 
 const TypeScriptInterfaceTemplate = `export interface {{.Name -}}JSON {
   {{- range $field :=  .Fields}}
-  {{ $field.JsonName }}{{if $field.IsOmitEmpty}}?{{end}}: {{$field.TypeName -}}
+  {{$field.JsonName}}{{if $field.IsOmitEmpty}}?{{end}}: {{$field.TypeName -}}
     {{- if $field.IsNotPrimitive -}}JSON{{end}}
       {{- if $field.IsList -}}[]{{end}};{{end}}
 }
@@ -67,11 +58,11 @@ const TypeScriptInterfaceTemplate = `export interface {{.Name -}}JSON {
 export class {{.Name}} implements TDProtoClass<{{- .Name -}}> {
   /**
    * {{.Help}}
-   {{ range $field :=  .Fields}}* {{ $field.Name }} {{ $field.Help }}
+   {{range $field :=  .Fields}}* {{$field.Name}} {{$field.Help}}
    {{end}}*/
   constructor (
 	{{- range $field :=  .Fields}}
-    public {{if $field.IsReadOnly}}readonly {{end}}{{ $field.Name }}{{if $field.IsOmitEmpty}}?{{end}}: {{ $field.TypeName -}}
+    public {{if $field.IsReadOnly}}readonly {{end}}{{$field.Name}}{{if $field.IsOmitEmpty}}?{{end}}: {{$field.TypeName -}}
       {{- if $field.IsList -}}[]{{end}},{{end}}
   ) {}
 
@@ -79,8 +70,8 @@ export class {{.Name}} implements TDProtoClass<{{- .Name -}}> {
     return new {{.Name -}}(
       {{- range $field :=  .Fields}}
       {{- if $field.IsNotPrimitive}}
-      {{if $field.IsOmitEmpty -}} raw.{{- $field.JsonName }} && {{end}}
-        {{- if $field.IsList}}raw.{{- $field.JsonName }}.map({{ $field.TypeName }}.fromJSON)
+      {{if $field.IsOmitEmpty -}} raw.{{- $field.JsonName}} && {{end}}
+        {{- if $field.IsList}}raw.{{- $field.JsonName}}.map({{$field.TypeName}}.fromJSON)
         {{- else -}} {{- $field.TypeName -}}.fromJSON(raw.{{- $field.JsonName -}}){{end}}
       {{- else}}
       raw.{{- $field.JsonName -}}
@@ -115,11 +106,6 @@ export class {{.Name}} implements TDProtoClass<{{- .Name -}}> {
 }
 
 `
-
-type TypeScriptTemplate struct {
-	Class     *template.Template
-	Interface *template.Template
-}
 
 type TypeScriptSumType struct {
 	Name   string
