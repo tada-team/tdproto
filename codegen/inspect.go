@@ -54,7 +54,7 @@ type TdEvent struct {
 type TdInfo struct {
 	TdStructs []TdStruct
 	TdTypes   []TdType
-	Events    []TdEvent
+	TdEvents  []TdEvent
 	TdConsts  []TdConstFields
 }
 
@@ -119,8 +119,49 @@ func ParseTdprotoFile(infoToFill *TdInfo, fileName string, fileAst *ast.File) er
 			if err != nil {
 				return err
 			}
+		case *ast.FuncDecl:
+			err := parseFunctionDeclaration(infoToFill, declarationType)
+			if err != nil {
+				return err
+			}
 		}
+
 	}
+	return nil
+}
+
+func parseFunctionDeclaration(infoToFill *TdInfo, functionDeclaration *ast.FuncDecl) error {
+
+	if !functionDeclaration.Name.IsExported() {
+		return nil
+	}
+
+	if functionDeclaration.Recv == nil {
+		return nil
+	}
+
+	if len(functionDeclaration.Recv.List) != 1 {
+		return nil
+	}
+
+	if functionDeclaration.Name.Name != "GetName" {
+		return nil
+	}
+
+	returnStatementAst := functionDeclaration.Body.List[0].(*ast.ReturnStmt)
+	returnStatemetExpression, ok := returnStatementAst.Results[0].(*ast.BasicLit)
+
+	if !ok {
+		return nil
+	}
+
+	eventName := strings.Trim(returnStatemetExpression.Value, "\"")
+
+	typeIdent := functionDeclaration.Recv.List[0].Type.(*ast.Ident)
+	typeEventBelongsTo := typeIdent.Obj.Name
+
+	errorLogger.Printf("EVENT: %s of the class %s", eventName, typeEventBelongsTo)
+
 	return nil
 }
 
