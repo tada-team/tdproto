@@ -19,6 +19,7 @@ const TypeScriptClosingBracket = "{"
 const TypeScriptInterfaceHeaderTemplateStr = `export interface {{.Name}}JSON {`
 
 var tsTypesMap = map[string]string{
+	"JID":               "JID",
 	"string":            "string",
 	"int":               "number",
 	"int64":             "number",
@@ -199,6 +200,12 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo {
 		tsInfo.TypesAliases = append(tsInfo.TypesAliases, tsNewTypeAlias)
 		tsTypesMap[typeAliasName] = typeAliasName
 	}
+
+	// Manually add JID as string
+	tsInfo.TypesAliases = append(tsInfo.TypesAliases, TypeScriptTypeAliasInfo{
+		Name:     "JID",
+		BaseType: "string",
+	})
 
 	for _, tadaStructInfo := range tdprotoInfo.TdStructs {
 
