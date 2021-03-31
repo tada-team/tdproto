@@ -210,14 +210,14 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo {
 	for _, tadaStructInfo := range tdprotoInfo.TdStructs {
 
 		tsNewClass := TypeScriptClassInfo{
-			Name: tadaStructInfo.Name,
+			Name: codegen.ToCamelCase(tadaStructInfo.Name),
 			Help: tadaStructInfo.Help,
 		}
 
 		for _, tadaStructField := range tadaStructInfo.Fields {
 			tsFieldName, isSubstituted := tsFieldNameSubstitutions[tadaStructField.Name]
 			if !isSubstituted {
-				tsFieldName = codegen.ToCamelCase(tadaStructField.Name)
+				tsFieldName = codegen.ToLowerCamelCase(tadaStructField.Name)
 			}
 
 			tsTypeName, ok := tsTypesMap[tadaStructField.TypeStr]
@@ -225,7 +225,7 @@ func convertTadaInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo {
 			isNotPrimitive := false
 
 			if !ok {
-				tsTypeName = tadaStructField.TypeStr
+				tsTypeName = codegen.ToCamelCase(tadaStructField.TypeStr)
 				isNotPrimitive = true
 			}
 
