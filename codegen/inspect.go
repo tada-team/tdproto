@@ -59,15 +59,10 @@ type TdType struct {
 	BaseType string
 }
 
-type TdEvent struct {
-	Name string `json:"name"`
-	Help string `json:"help"`
-}
-
 type TdInfo struct {
 	TdStructs []TdStruct
 	TdTypes   []TdType
-	TdEvents  []TdEvent
+	TdEvents  map[string]string
 	TdConsts  []TdConstFields
 }
 
@@ -103,6 +98,7 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 	tdprotoFileSet := token.NewFileSet()
 
 	infoToFill = new(TdInfo)
+	infoToFill.TdEvents = make(map[string]string)
 
 	tdprotoNameToAstMap, err := extractTdprotoAst(tdprotoFileSet)
 	if err != nil {
@@ -173,7 +169,7 @@ func parseFunctionDeclaration(infoToFill *TdInfo, functionDeclaration *ast.FuncD
 	typeIdent := functionDeclaration.Recv.List[0].Type.(*ast.Ident)
 	typeEventBelongsTo := typeIdent.Obj.Name
 
-	errorLogger.Printf("EVENT: %s of the class %s", eventName, typeEventBelongsTo)
+	infoToFill.TdEvents[typeEventBelongsTo] = eventName
 
 	return nil
 }
