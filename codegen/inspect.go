@@ -13,6 +13,18 @@ import (
 	"github.com/tada-team/tdproto"
 )
 
+var golangPrimitiveTypes = map[string]string{
+	"string":            "",
+	"int":               "",
+	"int64":             "",
+	"uint16":            "",
+	"uint":              "",
+	"bool":              "",
+	"interface{}":       "",
+	"ISODateTimeString": "",
+	"time.Time":         "",
+}
+
 type TdConstFields struct {
 	Name  string `json:"name"`
 	Type  string
@@ -25,6 +37,7 @@ type TdStructField struct {
 	Help        string
 	JsonName    string
 	TypeStr     string
+	IsPrimitive bool
 	IsReadOnly  bool
 	IsPointer   bool
 	IsList      bool
@@ -357,6 +370,8 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 			fieldDoc = "DOCUMENTATION MISSING"
 		}
 
+		_, isPrimitive := golangPrimitiveTypes[fieldTypeStr]
+
 		fieldsList = append(fieldsList, TdStructField{
 			Name:        fieldName,
 			IsReadOnly:  isReadOnly,
@@ -365,6 +380,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 			TypeStr:     fieldTypeStr,
 			IsList:      isList,
 			IsPointer:   isPointer,
+			IsPrimitive: isPrimitive,
 			Help:        fieldDoc,
 		})
 	}
