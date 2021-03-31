@@ -41,6 +41,9 @@ const TypeScriptHeaderStr = `interface TDProtoClass<T> {
   readonly mappableFields: ReadonlyArray<keyof T>;
 }
 
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable @typescript-eslint/interface-name-prefix */
+
 `
 
 const TypeScriptSumTypeTemplate = `type {{.Name}} =
