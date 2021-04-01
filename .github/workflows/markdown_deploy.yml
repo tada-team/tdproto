@@ -1,0 +1,36 @@
+---
+name: Generate and deploy markdown
+
+on: [push]
+
+env:
+  CLONE_DIR: clone_dir
+  MARKDOWN_FILE: README.md
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    environment: markdown_deployment
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '1.16'
+      - name: Clone markdown repo
+        uses: actions/checkout@v2
+        with:
+          repository: 'tada-team/tdproto-mardown'
+          ssh-key: ${{ secrets.MARKDOWN_DEPLOY_KEY }}
+          path: 'clone_dir'
+      - name: Generate markdown
+        run: |
+          go run codegen/markdown/main.go > "$CLONE_DIR"/"$MARKDOWN_FILE"
+      - name: Commit and upload markdown
+        if: github.ref == 'refs/heads/master'
+        run: |
+          cd "$CLONE_DIR"
+          git add "$MARKDOWN_FILE"
+          git config --global user.email "action@github.com"
+          git config --global user.name "Github Action"
+          git commit -m "Generate markdown on $(date)"
+          git push
