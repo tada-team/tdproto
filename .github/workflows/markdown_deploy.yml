@@ -1,7 +1,10 @@
 ---
 name: Generate and deploy markdown
 
-on: [push]
+on:
+  push:
+    paths:
+      - './*.go'
 
 env:
   CLONE_DIR: clone_dir
