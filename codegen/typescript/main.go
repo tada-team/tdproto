@@ -53,6 +53,8 @@ type {{.Name}} = {{.BaseType}}
 
 const TypeScriptInterfaceTemplate = `export interface {{.Name -}}JSON {
   {{- range $field :=  .Fields}}
+  {{- if eq $field.TypeName "any"}}
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any{{- end}}
   {{$field.JsonName}}{{if $field.IsOmitEmpty}}?{{end}}: {{$field.TypeName -}}
     {{- if $field.IsNotPrimitive -}}JSON{{end}}
       {{- if $field.IsList -}}[]{{end}};{{end}}
