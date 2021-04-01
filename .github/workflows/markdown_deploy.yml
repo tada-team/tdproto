@@ -19,7 +19,7 @@ jobs:
       - name: Clone markdown repo
         uses: actions/checkout@v2
         with:
-          repository: 'tada-team/tdproto-mardown'
+          repository: 'tada-team/tdproto-markdown'
           ssh-key: ${{ secrets.MARKDOWN_DEPLOY_KEY }}
           path: 'clone_dir'
       - name: Generate markdown
