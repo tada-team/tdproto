@@ -58,7 +58,7 @@ const TypeScriptInterfaceTemplate = `export interface {{.Name -}}JSON {
 export class {{.Name}} implements TDProtoClass<{{- .Name -}}> {
   /**
    * {{.Help}}
-   {{range $field :=  .Fields}}* {{$field.Name}} {{$field.Help}}
+   {{range $field :=  .Fields}}* @param {{$field.Name}} {{$field.Help}}
    {{end}}*/
   constructor (
 	{{- range $field :=  .Fields}}
