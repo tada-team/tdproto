@@ -33,15 +33,16 @@ type TdConstFields struct {
 }
 
 type TdStructField struct {
-	Name        string
-	Help        string
-	JsonName    string
-	TypeStr     string
-	IsPrimitive bool
-	IsReadOnly  bool
-	IsPointer   bool
-	IsList      bool
-	IsOmitEmpty bool
+	Name            string
+	Help            string
+	JsonName        string
+	TypeStr         string
+	IsPrimitive     bool
+	IsReadOnly      bool
+	IsPointer       bool
+	IsList          bool
+	IsOmitEmpty     bool
+	IsNotSerialized bool
 }
 
 type TdStruct struct {
@@ -267,6 +268,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 		fieldName := field.Names[0].Name
 		isOmitEmpty := false
 		isReadOnly := false
+		isNotSerialized := false
 		jsonName := fieldName
 		fieldDoc := cleanHelp(field.Doc.Text())
 
@@ -281,7 +283,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 			for i, aTag := range jsonTags {
 				if i == 0 {
 					if aTag == "-" {
-						continue
+						isNotSerialized = true
 					}
 
 					jsonName = aTag
@@ -369,15 +371,16 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 		_, isPrimitive := golangPrimitiveTypes[fieldTypeStr]
 
 		fieldsList = append(fieldsList, TdStructField{
-			Name:        fieldName,
-			IsReadOnly:  isReadOnly,
-			IsOmitEmpty: isOmitEmpty,
-			JsonName:    jsonName,
-			TypeStr:     fieldTypeStr,
-			IsList:      isList,
-			IsPointer:   isPointer,
-			IsPrimitive: isPrimitive,
-			Help:        fieldDoc,
+			Name:            fieldName,
+			IsReadOnly:      isReadOnly,
+			IsOmitEmpty:     isOmitEmpty,
+			JsonName:        jsonName,
+			TypeStr:         fieldTypeStr,
+			IsList:          isList,
+			IsPointer:       isPointer,
+			IsPrimitive:     isPrimitive,
+			IsNotSerialized: isNotSerialized,
+			Help:            fieldDoc,
 		})
 	}
 
