@@ -227,6 +227,10 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo 
 		}
 
 		for _, tdprotoStructField := range tdprotoFields {
+			if tdprotoStructField.IsNotSerialized {
+				continue
+			}
+
 			tsFieldName, isSubstituted := tsFieldNameSubstitutions[tdprotoStructField.Name]
 			if !isSubstituted {
 				tsFieldName = codegen.ToLowerCamelCase(tdprotoStructField.Name)
