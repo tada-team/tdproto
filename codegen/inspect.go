@@ -45,11 +45,11 @@ type TdStructField struct {
 }
 
 type TdStruct struct {
-	Name       string          `json:"name"`
-	Help       string          `json:"help"`
-	Fields     []TdStructField `json:"fields"`
-	ReadOnly   bool            `json:"readonly,omitempty"`
-	EnumValues []TdConstFields `json:"enum_values,omitempty"`
+	Name             string
+	Help             string
+	Fields           []TdStructField
+	ReadOnly         bool
+	AnonnymousFields []string
 }
 
 type TdType struct {
@@ -60,7 +60,7 @@ type TdType struct {
 }
 
 type TdInfo struct {
-	TdStructs []TdStruct
+	TdStructs map[string]TdStruct
 	TdTypes   []TdType
 	TdEvents  map[string]string
 	TdConsts  []TdConstFields
@@ -99,6 +99,7 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 
 	infoToFill = new(TdInfo)
 	infoToFill.TdEvents = make(map[string]string)
+	infoToFill.TdStructs = make(map[string]TdStruct)
 
 	tdprotoNameToAstMap, err := extractTdprotoAst(tdprotoFileSet)
 	if err != nil {
@@ -112,10 +113,6 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 			return infoToFill, err
 		}
 	}
-
-	sort.Slice(infoToFill.TdStructs, func(i, j int) bool {
-		return infoToFill.TdStructs[i].Name < infoToFill.TdStructs[j].Name
-	})
 
 	return infoToFill, nil
 }
@@ -253,11 +250,14 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 	isReadOnly := strings.Contains(helpString, "Readonly")
 
 	var fieldsList []TdStructField
+	var anonymousFieldsList []string
 
 	for _, field := range structInfo.Fields.List {
 		switch len(field.Names) {
 		case 0:
-			// TODO: implement inheritance
+			anonymousIdent := field.Type.(*ast.Ident)
+			anonymousFieldName := anonymousIdent.Name
+			anonymousFieldsList = append(anonymousFieldsList, anonymousFieldName)
 			continue
 		case 1:
 		default:
@@ -385,12 +385,13 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 		return fieldsList[i].Name < fieldsList[j].Name
 	})
 
-	infoToFill.TdStructs = append(infoToFill.TdStructs, TdStruct{
-		Help:     helpString,
-		ReadOnly: isReadOnly,
-		Name:     structName,
-		Fields:   fieldsList,
-	})
+	infoToFill.TdStructs[structName] = TdStruct{
+		Help:             helpString,
+		ReadOnly:         isReadOnly,
+		Name:             structName,
+		Fields:           fieldsList,
+		AnonnymousFields: anonymousFieldsList,
+	}
 
 	return nil
 }
