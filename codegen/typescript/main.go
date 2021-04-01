@@ -20,6 +20,7 @@ var tsTypesMap = map[string]string{
 	"interface{}":       "any",
 	"ISODateTimeString": "string",
 	"time.Time":         "string",
+	"UiSettings":        "UiSettings",
 }
 
 var tsFieldNameSubstitutions = map[string]string{
