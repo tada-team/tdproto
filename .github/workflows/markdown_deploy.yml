@@ -32,5 +32,5 @@ jobs:
           git add "$MARKDOWN_FILE"
           git config --global user.email "action@github.com"
           git config --global user.name "Github Action"
-          git commit -m "Generate markdown on $(date)"
+          git commit -m "Generate markdown on $(date)" --allow-empty
           git push
