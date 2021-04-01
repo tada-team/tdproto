@@ -36,7 +36,7 @@ const TypeScriptHeaderStr = `interface TDProtoClass<T> {
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable @typescript-eslint/interface-name-prefix */
 
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type UiSettings = Record<string, any>
 
 `
@@ -67,6 +67,8 @@ export class {{.Name}} implements TDProtoClass<{{- .Name -}}> {
    {{end}}*/
   constructor (
 	{{- range $field :=  .Fields}}
+    {{- if eq $field.TypeName "any"}}
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any{{- end}}
     public {{if $field.IsReadOnly}}readonly {{end}}{{$field.Name}}{{if $field.IsOmitEmpty}}?{{end}}: {{$field.TypeName -}}
       {{- if $field.IsList -}}[]{{end}},{{end}}
   ) {}
