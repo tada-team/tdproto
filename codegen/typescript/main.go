@@ -37,7 +37,7 @@ const TypeScriptHeaderStr = `interface TDProtoClass<T> {
 /* eslint-disable @typescript-eslint/interface-name-prefix */
 
 
-type UiSettings = Record<strings,any>
+type UiSettings = Record<string, any>
 
 `
 
