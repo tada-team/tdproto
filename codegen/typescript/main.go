@@ -205,7 +205,23 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo 
 			continue
 		}
 
-		for _, tdprotoStructField := range tdprotoStructInfo.Fields {
+		var tdprotoFields []codegen.TdStructField
+
+		// Add fields defined in the struct body
+		tdprotoFields = append(tdprotoFields, tdprotoStructInfo.Fields...)
+
+		// Insert anonymous fields
+		for _, anonymousFieldName := range tdprotoStructInfo.AnonnymousFields {
+			anonymousStruct, ok := tdprotoInfo.TdStructs[anonymousFieldName]
+
+			if !ok {
+				panic(fmt.Errorf("anonymous struct missing %s", anonymousFieldName))
+			}
+
+			tdprotoFields = append(tdprotoFields, anonymousStruct.Fields...)
+		}
+
+		for _, tdprotoStructField := range tdprotoFields {
 			tsFieldName, isSubstituted := tsFieldNameSubstitutions[tdprotoStructField.Name]
 			if !isSubstituted {
 				tsFieldName = codegen.ToLowerCamelCase(tdprotoStructField.Name)
