@@ -388,6 +388,6 @@ var MarkupTestCases = []struct {
 		Title: "multi pre",
 		Raw:   "``` 1 ```2``` ```3",
 		Html:  "<pre>1</pre>2<pre></pre>3",
-		//Plain: "``` 1 ```2``` ```3```",
+		Plain:   "123",
 	},
 }
