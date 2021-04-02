@@ -27,7 +27,7 @@ jobs:
           path: 'clone_dir'
       - name: Generate markdown
         run: |
-          go run codegen/markdown/main.go > "$CLONE_DIR"/"$MARKDOWN_FILE"
+          go run ./codegen/markdown/ > "$CLONE_DIR"/"$MARKDOWN_FILE"
       - name: Commit and upload markdown
         if: github.ref == 'refs/heads/master'
         run: |
