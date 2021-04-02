@@ -52,6 +52,55 @@ type {{.Name}} = {{.BaseType}}
 
 `
 
+const TypeScriptManualClasses = `
+export interface TeamUnreadJSON {
+   direct: UnreadJSON;
+   group: UnreadJSON;
+   task: UnreadJSON;
+}
+ 
+export class TeamUnread implements TDProtoClass<TeamUnread> {
+  constructor (
+    public direct: Unread,
+    public group: Unread,
+    public task: Unread
+  ) {}
+ 
+  public static fromJSON (raw: TeamUnreadJSON): TeamUnread {
+    return new TeamUnread(
+      Unread.fromJSON(raw.direct),
+      Unread.fromJSON(raw.group),
+      Unread.fromJSON(raw.task),
+    )
+  }
+ 
+  public mappableFields = [
+   'direct',
+   'group',
+   'task',
+  ] as const
+ 
+  readonly #mapper = {
+   /* eslint-disable @typescript-eslint/camelcase */
+   direct: () => ({ direct: this.direct.toJSON() }),
+   group: () => ({ created: this.group.toJSON() }),
+   task: () => ({ task: this.task.toJSON() }),
+   /* eslint-enable @typescript-eslint/camelcase */
+  }
+ 
+  public toJSON (): TeamUnreadJSON
+  public toJSON (fields: Array<this['mappableFields'][number]>): Partial<TeamUnreadJSON>
+  public toJSON (fields?: Array<this['mappableFields'][number]>) {
+    if (fields && fields.length > 0) {
+      return Object.assign({}, ...fields.map(f => this.#mapper[f]()))
+    } else {
+      return Object.assign({}, ...Object.values(this.#mapper).map(v => v()))
+    }
+  }
+}
+
+`
+
 const TypeScriptInterfaceTemplate = `export interface {{.Name -}}JSON {
   {{- range $field :=  .Fields}}
   {{- if eq $field.TypeName "any"}}
@@ -321,6 +370,8 @@ func generateTypeScript(tdprotoInfo *codegen.TdInfo) {
 			panic(err)
 		}
 	}
+
+	fmt.Fprint(os.Stdout, TypeScriptManualClasses)
 
 	for _, tsClassInfo := range tsInfo.Classes {
 		err := classTemplate.Execute(os.Stdout, tsClassInfo)
