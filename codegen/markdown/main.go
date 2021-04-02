@@ -85,6 +85,10 @@ func generateMarkdown(tdprotoInfo *codegen.TdInfo) {
 	fmt.Fprint(os.Stdout, "## Structures\n")
 
 	for _, tdStructInfo := range tdprotoInfo.TdStructs {
+		for _, anonStruct := range tdStructInfo.GetStructAnonymousStructs(tdprotoInfo) {
+			tdStructInfo.Fields = append(tdStructInfo.Fields, anonStruct.Fields...)
+		}
+
 		err := structureTemplate.Execute(os.Stdout, tdStructInfo)
 		if err != nil {
 			panic(err)
