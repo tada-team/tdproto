@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/tada-team/tdproto/codegen"
 	"os"
+	"sort"
 	"text/template"
 )
 
@@ -22,8 +23,60 @@ const markdownStructureTemplate = `
 
 `
 
+const markdownEventTemplate = `
+### "{{.Name}}"
+
+Event structure: [{{.EventStructStr}}](#{{.EventStructStr}})
+
+{{.Help}}
+
+` +
+	"```" +
+	`
+{{.Example}}
+` +
+	"```"
+
+type markdownEvent struct {
+	Name           string
+	Help           string
+	Example        string
+	EventStructStr string
+}
+
+func createMarkdownEvents(tdprotoInfo *codegen.TdInfo) []markdownEvent {
+	var events []markdownEvent
+
+	for eventStructName, eventStr := range tdprotoInfo.TdEvents {
+		eventExample, ok := eventExampleStr[eventStr]
+
+		if !ok {
+			eventExample = "EVENT MISSING EXAMPLE"
+		}
+
+		events = append(events, markdownEvent{
+			Name:           eventStr,
+			Help:           tdprotoInfo.TdStructs[eventStructName].Help,
+			Example:        eventExample,
+			EventStructStr: eventStructName,
+		})
+	}
+
+	sort.Slice(events, func(i, j int) bool {
+		return events[i].Name < events[j].Name
+	})
+
+	return events
+}
+
 func generateMarkdown(tdprotoInfo *codegen.TdInfo) {
-	markdownTemplate, err := template.New("markdownStructure").Parse(markdownStructureTemplate)
+	structureTemplate, err := template.New("markdownStructure").Parse(markdownStructureTemplate)
+
+	if err != nil {
+		panic(err)
+	}
+
+	eventTemplate, err := template.New("markdownEvent").Parse(markdownEventTemplate)
 
 	if err != nil {
 		panic(err)
@@ -32,7 +85,19 @@ func generateMarkdown(tdprotoInfo *codegen.TdInfo) {
 	fmt.Fprint(os.Stdout, "## Structures\n")
 
 	for _, tdStructInfo := range tdprotoInfo.TdStructs {
-		err := markdownTemplate.Execute(os.Stdout, tdStructInfo)
+		err := structureTemplate.Execute(os.Stdout, tdStructInfo)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	fmt.Fprint(os.Stdout, "## Events\n")
+
+	markdownEvents := createMarkdownEvents(tdprotoInfo)
+
+	for _, event := range markdownEvents {
+		err := eventTemplate.Execute(os.Stdout, event)
+
 		if err != nil {
 			panic(err)
 		}
