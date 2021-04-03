@@ -153,13 +153,13 @@ type Chat struct {
 	Title string `chattype:"task" json:"title,omitempty"`
 
 	// Task done date in iso format, if any
-	Done string `chattype:"task" json:"done,omitempty"`
+	Done ISODateTimeString `chattype:"task" json:"done,omitempty"`
 
 	// Task done reason, if any
 	DoneReason string `chattype:"task" json:"done_reason,omitempty"`
 
 	// Task deadline in iso format, if any
-	Deadline string `chattype:"task" json:"deadline,omitempty"`
+	Deadline ISODateTimeString `chattype:"task" json:"deadline,omitempty"`
 
 	// Is task deadline expired
 	DeadlineExpired bool `chattype:"task" json:"deadline_expired,omitempty"`

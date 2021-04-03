@@ -30,7 +30,7 @@ type Contact struct {
 	TeamStatus TeamStatus `json:"status"`
 
 	// Last activity in this team (iso datetime)
-	LastActivity *string `json:"last_activity"`
+	LastActivity ISODateTimeString `json:"last_activity,omitempty"`
 
 	// Can contact add users to this team
 	AddToTeamRights bool `json:"add_to_team_rights,omitempty"`

@@ -10,8 +10,8 @@ type WikiPage struct {
 	// Object version
 	Gentime int64 `json:"gentime"`
 
-	// Update time, iso
-	Updated string `json:"updated"`
+	// Update time
+	Updated ISODateTimeString `json:"updated"`
 
 	// Last editor contact id
 	Editor JID `json:"editor"`

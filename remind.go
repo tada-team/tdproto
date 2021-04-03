@@ -9,7 +9,7 @@ type Remind struct {
 	Chat *JID `json:"chat"`
 
 	// Activation time, iso
-	FireAt string `json:"fire_at"`
+	FireAt ISODateTimeString `json:"fire_at"`
 
 	// Comment, if any
 	Comment string `json:"comment,omitempty"`
