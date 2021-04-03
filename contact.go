@@ -66,13 +66,13 @@ type Contact struct {
 	ChangeableFields []string `json:"changeable_fields,omitempty"`
 
 	// Family name
-	FamilyName *string `json:"family_name,omitempty"`
+	FamilyName string `json:"family_name,omitempty"`
 
 	// Given name
-	GivenName *string `json:"given_name,omitempty"`
+	GivenName string `json:"given_name,omitempty"`
 
 	// Patronymic, if any
-	Patronymic *string `json:"patronymic,omitempty"`
+	Patronymic string `json:"patronymic,omitempty"`
 
 	// Default language code
 	DefaultLang *string `json:"default_lang,omitempty"`

@@ -2,11 +2,11 @@ package tdproto
 
 // Audio call information
 type CallEvent struct {
-	// Call start, iso date
-	Start *string `json:"start"`
+	// Call start
+	Start *ISODateTimeString `json:"start"`
 
-	// Call finish, iso date
-	Finish *string `json:"finish"`
+	// Call finish
+	Finish *ISODateTimeString `json:"finish"`
 
 	// Call record enabled
 	Audiorecord bool `json:"audiorecord"`

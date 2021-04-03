@@ -77,17 +77,17 @@ type MessageContent struct {
 	// Change actor contact id (for "change" mediatype)
 	Actor *JID `mediatype:"change" json:"actor,omitempty"`
 
-	// Comment. For audio message.
-	Comment string `mediatype:"progress" json:"comment,omitempty"`
+	// Comment (for "audiomsg" mediatype)
+	Comment string `mediatype:"audiomsg" json:"comment,omitempty"`
 
-	// Given name (for "contact"  mediatype)
-	GivenName *string `mediatype:"contact" json:"given_name,omitempty"`
+	// Given name (for "contact" mediatype)
+	GivenName string `mediatype:"contact" json:"given_name,omitempty"`
 
-	// Family name (for "contact"  mediatype)
-	FamilyName *string `mediatype:"contact" json:"family_name,omitempty"`
+	// Family name (for "contact" mediatype)
+	FamilyName string `mediatype:"contact" json:"family_name,omitempty"`
 
-	// Patronymic name (for "contact"  mediatype)
-	Patronymic *string `mediatype:"contact" json:"patronymic,omitempty"`
+	// Patronymic name (for "contact" mediatype)
+	Patronymic string `mediatype:"contact" json:"patronymic,omitempty"`
 
 	// Contact phones list (for "contact"  mediatype)
 	Phones []string `mediatype:"contact" json:"phones,omitempty"`
