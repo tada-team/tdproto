@@ -141,7 +141,7 @@ type Chat struct {
 	Num uint `chattype:"task" json:"num,omitempty"`
 
 	// Task followers id's. TODO: rename to "followers"
-	Observers *[]JID `chattype:"task" json:"observers,omitempty"`
+	Observers []JID `chattype:"task" json:"observers,omitempty"`
 
 	// Task creator
 	Owner *JID `chattype:"task" json:"owner,omitempty"`
@@ -195,7 +195,7 @@ type Chat struct {
 	Parents []Subtask `chattype:"task" json:"parents,omitempty"`
 
 	// Tab names
-	Tabs *[]TaskTabKey `chattype:"task" json:"tabs,omitempty"`
+	Tabs []TaskTabKey `chattype:"task" json:"tabs,omitempty"`
 
 	// My status in group chat
 	Status *GroupStatus `chattype:"group" json:"status,omitempty"`

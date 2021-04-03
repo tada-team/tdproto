@@ -90,10 +90,10 @@ type MessageContent struct {
 	Patronymic *string `mediatype:"contact" json:"patronymic,omitempty"`
 
 	// Contact phones list (for "contact"  mediatype)
-	Phones *[]string `mediatype:"contact" json:"phones,omitempty"`
+	Phones []string `mediatype:"contact" json:"phones,omitempty"`
 
 	// Emails list (for "contact"  mediatype)
-	Emails *[]string `mediatype:"contact" json:"emails,omitempty"`
+	Emails []string `mediatype:"contact" json:"emails,omitempty"`
 
 	// Stickerpack name (for "sticker" subtype)
 	Stickerpack string `mediasubtype:"sticker" json:"stickerpack,omitempty"`

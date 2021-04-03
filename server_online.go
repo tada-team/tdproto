@@ -2,8 +2,8 @@ package tdproto
 
 func NewServerOnline(contacts []OnlineContact, calls []OnlineCall) (r ServerOnline) {
 	r.Name = r.GetName()
-	r.Params.Contacts = &contacts
-	r.Params.Calls = &calls
+	r.Params.Contacts = contacts
+	r.Params.Calls = calls
 	return r
 }
 
@@ -17,10 +17,10 @@ func (p ServerOnline) GetName() string { return "server.online" }
 
 type serverOnlineParams struct {
 	// Online team members
-	Contacts *[]OnlineContact `json:"contacts"`
+	Contacts []OnlineContact `json:"contacts"`
 
 	// Active calls
-	Calls *[]OnlineCall `json:"calls"`
+	Calls []OnlineCall `json:"calls,omitempty"`
 }
 
 type OnlineContact struct {

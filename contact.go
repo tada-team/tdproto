@@ -63,7 +63,7 @@ type Contact struct {
 	CanDelete bool `json:"can_delete,omitempty"`
 
 	// Changeable fields
-	ChangeableFields *[]string `json:"changeable_fields,omitempty"`
+	ChangeableFields []string `json:"changeable_fields,omitempty"`
 
 	// Family name
 	FamilyName *string `json:"family_name,omitempty"`
