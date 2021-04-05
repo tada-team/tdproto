@@ -54,9 +54,11 @@ type {{.Name}} = {{.BaseType}}
 
 const TypeScriptManualClasses = `
 export interface TeamUnreadJSON {
+   /* eslint-disable camelcase */
    direct: UnreadJSON;
    group: UnreadJSON;
    task: UnreadJSON;
+   /* eslint-enable camelcase */
 }
  
 export class TeamUnread implements TDProtoClass<TeamUnread> {
@@ -81,11 +83,11 @@ export class TeamUnread implements TDProtoClass<TeamUnread> {
   ] as const
  
   readonly #mapper = {
-   /* eslint-disable @typescript-eslint/camelcase */
+   /* eslint-disable camelcase */
    direct: () => ({ direct: this.direct.toJSON() }),
-   group: () => ({ created: this.group.toJSON() }),
+   group: () => ({ group: this.group.toJSON() }),
    task: () => ({ task: this.task.toJSON() }),
-   /* eslint-enable @typescript-eslint/camelcase */
+   /* eslint-enable camelcase */
   }
  
   public toJSON (): TeamUnreadJSON
@@ -102,12 +104,14 @@ export class TeamUnread implements TDProtoClass<TeamUnread> {
 `
 
 const TypeScriptInterfaceTemplate = `export interface {{.Name -}}JSON {
+  /* eslint-disable camelcase */
   {{- range $field :=  .Fields}}
   {{- if eq $field.TypeName "any"}}
   // eslint-disable-next-line @typescript-eslint/no-explicit-any{{- end}}
   {{$field.JsonName}}{{if $field.IsOmitEmpty}}?{{end}}: {{$field.TypeName -}}
     {{- if $field.IsNotPrimitive -}}JSON{{end}}
       {{- if $field.IsList -}}[]{{end}};{{end}}
+  /* eslint-enable camelcase */
 }
 
 export class {{.Name}} implements TDProtoClass<{{- .Name -}}> {
@@ -143,12 +147,12 @@ export class {{.Name}} implements TDProtoClass<{{- .Name -}}> {
   ] as const
 
   readonly #mapper = {
-    /* eslint-disable @typescript-eslint/camelcase */
+    /* eslint-disable camelcase */
     {{- range $field :=  .Fields}}
     {{$field.Name -}}: () => ({ {{$field.JsonName -}}: this.{{$field.Name}}
       {{- if $field.IsNotPrimitive -}}{{- if $field.IsOmitEmpty}}?{{end}}
         {{- if $field.IsList}}.map(u => u.toJSON()){{else}}.toJSON(){{end}}{{end}} }),{{end}}
-    /* eslint-enable @typescript-eslint/camelcase */
+    /* eslint-enable camelcase */
   }
 
   public toJSON (): {{.Name -}}JSON
