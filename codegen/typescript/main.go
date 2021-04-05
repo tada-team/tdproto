@@ -30,12 +30,14 @@ var tsFieldNameSubstitutions = map[string]string{
 	"Static":  "isStatic",
 }
 
-const TypeScriptHeaderStr = `interface TDProtoClass<T> {
+const TypeScriptHeaderStr = `/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+interface TDProtoClass<T> {
   readonly mappableFields: ReadonlyArray<keyof T>;
 }
 
-/* eslint-disable @typescript-eslint/no-use-before-define */
-/* eslint-disable @typescript-eslint/interface-name-prefix */
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type UiSettings = Record<string, any>
