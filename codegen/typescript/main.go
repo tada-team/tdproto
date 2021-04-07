@@ -291,7 +291,7 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo 
 
 			tsFieldName, isSubstituted := tsFieldNameSubstitutions[tdprotoStructField.Name]
 			if !isSubstituted {
-				tsFieldName = codegen.ToLowerCamelCase(tdprotoStructField.Name)
+				tsFieldName = codegen.SnakeCaseToLowerCamel(tdprotoStructField.JsonName)
 			}
 
 			tsTypeName, ok := tsTypesMap[tdprotoStructField.TypeStr]
