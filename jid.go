@@ -23,8 +23,6 @@ type HasJid interface {
 
 type JID string
 
-func NewJID(val string) JID { return JID(val) }
-
 func (jid JID) ChatType() ChatType {
 	switch {
 	case jid.IsDirect():
