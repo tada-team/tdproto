@@ -477,6 +477,31 @@ func ToSnakeCase(original string) string {
 	return buildStr.String()
 }
 
+func SnakeCaseToLowerCamel(original string) string {
+	var buildStr strings.Builder
+
+	nextCharToUpper := false
+
+	for i, char := range original {
+		if i != 0 && char == '_' {
+			nextCharToUpper = true
+			continue
+		}
+
+		nextChar := char
+
+		if nextCharToUpper {
+			nextChar = unicode.ToUpper(char)
+			nextCharToUpper = false
+		}
+
+		buildStr.WriteString(string(nextChar))
+
+	}
+
+	return buildStr.String()
+}
+
 func ToLowerCamelCase(original string) string {
 	return strings.ToLower(original[:1]) + original[1:]
 }
