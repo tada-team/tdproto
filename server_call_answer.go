@@ -26,7 +26,7 @@ type serverCallAnswerParams struct {
 	Candidates []serverCallAnswerCandidate `json:"candidates"`
 
 	// Current call participants
-	Onliners []CallOnliner `json:"onliners"`
+	Onliners []CallOnliner `json:"onliners,omitempty"`
 
 	// SDP data
 	JSEP JSEP `json:"jsep"`

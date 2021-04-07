@@ -4,7 +4,7 @@ import "time"
 
 func NewServerCallState(chat HasJid, startCall, finishCall *time.Time, onliners []CallOnliner, audiorecord, buzz bool, uid string, timestamp int64) (r ServerCallState) {
 	r.Name = r.GetName()
-	r.Params.Jid = *chat.JID()
+	r.Params.Jid = chat.JID()
 	r.Params.Onliners = onliners
 	r.Params.Buzz = buzz
 	r.Params.Uid = uid
@@ -40,7 +40,7 @@ type serverCallStateParams struct {
 	Uid string `json:"uid"`
 
 	// Call participants
-	Onliners []CallOnliner `json:"onliners"`
+	Onliners []CallOnliner `json:"onliners,omitempty"`
 
 	// Call start, if any
 	Start *ISODateTimeString `json:"start"`
