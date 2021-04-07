@@ -81,7 +81,7 @@ type Team struct {
 	Contacts []Contact `json:"contacts,omitempty" tdproto:"readonly"`
 
 	// For single group teams, jid of chat
-	SingleGroup *JID `json:"single_group,omitempty" tdproto:"readonly"`
+	SingleGroup JID `json:"single_group,omitempty" tdproto:"readonly"`
 
 	// Color theme, if any
 	Theme *Theme `json:"theme,omitempty" tdproto:"readonly"`

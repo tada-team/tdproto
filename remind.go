@@ -6,7 +6,7 @@ type Remind struct {
 	Uid string `json:"uid"`
 
 	// Chat id
-	Chat *JID `json:"chat"`
+	Chat JID `json:"chat"`
 
 	// Activation time, iso
 	FireAt ISODateTimeString `json:"fire_at"`

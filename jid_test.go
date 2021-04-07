@@ -6,20 +6,37 @@ import (
 )
 
 func TestNewJID(t *testing.T) {
-	res := new(struct {
-		Val JID `json:"val"`
+	t.Run("marshall", func(t *testing.T) {
+		res := new(struct {
+			Val JID `json:"val,omitempty"`
+		})
+
+		b,  err := json.Marshal(res)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if string(b) != "{}" {
+			t.Error("must be empty, got:", string(b))
+		}
 	})
 
-	data := `{"val": "t-63150419-c5c7-40fb-8aa2-ca6b613ca5a0"}`
-	if err := json.Unmarshal([]byte(data), res); err != nil {
-		t.Fatal(err)
-	}
+	t.Run("unmarshall", func(t *testing.T) {
+		res := new(struct {
+			Val JID `json:"val"`
+		})
 
-	if !res.Val.IsTask() {
-		t.Error("must be task")
-	}
+		data := `{"val": "t-63150419-c5c7-40fb-8aa2-ca6b613ca5a0"}`
+		if err := json.Unmarshal([]byte(data), res); err != nil {
+			t.Fatal(err)
+		}
 
-	if res.Val.Uid() != "63150419-c5c7-40fb-8aa2-ca6b613ca5a0" {
-		t.Error("invalid uid:", res.Val.Uid())
-	}
+		if !res.Val.IsTask() {
+			t.Error("must be task")
+		}
+
+		if res.Val.Uid() != "63150419-c5c7-40fb-8aa2-ca6b613ca5a0" {
+			t.Error("invalid uid:", res.Val.Uid())
+		}
+	})
 }

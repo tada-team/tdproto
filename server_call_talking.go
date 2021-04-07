@@ -1,9 +1,9 @@
 package tdproto
 
-func NewServerCallTalking(talking bool, chat, actor *JID) (r ServerCallTalking) {
+func NewServerCallTalking(talking bool, chat, actor JID) (r ServerCallTalking) {
 	r.Name = r.GetName()
-	r.Params.Jid = *chat
-	r.Params.Actor = *actor
+	r.Params.Jid = chat
+	r.Params.Actor = actor
 	r.Params.Talking = talking
 	return r
 }

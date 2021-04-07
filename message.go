@@ -75,7 +75,7 @@ type MessageContent struct {
 	New *string `mediatype:"change" json:"new,omitempty"`
 
 	// Change actor contact id (for "change" mediatype)
-	Actor *JID `mediatype:"change" json:"actor,omitempty"`
+	Actor JID `mediatype:"change" json:"actor,omitempty"`
 
 	// Comment (for "audiomsg" mediatype)
 	Comment string `mediatype:"audiomsg" json:"comment,omitempty"`
@@ -251,7 +251,7 @@ type MessageReactionDetail struct {
 	Created ISODateTimeString `json:"created"`
 
 	// Reaction author
-	Sender *JID `json:"sender"`
+	Sender JID `json:"sender"`
 
 	// Reaction emoji
 	Name string `json:"name"`

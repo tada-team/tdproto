@@ -135,7 +135,7 @@ type Chat struct {
 	NumCheckedItems *uint `chattype:"task" json:"num_checked_items,omitempty"`
 
 	// Assignee contact id. Tasks only
-	Assignee *JID `chattype:"task" json:"assignee,omitempty"`
+	Assignee JID `chattype:"task" json:"assignee,omitempty"`
 
 	// Task number in this team
 	Num uint `chattype:"task" json:"num,omitempty"`
@@ -144,7 +144,7 @@ type Chat struct {
 	Observers []JID `chattype:"task" json:"observers,omitempty"`
 
 	// Task creator
-	Owner *JID `chattype:"task" json:"owner,omitempty"`
+	Owner JID `chattype:"task" json:"owner,omitempty"`
 
 	// Task status. May be custom
 	TaskStatus string `chattype:"task" json:"task_status,omitempty"`
@@ -288,7 +288,7 @@ type TaskItem struct {
 // Group chat membership status
 type GroupMembership struct {
 	// Contact id
-	Jid *JID `json:"jid"`
+	Jid JID `json:"jid"`
 
 	// Status in group
 	Status GroupStatus `json:"status"`

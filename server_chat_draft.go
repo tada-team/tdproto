@@ -1,6 +1,6 @@
 package tdproto
 
-func NewServerChatDraft(jid *JID, draft string, draftNum int64) (r ServerChatDraft) {
+func NewServerChatDraft(jid JID, draft string, draftNum int64) (r ServerChatDraft) {
 	r.Name = r.GetName()
 	r.Params.Jid = jid
 	r.Params.Draft = draft
@@ -18,11 +18,11 @@ func (p ServerChatDraft) GetName() string { return "server.chat.draft" }
 
 type serverChatDraftParams struct {
 	// Chat or contact id
-	Jid *JID `json:"jid"`
+	Jid JID `json:"jid"`
 
 	// Draft text
 	Draft string `json:"draft"`
 
-	// Draft version
+	// Draft version. TODO: use gentime instead
 	DraftNum int64 `json:"draft_num"`
 }

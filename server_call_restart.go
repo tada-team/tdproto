@@ -1,8 +1,8 @@
 package tdproto
 
-func NewServerCallRestart(chat *JID, teamUid string, uid string) (r ServerCallRestart) {
+func NewServerCallRestart(chat JID, teamUid string, uid string) (r ServerCallRestart) {
 	r.Name = r.GetName()
-	r.Params.Jid = *chat
+	r.Params.Jid = chat
 	r.Params.Team = teamUid
 	r.Params.Uid = uid
 	return r

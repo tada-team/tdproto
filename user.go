@@ -47,7 +47,7 @@ type User struct {
 
 type UserWithMe struct {
 	User
-	Inviter *JID         `json:"inviter,omitempty"`
+	Inviter JID          `json:"inviter,omitempty"`
 	Teams   []Team       `json:"teams"`
 	Devices []PushDevice `json:"devices"`
 }

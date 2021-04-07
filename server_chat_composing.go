@@ -1,9 +1,9 @@
 package tdproto
 
-func NewServerChatComposing(composing, isAudio bool, chat, actor *JID) (r ServerChatComposing) {
+func NewServerChatComposing(composing, isAudio bool, chat, actor JID) (r ServerChatComposing) {
 	r.Name = r.GetName()
-	r.Params.Jid = *chat
-	r.Params.Actor = *actor
+	r.Params.Jid = chat
+	r.Params.Actor = actor
 	r.Params.Composing = composing
 	r.Params.IsAudio = isAudio
 	return r

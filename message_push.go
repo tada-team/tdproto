@@ -24,10 +24,10 @@ type MessagePush struct {
 	Team string `json:"team"`
 
 	// Sender contact id
-	Sender *JID `json:"sender"`
+	Sender JID `json:"sender"`
 
 	// Chat id
-	Chat *JID `json:"chat"`
+	Chat JID `json:"chat"`
 
 	// Message id
 	MessageId string `json:"message_id"`
