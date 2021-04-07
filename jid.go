@@ -43,7 +43,6 @@ func (jid JID) IsTask() bool    { return strings.HasPrefix(jid.String(), TaskPre
 func (jid JID) IsSection() bool { return strings.HasPrefix(jid.String(), ContactSectionPrefix) }
 
 func (jid JID) Empty() bool          { return jid.String() == "" }
-func (jid JID) Equal(other JID) bool { return jid.String() == other.String() }
 func (jid JID) JID() JID             { return jid }
 func (jid JID) String() string       { return string(jid) }
 func (jid JID) Valid() bool          { return jid.Uid() != "" }
