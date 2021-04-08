@@ -168,7 +168,6 @@ func parseFunctionDeclaration(infoToFill *TdInfo, functionDeclaration *ast.FuncD
 
 	returnStatementAst := functionDeclaration.Body.List[0].(*ast.ReturnStmt)
 	returnStatemetExpression, ok := returnStatementAst.Results[0].(*ast.BasicLit)
-
 	if !ok {
 		return nil
 	}
