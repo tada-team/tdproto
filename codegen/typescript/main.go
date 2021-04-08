@@ -336,6 +336,19 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo 
 		tsInfo.Classes = append(tsInfo.Classes, tsNewClass)
 	}
 
+	// Sort everything by name
+	sort.Slice(tsInfo.Classes, func(i, j int) bool {
+		return (tsInfo.Classes[i].Name < tsInfo.Classes[j].Name)
+	})
+
+	sort.Slice(tsInfo.SumTypes, func(i, j int) bool {
+		return (tsInfo.SumTypes[i].Name < tsInfo.SumTypes[j].Name)
+	})
+
+	sort.Slice(tsInfo.TypesAliases, func(i, j int) bool {
+		return (tsInfo.TypesAliases[i].Name < tsInfo.TypesAliases[j].Name)
+	})
+
 	return tsInfo
 }
 
