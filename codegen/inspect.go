@@ -26,10 +26,10 @@ var golangPrimitiveTypes = map[string]string{
 }
 
 type TdConstFields struct {
-	Name  string `json:"name"`
+	Name  string
 	Type  string
-	Value string `json:"value"`
-	Help  string `json:"help"`
+	Value string
+	Help  string
 }
 
 type TdStructField struct {
@@ -54,8 +54,8 @@ type TdStruct struct {
 }
 
 type TdType struct {
-	Name     string `json:"name"`
-	Help     string `json:"help"`
+	Name     string
+	Help     string
 	IsArray  bool
 	BaseType string
 }
