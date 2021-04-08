@@ -22,6 +22,9 @@ type Features struct {
 	// Application title
 	AppTitle string `json:"app_title"`
 
+	// Landing page address, if any
+	LandingUrl string `json:"landing_url,omitempty"`
+
 	// Local applications urls
 	AppSchemes []string `json:"app_schemes"`
 
