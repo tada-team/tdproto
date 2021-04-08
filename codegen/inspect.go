@@ -96,12 +96,12 @@ func (i TdInfo) GetEnums() []TdEnum {
 }
 
 func (tds TdStruct) GetStructAnonymousStructs(tdInfo *TdInfo) []TdStruct {
-	var anonymousStructs []TdStruct
-
-	for _, anonymousStructName := range tds.AnonnymousFields {
-		anonymousStructs = append(anonymousStructs, tdInfo.TdStructs[anonymousStructName])
+	anonymousStructs := make([]TdStruct, len(tds.AnonnymousFields))
+	for i, anonymousStructName := range tds.AnonnymousFields {
+		anonymousStructs[i] = tdInfo.TdStructs[anonymousStructName]
 	}
 
+	// TODO: Deep copy Fields and AnonnymousFields
 	return anonymousStructs
 }
 
