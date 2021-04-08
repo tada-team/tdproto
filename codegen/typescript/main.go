@@ -10,7 +10,6 @@ import (
 )
 
 var tsTypesMap = map[string]string{
-	"JID":               "JID",
 	"string":            "string",
 	"int":               "number",
 	"int64":             "number",
@@ -250,22 +249,11 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo 
 		tsTypesMap[typeAliasName] = typeAliasName
 	}
 
-	// Manually add JID as string
-	tsInfo.TypesAliases = append(tsInfo.TypesAliases, TypeScriptTypeAliasInfo{
-		Name:     "JID",
-		BaseType: "string",
-	})
-
 	for _, tdprotoStructInfo := range tdprotoInfo.TdStructs {
 
 		tsNewClass := TypeScriptClassInfo{
 			Name: codegen.ToCamelCase(tdprotoStructInfo.Name),
 			Help: tdprotoStructInfo.Help,
-		}
-
-		// Skip JID class
-		if tsNewClass.Name == "JID" {
-			continue
 		}
 
 		var tdprotoFields []codegen.TdStructField
