@@ -147,6 +147,7 @@ func ParseTdprotoFile(infoToFill *TdInfo, fileName string, fileAst *ast.File) er
 	return nil
 }
 
+// Only parses the GetName functions right now which maps Struct name to an event name
 func parseFunctionDeclaration(infoToFill *TdInfo, functionDeclaration *ast.FuncDecl) error {
 
 	if !functionDeclaration.Name.IsExported() {
