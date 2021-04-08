@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/tada-team/tdproto/codegen"
 	"os"
 	"sort"
 	"strings"
 	"text/template"
+
+	"github.com/tada-team/tdproto/codegen"
 )
 
 var tsTypesMap = map[string]string{
@@ -203,7 +204,6 @@ type TypeScriptInfo struct {
 }
 
 func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo {
-
 	var tsInfo TypeScriptInfo
 	var unwrapStructArrays = make(map[string]string)
 	var enumTypes = make(map[string]string)
@@ -250,7 +250,6 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo 
 	}
 
 	for _, tdprotoStructInfo := range tdprotoInfo.TdStructs {
-
 		tsNewClass := TypeScriptClassInfo{
 			Name: codegen.ToCamelCase(tdprotoStructInfo.Name),
 			Help: tdprotoStructInfo.Help,
@@ -264,7 +263,6 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo 
 		// Insert anonymous fields
 		for _, anonymousFieldName := range tdprotoStructInfo.AnonnymousFields {
 			anonymousStruct, ok := tdprotoInfo.TdStructs[anonymousFieldName]
-
 			if !ok {
 				panic(fmt.Errorf("anonymous struct missing %s", anonymousFieldName))
 			}
@@ -282,10 +280,9 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo 
 				tsFieldName = codegen.SnakeCaseToLowerCamel(tdprotoStructField.JsonName)
 			}
 
-			tsTypeName, ok := tsTypesMap[tdprotoStructField.TypeStr]
-
 			isNotPrimitive := false
 
+			tsTypeName, ok := tsTypesMap[tdprotoStructField.TypeStr]
 			if !ok {
 				tsTypeName = codegen.ToCamelCase(tdprotoStructField.TypeStr)
 				isNotPrimitive = true
@@ -293,7 +290,6 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo 
 
 			isList := tdprotoStructField.IsList
 			unwrappedTypeName, doUnwrap := unwrapStructArrays[tsTypeName]
-
 			if doUnwrap {
 				tsTypeName = unwrappedTypeName
 				isList = true
@@ -344,23 +340,9 @@ func generateTypeScript(tdprotoInfo *codegen.TdInfo) {
 
 	tsInfo := convertTdprotoInfoToTypeScript(tdprotoInfo)
 
-	classTemplate, err := template.New("tsInterface").Parse(TypeScriptInterfaceTemplate)
-
-	if err != nil {
-		panic(err)
-	}
-
-	typeTemplate, err := template.New("tsType").Parse(TypeScriptTypeTemplate)
-
-	if err != nil {
-		panic(err)
-	}
-
-	sumTemplate, err := template.New("tsSumTypes").Parse(TypeScriptSumTypeTemplate)
-
-	if err != nil {
-		panic(err)
-	}
+	classTemplate := template.Must(template.New("tsInterface").Parse(TypeScriptInterfaceTemplate))
+	typeTemplate := template.Must(template.New("tsType").Parse(TypeScriptTypeTemplate))
+	sumTemplate := template.Must(template.New("tsSumTypes").Parse(TypeScriptSumTypeTemplate))
 
 	fmt.Fprint(os.Stdout, TypeScriptHeaderStr)
 
