@@ -14,7 +14,7 @@ import (
 	"github.com/tada-team/tdproto"
 )
 
-var golangPrimitiveTypes = map[string]string{
+var GolangPrimitiveTypes = map[string]string{
 	"string":            "",
 	"int":               "",
 	"int64":             "",
@@ -384,7 +384,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 			fieldDoc = "DOCUMENTATION MISSING"
 		}
 
-		_, isPrimitive := golangPrimitiveTypes[fieldTypeStr]
+		_, isPrimitive := GolangPrimitiveTypes[fieldTypeStr]
 
 		fieldsList = append(fieldsList, TdStructField{
 			Name:            fieldName,
