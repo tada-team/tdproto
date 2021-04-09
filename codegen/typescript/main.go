@@ -10,6 +10,17 @@ import (
 	"github.com/tada-team/tdproto/codegen"
 )
 
+func main() {
+	tdprotoInfo, err := codegen.ParseTdproto()
+	if err != nil {
+		panic(err)
+	}
+
+	if err := generateTypeScript(tdprotoInfo); err != nil {
+		panic(err)
+	}
+}
+
 var tsTypesMap = map[string]string{
 	"string":            "string",
 	"int":               "number",
@@ -29,146 +40,6 @@ var tsFieldNameSubstitutions = map[string]string{
 	"Public":  "isPublic",
 	"Static":  "isStatic",
 }
-
-const TypeScriptHeaderStr = `/* eslint-disable @typescript-eslint/no-use-before-define */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-interface TDProtoClass<T> {
-  readonly mappableFields: ReadonlyArray<keyof T>;
-}
-
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type UiSettings = Record<string, any>
-
-`
-
-const TypeScriptSumTypeTemplate = `type {{.Name}} =
-  {{range $value := .Values}} | '{{- $value -}}'
-  {{end}}
-`
-
-const TypeScriptTypeTemplate = `
-type {{.Name}} = {{.BaseType}}
-
-`
-
-const TypeScriptManualClasses = `
-export interface TeamUnreadJSON {
-   /* eslint-disable camelcase */
-   direct: UnreadJSON;
-   group: UnreadJSON;
-   task: UnreadJSON;
-   /* eslint-enable camelcase */
-}
- 
-export class TeamUnread implements TDProtoClass<TeamUnread> {
-  constructor (
-    public direct: Unread,
-    public group: Unread,
-    public task: Unread
-  ) {}
- 
-  public static fromJSON (raw: TeamUnreadJSON): TeamUnread {
-    return new TeamUnread(
-      Unread.fromJSON(raw.direct),
-      Unread.fromJSON(raw.group),
-      Unread.fromJSON(raw.task),
-    )
-  }
- 
-  public mappableFields = [
-   'direct',
-   'group',
-   'task',
-  ] as const
- 
-  readonly #mapper = {
-   /* eslint-disable camelcase */
-   direct: () => ({ direct: this.direct.toJSON() }),
-   group: () => ({ group: this.group.toJSON() }),
-   task: () => ({ task: this.task.toJSON() }),
-   /* eslint-enable camelcase */
-  }
- 
-  public toJSON (): TeamUnreadJSON
-  public toJSON (fields: Array<this['mappableFields'][number]>): Partial<TeamUnreadJSON>
-  public toJSON (fields?: Array<this['mappableFields'][number]>) {
-    if (fields && fields.length > 0) {
-      return Object.assign({}, ...fields.map(f => this.#mapper[f]()))
-    } else {
-      return Object.assign({}, ...Object.values(this.#mapper).map(v => v()))
-    }
-  }
-}
-
-`
-
-const TypeScriptInterfaceTemplate = `export interface {{.Name -}}JSON {
-  /* eslint-disable camelcase */
-  {{- range $field :=  .Fields}}
-  {{- if eq $field.TypeName "any"}}
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any{{- end}}
-  {{$field.JsonName}}{{if $field.IsOmitEmpty}}?{{end}}: {{$field.TypeName -}}
-    {{- if $field.IsNotPrimitive -}}JSON{{end}}
-      {{- if $field.IsList -}}[]{{end}};{{end}}
-  /* eslint-enable camelcase */
-}
-
-export class {{.Name}} implements TDProtoClass<{{- .Name -}}> {
-  /**
-   * {{.Help}}
-   {{range $field :=  .Fields}}* @param {{$field.Name}} {{$field.Help}}
-   {{end}}*/
-  constructor (
-	{{- range $field :=  .Fields}}
-    {{- if eq $field.TypeName "any"}}
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any{{- end}}
-    public {{if $field.IsReadOnly}}readonly {{end}}{{$field.Name}}{{if $field.IsOmitEmpty}}?{{end}}: {{$field.TypeName -}}
-      {{- if $field.IsList -}}[]{{end}},{{end}}
-  ) {}
-
-  public static fromJSON (raw: {{.Name -}}JSON): {{.Name}} {
-    return new {{.Name -}}(
-      {{- range $field :=  .Fields}}
-      {{- if $field.IsNotPrimitive}}
-      {{if $field.IsOmitEmpty -}} raw.{{- $field.JsonName}} && {{end}}
-        {{- if $field.IsList}}raw.{{- $field.JsonName}}.map({{$field.TypeName}}.fromJSON)
-        {{- else -}} {{- $field.TypeName -}}.fromJSON(raw.{{- $field.JsonName -}}){{end}}
-      {{- else}}
-      raw.{{- $field.JsonName -}}
-      {{- end -}}
-	  ,{{end}}
-    )
-  }
-
-  public mappableFields = [
-    {{- range $field :=  .Fields}}
-    '{{- $field.Name -}}',{{end}}
-  ] as const
-
-  readonly #mapper = {
-    /* eslint-disable camelcase */
-    {{- range $field :=  .Fields}}
-    {{$field.Name -}}: () => ({ {{$field.JsonName -}}: this.{{$field.Name}}
-      {{- if $field.IsNotPrimitive -}}{{- if $field.IsOmitEmpty}}?{{end}}
-        {{- if $field.IsList}}.map(u => u.toJSON()){{else}}.toJSON(){{end}}{{end}} }),{{end}}
-    /* eslint-enable camelcase */
-  }
-
-  public toJSON (): {{.Name -}}JSON
-  public toJSON (fields: Array<this['mappableFields'][number]>): Partial<{{- .Name -}}JSON>
-  public toJSON (fields?: Array<this['mappableFields'][number]>) {
-    if (fields && fields.length > 0) {
-      return Object.assign({}, ...fields.map(f => this.#mapper[f]()))
-    } else {
-      return Object.assign({}, ...Object.values(this.#mapper).map(v => v()))
-    }
-  }
-}
-
-`
 
 type TypeScriptSumType struct {
 	Name   string
@@ -312,9 +183,8 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) (tsInfo TypeScr
 			if tsNewClass.Fields[i].IsOmitEmpty != tsNewClass.Fields[j].IsOmitEmpty {
 				return !tsNewClass.Fields[i].IsOmitEmpty && tsNewClass.Fields[j].IsOmitEmpty
 			} else {
-				return (tsNewClass.Fields[i].Name < tsNewClass.Fields[j].Name)
+				return tsNewClass.Fields[i].Name < tsNewClass.Fields[j].Name
 			}
-
 		})
 
 		tsInfo.Classes = append(tsInfo.Classes, tsNewClass)
@@ -322,52 +192,44 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) (tsInfo TypeScr
 
 	// Sort everything by name
 	sort.Slice(tsInfo.Classes, func(i, j int) bool {
-		return (tsInfo.Classes[i].Name < tsInfo.Classes[j].Name)
+		return tsInfo.Classes[i].Name < tsInfo.Classes[j].Name
 	})
 
 	sort.Slice(tsInfo.SumTypes, func(i, j int) bool {
-		return (tsInfo.SumTypes[i].Name < tsInfo.SumTypes[j].Name)
+		return tsInfo.SumTypes[i].Name < tsInfo.SumTypes[j].Name
 	})
 
 	sort.Slice(tsInfo.TypesAliases, func(i, j int) bool {
-		return (tsInfo.TypesAliases[i].Name < tsInfo.TypesAliases[j].Name)
+		return tsInfo.TypesAliases[i].Name < tsInfo.TypesAliases[j].Name
 	})
 
 	return tsInfo, nil
 }
 
 func generateTypeScript(tdprotoInfo *codegen.TdInfo) error {
-
 	tsInfo, err := convertTdprotoInfoToTypeScript(tdprotoInfo)
 	if err != nil {
 		return err
 	}
 
-	classTemplate := template.Must(template.New("tsInterface").Parse(TypeScriptInterfaceTemplate))
-	typeTemplate := template.Must(template.New("tsType").Parse(TypeScriptTypeTemplate))
-	sumTemplate := template.Must(template.New("tsSumTypes").Parse(TypeScriptSumTypeTemplate))
-
-	fmt.Fprint(os.Stdout, TypeScriptHeaderStr)
+	_, _ = fmt.Fprint(os.Stdout, tsHeader)
 
 	for _, tsSumTypeInfo := range tsInfo.SumTypes {
-		err := sumTemplate.Execute(os.Stdout, tsSumTypeInfo)
-		if err != nil {
+		if err := tsSumTypesTemplate.Execute(os.Stdout, tsSumTypeInfo); err != nil {
 			return err
 		}
 	}
 
 	for _, tsTypeAliasInfo := range tsInfo.TypesAliases {
-		err := typeTemplate.Execute(os.Stdout, tsTypeAliasInfo)
-		if err != nil {
+		if err := tsTypeTemplate.Execute(os.Stdout, tsTypeAliasInfo); err != nil {
 			return err
 		}
 	}
 
-	fmt.Fprint(os.Stdout, TypeScriptManualClasses)
+	_, _ = fmt.Fprintf(os.Stdout, tsManualClasses)
 
 	for _, tsClassInfo := range tsInfo.Classes {
-		err := classTemplate.Execute(os.Stdout, tsClassInfo)
-		if err != nil {
+		if err := tsInterfaceTemplate.Execute(os.Stdout, tsClassInfo); err != nil {
 			return err
 		}
 	}
@@ -375,12 +237,143 @@ func generateTypeScript(tdprotoInfo *codegen.TdInfo) error {
 	return nil
 }
 
-func main() {
-	tdprotoInfo, err := codegen.ParseTdproto()
-	if err != nil {
-		panic(err)
-	}
+const tsHeader = `/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
-	generateTypeScript(tdprotoInfo)
-
+interface TDProtoClass<T> {
+  readonly mappableFields: ReadonlyArray<keyof T>;
 }
+
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type UiSettings = Record<string, any>
+
+`
+
+const tsManualClasses = `
+export interface TeamUnreadJSON {
+   /* eslint-disable camelcase */
+   direct: UnreadJSON;
+   group: UnreadJSON;
+   task: UnreadJSON;
+   /* eslint-enable camelcase */
+}
+ 
+export class TeamUnread implements TDProtoClass<TeamUnread> {
+  constructor (
+    public direct: Unread,
+    public group: Unread,
+    public task: Unread
+  ) {}
+ 
+  public static fromJSON (raw: TeamUnreadJSON): TeamUnread {
+    return new TeamUnread(
+      Unread.fromJSON(raw.direct),
+      Unread.fromJSON(raw.group),
+      Unread.fromJSON(raw.task),
+    )
+  }
+ 
+  public mappableFields = [
+   'direct',
+   'group',
+   'task',
+  ] as const
+ 
+  readonly #mapper = {
+   /* eslint-disable camelcase */
+   direct: () => ({ direct: this.direct.toJSON() }),
+   group: () => ({ group: this.group.toJSON() }),
+   task: () => ({ task: this.task.toJSON() }),
+   /* eslint-enable camelcase */
+  }
+ 
+  public toJSON (): TeamUnreadJSON
+  public toJSON (fields: Array<this['mappableFields'][number]>): Partial<TeamUnreadJSON>
+  public toJSON (fields?: Array<this['mappableFields'][number]>) {
+    if (fields && fields.length > 0) {
+      return Object.assign({}, ...fields.map(f => this.#mapper[f]()))
+    } else {
+      return Object.assign({}, ...Object.values(this.#mapper).map(v => v()))
+    }
+  }
+}
+
+`
+
+var tsInterfaceTemplate = template.Must(template.New("tsInterface").Parse(`export interface {{.Name -}}JSON {
+  /* eslint-disable camelcase */
+  {{- range $field :=  .Fields}}
+  {{- if eq $field.TypeName "any"}}
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any{{- end}}
+  {{$field.JsonName}}{{if $field.IsOmitEmpty}}?{{end}}: {{$field.TypeName -}}
+    {{- if $field.IsNotPrimitive -}}JSON{{end}}
+      {{- if $field.IsList -}}[]{{end}};{{end}}
+  /* eslint-enable camelcase */
+}
+
+export class {{.Name}} implements TDProtoClass<{{- .Name -}}> {
+  /**
+   * {{.Help}}
+   {{range $field :=  .Fields}}* @param {{$field.Name}} {{$field.Help}}
+   {{end}}*/
+  constructor (
+	{{- range $field :=  .Fields}}
+    {{- if eq $field.TypeName "any"}}
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any{{- end}}
+    public {{if $field.IsReadOnly}}readonly {{end}}{{$field.Name}}{{if $field.IsOmitEmpty}}?{{end}}: {{$field.TypeName -}}
+      {{- if $field.IsList -}}[]{{end}},{{end}}
+  ) {}
+
+  public static fromJSON (raw: {{.Name -}}JSON): {{.Name}} {
+    return new {{.Name -}}(
+      {{- range $field :=  .Fields}}
+      {{- if $field.IsNotPrimitive}}
+      {{if $field.IsOmitEmpty -}} raw.{{- $field.JsonName}} && {{end}}
+        {{- if $field.IsList}}raw.{{- $field.JsonName}}.map({{$field.TypeName}}.fromJSON)
+        {{- else -}} {{- $field.TypeName -}}.fromJSON(raw.{{- $field.JsonName -}}){{end}}
+      {{- else}}
+      raw.{{- $field.JsonName -}}
+      {{- end -}}
+	  ,{{end}}
+    )
+  }
+
+  public mappableFields = [
+    {{- range $field :=  .Fields}}
+    '{{- $field.Name -}}',{{end}}
+  ] as const
+
+  readonly #mapper = {
+    /* eslint-disable camelcase */
+    {{- range $field :=  .Fields}}
+    {{$field.Name -}}: () => ({ {{$field.JsonName -}}: this.{{$field.Name}}
+      {{- if $field.IsNotPrimitive -}}{{- if $field.IsOmitEmpty}}?{{end}}
+        {{- if $field.IsList}}.map(u => u.toJSON()){{else}}.toJSON(){{end}}{{end}} }),{{end}}
+    /* eslint-enable camelcase */
+  }
+
+  public toJSON (): {{.Name -}}JSON
+  public toJSON (fields: Array<this['mappableFields'][number]>): Partial<{{- .Name -}}JSON>
+  public toJSON (fields?: Array<this['mappableFields'][number]>) {
+    if (fields && fields.length > 0) {
+      return Object.assign({}, ...fields.map(f => this.#mapper[f]()))
+    } else {
+      return Object.assign({}, ...Object.values(this.#mapper).map(v => v()))
+    }
+  }
+}
+
+`))
+
+var tsTypeTemplate = template.Must(template.New("tsType").Parse(`
+type {{.Name}} = {{.BaseType}}
+
+`))
+
+var tsSumTypesTemplate = template.Must(template.New("tsSumTypes").Parse( `type {{.Name}} =
+  {{range $value := .Values}} | '{{- $value -}}'
+  {{end}}
+`))
+
