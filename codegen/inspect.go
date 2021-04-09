@@ -64,7 +64,7 @@ type TdType struct {
 
 type TdInfo struct {
 	TdStructs map[string]TdStruct
-	TdTypes   []TdType
+	TdTypes   map[string]TdType
 	TdEvents  map[string]string
 	TdConsts  []TdConstFields
 }
@@ -236,20 +236,20 @@ func parseArrayTypeDefinition(infoToFill *TdInfo, declarationSpec *ast.TypeSpec,
 	typeName := declarationSpec.Name.Name
 	arrayExpressionAst := arrayAst.Elt.(*ast.Ident)
 	arrayTypeStr := arrayExpressionAst.Name
-	infoToFill.TdTypes = append(infoToFill.TdTypes, TdType{
+	infoToFill.TdTypes[typeName] = TdType{
 		Name:     typeName,
 		BaseType: arrayTypeStr,
 		IsArray:  true,
-	})
+	}
 	return nil
 }
 
 func parseTypeDefinition(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, typeIndent *ast.Ident) error {
 	typeName := declarationSpec.Name.Name
-	infoToFill.TdTypes = append(infoToFill.TdTypes, TdType{
+	infoToFill.TdTypes[typeName] = TdType{
 		Name:     typeName,
 		BaseType: typeIndent.Name,
-	})
+	}
 	return nil
 }
 
