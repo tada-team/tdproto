@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+  title: TdApi
+  version: 4.0.0
+servers:
+  - url: https://web.tada.team/api/v4
+paths:
+  /addr:
+    get:
+      summary: IP address
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  result:
+                    type: string
+                    example: "95.84.143.166"
+  /ping:
+    get:
+      summary: Ping server
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  result:
+                    type: string
+                    example: "pong"
+  /time:
+    get:
+      summary: Server time
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  result:
+                    type: string
+                    format: date-time
+                    example: "2021-04-09T15:06:46.555215Z"
