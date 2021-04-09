@@ -4,9 +4,12 @@ import (
 	"bytes"
 	"encoding/json"
 	"log"
+	"os"
 
 	"github.com/pkg/errors"
 )
+
+var errorLogger = log.New(os.Stderr, "", 0)
 
 func DebugJSON(v interface{}) string {
 	b := new(bytes.Buffer)
