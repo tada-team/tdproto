@@ -147,7 +147,6 @@ func ParseTdprotoFile(infoToFill *TdInfo, fileName string, fileAst *ast.File) er
 	return nil
 }
 
-// Only parses the GetName functions right now which maps Struct name to an event name
 func parseFunctionDeclaration(infoToFill *TdInfo, functionDeclaration *ast.FuncDecl) error {
 
 	if !functionDeclaration.Name.IsExported() {
@@ -162,6 +161,7 @@ func parseFunctionDeclaration(infoToFill *TdInfo, functionDeclaration *ast.FuncD
 		return nil
 	}
 
+	// Only parses the GetName functions right now which maps Struct name to an event name
 	if functionDeclaration.Name.Name != "GetName" {
 		return nil
 	}
@@ -337,7 +337,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 			case *ast.InterfaceType:
 				fieldTypeStr = "interface{}"
 			default:
-				panic(fmt.Errorf("unknown array type %#v", arrayTypeAst))
+				return fmt.Errorf("unknown array type %#v", arrayTypeAst)
 			}
 
 		case *ast.StarExpr:
@@ -502,10 +502,10 @@ func SnakeCaseToLowerCamel(original string) string {
 	return buildStr.String()
 }
 
-func ToLowerCamelCase(original string) string {
+func LowercaseFirstLetter(original string) string {
 	return strings.ToLower(original[:1]) + original[1:]
 }
 
-func ToCamelCase(original string) string {
+func UppercaseFirstLetter(original string) string {
 	return strings.ToUpper(original[:1]) + original[1:]
 }

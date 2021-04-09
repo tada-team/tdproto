@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/tada-team/tdproto/codegen"
 	"os"
 	"sort"
+	"strings"
 	"text/template"
+
+	"github.com/tada-team/tdproto/codegen"
 )
 
 const markdownStructureTemplate = `
@@ -44,8 +46,7 @@ type markdownEvent struct {
 	EventStructStr string
 }
 
-func createMarkdownEvents(tdprotoInfo *codegen.TdInfo) []markdownEvent {
-	var events []markdownEvent
+func createMarkdownEvents(tdprotoInfo *codegen.TdInfo) (events []markdownEvent, err error) {
 
 	for eventStructName, eventStr := range tdprotoInfo.TdEvents {
 		eventExample, ok := eventExampleStr[eventStr]
@@ -63,26 +64,24 @@ func createMarkdownEvents(tdprotoInfo *codegen.TdInfo) []markdownEvent {
 	}
 
 	sort.Slice(events, func(i, j int) bool {
-		return events[i].Name < events[j].Name
+		return strings.ToLower(events[i].Name) < strings.ToLower(events[j].Name)
 	})
 
-	return events
+	return events, nil
 }
 
-func generateMarkdown(tdprotoInfo *codegen.TdInfo) {
+func generateMarkdown(tdprotoInfo *codegen.TdInfo) error {
 	structureTemplate, err := template.New("markdownStructure").Parse(markdownStructureTemplate)
-
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	eventTemplate, err := template.New("markdownEvent").Parse(markdownEventTemplate)
-
 	if err != nil {
-		panic(err)
+		return err
 	}
 
-	fmt.Fprint(os.Stdout, "## Structures\n")
+	fmt.Fprintln(os.Stdout, "## Structures")
 
 	for _, tdStructInfo := range tdprotoInfo.TdStructs {
 		for _, anonStruct := range tdStructInfo.GetStructAnonymousStructs(tdprotoInfo) {
@@ -91,27 +90,29 @@ func generateMarkdown(tdprotoInfo *codegen.TdInfo) {
 
 		err := structureTemplate.Execute(os.Stdout, tdStructInfo)
 		if err != nil {
-			panic(err)
+			return err
 		}
 	}
 
-	fmt.Fprint(os.Stdout, "## Events\n")
+	fmt.Fprintln(os.Stdout, "## Events")
 
-	markdownEvents := createMarkdownEvents(tdprotoInfo)
+	markdownEvents, err := createMarkdownEvents(tdprotoInfo)
+	if err != nil {
+		return err
+	}
 
 	for _, event := range markdownEvents {
 		err := eventTemplate.Execute(os.Stdout, event)
-
 		if err != nil {
-			panic(err)
+			return err
 		}
 	}
+	return nil
 }
 
 func main() {
 
 	tdprotoInfo, err := codegen.ParseTdproto()
-
 	if err != nil {
 		panic(err)
 	}

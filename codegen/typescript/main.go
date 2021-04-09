@@ -203,8 +203,7 @@ type TypeScriptInfo struct {
 	SumTypes     []TypeScriptSumType
 }
 
-func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo {
-	var tsInfo TypeScriptInfo
+func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) (tsInfo TypeScriptInfo, err error) {
 	var unwrapStructArrays = make(map[string]string)
 	var enumTypes = make(map[string]string)
 
@@ -251,7 +250,7 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo 
 
 	for _, tdprotoStructInfo := range tdprotoInfo.TdStructs {
 		tsNewClass := TypeScriptClassInfo{
-			Name: codegen.ToCamelCase(tdprotoStructInfo.Name),
+			Name: codegen.UppercaseFirstLetter(tdprotoStructInfo.Name),
 			Help: tdprotoStructInfo.Help,
 		}
 
@@ -264,7 +263,8 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo 
 		for _, anonymousFieldName := range tdprotoStructInfo.AnonnymousFields {
 			anonymousStruct, ok := tdprotoInfo.TdStructs[anonymousFieldName]
 			if !ok {
-				panic(fmt.Errorf("anonymous struct missing %s", anonymousFieldName))
+				err = fmt.Errorf("anonymous struct missing %s", anonymousFieldName)
+				return
 			}
 
 			tdprotoFields = append(tdprotoFields, anonymousStruct.Fields...)
@@ -284,7 +284,7 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo 
 
 			tsTypeName, ok := tsTypesMap[tdprotoStructField.TypeStr]
 			if !ok {
-				tsTypeName = codegen.ToCamelCase(tdprotoStructField.TypeStr)
+				tsTypeName = codegen.UppercaseFirstLetter(tdprotoStructField.TypeStr)
 				isNotPrimitive = true
 			}
 
@@ -333,12 +333,15 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) TypeScriptInfo 
 		return (tsInfo.TypesAliases[i].Name < tsInfo.TypesAliases[j].Name)
 	})
 
-	return tsInfo
+	return tsInfo, nil
 }
 
-func generateTypeScript(tdprotoInfo *codegen.TdInfo) {
+func generateTypeScript(tdprotoInfo *codegen.TdInfo) error {
 
-	tsInfo := convertTdprotoInfoToTypeScript(tdprotoInfo)
+	tsInfo, err := convertTdprotoInfoToTypeScript(tdprotoInfo)
+	if err != nil {
+		return err
+	}
 
 	classTemplate := template.Must(template.New("tsInterface").Parse(TypeScriptInterfaceTemplate))
 	typeTemplate := template.Must(template.New("tsType").Parse(TypeScriptTypeTemplate))
@@ -349,14 +352,14 @@ func generateTypeScript(tdprotoInfo *codegen.TdInfo) {
 	for _, tsSumTypeInfo := range tsInfo.SumTypes {
 		err := sumTemplate.Execute(os.Stdout, tsSumTypeInfo)
 		if err != nil {
-			panic(err)
+			return err
 		}
 	}
 
 	for _, tsTypeAliasInfo := range tsInfo.TypesAliases {
 		err := typeTemplate.Execute(os.Stdout, tsTypeAliasInfo)
 		if err != nil {
-			panic(err)
+			return err
 		}
 	}
 
@@ -365,15 +368,15 @@ func generateTypeScript(tdprotoInfo *codegen.TdInfo) {
 	for _, tsClassInfo := range tsInfo.Classes {
 		err := classTemplate.Execute(os.Stdout, tsClassInfo)
 		if err != nil {
-			panic(err)
+			return err
 		}
 	}
 
+	return nil
 }
 
 func main() {
 	tdprotoInfo, err := codegen.ParseTdproto()
-
 	if err != nil {
 		panic(err)
 	}
