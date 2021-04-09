@@ -3,7 +3,7 @@ set -e
 cd $( dirname $0 )
 
 dest=../../tdproto_dart/lib/src
-go run dart/main.go $dest
+go run dart/ $dest
 
 cd $dest
 
