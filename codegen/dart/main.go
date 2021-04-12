@@ -1,6 +1,9 @@
 package main
 
 import (
+	"os"
+	"text/template"
+
 	"github.com/tada-team/tdproto/codegen"
 )
 
@@ -10,9 +13,21 @@ import 'package:freezed_annotation/freezed_annotation.dart';`
 const dartClassTemplate = `
 
 `
+const dartEnumHeader = `import 'package:freezed_annotation/freezed_annotation.dart';
+`
 
-func generateDart(tdprotoInfo *codegen.TdPackage) {
+var dartEnumTemplate = template.Must(template.New("dartEnum").Parse(`
+enum {{.Name}} { {{ range $value :=  .Values}}
+  @JsonValue('{{$value}}')
+  {{$value}},
+  {{end}}
+}
+`))
 
+func generateDart(tdprotoInfo *codegen.TdInfo) {
+	for _, tdEnum := range tdprotoInfo.GetEnums() {
+		dartEnumTemplate.Execute(os.Stdout, tdEnum)
+	}
 }
 
 func main() {
