@@ -18,6 +18,37 @@ var golangTypeToOpenApiType = map[string]string{
 	"time.Time":         "string",
 }
 
+type OpenApiMediaType struct {
+	Schema OpenApiRef `json:"schema"`
+}
+
+type OpenApiRequestBody struct {
+	Content map[string]OpenApiMediaType `json:"content,omitempty"`
+}
+
+type OpenApiParameter struct {
+	Name     string      `json:"name"`
+	In       string      `json:"in"`
+	Required bool        `json:"required"`
+	Schema   interface{} `json:"schema"`
+}
+
+type OpenApiResponce struct {
+	Description string                      `json:"description"`
+	Content     map[string]OpenApiMediaType `json:"content"`
+}
+
+type OpenApiOperation struct {
+	Summary     string                     `json:"summary"`
+	RequestBody *OpenApiRequestBody        `json:"requestBody,omitempty"`
+	Parameters  []OpenApiParameter         `json:"parameters"`
+	Responses   map[string]OpenApiResponce `json:"responses"`
+}
+
+type OpenApiPath struct {
+	Get *OpenApiOperation `json:"get,omitempty"`
+}
+
 type OpenApiRef struct {
 	ReferencePath string `json:"$ref"`
 }
