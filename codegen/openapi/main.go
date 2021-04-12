@@ -116,21 +116,31 @@ func typeStrToSchema(typeStr string) interface{} {
 	}
 }
 
+func createSchemaArrayFromField(tdField codegen.TdStructField) (newSchema OpenApiSchema) {
+
+	newSchema.Type = "array"
+	newSchema.Items = typeStrToSchema(tdField.TypeStr)
+
+	return
+}
+
 func createSchemaFromField(tdField codegen.TdStructField) (newObject interface{}, err error) {
 
-	openapiType, isPrimitive := golangTypeToOpenApiType[tdField.TypeStr]
-
-	if isPrimitive {
-		return OpenApiSchema{
-			Type:       openapiType,
-			IsNullable: tdField.IsPointer,
-			Properties: nil,
-		}, nil
-	} else {
-		return OpenApiRef{
-			ReferencePath: referenceSchema(tdField.TypeStr),
-		}, nil
+	if tdField.IsList {
+		return createSchemaArrayFromField(tdField), nil
 	}
+
+	typeSchema := typeStrToSchema(tdField.TypeStr)
+
+	schema, ok := typeSchema.(OpenApiSchema)
+	if ok {
+		if tdField.IsPointer {
+			schema.IsNullable = true
+		}
+
+	}
+
+	return typeSchema, nil
 }
 
 func createSchemaFromType(tdType codegen.TdType) (newSchema OpenApiSchema, err error) {
