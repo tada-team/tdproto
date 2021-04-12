@@ -226,7 +226,10 @@ func generateTypeScript(tdprotoInfo *codegen.TdInfo) error {
 		}
 	}
 
-	_, _ = fmt.Fprintf(os.Stdout, tsManualClasses)
+	_, err = fmt.Fprint(os.Stdout, tsManualClasses)
+	if err != nil {
+		return nil
+	}
 
 	for _, tsClassInfo := range tsInfo.Classes {
 		if err := tsInterfaceTemplate.Execute(os.Stdout, tsClassInfo); err != nil {
@@ -247,7 +250,7 @@ interface TDProtoClass<T> {
 
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type UiSettings = Record<string, any>
+export type UiSettings = Record<string, any>
 
 `
 
@@ -368,12 +371,11 @@ export class {{.Name}} implements TDProtoClass<{{- .Name -}}> {
 `))
 
 var tsTypeTemplate = template.Must(template.New("tsType").Parse(`
-type {{.Name}} = {{.BaseType}}
+export type {{.Name}} = {{.BaseType}}
 
 `))
 
-var tsSumTypesTemplate = template.Must(template.New("tsSumTypes").Parse( `type {{.Name}} =
+var tsSumTypesTemplate = template.Must(template.New("tsSumTypes").Parse(`type {{.Name}} =
   {{range $value := .Values}} | '{{- $value -}}'
   {{end}}
 `))
-
