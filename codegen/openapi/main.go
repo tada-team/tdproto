@@ -70,11 +70,16 @@ type OpenApiInfo struct {
 	Version string `json:"version"`
 }
 
+type OpenApiServer struct {
+	Url string `json:"url"`
+}
+
 type OpenAPiRoot struct {
 	OpenApiVersion string                 `json:"openapi"`
 	Components     OpenApiComponents      `json:"components"`
 	Info           OpenApiInfo            `json:"info"`
 	Paths          map[string]OpenApiPath `json:"paths"`
+	Servers        []OpenApiServer        `json:"servers,omitempty"`
 }
 
 func createResponceRefJson(typeStr string) OpenApiResponce {
@@ -149,6 +154,10 @@ func generateOpenApiStruct(tdInfo *codegen.TdInfo) (openapiInfo OpenAPiRoot, err
 	openapiInfo.Info.Version = "0.0.1"
 
 	openapiInfo.Paths = TdPaths
+
+	openapiInfo.Servers = []OpenApiServer{
+		{Url: "https://web.tada.team/api/v4"},
+	}
 
 	openapiInfo.Components.Schemas = make(map[string]OpenApiSchema)
 
