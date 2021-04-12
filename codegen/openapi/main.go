@@ -77,6 +77,10 @@ type OpenAPiRoot struct {
 	Paths          map[string]interface{} `json:"paths"`
 }
 
+func referenceSchema(typeStr string) string {
+	return fmt.Sprintf("#/components/schemas/%s", typeStr)
+}
+
 func typeStrToSchema(typeStr string) interface{} {
 	openapiType, isPrimitive := golangTypeToOpenApiType[typeStr]
 
@@ -104,7 +108,7 @@ func createSchemaFromField(tdField codegen.TdStructField) (newObject interface{}
 		}, nil
 	} else {
 		return OpenApiRef{
-			ReferencePath: fmt.Sprintf("#/components/schemas/%s", tdField.TypeStr),
+			ReferencePath: referenceSchema(tdField.TypeStr),
 		}, nil
 	}
 }
