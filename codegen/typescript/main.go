@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"sort"
-	"strings"
 	"text/template"
 
 	"github.com/tada-team/tdproto/codegen"
@@ -80,9 +79,7 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) (tsInfo TypeScr
 
 	for _, tdprotoEnumInfo := range tdprotoInfo.GetEnums() {
 		var tsEnumValues []string
-		for _, enumValue := range tdprotoEnumInfo.Values {
-			tsEnumValues = append(tsEnumValues, strings.Trim(enumValue, "\""))
-		}
+		tsEnumValues = append(tsEnumValues, tdprotoEnumInfo.Values...)
 
 		tsInfo.SumTypes = append(tsInfo.SumTypes, TypeScriptSumType{
 			Name:   tdprotoEnumInfo.Name,

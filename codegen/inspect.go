@@ -80,7 +80,7 @@ func (i TdInfo) GetEnums() []TdEnum {
 		constValue := aConst.Value
 
 		constValueList := constMap[constType]
-		constMap[constType] = append(constValueList, constValue)
+		constMap[constType] = append(constValueList, strings.Trim(constValue, `"`))
 	}
 
 	var listOfEnums []TdEnum
