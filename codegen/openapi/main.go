@@ -41,7 +41,7 @@ type OpenApiResponce struct {
 type OpenApiOperation struct {
 	Summary     string                     `json:"summary"`
 	RequestBody *OpenApiRequestBody        `json:"requestBody,omitempty"`
-	Parameters  []OpenApiParameter         `json:"parameters"`
+	Parameters  []OpenApiParameter         `json:"parameters,omitempty"`
 	Responses   map[string]OpenApiResponce `json:"responses"`
 }
 
@@ -74,7 +74,12 @@ type OpenAPiRoot struct {
 	OpenApiVersion string                 `json:"openapi"`
 	Components     OpenApiComponents      `json:"components"`
 	Info           OpenApiInfo            `json:"info"`
-	Paths          map[string]interface{} `json:"paths"`
+	Paths          map[string]OpenApiPath `json:"paths"`
+}
+
+func createRefFromTypeStr(typeStr string) (newRef OpenApiRef) {
+	newRef.ReferencePath = referenceSchema(typeStr)
+	return
 }
 
 func referenceSchema(typeStr string) string {
@@ -133,7 +138,7 @@ func generateOpenApiStruct(tdInfo *codegen.TdInfo) (openapiInfo OpenAPiRoot, err
 	openapiInfo.Info.Title = "Tdproto"
 	openapiInfo.Info.Version = "0.0.1"
 
-	openapiInfo.Paths = map[string]interface{}{}
+	openapiInfo.Paths = TdPaths
 
 	openapiInfo.Components.Schemas = make(map[string]OpenApiSchema)
 
