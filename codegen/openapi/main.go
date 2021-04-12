@@ -77,6 +77,16 @@ type OpenAPiRoot struct {
 	Paths          map[string]OpenApiPath `json:"paths"`
 }
 
+func createResponceRefJson(typeStr string) OpenApiResponce {
+	return OpenApiResponce{
+		Content: map[string]OpenApiMediaType{
+			"application/json": {
+				Schema: createRefFromTypeStr("ClientPing"),
+			},
+		},
+	}
+}
+
 func createRefFromTypeStr(typeStr string) (newRef OpenApiRef) {
 	newRef.ReferencePath = referenceSchema(typeStr)
 	return
