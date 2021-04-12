@@ -113,6 +113,7 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 	infoToFill = new(TdInfo)
 	infoToFill.TdEvents = make(map[string]string)
 	infoToFill.TdStructs = make(map[string]TdStruct)
+	infoToFill.TdTypes = make(map[string]TdType)
 
 	tdprotoNameToAstMap, err := extractTdprotoAst(tdprotoFileSet)
 	if err != nil {
