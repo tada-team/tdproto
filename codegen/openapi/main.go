@@ -175,6 +175,7 @@ func generateOpenApiStruct(tdInfo *codegen.TdInfo) (openapiInfo OpenAPiRoot, err
 		var openapiSchema OpenApiSchema = OpenApiSchema{
 			Type:       "object",
 			Properties: make(map[string]interface{}),
+			Required:   make([]string, 0),
 		}
 
 		structName := tdStructInfo.Name
@@ -192,6 +193,10 @@ func generateOpenApiStruct(tdInfo *codegen.TdInfo) (openapiInfo OpenAPiRoot, err
 			}
 
 			openapiSchema.Properties[tdField.JsonName] = propertyObject
+
+			if !tdField.IsOmitEmpty {
+				openapiSchema.Required = append(openapiSchema.Required, tdField.JsonName)
+			}
 		}
 
 		openapiInfo.Components.Schemas[structName] = openapiSchema
