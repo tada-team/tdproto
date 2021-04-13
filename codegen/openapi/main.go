@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"reflect"
 
 	"github.com/tada-team/tdproto/codegen"
 )
@@ -82,11 +83,13 @@ type OpenAPiRoot struct {
 	Servers        []OpenApiServer        `json:"servers,omitempty"`
 }
 
-func createResponceRefJson(typeStr string) OpenApiResponce {
+func createResponceRefJson(someType interface{}) OpenApiResponce {
+	typeToRef := reflect.TypeOf(someType)
+
 	return OpenApiResponce{
 		Content: map[string]OpenApiMediaType{
 			"application/json": {
-				Schema: createRefFromTypeStr("ClientPing"),
+				Schema: createRefFromTypeStr(typeToRef.Name()),
 			},
 		},
 	}
