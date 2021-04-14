@@ -50,6 +50,21 @@ enum {{.Name}} { {{range $value :=  .Values}}
 }
 `))
 
+var dartLibTemplate = template.Must(template.New("dartLib").Parse(`library tdproto_dart;
+
+// Generated enums:
+{{range $value := .GeneratedEnums}}export './src/enums/{{$value}}.dart';
+{{end}}
+// Generated models:
+{{range $value := .GeneratedModels}}export './src/models/{{$value}}/{{$value}}.dart';
+{{end}}
+`))
+
+type DartLibInfo struct {
+	GeneratedEnums  []string
+	GeneratedModels []string
+}
+
 type DartClassField struct {
 	Name     string
 	DartType string
