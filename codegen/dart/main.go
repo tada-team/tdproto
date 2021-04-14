@@ -111,7 +111,9 @@ func generateDart(tdprotoInfo *codegen.TdPackage, basePath string) error {
 	}
 
 	for _, tdEnum := range tdprotoInfo.GetEnums() {
-		enumFile, err := os.Create(path.Join(basePath, enumsPathPrefix, fmt.Sprintf("%s.dart", tdEnum.Name)))
+		enumFileName := codegen.ToSnakeCase(tdEnum.Name)
+
+		enumFile, err := os.Create(path.Join(basePath, enumsPathPrefix, fmt.Sprintf("%s.dart", enumFileName)))
 		if err != nil {
 			return err
 		}
@@ -130,14 +132,16 @@ func generateDart(tdprotoInfo *codegen.TdPackage, basePath string) error {
 	dartClasses := generateDartClasses(tdprotoInfo)
 
 	for _, dartClass := range dartClasses {
-		classFolderPath := path.Join(basePath, modelsPathPrefix, dartClass.Parent.Name)
+		dartClassFilename := codegen.ToSnakeCase(dartClass.Parent.Name)
+
+		classFolderPath := path.Join(basePath, modelsPathPrefix, dartClassFilename)
 
 		err := os.Mkdir(classFolderPath, 0o750)
 		if err != nil {
 			return nil
 		}
 
-		classFile, err := os.Create(path.Join(classFolderPath, fmt.Sprintf("%s.dart", dartClass.Parent.Name)))
+		classFile, err := os.Create(path.Join(classFolderPath, fmt.Sprintf("%s.dart", dartClassFilename)))
 		if err != nil {
 			return err
 		}
