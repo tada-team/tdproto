@@ -160,13 +160,19 @@ func generateDart(tdprotoInfo *codegen.TdPackage, basePath string) error {
 	return nil
 }
 
-func getDartTypeFromGoType(goType string) string {
+func getDartTypeFromGoType(goType string, tdprotoInfo *codegen.TdInfo) string {
 	primitiveType, ok := dartTypeMap[goType]
-	if !ok {
-		return goType
-	} else {
+	if ok {
 		return primitiveType
 	}
+
+	for _, tdType := range tdprotoInfo.TdTypes {
+		if tdType.Name == goType {
+			return getDartTypeFromGoType(tdType.BaseType, tdprotoInfo)
+		}
+	}
+
+	return goType
 }
 
 func generateDartClasses(tdprotoInfo *codegen.TdPackage) (dartClasses []DartClass) {
@@ -185,7 +191,7 @@ func generateDartClasses(tdprotoInfo *codegen.TdPackage) (dartClasses []DartClas
 		for _, tdField := range allFields {
 			newDartClass.Fields = append(newDartClass.Fields, DartClassField{
 				Name:     codegen.LowercaseFirstLetter(structName),
-				DartType: getDartTypeFromGoType(tdField.TypeStr),
+				DartType: getDartTypeFromGoType(tdField.TypeStr, tdprotoInfo),
 				Parent:   tdField,
 			})
 		}
