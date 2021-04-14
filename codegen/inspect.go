@@ -5,6 +5,7 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
+	"path"
 	"reflect"
 	"sort"
 	"strings"
@@ -51,6 +52,7 @@ type TdStruct struct {
 	Fields           []TdStructField
 	ReadOnly         bool
 	AnonnymousFields []string
+	FileName         string
 }
 
 type TdType struct {
@@ -119,7 +121,11 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 
 	tdprotoAst := tdprotoNameToAstMap["tdproto"]
 	for fileName, fileAst := range tdprotoAst.Files {
-		err = ParseTdprotoFile(infoToFill, fileName, fileAst)
+
+		basePath := path.Base(fileName)
+		basePathNoExt := strings.TrimRight(basePath, path.Ext(basePath))
+
+		err = ParseTdprotoFile(infoToFill, basePathNoExt, fileAst)
 		if err != nil {
 			return infoToFill, err
 		}
@@ -132,7 +138,7 @@ func ParseTdprotoFile(infoToFill *TdInfo, fileName string, fileAst *ast.File) er
 	for _, declaration := range fileAst.Decls {
 		switch declarationType := declaration.(type) {
 		case *ast.GenDecl:
-			err := ParseGenericDeclaration(infoToFill, declarationType)
+			err := ParseGenericDeclaration(infoToFill, declarationType, fileName)
 			if err != nil {
 				return err
 			}
@@ -182,14 +188,14 @@ func parseFunctionDeclaration(infoToFill *TdInfo, functionDeclaration *ast.FuncD
 	return nil
 }
 
-func ParseGenericDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl) error {
+func ParseGenericDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl, fileName string) error {
 	switch genDeclaration.Tok {
 	case token.CONST:
 		return parseConstDeclaration(infoToFill, genDeclaration)
 	case token.TYPE:
 		for _, aSpec := range genDeclaration.Specs {
 			aTypeSpec := aSpec.(*ast.TypeSpec)
-			err := parseTypeDeclaration(infoToFill, genDeclaration, aTypeSpec)
+			err := parseTypeDeclaration(infoToFill, genDeclaration, aTypeSpec, fileName)
 			if err != nil {
 				return err
 			}
@@ -199,7 +205,7 @@ func ParseGenericDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl) er
 }
 
 // parse type Name struct|type {Field} declarations
-func parseTypeDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl, declarationSpec *ast.TypeSpec) error {
+func parseTypeDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl, declarationSpec *ast.TypeSpec, fileName string) error {
 
 	helpString := cleanHelp(genDeclaration.Doc.Text())
 
@@ -210,7 +216,7 @@ func parseTypeDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl, decla
 			return err
 		}
 	case *ast.StructType:
-		err := parseStructDefinitionInfo(infoToFill, declarationSpec, typeAst, helpString)
+		err := parseStructDefinitionInfo(infoToFill, declarationSpec, typeAst, helpString, fileName)
 		if err != nil {
 			return err
 		}
@@ -247,7 +253,7 @@ func parseTypeDefinition(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, type
 	return nil
 }
 
-func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, structInfo *ast.StructType, helpString string) error {
+func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, structInfo *ast.StructType, helpString string, fileName string) error {
 	if helpString == "" {
 		errorLogger.Printf("WARN: TdStruct missing a doc string %+v", structInfo)
 		helpString = "MISSING CLASS DOCUMENTATION"
@@ -404,6 +410,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 		Name:             structName,
 		Fields:           fieldsList,
 		AnonnymousFields: anonymousFieldsList,
+		FileName:         fileName,
 	}
 
 	return nil
