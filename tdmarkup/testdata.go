@@ -131,6 +131,12 @@ var MarkupTestCases = []struct {
 		Plain: "123/ 456 /789",
 	},
 	{
+		Title: "path",
+		Raw:   "GET /path/to/ here",
+		Html:  "GET /path/to/ here",
+		Plain: "GET /path/to/ here",
+	},
+	{
 		Title: "not italic 4 without links",
 		Raw:   "https://ya.ru/",
 		Html:  "https://ya.ru/",
