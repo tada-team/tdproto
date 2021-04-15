@@ -16,7 +16,7 @@ type clientCallTrickleParams struct {
 	Candidate string `json:"candidate"`
 
 	// SDP mid
-	SdpMid string `json:"sdp_mid"`
+	SdpMid string `json:"sdp_mid,omitempty"`
 
 	// SDP index
 	SdpMlineIndex int `json:"sdp_mline_index"`

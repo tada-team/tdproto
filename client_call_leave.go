@@ -13,5 +13,5 @@ type clientCallLeaveParams struct {
 	Jid JID `json:"jid"`
 
 	// Reason, if any
-	Reason string `json:"reason"`
+	Reason string `json:"reason,omitempty"`
 }

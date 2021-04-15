@@ -43,10 +43,10 @@ type serverCallStateParams struct {
 	Onliners []CallOnliner `json:"onliners,omitempty"`
 
 	// Call start, if any
-	Start *ISODateTimeString `json:"start"`
+	Start *ISODateTimeString `json:"start,omitempty"`
 
 	// Call finish, if any
-	Finish *ISODateTimeString `json:"finish"`
+	Finish *ISODateTimeString `json:"finish,omitempty"`
 
 	// Call record enabled
 	Audiorecord bool `json:"audiorecord"`

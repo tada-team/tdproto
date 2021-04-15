@@ -14,5 +14,5 @@ type clientCallBuzzParams struct {
 	Jid JID `json:"jid"`
 
 	// List of call participants
-	Members []JID `json:"members"`
+	Members []JID `json:"members,omitempty"`
 }
