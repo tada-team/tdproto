@@ -372,7 +372,7 @@ export type {{.Name}} = {{.BaseType}}
 
 `))
 
-var tsSumTypesTemplate = template.Must(template.New("tsSumTypes").Parse(`type {{.Name}} =
+var tsSumTypesTemplate = template.Must(template.New("tsSumTypes").Parse(`export type {{.Name}} =
   {{range $value := .Values}} | '{{- $value -}}'
   {{end}}
 `))
