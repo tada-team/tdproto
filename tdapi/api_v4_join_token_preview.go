@@ -22,32 +22,13 @@ func init() {
 				Status200: okResponse(openapi.Property{
 					Type: openapi.Object,
 					Properties: map[string]openapi.Property{
-						"uid": {
-							Type:        openapi.String,
-							Description: "Team id",
-						},
-						"name": {
-							Type:        openapi.String,
-							Description: "Team name",
-						},
-						"icons": {
-							Type:        openapi.String,
-							Description: "Team icons",
-							Properties: map[string]openapi.Property{
-								"stub": {
-									Type:        openapi.String,
-									Description: "Generated image with 1-2 letters",
-								},
-								"letters": {
-									Type:        openapi.String,
-									Description: "Letters from stub icon",
-								},
-								"color": {
-									Type:        openapi.String,
-									Description: "Stub icon background color",
-								},
-							},
-						},
+						"uid":  openapi.StringProperty("Team id"),
+						"name": openapi.StringProperty("Team name"),
+						"icons": openapi.ObjectProperty("Team icons", map[string]openapi.Property{
+							"stub":    openapi.StringProperty("Generated image with 1-2 letters"),
+							"letters": openapi.StringProperty("Letters from stub icon"),
+							"color":   openapi.StringProperty("Stub icon background color"),
+						}),
 					},
 					Example: tdproto.TeamShort{
 						Uid:  "123e4567-e89b-12d3-a456-426614174000",

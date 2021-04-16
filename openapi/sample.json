@@ -1,21 +1,164 @@
 {
   "openapi": "3.0.3",
+  "info": {
+    "title": "tdproto",
+    "version": "0.0.1"
+  },
   "servers": [
     {
       "url": "https://web.tada.team"
     }
   ],
   "paths": {
-    "/api/v4/ping": {
+    "/api/v4/addr": {
       "get": {
-        "summary": "Ping server",
+        "summary": "Client address, for debug",
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClientPing"
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "result": {
+                      "type": "string",
+                      "example": "127.0.0.1"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v4/join/{token}/preview": {
+      "parameters": [
+        {
+          "name": "token",
+          "in": "path",
+          "required": true,
+          "description": "Invitation token",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Invitation information",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "result": {
+                      "type": "object",
+                      "example": {
+                        "uid": "123e4567-e89b-12d3-a456-426614174000",
+                        "name": "Test Team",
+                        "icons": {
+                          "stub": "https://web.tada.team/a/e36659:tt/256.png",
+                          "letters": "TT",
+                          "color": "#E36659"
+                        }
+                      },
+                      "properties": {
+                        "icons": {
+                          "type": "string",
+                          "description": "Team icons",
+                          "properties": {
+                            "color": {
+                              "type": "string",
+                              "description": "Stub icon background color"
+                            },
+                            "letters": {
+                              "type": "string",
+                              "description": "Letters from stub icon"
+                            },
+                            "stub": {
+                              "type": "string",
+                              "description": "Generated image with 1-2 letters"
+                            }
+                          }
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Team name"
+                        },
+                        "uid": {
+                          "type": "string",
+                          "description": "Team id"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v4/ping": {
+      "get": {
+        "summary": "Server ping",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "result": {
+                      "type": "string",
+                      "example": "pong"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v4/time": {
+      "get": {
+        "summary": "Server time",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "result": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2021-04-09T15:06:46.555215Z"
+                    }
+                  }
                 }
               }
             }
@@ -24,11 +167,5 @@
       }
     }
   },
-  "info": {
-    "title": "tdproto",
-    "version": "0.0.1"
-  },
-  "components": {
-    "schemas": {}
-  }
+  "components": {}
 }
