@@ -83,7 +83,7 @@ type OpenAPiRoot struct {
 	Servers        []OpenApiServer        `json:"servers,omitempty"`
 }
 
-func createResponceRefJson(someType interface{}) OpenApiResponse {
+func createResponseRefJson(someType interface{}) OpenApiResponse {
 	typeToRef := reflect.TypeOf(someType)
 
 	return OpenApiResponse{
