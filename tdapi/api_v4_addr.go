@@ -5,14 +5,13 @@ import (
 )
 
 func init() {
-	register("/api/v4/time", openapi.Path{
+	register("/api/v4/addr", openapi.Path{
 		Get: &openapi.Operation{
-			Summary: "Server time",
+			Summary: "Client address, for debug",
 			Responses: openapi.Responses{
 				Status200: okResponse(openapi.Property{
 					Type:    openapi.String,
-					Format:  openapi.DateTime,
-					Example: "2021-04-09T15:06:46.555215Z",
+					Example: "127.0.0.1",
 				}),
 			},
 		},
