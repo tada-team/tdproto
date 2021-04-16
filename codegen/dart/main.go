@@ -23,6 +23,13 @@ var dartTypeMap = map[string]string{
 	"time.Time":         "String",
 }
 
+var dartFieldNameSubstitutions = map[string]string{
+	"Default": "isDefault",
+	"New":     "isNew",
+	"Public":  "isPublic",
+	"Static":  "isStatic",
+}
+
 var dartClassTemplate = template.Must(template.New("dartClass").Parse(`import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:tdproto_dart/tdproto_dart.dart';
 
@@ -191,8 +198,13 @@ func generateDartClasses(tdprotoInfo *codegen.TdPackage) (dartClasses []DartClas
 		for _, tdField := range allFields {
 			dartTypeStr, isList := getDartTypeFromGoType(tdField.TypeStr, tdprotoInfo)
 
+			dartFieldName, isSubstituted := dartFieldNameSubstitutions[tdField.Name]
+			if !isSubstituted {
+				dartFieldName = codegen.LowercaseFirstLetter(tdField.Name)
+			}
+
 			newDartClass.Fields = append(newDartClass.Fields, DartClassField{
-				Name:     codegen.LowercaseFirstLetter(tdField.Name),
+				Name:     dartFieldName,
 				DartType: dartTypeStr,
 				IsList:   isList || tdField.IsList,
 				Parent:   tdField,
