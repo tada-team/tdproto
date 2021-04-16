@@ -20,6 +20,7 @@ var dartTypeMap = map[string]string{
 	"uint":              "int",
 	"ISODateTimeString": "DateTime",
 	"interface{}":       "dynamic",
+	"time.Time":         "String",
 }
 
 var dartClassTemplate = template.Must(template.New("dartClass").Parse(`import 'package:freezed_annotation/freezed_annotation.dart';
