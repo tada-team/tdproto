@@ -1,10 +1,11 @@
 package openapi
 
 type Path struct {
-	Get    *Operation `json:"get,omitempty"`
-	Post   *Operation `json:"post,omitempty"`
-	Put    *Operation `json:"put,omitempty"`
-	Delete *Operation `json:"delete,omitempty"`
+	Parameters []Parameter `json:"parameters,omitempty"`
+	Get        *Operation  `json:"get,omitempty"`
+	Post       *Operation  `json:"post,omitempty"`
+	Put        *Operation  `json:"put,omitempty"`
+	Delete     *Operation  `json:"delete,omitempty"`
 }
 
 func (ps Path) Operations() (res []*Operation) {
@@ -22,4 +23,3 @@ func (ps Path) Operations() (res []*Operation) {
 	}
 	return
 }
-
