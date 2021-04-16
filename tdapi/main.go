@@ -1,8 +1,9 @@
 package tdapi
 
 import (
-	"github.com/tada-team/tdproto/tdapi/openapi"
 	"strings"
+
+	"github.com/tada-team/tdproto/tdapi/openapi"
 )
 
 var paths = make(map[string]openapi.Path)
@@ -19,3 +20,4 @@ func register(path string, spec openapi.Path) {
 	}
 	paths[path] = spec
 }
+
