@@ -131,6 +131,9 @@ func (s *MarkupScanner) Scan(links tdproto.MessageLinks) (string, *tdproto.Marku
 		allowWhitespaceAround := typ == tdproto.Code
 		t, e := s.scanInline(s.Next(), typ, allowWhitespaceAround)
 		if e != nil {
+			if typ == tdproto.Italic && isPath(t) {
+				return t, nil
+			}
 			if typ != tdproto.Code {
 				e.Childs = s.scanChilds(t[1 : len(t)-1])
 			}
