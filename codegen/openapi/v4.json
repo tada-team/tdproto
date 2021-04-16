@@ -65,41 +65,38 @@
                     },
                     "result": {
                       "type": "object",
-                      "example": {
-                        "uid": "123e4567-e89b-12d3-a456-426614174000",
-                        "name": "Test Team",
-                        "icons": {
-                          "stub": "https://web.tada.team/a/e36659:tt/256.png",
-                          "letters": "TT",
-                          "color": "#E36659"
-                        }
-                      },
+                      "description": "Short team representation. For invites, push notifications, etc. Readonly.",
                       "properties": {
                         "icons": {
-                          "type": "string",
+                          "type": "object",
                           "description": "Team icons",
                           "properties": {
                             "color": {
                               "type": "string",
-                              "description": "Stub icon background color"
+                              "description": "Stub icon background color",
+                              "example": "#E36659"
                             },
                             "letters": {
                               "type": "string",
-                              "description": "Letters from stub icon"
+                              "description": "Letters from stub icon",
+                              "example": "TT"
                             },
                             "stub": {
                               "type": "string",
-                              "description": "Generated image with 1-2 letters"
+                              "description": "Generated image with 1-2 letters",
+                              "example": "https://web.tada.team/a/e36659:tt/256.png"
                             }
                           }
                         },
                         "name": {
                           "type": "string",
-                          "description": "Team name"
+                          "description": "Team name",
+                          "example": "Test Team"
                         },
                         "uid": {
                           "type": "string",
-                          "description": "Team id"
+                          "description": "Team id",
+                          "example": "123e4567-e89b-12d3-a456-426614174000"
                         }
                       }
                     }

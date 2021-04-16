@@ -1,11 +1,20 @@
 package openapi
 
-func StringProperty(description string) Property {
-	return Property{Type: String, Description: description}
+func StringProperty(description string, example interface{}) Property {
+	return Property{
+		Type:        String,
+		Description: description,
+		Example:     example,
+	}
 }
 
-func ObjectProperty(description string, properties map[string]Property) Property {
-	return Property{Type: Object, Description: description, Properties: properties}
+func ObjectProperty(description string, properties map[string]Property, example interface{}) Property {
+	return Property{
+		Type:        Object,
+		Description: description,
+		Properties:  properties,
+		Example:     example,
+	}
 }
 
 type Property struct {
