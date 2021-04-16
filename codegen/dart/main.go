@@ -26,8 +26,8 @@ var dartTypeMap = map[string]string{
 var dartClassTemplate = template.Must(template.New("dartClass").Parse(`import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:tdproto_dart/tdproto_dart.dart';
 
-part '{{.Name}}.freezed.dart';
-part '{{.Name}}.g.dart';
+part '{{.SnakeCase}}.freezed.dart';
+part '{{.SnakeCase}}.g.dart';
 
 /// {{.Parent.Help}}
 @freezed
@@ -79,9 +79,10 @@ type DartClassField struct {
 }
 
 type DartClass struct {
-	Fields []DartClassField
-	Parent codegen.TdStruct
-	Name   string
+	Fields    []DartClassField
+	Parent    codegen.TdStruct
+	Name      string
+	SnakeCase string
 }
 
 func generateDart(tdprotoInfo *codegen.TdPackage, basePath string) error {
@@ -111,7 +112,7 @@ func generateDart(tdprotoInfo *codegen.TdPackage, basePath string) error {
 	dartClasses := generateDartClasses(tdprotoInfo)
 
 	for _, dartClass := range dartClasses {
-		dartClassFilename := codegen.ToSnakeCase(dartClass.Name)
+		dartClassFilename := dartClass.SnakeCase
 		dartClassFolderPath := path.Join(modelsPathPrefix, dartClassFilename)
 		dartClassFilePath := path.Join(dartClassFolderPath, fmt.Sprintf("%s.dart", dartClassFilename))
 		libInfo.GeneratedModels = append(libInfo.GeneratedModels, dartClassFilePath)
@@ -174,8 +175,9 @@ func generateDartClasses(tdprotoInfo *codegen.TdPackage) (dartClasses []DartClas
 	for structName, structInfo := range tdprotoInfo.TdStructs {
 
 		newDartClass := DartClass{
-			Parent: structInfo,
-			Name:   codegen.UppercaseFirstLetter(structInfo.Name),
+			Parent:    structInfo,
+			Name:      codegen.UppercaseFirstLetter(structInfo.Name),
+			SnakeCase: codegen.ToSnakeCase(structInfo.Name),
 		}
 
 		var allFields []codegen.TdStructField
