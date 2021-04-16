@@ -8,7 +8,7 @@ var TdPaths = map[string]OpenApiPath{
 	"/ping": {
 		Get: &OpenApiOperation{
 			Summary: "Ping server",
-			Responses: map[string]OpenApiResponce{
+			Responses: map[string]OpenApiResponse{
 				"200": createResponceRefJson(tdproto.ClientPing{}),
 			},
 		},

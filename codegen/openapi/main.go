@@ -34,7 +34,7 @@ type OpenApiParameter struct {
 	Schema   interface{} `json:"schema"`
 }
 
-type OpenApiResponce struct {
+type OpenApiResponse struct {
 	Description string                      `json:"description"`
 	Content     map[string]OpenApiMediaType `json:"content"`
 }
@@ -43,7 +43,7 @@ type OpenApiOperation struct {
 	Summary     string                     `json:"summary"`
 	RequestBody *OpenApiRequestBody        `json:"requestBody,omitempty"`
 	Parameters  []OpenApiParameter         `json:"parameters,omitempty"`
-	Responses   map[string]OpenApiResponce `json:"responses"`
+	Responses   map[string]OpenApiResponse `json:"responses"`
 }
 
 type OpenApiPath struct {
@@ -83,10 +83,10 @@ type OpenAPiRoot struct {
 	Servers        []OpenApiServer        `json:"servers,omitempty"`
 }
 
-func createResponceRefJson(someType interface{}) OpenApiResponce {
+func createResponceRefJson(someType interface{}) OpenApiResponse {
 	typeToRef := reflect.TypeOf(someType)
 
-	return OpenApiResponce{
+	return OpenApiResponse{
 		Content: map[string]OpenApiMediaType{
 			"application/json": {
 				Schema: createRefFromTypeStr(typeToRef.Name()),
