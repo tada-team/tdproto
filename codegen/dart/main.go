@@ -29,12 +29,12 @@ import 'package:tdproto_dart/tdproto_dart.dart';
 part '{{.SnakeCase}}.freezed.dart';
 part '{{.SnakeCase}}.g.dart';
 
-/// {{.Parent.Help}}
+{{if eq .Parent.Help "MISSING CLASS DOCUMENTATION"}}// {{else}}/// {{end}}{{.Parent.Help}}
 @freezed
 abstract class {{.Name}} with _${{.Name}} {
   const factory {{.Name}}({
     {{range $field := .Fields -}}
-    /// {{$field.Parent.Help}}
+    {{if eq $field.Parent.Help "DOCUMENTATION MISSING"}}// {{else}}/// {{end}}{{$field.Parent.Help}}
     @JsonKey(name: '{{$field.Parent.JsonName}}') 
 	{{- if eq $field.DartType "DateTime"}} @DateTimeConverter(){{end -}}
     {{- if $field.Parent.IsOmitEmpty}} {{else}} @required {{end -}}
