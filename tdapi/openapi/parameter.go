@@ -1,5 +1,17 @@
 package openapi
 
+func PathParameter(name, description string) Parameter {
+	return Parameter{
+		Name:        name,
+		In:          "path",
+		Required:    true,
+		Description: description,
+		Schema: Schema{
+			Type: String,
+		},
+	}
+}
+
 type Parameter struct {
 	Name        string `json:"name"`
 	In          string `json:"in,omitempty"`
