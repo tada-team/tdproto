@@ -1,0 +1,34 @@
+{
+  "openapi": "3.0.3",
+  "servers": [
+    {
+      "url": "https://web.tada.team"
+    }
+  ],
+  "paths": {
+    "/api/v4/ping": {
+      "get": {
+        "summary": "Ping server",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientPing"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "tdproto",
+    "version": "0.0.1"
+  },
+  "components": {
+    "schemas": {}
+  }
+}
