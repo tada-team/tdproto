@@ -14,7 +14,7 @@ type Group struct {
 	// Group title
 	DisplayName string `json:"display_name"`
 
-	// Group description, optiopnal
+	// Group description, optional
 	Description string `json:"description"`
 
 	// Readonly for non-admins group chat (Like Channels in Telegram bug switchable)
@@ -26,7 +26,7 @@ type Group struct {
 	// Any new team member will be added to this group chat
 	DefaultForAll bool `json:"default_for_all"`
 
-	// Delete messages in this chat in seconds. Experemental function
+	// Delete messages in this chat in seconds. Experimental function
 	AutocleanupAge *int `json:"autocleanup_age"`
 
 	// Pinned message for this group
