@@ -1,6 +1,7 @@
 package tdapi
 
 import (
+	"github.com/tada-team/tdproto"
 	"github.com/tada-team/tdproto/tdapi/openapi"
 )
 
@@ -10,7 +11,7 @@ func init() {
 		Get: &openapi.Operation{
 			Summary: "Invitation information",
 			Responses: openapi.Responses{
-				Status200: okResponse(openapi.SchemaFromTypeName("TeamShort")),
+				Status200: okResponse(openapi.SchemaFromType(tdproto.TeamShort{})),
 			},
 		},
 	})

@@ -1,6 +1,10 @@
 package openapi
 
-import "github.com/tada-team/tdproto/codegen"
+import (
+	"reflect"
+	
+	"github.com/tada-team/tdproto/codegen"
+)
 
 type Schema struct {
 	Type        Type              `json:"type,omitempty"`
@@ -33,6 +37,11 @@ func (s Schema) Refs() []string {
 
 func SchemaRef(name string) string {
 	return "#/components/schemas/" + name
+}
+
+func SchemaFromType(v interface{}) Schema {
+	name := reflect.TypeOf(v).Name()
+	return SchemaFromTypeName(name)
 }
 
 func SchemaFromTypeName(name string) Schema {
