@@ -64,23 +64,7 @@
                       "example": true
                     },
                     "result": {
-                      "type": "object",
-                      "properties": {
-                        "icons": {
-                          "$ref": "#/components/schemas/TeamShort"
-                        },
-                        "name": {
-                          "type": "string",
-                          "description": "Team name",
-                          "example": "Test Team"
-                        },
-                        "uid": {
-                          "type": "string",
-                          "description": "Team id",
-                          "example": "123e4567-e89b-12d3-a456-426614174000"
-                        }
-                      },
-                      "description": "Short team representation. For invites, push notifications, etc. Readonly."
+                      "$ref": "#/components/schemas/TeamShort"
                     }
                   }
                 }

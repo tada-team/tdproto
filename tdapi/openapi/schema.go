@@ -35,14 +35,6 @@ func SchemaRef(name string) string {
 	return "#/components/schemas/" + name
 }
 
-//func PropertyFromTypeName(name string) Schema {
-//	openapiType, isPrimitive := golangTypeToOpenApiType[name]
-//	if isPrimitive {
-//		return Schema{Type: openapiType}
-//	}
-//	return Schema{Ref: SchemaRef(name)}
-//}
-
 func SchemaFromTypeName(name string) Schema {
 	openapiType, isPrimitive := golangTypeToOpenApiType[name]
 	if isPrimitive {
@@ -66,14 +58,6 @@ func SchemaFromTdField(tdField codegen.TdStructField) (res Schema) {
 	return
 }
 
-func SchemaFromTdType(tdType codegen.TdType) Schema {
-	if tdType.IsArray {
-		schema := SchemaFromTypeName(tdType.BaseType)
-		return Schema{Type: Array, Items: &schema}
-	}
-	return SchemaFromTypeName(tdType.BaseType)
-}
-
 var golangTypeToOpenApiType = map[string]Type{
 	"string":            String,
 	"int":               Number,
@@ -83,21 +67,4 @@ var golangTypeToOpenApiType = map[string]Type{
 	"bool":              Boolean,
 	"ISODateTimeString": String,
 	"time.Time":         String,
-}
-
-func StringProperty(description string, example interface{}) Schema {
-	return Schema{
-		Type:        String,
-		Description: description,
-		Example:     example,
-	}
-}
-
-func ObjectProperty(description string, properties map[string]Schema, example interface{}) Schema {
-	return Schema{
-		Type:        Object,
-		Description: description,
-		Properties:  properties,
-		Example:     example,
-	}
 }
