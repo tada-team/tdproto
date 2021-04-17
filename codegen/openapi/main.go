@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/tada-team/setof"
 	"github.com/tada-team/tdproto/codegen"
 	"github.com/tada-team/tdproto/tdapi"
 	"github.com/tada-team/tdproto/tdapi/openapi"
@@ -30,68 +31,6 @@ func main() {
 	}
 }
 
-var golangTypeToOpenApiType = map[string]openapi.Type{
-	"string":            openapi.String,
-	"int":               openapi.Number,
-	"int64":             openapi.Number,
-	"uint16":            openapi.Number,
-	"uint":              openapi.Number,
-	"bool":              openapi.Boolean,
-	"ISODateTimeString": openapi.String,
-	"time.Time":         openapi.String,
-}
-
-//func typeStrToSchema(typeStr string) interface{} {
-//	openapiType, isPrimitive := golangTypeToOpenApiType[typeStr]
-//
-//	if isPrimitive {
-//		return openapi.Schema{
-//			Type:       openapiType,
-//			Properties: nil,
-//		}
-//	} else {
-//		return openapi.Reference{
-//			ReferencePath: "#/components/schemas/" + typeStr,
-//		}
-//	}
-//}
-
-//func createSchemaArrayFromField(tdField codegen.TdStructField) openapi.Schema {
-//	return openapi.Schema{
-//		Type:  "array",
-//		Items: typeStrToSchema(tdField.TypeStr),
-//	}
-//}
-
-//func createSchemaFromField(tdField codegen.TdStructField) (newObject interface{}, err error) {
-//	if tdField.IsList {
-//		return createSchemaArrayFromField(tdField), nil
-//	}
-//
-//	typeSchema := typeStrToSchema(tdField.TypeStr)
-//
-//	schema, ok := typeSchema.(openapi.Schema)
-//	if ok && tdField.IsPointer {
-//		schema.Nullable = true
-//	}
-//
-//	return typeSchema, nil
-//}
-
-//func createSchemaFromType(tdType codegen.TdType) (openapi.Schema, error) {
-//	if tdType.IsArray {
-//		return openapi.Schema{
-//			Type:  "array",
-//			Items: typeStrToSchema(tdType.BaseType),
-//		}, nil
-//	} else {
-//		return openapi.Schema{
-//			Type:       golangTypeToOpenApiType[tdType.BaseType],
-//			Properties: nil,
-//		}, nil
-//	}
-//}
-
 func generateOpenApiStruct(tdInfo *codegen.TdInfo) (openapi.Root, error) {
 	root := openapi.Root{
 		Openapi: "3.0.3",
@@ -108,74 +47,59 @@ func generateOpenApiStruct(tdInfo *codegen.TdInfo) (openapi.Root, error) {
 		Paths: tdapi.GetPaths(),
 	}
 
-	//usedRefs := make(setof.Strings)
-	//for _, path := range root.Paths {
-	//	for _, operation := range path.Operations() {
-	//		for _, response := range operation.Responses {
-	//			for _, mediaType := range response.Content {
-	//				usedRefs.Update(mediaType.Schema.ReferencePath)
-	//			}
-	//		}
-	//	}
-	//}
+	usedRefs := make(setof.Strings)
+	for _, path := range root.Paths {
+		for _, operation := range path.Iter() {
+			for _, response := range operation.Responses.Iter() {
+				for _, content := range response.Content.Iter() {
+					usedRefs.Update(content.Schema.Refs()...)
+				}
+			}
+		}
+	}
 
-	//for _, tdStructInfo := range tdInfo.TdStructs {
-	//	structName := tdStructInfo.Name
-	//	if !usedRefs.Contains(structName) {
-	//		continue
-	//	}
-	//
-	//	openapiSchema := openapi.Schema{
-	//		Type:       "object",
-	//		Properties: make(map[string]interface{}),
-	//		Required:   make([]string, 0),
-	//	}
-	//
-	//	allStructFields := make([]codegen.TdStructField, 0)
-	//	allStructFields = append(allStructFields, tdStructInfo.Fields...)
-	//	for _, anonStruct := range tdStructInfo.GetStructAnonymousStructs(tdInfo) {
-	//		allStructFields = append(allStructFields, anonStruct.Fields...)
-	//	}
-	//
-	//	for _, tdField := range allStructFields {
-	//		propertyObject, err := createSchemaFromField(tdField)
-	//		if err != nil {
-	//			return root, err
-	//		}
-	//
-	//		openapiSchema.Properties[tdField.JsonName] = propertyObject
-	//
-	//		if !tdField.IsOmitEmpty {
-	//			openapiSchema.Required = append(openapiSchema.Required, tdField.JsonName)
-	//		}
-	//	}
-	//
-	//	root.Components.Schemas[structName] = openapiSchema
-	//}
-
-	//for _, tdType := range tdInfo.TdTypes {
-	//	if !usedRefs.Contains(tdType.Name) {
-	//		continue
-	//	}
-	//
-	//	newTypeSchema, err := createSchemaFromType(tdType)
-	//	if err != nil {
-	//		return root, err
-	//	}
-	//	root.Components.Schemas[tdType.Name] = newTypeSchema
-	//}
-
-	//root.Components.Schemas["interface{}"] = openapi.Schema{
-	//	Type: "object",
-	//}
-	//
-	//root.Components.Schemas["TeamUnread"] = openapi.Schema{
-	//	Type: "object",
-	//}
-	//
-	//root.Components.Schemas["UiSettings"] = openapi.Schema{
-	//	Type: "object",
-	//}
+	for name := range tdInfo.TdStructs {
+		if usedRefs.Contains(openapi.SchemaRef(name)) {
+			if err := addSchema(root.Components.Schemas, name, tdInfo); err != nil {
+				return root, err
+			}
+		}
+	}
 
 	return root, nil
+}
+
+func addSchema(components map[string]openapi.Schema, name string, tdInfo *codegen.TdInfo) error {
+	tdStructInfo, found := tdInfo.TdStructs[name]
+	if !found {
+		return fmt.Errorf("type not found: %s", name)
+	}
+
+	schema := openapi.Schema{
+		Type:        openapi.Object,
+		Properties:  make(map[string]openapi.Schema),
+		Description: tdStructInfo.Help,
+	}
+
+	var allStructFields []codegen.TdStructField
+	allStructFields = append(allStructFields, tdStructInfo.Fields...)
+	for _, anonStruct := range tdStructInfo.GetStructAnonymousStructs(tdInfo) {
+		allStructFields = append(allStructFields, anonStruct.Fields...)
+	}
+
+	for _, tdField := range allStructFields {
+		prop := openapi.SchemaFromTdField(tdField)
+		if prop.Ref != "" {
+			if err := addSchema(components, tdField.TypeStr, tdInfo); err != nil {
+				return err
+			}
+		}
+		schema.Properties[tdField.JsonName] = prop
+		if !tdField.IsOmitEmpty {
+			schema.Required = append(schema.Required, tdField.JsonName)
+		}
+	}
+
+	components[name] = schema
+	return nil
 }

@@ -8,18 +8,18 @@ type Path struct {
 	Delete     *Operation  `json:"delete,omitempty"`
 }
 
-func (ps Path) Operations() (res []*Operation) {
-	if ps.Get != nil {
-		res = append(res, ps.Get)
+func (p Path) Iter() (res []Operation) {
+	if p.Get != nil {
+		res = append(res, *p.Get)
 	}
-	if ps.Post != nil {
-		res = append(res, ps.Post)
+	if p.Post != nil {
+		res = append(res, *p.Post)
 	}
-	if ps.Put != nil {
-		res = append(res, ps.Put)
+	if p.Put != nil {
+		res = append(res, *p.Put)
 	}
-	if ps.Delete != nil {
-		res = append(res, ps.Delete)
+	if p.Delete != nil {
+		res = append(res, *p.Delete)
 	}
 	return
 }

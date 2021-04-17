@@ -1,11 +1,7 @@
 package openapi
 
-func JSONContent(schema Schema) Contents {
-	return Contents{
-		ApplicationJSON: &Content{
-			Schema: schema,
-		},
-	}
+type Content struct {
+	Schema Schema `json:"schema"`
 }
 
 type Contents struct {
@@ -13,6 +9,12 @@ type Contents struct {
 	ApplicationXWWWFormUrlencoded *Content `json:"application/x-www-form-urlencoded,omitempty"`
 }
 
-type Content struct {
-	Schema Schema `json:"schema"`
+func (c Contents) Iter() (res []Content) {
+	if c.ApplicationJSON != nil {
+		res = append(res, *c.ApplicationJSON)
+	}
+	if c.ApplicationXWWWFormUrlencoded != nil {
+		res = append(res, *c.ApplicationXWWWFormUrlencoded)
+	}
+	return
 }

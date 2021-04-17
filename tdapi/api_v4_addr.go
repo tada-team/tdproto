@@ -9,7 +9,7 @@ func init() {
 		Get: &openapi.Operation{
 			Summary: "Client address, for debug",
 			Responses: openapi.Responses{
-				Status200: okResponse(openapi.Property{
+				Status200: okResponse(openapi.Schema{
 					Type:    openapi.String,
 					Example: "127.0.0.1",
 				}),

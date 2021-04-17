@@ -7,4 +7,3 @@ type Operation struct {
 	RequestBody *RequestBody `json:"requestBody,omitempty"`
 	//Parameters  []Parameter  `json:"parameters,omitempty"`
 }
-

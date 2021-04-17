@@ -9,7 +9,7 @@ func init() {
 		Get: &openapi.Operation{
 			Summary: "Server ping",
 			Responses: openapi.Responses{
-				Status200: okResponse(openapi.Property{
+				Status200: okResponse(openapi.Schema{
 					Type:    openapi.String,
 					Example: "pong",
 				}),
