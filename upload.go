@@ -29,6 +29,9 @@ type Upload struct {
 	// Is animated (images only)
 	Animated bool `json:"animated,omitempty"`
 
+	// Compact representation of a placeholder for an image (images only)
+	Blurhash string `json:"blurhash,omitempty"`
+
 	// File still processing (video only)
 	Processing bool `json:"processing,omitempty"`
 
