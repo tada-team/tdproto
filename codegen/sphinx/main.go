@@ -123,7 +123,7 @@ var eventTemplate = template.Must(template.New("rstEvent").Parse(`
 
 func printRstEvents(events []rstEvent) error {
 	_, err := fmt.Fprintln(os.Stdout, `Td Events
-	======================================`)
+======================================`)
 	if err != nil {
 		return err
 	}
