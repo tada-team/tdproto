@@ -51,9 +51,9 @@ abstract class {{.Name}} with _${{.Name}} {
 	{{$field.Name}},
     
     {{end}}
-  }) = _{{.Parent.Name}};
+  }) = _{{.Name}};
 
-  factory {{.Parent.Name}}.fromJson(Map<String, dynamic> json) => _${{.Parent.Name}}FromJson(json);
+  factory {{.Name}}.fromJson(Map<String, dynamic> json) => _${{.Name}}FromJson(json);
 }
 `))
 
