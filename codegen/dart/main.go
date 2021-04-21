@@ -24,6 +24,7 @@ var dartTypeMap = map[string]string{
 	"interface{}":       "dynamic",
 	"time.Time":         "String",
 	"bool":              "bool",
+	"UiSettings":        "Map<String, dynamic>",
 }
 
 var dartFieldNameSubstitutions = map[string]string{
