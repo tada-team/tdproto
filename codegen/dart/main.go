@@ -239,6 +239,29 @@ func generateDartClasses(tdprotoInfo *codegen.TdPackage) (dartClasses []DartClas
 		dartClasses = append(dartClasses, newDartClass)
 	}
 
+	// Manually add TeamUnread
+	dartClasses = append(dartClasses, DartClass{
+		Name:      "TeamUnread",
+		SnakeCase: "team_unread",
+		Parent: codegen.TdStruct{
+			Help: "Manually added",
+		},
+		Fields: []DartClassField{
+			{Name: "Direct", DartType: "Unread", Parent: codegen.TdStructField{
+				Help:     "Manually added",
+				JsonName: "direct",
+			}},
+			{Name: "Group", DartType: "Unread", Parent: codegen.TdStructField{
+				Help:     "Manually added",
+				JsonName: "group",
+			}},
+			{Name: "Task", DartType: "Unread", Parent: codegen.TdStructField{
+				Help:     "Manually added",
+				JsonName: "taks",
+			}},
+		},
+	})
+
 	return
 }
 
