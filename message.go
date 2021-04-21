@@ -47,6 +47,9 @@ type MessageContent struct {
 	// Upload still processing, if any. Deprecated: use Uploads instead
 	Processing bool `mediatype:"video" json:"processing,omitempty"`
 
+	// Compact representation of a placeholder for an image. Deprecated: use Uploads instead
+	Blurhash string `mediatype:"image" json:"blurhash,omitempty"`
+
 	// Upload preview height, in pixels, if any. Deprecated: use Uploads instead
 	PreviewHeight int `mediatype:"image,video" json:"previewHeight,omitempty"`
 
