@@ -23,6 +23,7 @@ var dartTypeMap = map[string]string{
 	"ISODateTimeString": "DateTime",
 	"interface{}":       "dynamic",
 	"time.Time":         "String",
+	"bool":              "bool",
 }
 
 var dartFieldNameSubstitutions = map[string]string{
