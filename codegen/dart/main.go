@@ -44,7 +44,7 @@ abstract class {{.Name}} with _${{.Name}} {
   const factory {{.Name}}({
     {{range $field := .Fields -}}
     {{if eq $field.Parent.Help "DOCUMENTATION MISSING"}}// {{else}}/// {{end}}{{$field.Parent.Help}}.
-    @JsonKey(name: '{{$field.Parent.JsonName}}') 
+    {{if $field.IsDeprecated}}@Deprecated('{{$field.Parent.Help}}.') {{end}}@JsonKey(name: '{{$field.Parent.JsonName}}') 
 	{{- if eq $field.DartType "DateTime"}} @DateTimeConverter(){{end -}}
     {{- if $field.Parent.IsOmitEmpty}} {{else}} @required {{end -}}
     {{if $field.Parent.IsList}}List<{{$field.DartType}}> {{else}}{{$field.DartType}} {{end -}}
@@ -82,10 +82,11 @@ type DartLibInfo struct {
 }
 
 type DartClassField struct {
-	Name     string
-	DartType string
-	IsList   bool
-	Parent   codegen.TdStructField
+	Name         string
+	DartType     string
+	IsList       bool
+	IsDeprecated bool
+	Parent       codegen.TdStructField
 }
 
 type DartClass struct {
@@ -226,10 +227,11 @@ func generateDartClasses(tdprotoInfo *codegen.TdPackage) (dartClasses []DartClas
 			}
 
 			newDartClass.Fields = append(newDartClass.Fields, DartClassField{
-				Name:     dartFieldName,
-				DartType: dartTypeStr,
-				IsList:   isList || tdField.IsList,
-				Parent:   tdField,
+				Name:         dartFieldName,
+				DartType:     dartTypeStr,
+				IsList:       isList || tdField.IsList,
+				Parent:       tdField,
+				IsDeprecated: strings.Contains(tdField.Help, "Deprecated"),
 			})
 		}
 
