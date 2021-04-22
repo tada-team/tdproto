@@ -49,8 +49,11 @@ fi
 
 DART_LIB_FOLDER="$(readlink --canonicalize $DART_LIB_FOLDER)"
 
-rm -r "${DART_LIB_FOLDER}/lib/src/models"
-rm -r "${DART_LIB_FOLDER}/lib/src/enums"
+LIB_ENUMS_PATH="${DART_LIB_FOLDER}/lib/src/enums"
+LIB_MODELS_PATH="${DART_LIB_FOLDER}/lib/src/models"
+
+if [ -d "$LIB_ENUMS_PATH" ]; then rm -r "$LIB_ENUMS_PATH"; fi
+if [ -d "$LIB_MODELS_PATH" ]; then rm -r "$LIB_MODELS_PATH"; fi
 
 go run "./dart" "$DART_LIB_FOLDER"
 
