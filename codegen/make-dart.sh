@@ -4,13 +4,20 @@ shopt -s extdebug
 IFS=$'\n\t'
 
 # Setup command line arguments
-TEMP=$(getopt --options "" --name "make-dart.bash" -- "$@")
+TEMP=$(getopt --options 'b' --long 'no-build' --name "make-dart.bash" -- "$@")
 
 eval set -- "$TEMP"
 unset TEMP
 
+RUN_BUILD=true
+
 while true; do
     case "$1" in
+        '-b'|'--no-build')
+            RUN_BUILD=false
+            shift
+            continue
+        ;;
         '--')
             shift
             break
@@ -43,7 +50,9 @@ go run "./dart" "$DART_LIB_FOLDER"
 
 cd "$DART_LIB_FOLDER"
 
-flutter pub get
-flutter packages pub run build_runner build --delete-conflicting-outputs
+if [ "$RUN_BUILD" = true ]; then
+    flutter pub get
+    flutter packages pub run build_runner build --delete-conflicting-outputs
 
-dartfmt -l 120 -w .
+    dartfmt -l 120 -w .
+fi
