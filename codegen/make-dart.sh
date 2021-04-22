@@ -34,8 +34,10 @@ if [ ! -d $DART_LIB_FOLDER ]; then
     exit 1
 fi
 
-rm -r "${DART_LIB_FOLDER}lib/src/models"
-rm -r "${DART_LIB_FOLDER}lib/src/enums"
+DART_LIB_FOLDER="$(readlink --canonicalize $DART_LIB_FOLDER)"
+
+rm -r "${DART_LIB_FOLDER}/lib/src/models"
+rm -r "${DART_LIB_FOLDER}/lib/src/enums"
 
 go run "./dart" "$DART_LIB_FOLDER"
 
