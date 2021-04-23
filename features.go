@@ -121,6 +121,12 @@ type Features struct {
 	// Name of installation
 	InstallationType string `json:"installation_type"`
 
+	// Installation title, used on login screen
+	InstallationTitle string `json:"installation_title,omitempty"`
+
+	// Background image url, if any
+	Background string `json:"background,omitempty"`
+
 	// Testing installation
 	IsTesting bool `json:"is_testing"`
 
