@@ -43,7 +43,7 @@ func generateRstServerEvents(tdprotoInfo *codegen.TdInfo) (events []rstEvent, er
 	for eventStructName, eventStr := range tdprotoInfo.TdEvents {
 		eventExample, ok := eventExampleStr[eventStr]
 		if !ok {
-			eventExample = "EVENT MISSING EXAMPLE"
+			eventExample = ""
 		}
 
 		originalStruct, ok := tdprotoInfo.TdStructs[eventStructName]
@@ -109,17 +109,16 @@ var eventTemplate = template.Must(template.New("rstEvent").Parse(`
 ----------------------------------------------------------------------------
 
 {{.Help}}
-
 {{range $field := .Fields}}
-* ` + "``" + "{{$field.Name}}" + "``" + ` - {{$field.Help}}
-{{end}}
+* ` + "``" + "{{$field.Name}}" + "``" + ` - {{$field.Help}}{{end}}
 
-
+{{if .Example -}}
 .. code-block:: json
    
    {{.Example}}
 
-`))
+{{else}}**MISSING EXAMPLE**
+{{end}}`))
 
 func printRstEvents(events []rstEvent) error {
 	_, err := fmt.Fprintln(os.Stdout, `Td Events
