@@ -16,12 +16,12 @@ func main() {
 		panic(err)
 	}
 
-	rstEvents, err := generateRstServerEvents(tdprotoInfo)
+	clientEvents, serverEvents, err := generateRstServerEvents(tdprotoInfo)
 	if err != nil {
 		panic(err)
 	}
 
-	if err := printRstEvents(rstEvents); err != nil {
+	if err := printRstEvents(clientEvents, serverEvents); err != nil {
 		panic(err)
 	}
 }
@@ -39,7 +39,7 @@ type rstEvent struct {
 	Fields         []rstEventField
 }
 
-func generateRstServerEvents(tdprotoInfo *codegen.TdInfo) (events []rstEvent, err error) {
+func generateRstServerEvents(tdprotoInfo *codegen.TdInfo) (clientEvents []rstEvent, serverEvents []rstEvent, err error) {
 	for eventStructName, eventStr := range tdprotoInfo.TdEvents {
 		eventExample, ok := eventExampleStr[eventStr]
 		if !ok {
@@ -94,14 +94,22 @@ func generateRstServerEvents(tdprotoInfo *codegen.TdInfo) (events []rstEvent, er
 			return strings.ToLower(event.Fields[i].Name) < strings.ToLower(event.Fields[j].Name)
 		})
 
-		events = append(events, event)
+		if strings.HasPrefix(event.Name, "client") {
+			clientEvents = append(clientEvents, event)
+		} else {
+			serverEvents = append(serverEvents, event)
+		}
 	}
 
-	sort.Slice(events, func(i, j int) bool {
-		return strings.ToLower(events[i].Name) < strings.ToLower(events[j].Name)
+	sort.Slice(clientEvents, func(i, j int) bool {
+		return strings.ToLower(clientEvents[i].Name) < strings.ToLower(clientEvents[j].Name)
 	})
 
-	return events, nil
+	sort.Slice(serverEvents, func(i, j int) bool {
+		return strings.ToLower(serverEvents[i].Name) < strings.ToLower(serverEvents[j].Name)
+	})
+
+	return clientEvents, serverEvents, nil
 }
 
 var eventTemplate = template.Must(template.New("rstEvent").Parse(`
@@ -120,14 +128,27 @@ var eventTemplate = template.Must(template.New("rstEvent").Parse(`
 {{else}}**MISSING EXAMPLE**
 {{end}}`))
 
-func printRstEvents(events []rstEvent) error {
-	_, err := fmt.Fprintln(os.Stdout, `Td Events
+func printRstEvents(clientEvents []rstEvent, serverEvents []rstEvent) error {
+	_, err := fmt.Fprintln(os.Stdout, `Client events
 ======================================`)
 	if err != nil {
 		return err
 	}
 
-	for _, event := range events {
+	for _, event := range clientEvents {
+		err := eventTemplate.Execute(os.Stdout, event)
+		if err != nil {
+			return err
+		}
+	}
+
+	_, err = fmt.Fprintln(os.Stdout, `Server events
+======================================`)
+	if err != nil {
+		return err
+	}
+
+	for _, event := range serverEvents {
 		err := eventTemplate.Execute(os.Stdout, event)
 		if err != nil {
 			return err
