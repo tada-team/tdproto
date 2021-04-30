@@ -28,6 +28,15 @@ type markdownEvent struct {
 	EventStructStr string
 }
 
+type markdownStructField struct {
+	codegen.TdStructField
+}
+
+type markdownStruct struct {
+	codegen.TdStruct
+	Fields []markdownStructField
+}
+
 func createMarkdownEvents(tdprotoInfo *codegen.TdInfo) (events []markdownEvent, err error) {
 	for eventStructName, eventStr := range tdprotoInfo.TdEvents {
 		eventExample, ok := eventExampleStr[eventStr]
@@ -54,11 +63,33 @@ func generateMarkdown(tdprotoInfo *codegen.TdInfo) error {
 	_, _ = fmt.Fprintln(os.Stdout, "## Structures")
 
 	for _, tdStructInfo := range tdprotoInfo.TdStructs {
-		for _, anonStruct := range tdStructInfo.GetStructAnonymousStructs(tdprotoInfo) {
-			tdStructInfo.Fields = append(tdStructInfo.Fields, anonStruct.Fields...)
+		if tdStructInfo.Help == "MISSING CLASS DOCUMENTATION" {
+			continue
 		}
 
-		if err := structureTemplate.Execute(os.Stdout, tdStructInfo); err != nil {
+		structureToPrint := markdownStruct{
+			TdStruct: tdStructInfo,
+			Fields:   make([]markdownStructField, 0),
+		}
+
+		allfields := make([]codegen.TdStructField, 0)
+		allfields = append(allfields, tdStructInfo.Fields...)
+
+		for _, anonStruct := range tdStructInfo.GetStructAnonymousStructs(tdprotoInfo) {
+			allfields = append(allfields, anonStruct.Fields...)
+		}
+
+		for _, field := range allfields {
+			if field.Help == "DOCUMENTATION MISSING" {
+				continue
+			}
+
+			structureToPrint.Fields = append(structureToPrint.Fields, markdownStructField{
+				TdStructField: field,
+			})
+		}
+
+		if err := structureTemplate.Execute(os.Stdout, structureToPrint); err != nil {
 			return err
 		}
 	}
@@ -79,17 +110,16 @@ func generateMarkdown(tdprotoInfo *codegen.TdInfo) error {
 }
 
 var structureTemplate = template.Must(template.New("markdownStructure").Parse(`
-### {{.Name}}
-{{.Help}}
+### {{.TdStruct.Name}}
+{{.TdStruct.Help}}
 {{range $field := .Fields}}
-* **{{ $field.JsonName }}** (
-    {{- if $field.IsPrimitive -}} {{- $field.TypeStr -}} {{ else }} [{{- $field.TypeStr -}}](#{{- $field.TypeStr -}}) {{ end }}
-	{{- if $field.IsReadOnly }}, readonly for clients{{ end -}}
-	{{- if $field.IsPointer }}, nullable{{ end -}}
-	{{- if $field.IsList }}, list{{end -}}
-	{{- if $field.IsOmitEmpty }}, omitempty{{ end -}}
-  ) — {{ $field.Help }}.
-{{end}}
+* **{{ $field.TdStructField.JsonName }}** (
+    {{- if $field.TdStructField.IsPrimitive -}} {{- $field.TdStructField.TypeStr -}} {{ else }} [{{- $field.TdStructField.TypeStr -}}](#{{- $field.TdStructField.TypeStr -}}) {{ end }}
+	{{- if $field.TdStructField.IsReadOnly }}, readonly for clients{{ end -}}
+	{{- if $field.TdStructField.IsPointer }}, nullable{{ end -}}
+	{{- if $field.TdStructField.IsList }}, list{{end -}}
+	{{- if $field.TdStructField.IsOmitEmpty }}, omitempty{{ end -}}
+  ) — {{ $field.TdStructField.Help }}.{{end}}
 
 `))
 
