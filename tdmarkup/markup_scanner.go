@@ -1,13 +1,14 @@
 package tdmarkup
 
 import (
+	"net/url"
 	"strings"
 	"time"
 
 	"github.com/tada-team/tdproto"
 )
 
-var ops = "*/_~`<>&"
+var ops = "*/_~`<>&[]()"
 
 var opInlines = map[rune]tdproto.MarkupType{
 	'*': tdproto.Bold,
@@ -21,6 +22,9 @@ var (
 	opCodeBlock  = []rune("```")
 	opQuoteBlock = []rune("> ")
 )
+
+// FIXME: temporary hack, move to MarkupScanner() itself
+var CheckUrl = func(u *url.URL) bool { return u.Scheme != "" }
 
 func contains(s string, typ tdproto.MarkupType) bool {
 	for s := NewMarkupScanner(s); s.Rest() > 0; {
@@ -79,10 +83,15 @@ func NewMarkupScanner(text string) *MarkupScanner {
 	return &MarkupScanner{Scanner: NewScanner(text)}
 }
 
-// TODO: markdown link
 func (s *MarkupScanner) Scan(links tdproto.MessageLinks) (string, *tdproto.MarkupEntity) {
 	if isEOF(s.Next()) {
 		return "", nil
+	}
+
+	// markdown links
+	t, e := s.scanMarkdownLinks()
+	if e != nil {
+		return t, e
 	}
 
 	// links
@@ -94,7 +103,7 @@ func (s *MarkupScanner) Scan(links tdproto.MessageLinks) (string, *tdproto.Marku
 	}
 
 	// dates (before html tags!)
-	t, e := s.scanTime()
+	t, e = s.scanTime()
 	if e != nil {
 		return t, e
 	}
@@ -205,7 +214,6 @@ func (s *MarkupScanner) scanTime() (string, *tdproto.MarkupEntity) {
 
 	s.Rewind(start)
 	return "", nil
-
 }
 
 func (s *MarkupScanner) scanInline(marker rune, typ tdproto.MarkupType, allowWhitespaceAround bool) (string, *tdproto.MarkupEntity) {
@@ -369,5 +377,82 @@ func (s *MarkupScanner) scanUnsafe() (string, *tdproto.MarkupEntity) {
 		}
 	default:
 		return string(s.Next()), nil
+	}
+}
+
+func (s *MarkupScanner) scanMarkdownLinks() (string, *tdproto.MarkupEntity) {
+	if s.Next() != '[' {
+		return "", nil
+	}
+
+	start := s.Position()
+	ch := s.TakeNext()
+
+	var b strings.Builder
+	b.Grow(s.Length() - s.Position())
+	b.WriteRune(ch)
+
+	var replBuilder strings.Builder
+
+findRepl:
+	for {
+		ch := s.TakeNext()
+		b.WriteRune(ch)
+		switch ch {
+		case ']':
+			break findRepl
+		case '(', ')', '[':
+			s.Rewind(start)
+			return "", nil
+		default:
+			replBuilder.WriteRune(ch)
+		}
+		if s.Rest() == 0 {
+			s.Rewind(start)
+			return "", nil
+		}
+	}
+
+	if s.Next() != '(' {
+		s.Rewind(start)
+		return "", nil
+	}
+
+	ch = s.TakeNext()
+	b.WriteRune(ch)
+
+	var urlBuilder strings.Builder
+
+findUrl:
+	for {
+		ch := s.TakeNext()
+		b.WriteRune(ch)
+		switch ch {
+		case ')':
+			break findUrl
+		case '(', '[', ']':
+			s.Rewind(start)
+			return "", nil
+		default:
+			urlBuilder.WriteRune(ch)
+		}
+		if s.Rest() == 0 {
+			s.Rewind(start)
+			return "", nil
+		}
+	}
+
+	u, err := url.Parse(urlBuilder.String())
+	if err != nil || !CheckUrl(u) {
+		s.Rewind(start)
+		return "", nil
+	}
+
+	return b.String(), &tdproto.MarkupEntity{
+		Type:  tdproto.Link,
+		Url:   u.String(),
+		Repl:  replBuilder.String(),
+		Open:  start,
+		Close: s.Position(),
 	}
 }

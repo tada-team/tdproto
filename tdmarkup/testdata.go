@@ -394,6 +394,30 @@ var MarkupTestCases = []struct {
 		Title: "multi pre",
 		Raw:   "``` 1 ```2``` ```3",
 		Html:  "<pre>1</pre>2<pre></pre>3",
-		Plain:   "123",
+		Plain: "123",
+	},
+	{
+		Title: "markdown link",
+		Raw:   `[ya.ru](https://ya.ru)`,
+		Html:  `<a href="https://ya.ru">ya.ru</a>`,
+		Plain: "ya.ru",
+	},
+	{
+		Title: "markdown link without scheme",
+		Raw:   `[ya.ru](ya.ru)`,
+		Html:  `[ya.ru](ya.ru)`,
+		Plain: `[ya.ru](ya.ru)`,
+	},
+	{
+		Title: "broken markdown link",
+		Raw:   `[ya.ru](https://ya.ru`,
+		Html:  `[ya.ru](https://ya.ru`,
+		Plain: `[ya.ru](https://ya.ru`,
+	},
+	{
+		Title: "markdown link with markup",
+		Raw:   `[ya.ru *bold*](https://ya.ru)`,
+		Html:  `<a href="https://ya.ru">ya.ru *bold*</a>`,
+		Plain: "ya.ru *bold*",
 	},
 }
