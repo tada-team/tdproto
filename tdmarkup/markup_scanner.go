@@ -413,6 +413,12 @@ findRepl:
 		}
 	}
 
+	replText := strings.TrimSpace(replBuilder.String())
+	if len(replText) == 0 {
+		s.Rewind(start)
+		return "", nil
+	}
+
 	if s.Next() != '(' {
 		s.Rewind(start)
 		return "", nil
@@ -451,7 +457,7 @@ findUrl:
 	return b.String(), &tdproto.MarkupEntity{
 		Type:  tdproto.Link,
 		Url:   u.String(),
-		Repl:  replBuilder.String(),
+		Repl:  replText,
 		Open:  start,
 		Close: s.Position(),
 	}

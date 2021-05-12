@@ -403,6 +403,12 @@ var MarkupTestCases = []struct {
 		Plain: "ya.ru",
 	},
 	{
+		Title: "markdown link with space",
+		Raw:   `[ ya.ru ](https://ya.ru)`,
+		Html:  `<a href="https://ya.ru">ya.ru</a>`,
+		Plain: "ya.ru",
+	},
+	{
 		Title: "markdown link without scheme",
 		Raw:   `[ya.ru](ya.ru)`,
 		Html:  `[ya.ru](ya.ru)`,
@@ -419,5 +425,11 @@ var MarkupTestCases = []struct {
 		Raw:   `[ya.ru *bold*](https://ya.ru)`,
 		Html:  `<a href="https://ya.ru">ya.ru *bold*</a>`,
 		Plain: "ya.ru *bold*",
+	},
+	{
+		Title: "empty markdown link",
+		Raw:   `[ ](https://ya.ru)`,
+		Html:  `[ ](https://ya.ru)`,
+		Plain: `[ ](https://ya.ru)`,
 	},
 }
