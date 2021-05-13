@@ -126,6 +126,11 @@ func generateRstJson(tdprotoInfo *codegen.TdInfo) error {
 	var jsonObjects []rstJsonStruct
 
 	for _, tdStruct := range tdprotoInfo.TdStructs {
+		if tdStruct.Help == "MISSING CLASS DOCUMENTATION" {
+			// Do not print structures without help
+			continue
+		}
+
 		if unicode.IsLower([]rune(tdStruct.Name)[0]) {
 			// Do not print private structs
 			continue
