@@ -229,38 +229,105 @@ type ICEServer struct {
 
 // Experimental translation fields for "team" entity renaming. Readonly.
 type Terms struct {
-	EnInTeam       string
-	EnTeam         string
-	EnTeamAccess   string
-	EnTeamAdmin    string
-	EnTeamAdmins   string
-	EnTeamGuest    string
-	EnTeamMember   string
-	EnTeamMembers  string
-	EnTeamOwner    string
+	// "in team"
+	EnInTeam string
+
+	// "team"
+	EnTeam string
+
+	// "access to team"
+	EnTeamAccess string
+
+	// "team admin"
+	EnTeamAdmin string
+
+	// "team admins"
+	EnTeamAdmins string
+
+	// "team guest"
+	EnTeamGuest string
+
+	// "team member"
+	EnTeamMember string
+
+	// "team members"
+	EnTeamMembers string
+
+	// "team owner",
+	EnTeamOwner string
+
+	// "team settings"
 	EnTeamSettings string
+
+	// "настройки команды"
 	RuTeamSettings string
-	EnTeams        string
-	EnToTeam       string
-	RuInTeam       string
-	RuTeam         string
-	RuTeamAccess   string
-	RuTeamAdmin    string
-	RuTeamAdmins   string
-	RuTeamD        string
-	RuTeamGuest    string
-	RuTeamMember   string
-	RuTeamMembers  string
-	RuTeamOwner    string
-	RuTeamP        string
-	RuTeamR        string
-	RuTeams        string
-	RuTeamsD       string
-	RuTeamsP       string
-	RuTeamsR       string
-	RuTeamsT       string
-	RuTeamsV       string
-	RuTeamT        string
-	RuTeamV        string
-	RuToTeam       string
+
+	// "teams"
+	EnTeams string
+
+	// "to team"
+	EnToTeam string
+
+	// "в команде"
+	RuInTeam string
+
+	// "команда"
+	RuTeam string
+
+	// "доступ к команде"
+	RuTeamAccess string
+
+	// "администратор команды"
+	RuTeamAdmin string
+
+	// "администраторы команды"
+	RuTeamAdmins string
+
+	// "команде"
+	RuTeamD string
+
+	// "гость команды"
+	RuTeamGuest string
+
+	// "участник команды"
+	RuTeamMember string
+
+	// "участники команды"
+	RuTeamMembers string
+
+	// "владелец команды"
+	RuTeamOwner string
+
+	// "команде"
+	RuTeamP string
+
+	// "команды"
+	RuTeamR string
+
+	// "команды"
+	RuTeams string
+
+	// "командам"
+	RuTeamsD string
+
+	// "командах"
+	RuTeamsP string
+
+	// "команд"
+	RuTeamsR string
+
+	// "командами"
+	RuTeamsT string
+
+	// "команды"
+	RuTeamsV string
+
+	// "командой"
+	RuTeamT string
+
+	// "команду"
+	RuTeamV string
+
+	// "в команду"
+	RuToTeam string
 }

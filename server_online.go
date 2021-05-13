@@ -23,6 +23,7 @@ type serverOnlineParams struct {
 	Calls []OnlineCall `json:"calls,omitempty"`
 }
 
+// Contact online status
 type OnlineContact struct {
 	// Contact id
 	Jid JID `json:"jid"`
@@ -34,6 +35,7 @@ type OnlineContact struct {
 	Mobile bool `json:"mobile"` // TODO: omitempty. 17feb2020
 }
 
+// Active call status
 type OnlineCall struct {
 	// Chat or contact id
 	Jid JID `json:"jid"`

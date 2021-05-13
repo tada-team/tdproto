@@ -2,12 +2,12 @@ package tdproto
 
 // Task color rules color
 type TaskColor struct {
-	// Regular color (HEX)
-	Regular string `json:"regular"`
+	// Regular color
+	Regular RGBColor `json:"regular"`
 
-	// Dark color (HEX)
-	Dark    string `json:"dark"`
+	// Dark color
+	Dark RGBColor `json:"dark"`
 
-	// Light color (HEX)
-	Light   string `json:"light"`
+	// Light color
+	Light RGBColor `json:"light"`
 }
