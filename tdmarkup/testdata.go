@@ -403,6 +403,18 @@ var MarkupTestCases = []struct {
 		Plain: "ya.ru",
 	},
 	{
+		Title: "markdown link inside markup",
+		Raw:   `*[ya.ru](https://ya.ru)*`,
+		Html:  `<b><a href="https://ya.ru">ya.ru</a></b>`,
+		Plain: "ya.ru",
+	},
+	{
+		Title: "markdown link inside markup",
+		Raw:   `*[github](https://github.com)*`,
+		Html:  `<b><a href="https://github.com">github</a></b>`,
+		Plain: "github",
+	},
+	{
 		Title: "markdown link with space",
 		Raw:   `[ ya.ru ](https://ya.ru)`,
 		Html:  `<a href="https://ya.ru">ya.ru</a>`,
