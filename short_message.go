@@ -29,6 +29,9 @@ type ShortMessage struct {
 
 // Upload + ShortMessage
 type UploadShortMessage struct {
-	Upload  Upload       `json:"upload"`
+	// Upload information
+	Upload Upload `json:"upload"`
+
+	// Short message information
 	Message ShortMessage `json:"message"`
 }
