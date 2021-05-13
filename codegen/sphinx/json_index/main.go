@@ -6,6 +6,7 @@ import (
 	"sort"
 	"strings"
 	"text/template"
+	"unicode"
 
 	"github.com/tada-team/tdproto/codegen"
 )
@@ -125,6 +126,11 @@ func generateRstJson(tdprotoInfo *codegen.TdInfo) error {
 	var jsonObjects []rstJsonStruct
 
 	for _, tdStruct := range tdprotoInfo.TdStructs {
+		if unicode.IsLower([]rune(tdStruct.Name)[0]) {
+			// Do not print private structs
+			continue
+		}
+
 		isEvent := tdStruct.Name == "BaseEvent"
 
 		newRstJson := rstJsonStruct{
