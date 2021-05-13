@@ -7,7 +7,6 @@ import (
 	"go/token"
 	"path"
 	"reflect"
-	"sort"
 	"strings"
 	"unicode"
 
@@ -400,10 +399,6 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 			Help:            fieldDoc,
 		})
 	}
-
-	sort.Slice(fieldsList, func(i, j int) bool {
-		return fieldsList[i].Name < fieldsList[j].Name
-	})
 
 	infoToFill.TdStructs[structName] = TdStruct{
 		Help:             helpString,

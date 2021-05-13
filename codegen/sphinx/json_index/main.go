@@ -160,10 +160,6 @@ func generateRstJson(tdprotoInfo *codegen.TdInfo) error {
 			}
 		}
 
-		sort.Slice(newRstJson.Fields, func(i, j int) bool {
-			return strings.ToLower(newRstJson.Fields[i].JsonName) < strings.ToLower(newRstJson.Fields[j].Name)
-		})
-
 		jsonObjects = append(jsonObjects, newRstJson)
 	}
 
