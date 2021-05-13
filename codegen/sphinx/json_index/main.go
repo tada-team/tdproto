@@ -125,6 +125,8 @@ func generateRstJson(tdprotoInfo *codegen.TdInfo) error {
 	var jsonObjects []rstJsonStruct
 
 	for _, tdStruct := range tdprotoInfo.TdStructs {
+		isEvent := tdStruct.Name == "BaseEvent"
+
 		newRstJson := rstJsonStruct{
 			TdStruct: tdStruct,
 		}
@@ -136,11 +138,19 @@ func generateRstJson(tdprotoInfo *codegen.TdInfo) error {
 		}
 
 		for _, anonStruct := range tdStruct.GetStructAnonymousStructs(tdprotoInfo) {
+			if anonStruct.Name == "BaseEvent" {
+				isEvent = true
+			}
+
 			for _, anonStructField := range anonStruct.Fields {
 				newRstJson.Fields = append(newRstJson.Fields, rstJsonField{
 					TdStructField: anonStructField,
 				})
 			}
+		}
+
+		if isEvent {
+			continue
 		}
 
 		for i, field := range newRstJson.Fields {
