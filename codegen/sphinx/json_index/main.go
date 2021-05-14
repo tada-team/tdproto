@@ -57,7 +57,7 @@ var jsonTemplate = template.Must(template.New("rstJson").Parse(`
 **Fields**:
 {{range $field := .Fields}}
 * ` + "``" + "{{$field.TdStructField.JsonName}}" + "``" +
-	` ({{- if $field.IsJsonPrimitive}}{{$field.TypeStr}}{{else}} :ref:` + "`" + `tdproto-{{$field.TdStructField.TypeStr}}` + "` " +
+	` ({{- if $field.IsJsonPrimitive}}{{$field.TypeStr}}{{else}}:ref:` + "`" + `tdproto-{{$field.TdStructField.TypeStr}}` + "`" +
 	`{{end}}) - {{$field.TdStructField.Help}}
 {{- if $field.IsOmitEmpty}}. Maybe omitted{{else -}}{{end}}
 {{- if $field.IsPointer}}. Might be null{{else -}}{{end}}{{end}}
