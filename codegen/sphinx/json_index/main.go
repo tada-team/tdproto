@@ -68,7 +68,7 @@ var jsonTemplate = template.Must(template.New("rstJson").Parse(`
 var enumTemplate = template.Must(template.New("rstEnum").Parse(`
 .. _tdproto-{{- .Name}}:
 
-{{.Name}} enum
+{{.Name}}
 -------------------------------------------------------------
 **Possible values**:
 {{range $value := .Values}}
@@ -79,7 +79,7 @@ var enumTemplate = template.Must(template.New("rstEnum").Parse(`
 var typeAliasTemplate = template.Must(template.New("rstType").Parse(`
 .. _tdproto-{{- .Name}}:
 
-{{.Name}} type alias of ` + "``{{.BaseType}}``" + `
+{{.Name}}
 -------------------------------------------------------------
 {{.Help}}
 **Base Type**: {{.BaseType}}
