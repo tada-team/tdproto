@@ -439,9 +439,22 @@ var MarkupTestCases = []struct {
 		Plain: "ya.ru *bold*",
 	},
 	{
+		Title: "markdown link with smile",
+		Raw:   `[=(](app://path)`,
+		Html:  `<a href="app://path">=(</a>`,
+		Plain: "=(",
+	},
+	{
 		Title: "empty markdown link",
 		Raw:   `[ ](https://ya.ru)`,
 		Html:  `[ ](https://ya.ru)`,
 		Plain: `[ ](https://ya.ru)`,
 	},
+	// TODO:
+	//{
+	//	Title: "markdown link with square brace",
+	//	Raw:   `[[x]](app://path)`,
+	//	Html:  `<a href="app://path">[x]</a>`,
+	//	Plain: "[x]",
+	//},
 }

@@ -401,9 +401,6 @@ findRepl:
 		switch ch {
 		case ']':
 			break findRepl
-		case '(', ')', '[':
-			s.Rewind(start)
-			return "", nil
 		default:
 			replBuilder.WriteRune(ch)
 		}
@@ -436,9 +433,6 @@ findUrl:
 		switch ch {
 		case ')':
 			break findUrl
-		case '(', '[', ']':
-			s.Rewind(start)
-			return "", nil
 		default:
 			urlBuilder.WriteRune(ch)
 		}
