@@ -20,4 +20,3 @@ func register(path string, spec openapi.Path) {
 	}
 	paths[path] = spec
 }
-
