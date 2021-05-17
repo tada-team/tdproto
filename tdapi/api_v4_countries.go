@@ -6,7 +6,7 @@ import (
 )
 
 func init() {
-	register("/api/v4/alltimezones", openapi.Path{
+	register("/api/v4/countries", openapi.Path{
 		Get: &openapi.Operation{
 			Summary: "Countries list with phone codes",
 			Responses: openapi.Responses{
