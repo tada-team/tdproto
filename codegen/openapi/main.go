@@ -69,10 +69,30 @@ func generateOpenApiStruct(tdInfo *codegen.TdInfo) (openapi.Root, error) {
 	return root, nil
 }
 
-func addSchema(components map[string]openapi.Schema, name string, tdInfo *codegen.TdInfo) error {
+var golangTypeToOpenApi = map[string]openapi.Type{
+	"string": openapi.String,
+	"bool":   openapi.Boolean,
+}
+
+func addTypeSchema(components map[string]openapi.Schema, name string, tdInfo *codegen.TdInfo) error {
+	tdTypeInfo, found := tdInfo.TdTypes[name]
+	if !found {
+		return fmt.Errorf("type alias not found: %s", name)
+	}
+
+	schema := openapi.Schema{
+		Type:        golangTypeToOpenApi[tdTypeInfo.BaseType],
+		Description: tdTypeInfo.Help,
+	}
+
+	components[name] = schema
+	return nil
+}
+
+func addStructSchema(components map[string]openapi.Schema, name string, tdInfo *codegen.TdInfo) error {
 	tdStructInfo, found := tdInfo.TdStructs[name]
 	if !found {
-		return fmt.Errorf("type not found: %s", name)
+		return fmt.Errorf("struct type not found: %s", name)
 	}
 
 	schema := openapi.Schema{
@@ -102,4 +122,34 @@ func addSchema(components map[string]openapi.Schema, name string, tdInfo *codege
 
 	components[name] = schema
 	return nil
+}
+
+func addSchema(components map[string]openapi.Schema, name string, tdInfo *codegen.TdInfo) error {
+	_, found := tdInfo.TdStructs[name]
+	if found {
+		return addStructSchema(components, name, tdInfo)
+	}
+
+	_, found = tdInfo.TdTypes[name]
+	if found {
+		return addTypeSchema(components, name, tdInfo)
+	}
+
+	// HACK: add maps to codegen
+	if name == "TeamUnread" {
+		err := addStructSchema(components, "Unread", tdInfo)
+		if err != nil {
+			return err
+		}
+
+		components[name] = openapi.Schema{
+			Type: openapi.Object,
+			AdditionalProperties: &openapi.Schema{
+				Ref: openapi.SchemaRef("Unread"),
+			},
+		}
+		return nil
+	}
+
+	return fmt.Errorf("could not resolve schema %s", name)
 }

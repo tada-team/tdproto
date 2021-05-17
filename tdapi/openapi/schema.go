@@ -2,19 +2,20 @@ package openapi
 
 import (
 	"reflect"
-	
+
 	"github.com/tada-team/tdproto/codegen"
 )
 
 type Schema struct {
-	Type        Type              `json:"type,omitempty"`
-	Format      Format            `json:"format,omitempty"`
-	Properties  map[string]Schema `json:"properties,omitempty"`
-	Items       *Schema           `json:"items,omitempty"`
-	Required    []string          `json:"required,omitempty"`
-	Description string            `json:"description,omitempty"`
-	Example     interface{}       `json:"example,omitempty"`
-	Ref         string            `json:"$ref,omitempty"`
+	Type                 Type              `json:"type,omitempty"`
+	Format               Format            `json:"format,omitempty"`
+	Properties           map[string]Schema `json:"properties,omitempty"`
+	Items                *Schema           `json:"items,omitempty"`
+	Required             []string          `json:"required,omitempty"`
+	Description          string            `json:"description,omitempty"`
+	Example              interface{}       `json:"example,omitempty"`
+	Ref                  string            `json:"$ref,omitempty"`
+	AdditionalProperties *Schema           `json:"additionalProperties,omitempty"`
 }
 
 func (s Schema) Refs() []string {
