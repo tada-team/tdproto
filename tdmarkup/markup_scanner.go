@@ -166,9 +166,6 @@ func (s *MarkupScanner) scanChilds(text string) (res []tdproto.MarkupEntity) {
 	for scanner.Rest() > 0 {
 		t, e := scanner.Scan(nil)
 		if e != nil {
-			if res == nil {
-				res = make([]tdproto.MarkupEntity, 0)
-			}
 			res = append(res, *e)
 		}
 		if t == "" {
@@ -396,7 +393,7 @@ func (s *MarkupScanner) scanMarkdownLinks() (string, *tdproto.MarkupEntity) {
 
 findRepl:
 	for {
-		ch := s.TakeNext()
+		ch = s.TakeNext()
 		b.WriteRune(ch)
 		switch ch {
 		case ']':
@@ -417,8 +414,8 @@ findRepl:
 	}
 
 	if s.Next() != '(' {
-		s.Rewind(start)
-		return "", nil
+		replBuilder.WriteRune(ch)
+		goto findRepl
 	}
 
 	ch = s.TakeNext()
