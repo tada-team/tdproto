@@ -61,11 +61,19 @@ type TdType struct {
 	BaseType string
 }
 
+type TdMapType struct {
+	Name         string
+	Help         string
+	KeyTypeStr   string
+	ValueTypeStr string
+}
+
 type TdInfo struct {
-	TdStructs map[string]TdStruct
-	TdTypes   map[string]TdType
-	TdEvents  map[string]string
-	TdConsts  []TdConstFields
+	TdStructs  map[string]TdStruct
+	TdTypes    map[string]TdType
+	TdEvents   map[string]string
+	TdMapTypes map[string]TdMapType
+	TdConsts   []TdConstFields
 }
 
 type TdEnum struct {
@@ -113,6 +121,7 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 	infoToFill.TdEvents = make(map[string]string)
 	infoToFill.TdStructs = make(map[string]TdStruct)
 	infoToFill.TdTypes = make(map[string]TdType)
+	infoToFill.TdMapTypes = make(map[string]TdMapType)
 
 	tdprotoNameToAstMap, err := extractTdprotoAst(tdprotoFileSet)
 	if err != nil {
@@ -225,8 +234,35 @@ func parseTypeDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl, decla
 		if err != nil {
 			return err
 		}
+	case *ast.MapType:
+		err := parseMapTypeDeclaration(infoToFill, declarationSpec, typeAst)
+		if err != nil {
+			return err
+		}
 	default:
 		errorLogger.Printf("WARN: Not implemented type declaration %#v", typeAst)
+	}
+
+	return nil
+}
+
+func parseMapTypeDeclaration(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, mapAst *ast.MapType) error {
+	typeName := declarationSpec.Name.Name
+
+	keyTypeStr, err := parseExprToString(mapAst.Key)
+	if err != nil {
+		return err
+	}
+
+	valueTypeStr, err := parseExprToString(mapAst.Value)
+	if err != nil {
+		return err
+	}
+
+	infoToFill.TdMapTypes[typeName] = TdMapType{
+		Name:         typeName,
+		KeyTypeStr:   keyTypeStr,
+		ValueTypeStr: valueTypeStr,
 	}
 
 	return nil
@@ -450,6 +486,29 @@ func parseConstDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl) erro
 	}
 
 	return nil
+}
+
+func parseExprToString(expr interface{}) (string, error) {
+	switch exprType := expr.(type) {
+	case *ast.SelectorExpr:
+		return parseSelectorAst(exprType), nil
+	case *ast.Ident:
+		return exprType.Name, nil
+	case *ast.InterfaceType:
+		return "interface{}", nil
+	case *ast.StarExpr:
+		return parseStarAst(exprType)
+	}
+
+	return "", fmt.Errorf("cannot parse expression %#v", expr)
+}
+
+func parseStarAst(starAst *ast.StarExpr) (string, error) {
+	pointedType, err := parseExprToString(starAst.X)
+	if err != nil {
+		return "", err
+	}
+	return pointedType, nil
 }
 
 func parseSelectorAst(selectorNode *ast.SelectorExpr) string {
