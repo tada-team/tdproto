@@ -202,6 +202,9 @@ type Features struct {
 	// Default wallpaper url for mobile apps, if any
 	DefaultWallpaper *Wallpaper `json:"default_wallpaper,omitempty"`
 
+	// Support email
+	SupportEmail string `json:"support_email"`
+
 	// Deprecated
 	TaskChecklist bool `json:"task_checklist"`
 
