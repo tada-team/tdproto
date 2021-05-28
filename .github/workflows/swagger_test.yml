@@ -50,7 +50,7 @@ jobs:
       - name: Generate OpenAPI
         working-directory: ${{ env.TDPROTO_DIR }}
         run: |
-          go run "./codegen/openapi/" > "../${CLONE_DIR}/${OPENAPI_FILE}"
+          go run "./codegen/openapi/" > "${GITHUB_WORKSPACE}/${CLONE_DIR}/${OPENAPI_FILE}"
       - name: Commit and upload swagger
         working-directory: ${{ env.CLONE_DIR }}
         run: |
