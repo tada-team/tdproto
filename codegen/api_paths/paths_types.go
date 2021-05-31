@@ -8,8 +8,15 @@ type HttpSpec struct {
 }
 
 type PathSpec struct {
+	Path   string
 	Get    *HttpSpec
 	Put    *HttpSpec
 	Delete *HttpSpec
 	Post   *HttpSpec
+}
+
+var AllPaths = map[string][]PathSpec{
+	"group": GroupPaths,
+	"team":  TeamPaths,
+	"chat":  ChatPaths,
 }

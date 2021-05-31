@@ -54,21 +54,21 @@ func addAllSchemas(tdInfo *codegen.TdInfo, root openApiRoot) error {
 	return nil
 }
 
-func addPaths(root *openApiRoot, pathsToAdd map[string]api_paths.PathSpec) error {
+func addPaths(root *openApiRoot, pathsToAdd []api_paths.PathSpec) error {
 
-	for path, pathObject := range pathsToAdd {
+	for _, pathObject := range pathsToAdd {
 		newPath := openApiPath{}
 
 		err := pathSpecToOpenApiPath(pathObject, &newPath)
 		if err != nil {
 			return err
 		}
-		err = addPathParameters(path, &newPath)
+		err = addPathParameters(pathObject.Path, &newPath)
 		if err != nil {
 			return err
 		}
 
-		root.Paths[path] = newPath
+		root.Paths[pathObject.Path] = newPath
 	}
 
 	return nil

@@ -59,9 +59,9 @@ func generateSpecRst(path string, spec api_paths.HttpSpec, method string) error 
 
 func generatePathsRst() error {
 
-	for path, spec := range api_paths.TeamPaths {
+	for _, spec := range api_paths.TeamPaths {
 		if spec.Get != nil {
-			err := generateSpecRst(path, *spec.Get, "get")
+			err := generateSpecRst(spec.Path, *spec.Get, "get")
 			if err != nil {
 				return err
 			}

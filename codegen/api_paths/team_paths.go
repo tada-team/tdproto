@@ -2,13 +2,17 @@ package api_paths
 
 import "github.com/tada-team/tdproto"
 
-var TeamPaths = map[string]PathSpec{
-	"/api/v4/teams": {
+var TeamPaths = []PathSpec{
+	{
+		Path: "/api/v4/teams",
 		Get: &HttpSpec{
-			Responce: []tdproto.Team{},
+			Responce:            []tdproto.Team{},
+			Description:         "Get the list of teams on the server.",
+			ResponceDescription: "List of :ref:`tdproto-Team` objects.",
 		},
 	},
-	"/api/v4/teams/{team_id}": {
+	{
+		Path: "/api/v4/teams/{team_id}",
 		Get: &HttpSpec{
 			Responce: tdproto.Team{},
 		},
@@ -20,17 +24,20 @@ var TeamPaths = map[string]PathSpec{
 			Responce: tdproto.Team{},
 		},
 	},
-	"/api/v4/teams/{team_id}/chats": {
+	{
+		Path: "/api/v4/teams/{team_id}/chats",
 		Get: &HttpSpec{
 			Responce: []tdproto.Chat{},
 		},
 	},
-	"/api/v4/teams/{team_id}/contacts": {
+	{
+		Path: "/api/v4/teams/{team_id}/contacts",
 		Get: &HttpSpec{
 			Responce: []tdproto.Contact{},
 		},
 	},
-	"/api/v4/teams/{team_id}/contacts/{contact_id}": {
+	{
+		Path: "/api/v4/teams/{team_id}/contacts/{contact_id}",
 		Get: &HttpSpec{
 			Responce: tdproto.Contact{},
 		},
