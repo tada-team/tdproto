@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"reflect"
+	"strings"
 	"text/template"
 
 	"github.com/tada-team/tdproto/codegen/api_paths"
@@ -16,10 +18,23 @@ type pathDoc struct {
 	ResultText  string
 }
 
+func (p pathDoc) ToSwaggerUrl() string {
+
+	suffix := fmt.Sprintf(
+		"%s%s", p.MethodName,
+		strings.ReplaceAll(strings.ReplaceAll(
+			strings.ReplaceAll(p.Path, "/", "_"),
+			"{", "_"), "}", "_"))
+
+	return fmt.Sprintf("`🔍 Try it! <https://tada-team.github.io/td-swagger-ui/#/default/%s>`__", suffix)
+}
+
 var pathsTemplate = template.Must(template.New("rstPath").Parse(`
 .. http:{{- .MethodName -}}:: {{.Path}}
 
   {{.Description}}
+
+  {{.ToSwaggerUrl}}
 
   :resjson boolean ok: True if no error occured.
   {{if .IsArray}}:resjson array result:{{else}}:resjson object result:{{end}}{{.ResultText}}
@@ -28,13 +43,16 @@ var pathsTemplate = template.Must(template.New("rstPath").Parse(`
 
 func generateSpecRst(path string, spec api_paths.HttpSpec, method string) error {
 
-	pathsTemplate.Execute(os.Stdout, pathDoc{
+	err := pathsTemplate.Execute(os.Stdout, pathDoc{
 		Path:        path,
 		MethodName:  method,
 		Description: spec.Description,
 		ResultText:  spec.ResponceDescription,
 		IsArray:     reflect.TypeOf(spec.Responce).Kind() == reflect.Slice,
 	})
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
