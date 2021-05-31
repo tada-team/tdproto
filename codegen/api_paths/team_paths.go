@@ -6,17 +6,15 @@ var TeamPaths = []PathSpec{
 	{
 		Path: "/api/v4/teams",
 		Get: &HttpSpec{
-			Responce:            []tdproto.Team{},
-			Description:         "Get the list of teams on the server.",
-			ResponceDescription: "List of :ref:`tdproto-Team` objects.",
+			Responce:    []tdproto.Team{},
+			Description: "Get the list of teams on the server.",
 		},
 	},
 	{
 		Path: "/api/v4/teams/{team_id}",
 		Get: &HttpSpec{
-			Responce:            tdproto.Team{},
-			Description:         "Get team info.",
-			ResponceDescription: ":ref:`tdproto-Team` object.",
+			Responce:    tdproto.Team{},
+			Description: "Get team info.",
 		},
 		Put: &HttpSpec{
 			Request:             tdproto.Team{},

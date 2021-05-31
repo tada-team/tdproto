@@ -6,7 +6,8 @@ var ChatPaths = []PathSpec{
 	{
 		Path: "/api/v4/teams/{team_id}/chats/{chat_id}",
 		Get: &HttpSpec{
-			Responce: tdproto.Chat{},
+			Responce:    tdproto.Chat{},
+			Description: "Get the chat information.",
 		},
 		Put: &HttpSpec{
 			Request:  tdproto.Chat{},

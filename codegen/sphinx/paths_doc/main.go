@@ -15,8 +15,10 @@ type pathDoc struct {
 	Path               string
 	Description        string
 	RequestDescription string
-	IsArray            bool
-	ResultText         string
+	RequestObjectName  string
+	ResultIsArray      bool
+	ResultDescription  string
+	ResultObjectName   string
 }
 
 func (p pathDoc) ToSwaggerUrl() string {
@@ -48,28 +50,72 @@ func (p pathDoc) ToParams() string {
 	return builder.String()
 }
 
+func (p pathDoc) ToRequestText() string {
+	if p.RequestDescription != "" {
+		return p.RequestDescription
+	}
+
+	if p.RequestObjectName == "" {
+		return ""
+	}
+
+	return fmt.Sprintf("The :ref:`tdproto-%s` object.", p.RequestObjectName)
+
+}
+
+func (p pathDoc) ToResultText() string {
+	if p.ResultDescription != "" {
+		return p.ResultDescription
+	}
+
+	if p.ResultIsArray {
+		return fmt.Sprintf("Array of :ref:`tdproto-%s` objects.", p.ResultObjectName)
+	} else {
+		return fmt.Sprintf("The :ref:`tdproto-%s` object.", p.ResultObjectName)
+	}
+}
+
 var pathsTemplate = template.Must(template.New("rstPath").Parse(`
 .. http:{{- .MethodName -}}:: {{.Path}}
 
   {{.Description}}
 
   {{.ToSwaggerUrl}}
-  {{.ToParams}}
-  :resjson boolean ok: True if no error occured.{{if .RequestDescription}}
-  :reqjson object: {{.RequestDescription}}{{end}}
-  {{if .IsArray}}:resjson array result:{{else}}:resjson object result:{{end}} {{.ResultText}}
+  {{.ToParams}}{{if .ToRequestText}}
+  :reqjson object: {{.ToRequestText}}{{end}}
+  :resjson boolean ok: True if no error occured.
+  {{if .ResultIsArray}}:resjson array result:{{else}}:resjson object result:{{end}} {{.ToResultText}}
   :status 200: No error.
 `))
 
 func generateSpecRst(path string, spec api_paths.HttpSpec, method string) error {
 
+	isArray := reflect.TypeOf(spec.Responce).Kind() == reflect.Slice
+
+	var resultObjectName string
+	if isArray {
+		resultObjectName = reflect.TypeOf(spec.Responce).Elem().Name()
+	} else {
+		resultObjectName = reflect.TypeOf(spec.Responce).Name()
+	}
+
+	var requestObjectName string
+	if spec.Request != nil {
+		requestObjectName = reflect.TypeOf(spec.Request).Name()
+		if requestObjectName == "" && spec.Request != nil {
+			return fmt.Errorf("failed to get request type name %v", spec.Request)
+		}
+	}
+
 	err := pathsTemplate.Execute(os.Stdout, pathDoc{
 		Path:               path,
 		MethodName:         method,
 		Description:        spec.Description,
-		ResultText:         spec.ResponceDescription,
 		RequestDescription: spec.RequestDescription,
-		IsArray:            reflect.TypeOf(spec.Responce).Kind() == reflect.Slice,
+		RequestObjectName:  requestObjectName,
+		ResultDescription:  spec.ResponceDescription,
+		ResultIsArray:      isArray,
+		ResultObjectName:   resultObjectName,
 	})
 	if err != nil {
 		return err
