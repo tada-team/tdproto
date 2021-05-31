@@ -124,8 +124,11 @@ type Features struct {
 	// Installation title, used on login screen
 	InstallationTitle string `json:"installation_title,omitempty"`
 
-	// Background image url, if any
-	Background string `json:"background,omitempty"`
+	// AppBackground image url, if any
+	AppLoginBackground string `json:"app_login_background,omitempty"`
+
+	// WebBackground image url, if any
+	WebLoginBackground string `json:"web_login_background,omitempty"`
 
 	// Testing installation
 	IsTesting bool `json:"is_testing"`
@@ -201,6 +204,9 @@ type Features struct {
 
 	// Default wallpaper url for mobile apps, if any
 	DefaultWallpaper *Wallpaper `json:"default_wallpaper,omitempty"`
+
+	// Support email
+	SupportEmail string `json:"support_email"`
 
 	// Deprecated
 	TaskChecklist bool `json:"task_checklist"`

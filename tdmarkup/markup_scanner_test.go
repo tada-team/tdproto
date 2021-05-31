@@ -35,6 +35,7 @@ func TestToPlainNoQuotes(t *testing.T) {
 		})
 	}
 }
+
 func TestParse(t *testing.T) {
 	for _, v := range MarkupTestCases {
 		t.Run(v.Title, func(t *testing.T) {

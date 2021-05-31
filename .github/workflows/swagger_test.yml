@@ -1,7 +1,7 @@
 ---
-name: Download and deploy swagger
+name: Test swagger
 
-on: [push]
+on: workflow_dispatch
 
 env:
   TDPROTO_DIR: tdproto
@@ -13,7 +13,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-20.04
-    environment: swagger_deployment
+    environment: swagger_testing_deployment
     steps:
       - uses: actions/checkout@v2
         with:
@@ -24,7 +24,7 @@ jobs:
       - name: Clone swagger page repo
         uses: actions/checkout@v2
         with:
-          repository: 'tada-team/td-swagger-ui'
+          repository: 'tada-team/test-swagger'
           ssh-key: ${{ secrets.SWAGGER_DEPLOY_KEY }}
           path: ${{ env.CLONE_DIR }}
       - name: Clean swagger page repo
@@ -50,9 +50,8 @@ jobs:
       - name: Generate OpenAPI
         working-directory: ${{ env.TDPROTO_DIR }}
         run: |
-          go run "./codegen/openapi/" > "${GITHUB_WORKSPACE}/${CLONE_DIR}/${OPENAPI_FILE}"
+          go run "./codegen/openapi/" > "../${CLONE_DIR}/${OPENAPI_FILE}"
       - name: Commit and upload swagger
-        if: github.ref == 'refs/heads/master'
         working-directory: ${{ env.CLONE_DIR }}
         run: |
           git add --all
