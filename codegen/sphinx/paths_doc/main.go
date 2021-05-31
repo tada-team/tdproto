@@ -66,7 +66,24 @@ func generatePathsRst() error {
 				return err
 			}
 		}
-
+		if spec.Delete != nil {
+			err := generateSpecRst(spec.Path, *spec.Delete, "delete")
+			if err != nil {
+				return err
+			}
+		}
+		if spec.Post != nil {
+			err := generateSpecRst(spec.Path, *spec.Post, "post")
+			if err != nil {
+				return err
+			}
+		}
+		if spec.Put != nil {
+			err := generateSpecRst(spec.Path, *spec.Put, "put")
+			if err != nil {
+				return err
+			}
+		}
 	}
 
 	return nil
