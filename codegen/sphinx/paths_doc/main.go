@@ -30,13 +30,31 @@ func (p pathDoc) ToSwaggerUrl() string {
 	return fmt.Sprintf("`🔍 Try it! <https://tada-team.github.io/td-swagger-ui/#/default/%s>`__", suffix)
 }
 
+func (p pathDoc) ToParams() string {
+
+	var builder strings.Builder
+
+	possibleParameters := []string{
+		"team_id", "contact_id",
+		"chat_id", "message_id",
+		"group_id"}
+
+	for _, paramString := range possibleParameters {
+		if strings.Contains(p.Path, paramString) {
+			builder.WriteString(fmt.Sprintf("\n  :param %s: ID of the %s.", paramString, strings.Split(paramString, "_")[0]))
+		}
+	}
+
+	return builder.String()
+}
+
 var pathsTemplate = template.Must(template.New("rstPath").Parse(`
 .. http:{{- .MethodName -}}:: {{.Path}}
 
   {{.Description}}
 
   {{.ToSwaggerUrl}}
-
+  {{.ToParams}}
   :resjson boolean ok: True if no error occured.{{if .RequestDescription}}
   :reqjson object: {{.RequestDescription}}{{end}}
   {{if .IsArray}}:resjson array result:{{else}}:resjson object result:{{end}} {{.ResultText}}
