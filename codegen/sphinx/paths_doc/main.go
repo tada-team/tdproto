@@ -11,11 +11,12 @@ import (
 )
 
 type pathDoc struct {
-	MethodName  string
-	Path        string
-	Description string
-	IsArray     bool
-	ResultText  string
+	MethodName         string
+	Path               string
+	Description        string
+	RequestDescription string
+	IsArray            bool
+	ResultText         string
 }
 
 func (p pathDoc) ToSwaggerUrl() string {
@@ -36,19 +37,21 @@ var pathsTemplate = template.Must(template.New("rstPath").Parse(`
 
   {{.ToSwaggerUrl}}
 
-  :resjson boolean ok: True if no error occured.
-  {{if .IsArray}}:resjson array result:{{else}}:resjson object result:{{end}}{{.ResultText}}
+  :resjson boolean ok: True if no error occured.{{if .RequestDescription}}
+  :reqjson object: {{.RequestDescription}}{{end}}
+  {{if .IsArray}}:resjson array result:{{else}}:resjson object result:{{end}} {{.ResultText}}
   :status 200: No error.
 `))
 
 func generateSpecRst(path string, spec api_paths.HttpSpec, method string) error {
 
 	err := pathsTemplate.Execute(os.Stdout, pathDoc{
-		Path:        path,
-		MethodName:  method,
-		Description: spec.Description,
-		ResultText:  spec.ResponceDescription,
-		IsArray:     reflect.TypeOf(spec.Responce).Kind() == reflect.Slice,
+		Path:               path,
+		MethodName:         method,
+		Description:        spec.Description,
+		ResultText:         spec.ResponceDescription,
+		RequestDescription: spec.RequestDescription,
+		IsArray:            reflect.TypeOf(spec.Responce).Kind() == reflect.Slice,
 	})
 	if err != nil {
 		return err
@@ -66,12 +69,6 @@ func generatePathsRst() error {
 				return err
 			}
 		}
-		if spec.Delete != nil {
-			err := generateSpecRst(spec.Path, *spec.Delete, "delete")
-			if err != nil {
-				return err
-			}
-		}
 		if spec.Post != nil {
 			err := generateSpecRst(spec.Path, *spec.Post, "post")
 			if err != nil {
@@ -80,6 +77,12 @@ func generatePathsRst() error {
 		}
 		if spec.Put != nil {
 			err := generateSpecRst(spec.Path, *spec.Put, "put")
+			if err != nil {
+				return err
+			}
+		}
+		if spec.Delete != nil {
+			err := generateSpecRst(spec.Path, *spec.Delete, "delete")
 			if err != nil {
 				return err
 			}

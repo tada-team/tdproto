@@ -5,6 +5,7 @@ type HttpSpec struct {
 	Responce            interface{}
 	Description         string
 	ResponceDescription string
+	RequestDescription  string
 }
 
 type PathSpec struct {
