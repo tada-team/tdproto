@@ -84,24 +84,26 @@ var pathsTemplate = template.Must(template.New("rstPath").Parse(`
   {{.ToSwaggerUrl}}
   {{.ToParams}}{{if .ToRequestText}}
   :reqjson object: {{.ToRequestText}}{{end}}
-  :resjson boolean ok: True if no error occured.
-  {{if .ResultIsArray}}:resjson array result:{{else}}:resjson object result:{{end}} {{.ToResultText}}
+  :resjson boolean ok: True if no error occured.{{if .ResultObjectName}}
+  {{if .ResultIsArray}}:resjson array result:{{else}}:resjson object result:{{end}} {{.ToResultText}}{{end}}
   :status 200: No error.
 `))
 
 func generateSpecRst(path string, spec api_paths.HttpSpec, method string) error {
 
-	if spec.Description == "" {
+	if spec.Description == nil {
 		return fmt.Errorf("path %s %s missing description", method, path)
 	}
 
-	isArray := reflect.TypeOf(spec.Responce).Kind() == reflect.Slice
-
 	var resultObjectName string
-	if isArray {
-		resultObjectName = reflect.TypeOf(spec.Responce).Elem().Name()
-	} else {
-		resultObjectName = reflect.TypeOf(spec.Responce).Name()
+	var isArray bool
+	if spec.Responce != nil {
+		isArray = reflect.TypeOf(spec.Responce).Kind() == reflect.Slice
+		if isArray {
+			resultObjectName = reflect.TypeOf(spec.Responce).Elem().Name()
+		} else {
+			resultObjectName = reflect.TypeOf(spec.Responce).Name()
+		}
 	}
 
 	var description string
