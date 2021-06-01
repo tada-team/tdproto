@@ -1,5 +1,6 @@
 package tdproto
 
+// Task project or contact section
 type Section struct {
 	// Section uid
 	Uid string `json:"uid"`
@@ -20,6 +21,7 @@ type Section struct {
 	IsArchive bool `json:"is_archive,omitempty"`
 }
 
+// Deleted task project or contact section
 type DeletedSection struct {
 	// Section uid
 	Uid string `json:"uid"`

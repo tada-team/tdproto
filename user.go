@@ -45,9 +45,16 @@ type User struct {
 	QuietTimeFinish *string `json:"quiet_time_finish"`
 }
 
+// Accouint data with extra information
 type UserWithMe struct {
 	User
-	Inviter JID          `json:"inviter,omitempty"`
-	Teams   []Team       `json:"teams"`
+
+	// Inviter id, if any
+	Inviter JID `json:"inviter,omitempty"`
+
+	// Available teams
+	Teams []Team `json:"teams"`
+
+	// Registered push devices
 	Devices []PushDevice `json:"devices"`
 }

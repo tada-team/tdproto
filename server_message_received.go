@@ -1,5 +1,6 @@
 package tdproto
 
+// Message receiving status
 type ReceivedMessage struct {
 	// Chat or contact id
 	Chat JID `json:"chat"`

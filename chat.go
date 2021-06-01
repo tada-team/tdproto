@@ -218,7 +218,7 @@ type Chat struct {
 	// Any new team member will be added to this group chat
 	DefaultForAll bool `chattype:"group" json:"default_for_all,omitempty"`
 
-	// Readonly for non-admins group chat (Like Channels in Telegram bug switchable)
+	// Readonly for non-admins group chat (Like Channels in Telegram but switchable)
 	ReadonlyForMembers bool `chattype:"group" json:"readonly_for_members,omitempty"`
 
 	// Delete messages in this chat in seconds. Experimental function

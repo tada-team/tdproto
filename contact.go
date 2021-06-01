@@ -173,11 +173,20 @@ type Contact struct {
 
 // Extra contact fields
 type ContactCustomFields struct {
-	Company     string `json:"company,omitempty"`
-	Department  string `json:"department,omitempty"`
-	Title       string `json:"title,omitempty"`
+	// Company
+	Company string `json:"company,omitempty"`
+
+	// Department
+	Department string `json:"department,omitempty"`
+
+	// Title
+	Title string `json:"title,omitempty"`
+
+	// MobilePhone
 	MobilePhone string `json:"mobile_phone,omitempty"`
-	Source      string `json:"source,omitempty"`
+
+	// Import source
+	Source string `json:"source,omitempty"`
 }
 
 // Short contact representation
