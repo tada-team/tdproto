@@ -91,6 +91,10 @@ var pathsTemplate = template.Must(template.New("rstPath").Parse(`
 
 func generateSpecRst(path string, spec api_paths.HttpSpec, method string) error {
 
+	if spec.Description == "" {
+		return fmt.Errorf("path %s %s missing description", method, path)
+	}
+
 	isArray := reflect.TypeOf(spec.Responce).Kind() == reflect.Slice
 
 	var resultObjectName string
