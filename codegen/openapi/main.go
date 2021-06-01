@@ -105,19 +105,11 @@ func generateOpenApiRoot(tdInfo *codegen.TdInfo) (openApiRoot, error) {
 		return root, err
 	}
 
-	err = addPaths(&root, api_paths.TeamPaths)
-	if err != nil {
-		return root, err
-	}
-
-	err = addPaths(&root, api_paths.ChatPaths)
-	if err != nil {
-		return root, err
-	}
-
-	err = addPaths(&root, api_paths.GroupPaths)
-	if err != nil {
-		return root, err
+	for _, pathCollection := range api_paths.AllPaths {
+		err = addPaths(&root, pathCollection)
+		if err != nil {
+			return root, err
+		}
 	}
 
 	return root, nil
