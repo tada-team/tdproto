@@ -33,14 +33,6 @@ func IsoDatetime(dt time.Time) string {
 	return strings.Replace(s, "+0000", "Z", 1)
 }
 
-func NullableIsoDatetime(dt *time.Time) *string {
-	if dt == nil {
-		return nil
-	}
-	v := IsoDatetime(*dt)
-	return &v
-}
-
 func ConfirmId() string {
 	return randomSymbols(12, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
 }
