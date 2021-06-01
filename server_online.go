@@ -44,7 +44,7 @@ type OnlineCall struct {
 	Uid string `json:"uid"`
 
 	// Call start
-	Start *ISODateTimeString `json:"start,omitempty"`
+	Start ISODateTimeString `json:"start,omitempty"`
 
 	// Number participants in call
 	OnlineCount int `json:"online_count,omitempty"`

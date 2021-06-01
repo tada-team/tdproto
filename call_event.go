@@ -1,18 +1,36 @@
 package tdproto
 
-// Audio call information
+// Call information
 type CallEvent struct {
-	// Call start
-	Start *ISODateTimeString `json:"start"`
+	// Chat or contact id
+	Jid JID `json:"jid"`
+
+	// Call id
+	Uid string `json:"uid"`
+
+	// Call buzzing
+	Buzz bool `json:"buzz,omitempty"`
+
+	// Creation date, iso datetime
+	Created ISODateTimeString `json:"created"`
+
+	// Call start. For direct calls can be empty when buzzing
+	Start ISODateTimeString `json:"start,omitempty"`
 
 	// Call finish
-	Finish *ISODateTimeString `json:"finish"`
+	Finish ISODateTimeString `json:"finish,omitempty"`
 
 	// Call record enabled
 	Audiorecord bool `json:"audiorecord"`
 
 	// Call participants
 	Onliners []CallOnliner `json:"onliners,omitempty"`
+
+	// Version
+	Gentime int64 `json:"gentime"`
+
+	// Deprecated: use gentime or created
+	Timestamp int64 `json:"timestamp"`
 }
 
 // Call participant
