@@ -32,25 +32,22 @@ var TeamPaths = []PathSpec{
 	{
 		Path: "/api/v4/teams/{team_id}/chats",
 		Get: &HttpSpec{
-			Responce:            []tdproto.Chat{},
-			Description:         "Get the list of chats in the team.",
-			ResponceDescription: "List of :ref:`tdproto-Chat` objects.",
+			Responce:    []tdproto.Chat{},
+			Description: "Get the list of chats in the team.",
 		},
 	},
 	{
 		Path: "/api/v4/teams/{team_id}/contacts",
 		Get: &HttpSpec{
-			Responce:            []tdproto.Contact{},
-			Description:         "Get the list of contacts of the team.",
-			ResponceDescription: "List of :ref:`tdproto-Contact` objects.",
+			Responce:    []tdproto.Contact{},
+			Description: "Get the list of contacts of the team.",
 		},
 	},
 	{
 		Path: "/api/v4/teams/{team_id}/contacts/{contact_id}",
 		Get: &HttpSpec{
-			Responce:            tdproto.Contact{},
-			Description:         "Get contact details.",
-			ResponceDescription: "The :ref:`tdproto-Contact` object.",
+			Responce:    tdproto.Contact{},
+			Description: "Get contact details.",
 		},
 		Post: &HttpSpec{
 			Request:             tdproto.Contact{},

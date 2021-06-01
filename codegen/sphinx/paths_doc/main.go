@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"reflect"
@@ -69,7 +70,7 @@ func (p pathDoc) ToResultText() string {
 	}
 
 	if p.ResultIsArray {
-		return fmt.Sprintf("Array of :ref:`tdproto-%s` objects.", p.ResultObjectName)
+		return fmt.Sprintf("List of :ref:`tdproto-%s` objects.", p.ResultObjectName)
 	} else {
 		return fmt.Sprintf("The :ref:`tdproto-%s` object.", p.ResultObjectName)
 	}
@@ -124,9 +125,24 @@ func generateSpecRst(path string, spec api_paths.HttpSpec, method string) error 
 	return nil
 }
 
-func generatePathsRst() error {
+func generatePathsRst(pathCollectionName string) error {
 
-	for _, spec := range api_paths.TeamPaths {
+	specCollection, found := api_paths.AllPaths[pathCollectionName]
+	if !found {
+		return fmt.Errorf("path collection not found %v", pathCollectionName)
+	}
+
+	collectionTitle, found := api_paths.PathTitles[pathCollectionName]
+	if !found {
+		return fmt.Errorf("no title found for collection %s", pathCollectionName)
+	}
+
+	fmt.Fprintf(os.Stdout, `%s
+----------------------------------------------
+`,
+		collectionTitle)
+
+	for _, spec := range specCollection {
 		if spec.Get != nil {
 			err := generateSpecRst(spec.Path, *spec.Get, "get")
 			if err != nil {
@@ -157,7 +173,10 @@ func generatePathsRst() error {
 }
 
 func main() {
-	err := generatePathsRst()
+	flag.Parse()
+	arg := flag.Arg(0)
+
+	err := generatePathsRst(arg)
 	if err != nil {
 		panic(err)
 	}
