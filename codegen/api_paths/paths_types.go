@@ -3,7 +3,7 @@ package api_paths
 type HttpSpec struct {
 	Request             interface{}
 	Responce            interface{}
-	Description         string
+	Description         interface{}
 	ResponceDescription string
 	RequestDescription  string
 }

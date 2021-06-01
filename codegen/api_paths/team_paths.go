@@ -19,14 +19,14 @@ var TeamPaths = []PathSpec{
 		Put: &HttpSpec{
 			Request:             tdproto.Team{},
 			Responce:            tdproto.Team{},
+			Description:         []string{"Update team settings.", "Must have admin rights."},
 			RequestDescription:  ":ref:`tdproto-Team` object with updated fields.",
 			ResponceDescription: "Updated :ref:`tdproto-Team` object of the team.",
-			Description:         "Update team settings. Must have admin rights.",
 		},
 		Delete: &HttpSpec{
 			Responce:            tdproto.Team{},
 			ResponceDescription: ":ref:`tdproto-Team` object of deleted team.",
-			Description:         "Delete the team. Must have admin rights.",
+			Description:         []string{"Delete the team.", "Must have admin rights."},
 		},
 	},
 	{
@@ -57,7 +57,7 @@ var TeamPaths = []PathSpec{
 		},
 		Delete: &HttpSpec{
 			Responce:            tdproto.Contact{},
-			Description:         "Remove contact from the team.",
+			Description:         []string{"Remove contact from the team.", "Must have admin rights."},
 			ResponceDescription: "Removed :ref:`tdproto-Contact` object.",
 		},
 	},

@@ -104,6 +104,17 @@ func generateSpecRst(path string, spec api_paths.HttpSpec, method string) error 
 		resultObjectName = reflect.TypeOf(spec.Responce).Name()
 	}
 
+	var description string
+	switch d := reflect.TypeOf(spec.Description).Kind(); d {
+	case reflect.String:
+		description = spec.Description.(string)
+	case reflect.Slice:
+		if reflect.TypeOf(spec.Description).Elem().Kind() != reflect.String {
+			return fmt.Errorf("path %s %s description is not slice of strings", method, path)
+		}
+		description = strings.Join(spec.Description.([]string), "\n\n  ")
+	}
+
 	var requestObjectName string
 	if spec.Request != nil {
 		requestObjectName = reflect.TypeOf(spec.Request).Name()
@@ -115,7 +126,7 @@ func generateSpecRst(path string, spec api_paths.HttpSpec, method string) error 
 	err := pathsTemplate.Execute(os.Stdout, pathDoc{
 		Path:               path,
 		MethodName:         method,
-		Description:        spec.Description,
+		Description:        description,
 		RequestDescription: spec.RequestDescription,
 		RequestObjectName:  requestObjectName,
 		ResultDescription:  spec.ResponceDescription,
