@@ -198,6 +198,24 @@ func interfaceToOaContents(someData interface{}, newContents *openApiContents, w
 	return nil
 }
 
+func getDescription(method api_paths.HttpSpec) string {
+	if method.Description == nil {
+		return ""
+	}
+
+	switch d := reflect.TypeOf(method.Description).Kind(); d {
+	case reflect.String:
+		return method.Description.(string)
+	case reflect.Slice:
+		if reflect.TypeOf(method.Description).Elem().Kind() != reflect.String {
+			return ""
+		}
+		return strings.Join(method.Description.([]string), "\n")
+	}
+
+	return ""
+}
+
 func convertPathSpecMethod(method api_paths.HttpSpec, operation **openApiOperation) error {
 	getRepsonce := openApiResponse{}
 	err := interfaceToOaContents(method.Responce, &getRepsonce.Content, true)
@@ -209,6 +227,7 @@ func convertPathSpecMethod(method api_paths.HttpSpec, operation **openApiOperati
 		Responses: map[string]openApiResponse{
 			"200": getRepsonce,
 		},
+		Description: getDescription(method),
 	}
 
 	if method.Request != nil {
