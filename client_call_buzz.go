@@ -13,6 +13,6 @@ type clientCallBuzzParams struct {
 	// Chat or contact id
 	Jid JID `json:"jid"`
 
-	// List of call participants
+	// List of call participants. Empty value means all participants in call
 	Members []JID `json:"members,omitempty"`
 }
