@@ -1,22 +1,16 @@
 package tdapi
 
-import (
-	"strings"
-
-	"github.com/tada-team/tdproto/tdapi/openapi"
-)
-
-var paths = make(map[string]openapi.Path)
-
-func GetPaths() map[string]openapi.Path {
-	return paths
+type PathSpec struct {
+	Input  interface{}
+	Output interface{}
 }
 
-func register(path string, spec openapi.Path) {
-	path = strings.ReplaceAll(path, "[", "{")
-	path = strings.ReplaceAll(path, "]", "}")
-	if _, ok := paths[path]; ok {
+var Paths = make(map[string]PathSpec)
+
+func registerPath(path string, spec PathSpec) {
+
+	if _, ok := Paths[path]; ok {
 		panic("path already registered")
 	}
-	paths[path] = spec
+	Paths[path] = spec
 }

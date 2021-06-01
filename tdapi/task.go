@@ -29,8 +29,11 @@ type TaskFilter struct {
 	//* ?sort = [ "created" | "-created" | "last_message" | "-last_message" | "deadline" | "-deadline" ]
 	Sort string `schema:"sort"`
 
-	//* ?task_status = ["new" | "done" ]
+	//* ?task_status = new,done | new | any
 	TaskStatus string `schema:"task_status"`
+
+	//* ?exclude_task_status = new,done | new | any
+	ExcludeTaskStatus string `schema:"exclude_task_status"`
 
 	//* ?num=num1,num2,num3...
 	Num string `schema:"num"`
@@ -48,7 +51,7 @@ type TaskFilter struct {
 	Owner string `schema:"owner"`
 
 	//* ?section=[ uid,uid... | "-" ]
-	Section string `schema:"section"`
+	Section string `schema:"section"` // TODO: rename to ?project=
 
 	//* ?tag=[ tag,tag,tag... | "-" ]
 	Tag string `schema:"tag"`
