@@ -23,7 +23,7 @@ type serverCallAnswerParams struct {
 	Jid JID `json:"jid"`
 
 	// List of ICE candidates (when trickle = false)
-	Candidates []serverCallAnswerCandidate `json:"candidates"`
+	Candidates []serverCallAnswerCandidate `json:"candidates,omitempty"`
 
 	// Current call participants
 	Onliners []CallOnliner `json:"onliners,omitempty"`
