@@ -36,4 +36,23 @@ var ChatPaths = []PathSpec{
 			Description: "Delete message.",
 		},
 	},
+	{
+		Path: "/api/v4/teams/{team_id}/chats/{contact_id}/messages",
+		Post: &HttpSpec{
+			Request:     tdproto.Message{},
+			Description: "Send text message to direct chat.",
+		},
+	},
+	{
+		Path: "/api/v4/teams/{team_id}/chats/{contact_id}/messages/{message_id}",
+		Post: &HttpSpec{
+			Request:     tdproto.Message{},
+			Responce:    tdproto.Message{},
+			Description: "Edit message in direct chat.",
+		},
+		Delete: &HttpSpec{
+			Responce:    tdproto.Message{},
+			Description: "Delete message in direct chat.",
+		},
+	},
 }
