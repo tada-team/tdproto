@@ -26,9 +26,9 @@ func (p pathDoc) ToSwaggerUrl() string {
 
 	suffix := fmt.Sprintf(
 		"%s%s", p.MethodName,
-		strings.ReplaceAll(strings.ReplaceAll(
+		strings.ReplaceAll(strings.ReplaceAll(strings.ReplaceAll(
 			strings.ReplaceAll(p.Path, "/", "_"),
-			"{", "_"), "}", "_"))
+			"{", "_"), "}", "_"), ".", "_"))
 
 	return fmt.Sprintf("`🔍 Try it! <https://tada-team.github.io/td-swagger-ui/#/default/%s>`__", suffix)
 }
