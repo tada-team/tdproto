@@ -63,7 +63,7 @@ func generateMarkdown(tdprotoInfo *codegen.TdInfo) error {
 	_, _ = fmt.Fprintln(os.Stdout, "## Structures")
 
 	for _, tdStructInfo := range tdprotoInfo.TdStructs {
-		if tdStructInfo.Help == "MISSING CLASS DOCUMENTATION" {
+		if tdStructInfo.Help == "" {
 			continue
 		}
 
@@ -80,7 +80,7 @@ func generateMarkdown(tdprotoInfo *codegen.TdInfo) error {
 		}
 
 		for _, field := range allfields {
-			if field.Help == "DOCUMENTATION MISSING" {
+			if field.Help == "" {
 				continue
 			}
 

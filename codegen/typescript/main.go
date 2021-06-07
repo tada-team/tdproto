@@ -73,6 +73,22 @@ type TypeScriptInfo struct {
 	SumTypes     []TypeScriptSumType
 }
 
+func getHelpClass(input string) string {
+	if input != "" {
+		return input
+	} else {
+		return "MISSING CLASS DOCUMENTATION"
+	}
+}
+
+func getHelpField(input string) string {
+	if input != "" {
+		return input
+	} else {
+		return "DOCUMENTATION MISSING"
+	}
+}
+
 func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) (tsInfo TypeScriptInfo, err error) {
 	var unwrapStructArrays = make(map[string]string)
 	var enumTypes = make(map[string]string)
@@ -119,7 +135,7 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) (tsInfo TypeScr
 	for _, tdprotoStructInfo := range tdprotoInfo.TdStructs {
 		tsNewClass := TypeScriptClassInfo{
 			Name: codegen.UppercaseFirstLetter(tdprotoStructInfo.Name),
-			Help: tdprotoStructInfo.Help,
+			Help: getHelpClass(tdprotoStructInfo.Help),
 		}
 
 		var tdprotoFields []codegen.TdStructField
@@ -171,7 +187,7 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) (tsInfo TypeScr
 				TypeName:       tsTypeName,
 				IsNotPrimitive: isNotPrimitive,
 				IsList:         isList,
-				Help:           tdprotoStructField.Help,
+				Help:           getHelpField(tdprotoStructField.Help),
 			})
 		}
 

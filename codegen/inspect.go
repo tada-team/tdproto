@@ -291,8 +291,7 @@ func parseTypeDefinition(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, type
 
 func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, structInfo *ast.StructType, helpString string, fileName string) error {
 	if helpString == "" {
-		errorLogger.Printf("WARN: TdStruct missing a doc string %+v", structInfo)
-		helpString = "MISSING CLASS DOCUMENTATION"
+		errorLogger.Printf("WARN: TdStruct missing a doc string %+v in file %s", structInfo, fileName)
 	}
 
 	if strings.HasPrefix(strings.ToLower(helpString), "deprecated") {
@@ -414,10 +413,6 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 		if fieldTypeStr == "" {
 			return fmt.Errorf("empty field name %s of %s", structName, fieldName)
 
-		}
-
-		if fieldDoc == "" {
-			fieldDoc = "DOCUMENTATION MISSING"
 		}
 
 		_, isPrimitive := GolangPrimitiveTypes[fieldTypeStr]

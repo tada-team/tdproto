@@ -128,7 +128,7 @@ func generateRstJson(tdprotoInfo *codegen.TdInfo) error {
 	var jsonObjects []rstJsonStruct
 
 	for _, tdStruct := range tdprotoInfo.TdStructs {
-		if tdStruct.Help == "MISSING CLASS DOCUMENTATION" {
+		if tdStruct.Help == "" {
 			// Do not print structures without help
 			continue
 		}
