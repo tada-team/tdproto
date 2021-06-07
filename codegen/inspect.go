@@ -114,6 +114,18 @@ func (tds TdStruct) GetStructAnonymousStructs(tdInfo *TdInfo) []TdStruct {
 	return anonymousStructs
 }
 
+func (tds TdStruct) GetAllJsonFields(tdInfo *TdInfo) []TdStructField {
+	var allFields []TdStructField
+
+	allFields = append(allFields, tds.Fields...)
+
+	for _, anonStruct := range tds.GetStructAnonymousStructs(tdInfo) {
+		allFields = append(allFields, anonStruct.Fields...)
+	}
+
+	return allFields
+}
+
 func ParseTdproto() (infoToFill *TdInfo, err error) {
 	tdprotoFileSet := token.NewFileSet()
 

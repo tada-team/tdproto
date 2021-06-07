@@ -138,23 +138,7 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) (tsInfo TypeScr
 			Help: getHelpClass(tdprotoStructInfo.Help),
 		}
 
-		var tdprotoFields []codegen.TdStructField
-
-		// Add fields defined in the struct body
-		tdprotoFields = append(tdprotoFields, tdprotoStructInfo.Fields...)
-
-		// Insert anonymous fields
-		for _, anonymousFieldName := range tdprotoStructInfo.AnonnymousFields {
-			anonymousStruct, ok := tdprotoInfo.TdStructs[anonymousFieldName]
-			if !ok {
-				err = fmt.Errorf("anonymous struct missing %s", anonymousFieldName)
-				return
-			}
-
-			tdprotoFields = append(tdprotoFields, anonymousStruct.Fields...)
-		}
-
-		for _, tdprotoStructField := range tdprotoFields {
+		for _, tdprotoStructField := range tdprotoStructInfo.GetAllJsonFields(tdprotoInfo) {
 			if tdprotoStructField.IsNotSerialized {
 				continue
 			}

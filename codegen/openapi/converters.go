@@ -118,13 +118,7 @@ func addStructSchema(components map[string]openApiSchema, name string, tdInfo *c
 		Description: tdStructInfo.Help,
 	}
 
-	var allStructFields []codegen.TdStructField
-	allStructFields = append(allStructFields, tdStructInfo.Fields...)
-	for _, anonStruct := range tdStructInfo.GetStructAnonymousStructs(tdInfo) {
-		allStructFields = append(allStructFields, anonStruct.Fields...)
-	}
-
-	for _, tdField := range allStructFields {
+	for _, tdField := range tdStructInfo.GetAllJsonFields(tdInfo) {
 		prop := schemaFromTdField(tdField)
 
 		schema.Properties[tdField.JsonName] = prop

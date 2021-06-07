@@ -72,14 +72,7 @@ func generateMarkdown(tdprotoInfo *codegen.TdInfo) error {
 			Fields:   make([]markdownStructField, 0),
 		}
 
-		allfields := make([]codegen.TdStructField, 0)
-		allfields = append(allfields, tdStructInfo.Fields...)
-
-		for _, anonStruct := range tdStructInfo.GetStructAnonymousStructs(tdprotoInfo) {
-			allfields = append(allfields, anonStruct.Fields...)
-		}
-
-		for _, field := range allfields {
+		for _, field := range tdStructInfo.GetAllJsonFields(tdprotoInfo) {
 			if field.Help == "" {
 				continue
 			}
