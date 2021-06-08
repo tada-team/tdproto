@@ -21,11 +21,13 @@ var AllPaths = map[string][]PathSpec{
 	"team":  TeamPaths,
 	"chat":  ChatPaths,
 	"misc":  MiscPaths,
+	"task":  TaskPaths,
 }
 
 var PathTitles = map[string]string{
-	"group": "Group related paths.",
-	"team":  "Team related paths.",
-	"chat":  "Chat related paths.",
+	"group": "Group related paths",
+	"team":  "Team related paths",
+	"chat":  "Chat related paths",
 	"misc":  "Miscelaneos paths",
+	"task":  "Task related paths",
 }
