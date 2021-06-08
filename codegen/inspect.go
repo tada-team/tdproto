@@ -164,6 +164,14 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 		return nil, err
 	}
 
+	// Cherry picking
+	// Task
+	taskObject, ok := tdapiInfo.TdStructs["Task"]
+	if !ok {
+		return nil, fmt.Errorf("failed to cherry pick Task")
+	}
+	infoToFill.TdStructs["Task"] = taskObject
+
 	return infoToFill, nil
 }
 
