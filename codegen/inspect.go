@@ -166,13 +166,23 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 
 	// Cherry picking
 	// Task
-	taskObject, ok := tdapiInfo.TdStructs["Task"]
-	if !ok {
-		return nil, fmt.Errorf("failed to cherry pick Task")
+	err = cherryPick(infoToFill, tdapiInfo, "Task")
+	if err != nil {
+		return nil, err
 	}
-	infoToFill.TdStructs["Task"] = taskObject
 
 	return infoToFill, nil
+}
+
+func cherryPick(tdproto *TdInfo, tdapi *TdInfo, name string) error {
+
+	pickObject, ok := tdapi.TdStructs[name]
+	if !ok {
+		return fmt.Errorf("failed to cherry pick %s", name)
+	}
+	tdproto.TdStructs[name] = pickObject
+
+	return nil
 }
 
 func parseTdprotoAst(packageAst *ast.Package, infoToFill *TdInfo) error {
