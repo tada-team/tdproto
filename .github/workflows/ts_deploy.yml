@@ -43,5 +43,5 @@ jobs:
           git add --all
           git config --global user.email "action@github.com"
           git config --global user.name "Github Action"
-          git commit -m "Generate markdown on $(date)" --allow-empty
+          git commit -m "Generate typescript on $(date)" --allow-empty
           git push
