@@ -280,7 +280,7 @@ func addPathParameters(path string, newPath *openApiPath) error {
 	possibleParameters := []string{
 		"team_id", "contact_id",
 		"chat_id", "message_id",
-		"group_id"}
+		"group_id", "task_id"}
 
 	for _, paramString := range possibleParameters {
 		if strings.Contains(path, fmt.Sprintf("{%s}", paramString)) {

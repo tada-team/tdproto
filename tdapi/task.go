@@ -2,24 +2,42 @@ package tdapi
 
 import "github.com/tada-team/tdproto"
 
+// Task
 type Task struct {
-	CustomColorIndex *uint16       `json:"custom_color_index,omitempty"`
-	Description      string        `json:"description,omitempty"`
-	Tags             []string      `json:"tags,omitempty"`
-	SectionUid       string        `json:"section,omitempty"`
-	Observers        []tdproto.JID `json:"observers,omitempty"` // TODO: rename to "followers"
-	Items            []string      `json:"items,omitempty"`
-	Assignee         tdproto.JID   `json:"assignee,omitempty"`
-	Deadline         string        `json:"deadline,omitempty"`
-	Public           bool          `json:"public,omitempty"`
-	RemindAt         string        `json:"remind_at,omitempty"`
-	TaskStatus       string        `json:"task_status,omitempty"`
-	Importance       *int          `json:"importance,omitempty"`
-	Urgency          *int          `json:"urgency,omitempty"`
-	Complexity       *int          `json:"complexity,omitempty"`
-	SpentTime        *int          `json:"spent_time,omitempty"`
-	LinkedMessages   []string      `json:"linked_messages,omitempty"` // TODO: Message object
-	Uploads          []string      `json:"uploads,omitempty"`
+	// Custom task color
+	CustomColorIndex *uint16 `json:"custom_color_index,omitempty"`
+	// Task description
+	Description string `json:"description,omitempty"`
+	// Task tags
+	Tags []string `json:"tags,omitempty"`
+	// Task section UID
+	SectionUid string `json:"section,omitempty"`
+	// User who follow the task
+	Observers []tdproto.JID `json:"observers,omitempty"` // TODO: rename to "followers"
+	// Items of the task
+	Items []string `json:"items,omitempty"`
+	// User who was assigned the task
+	Assignee tdproto.JID `json:"assignee,omitempty"`
+	// Deadline time
+	Deadline string `json:"deadline,omitempty"`
+	// Is task public
+	Public bool `json:"public,omitempty"`
+	// Fire a reminder at this time
+	RemindAt string `json:"remind_at,omitempty"`
+	// Task status
+	TaskStatus string `json:"task_status,omitempty"`
+	// Task importance
+	Importance *int `json:"importance,omitempty"`
+	// Task urgency
+	Urgency *int `json:"urgency,omitempty"`
+	// Task complexity
+	Complexity *int `json:"complexity,omitempty"`
+	// Time spent
+	SpentTime *int `json:"spent_time,omitempty"`
+	// Linked messages
+	LinkedMessages []string `json:"linked_messages,omitempty"` // TODO: Message object
+	// Task uploads
+	Uploads []string `json:"uploads,omitempty"`
 }
 
 type TaskFilter struct {

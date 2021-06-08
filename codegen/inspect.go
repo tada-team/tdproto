@@ -5,6 +5,7 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
+	"os"
 	"path"
 	"reflect"
 	"strings"
@@ -141,18 +142,62 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 	}
 
 	tdprotoAst := tdprotoNameToAstMap["tdproto"]
-	for fileName, fileAst := range tdprotoAst.Files {
+	err = parseTdprotoAst(tdprotoAst, infoToFill)
+	if err != nil {
+		return nil, err
+	}
+
+	tdapiFileSet := token.NewFileSet()
+	tdapiNameToAstMap, err := extractTdapiAst(tdapiFileSet)
+	if err != nil {
+		return nil, err
+	}
+
+	tdapiInfo := new(TdInfo)
+	tdapiInfo.TdEvents = make(map[string]string)
+	tdapiInfo.TdStructs = make(map[string]TdStruct)
+	tdapiInfo.TdTypes = make(map[string]TdType)
+	tdapiInfo.TdMapTypes = make(map[string]TdMapType)
+
+	err = parseTdprotoAst(tdapiNameToAstMap["tdapi"], tdapiInfo)
+	if err != nil {
+		return nil, err
+	}
+
+	// Cherry picking
+	// Task
+	err = cherryPick(infoToFill, tdapiInfo, "Task")
+	if err != nil {
+		return nil, err
+	}
+
+	return infoToFill, nil
+}
+
+func cherryPick(tdproto *TdInfo, tdapi *TdInfo, name string) error {
+
+	pickObject, ok := tdapi.TdStructs[name]
+	if !ok {
+		return fmt.Errorf("failed to cherry pick %s", name)
+	}
+	tdproto.TdStructs[name] = pickObject
+
+	return nil
+}
+
+func parseTdprotoAst(packageAst *ast.Package, infoToFill *TdInfo) error {
+	for fileName, fileAst := range packageAst.Files {
 
 		basePath := path.Base(fileName)
 		basePathNoExt := strings.TrimRight(basePath, path.Ext(basePath))
 
-		err = ParseTdprotoFile(infoToFill, basePathNoExt, fileAst)
+		err := ParseTdprotoFile(infoToFill, basePathNoExt, fileAst)
 		if err != nil {
-			return infoToFill, err
+			return err
 		}
 	}
 
-	return infoToFill, nil
+	return nil
 }
 
 func ParseTdprotoFile(infoToFill *TdInfo, fileName string, fileAst *ast.File) error {
@@ -389,6 +434,8 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 				fieldTypeStr = arrayTypeAst.Name
 			case *ast.InterfaceType:
 				fieldTypeStr = "interface{}"
+			case *ast.SelectorExpr:
+				fieldTypeStr = parseSelectorAst(arrayTypeAst)
 			default:
 				return fmt.Errorf("unknown array type %#v", arrayTypeAst)
 			}
@@ -418,6 +465,9 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 			fieldTypeStr = parseSelectorAst(fieldTypeAst)
 		case *ast.InterfaceType:
 			fieldTypeStr = "interface{}"
+		case *ast.MapType:
+			fmt.Fprint(os.Stderr, "TODO: support maps as field types")
+			continue
 		default:
 			return fmt.Errorf("unknown field of %s type %#v", structName, fieldTypeAst)
 		}
@@ -521,12 +571,20 @@ func parseStarAst(starAst *ast.StarExpr) (string, error) {
 func parseSelectorAst(selectorNode *ast.SelectorExpr) string {
 	expresionIdent := selectorNode.X.(*ast.Ident)
 	expressionStr := expresionIdent.Name
+	if expressionStr == "tdproto" { // HACK: when tdapi references tdproto
+		return selectorNode.Sel.Name
+	}
 	return expressionStr + "." + selectorNode.Sel.Name
 }
 
 func extractTdprotoAst(fileSet *token.FileSet) (map[string]*ast.Package, error) {
 	tdProtoPath := tdproto.SourceDir()
 	return parser.ParseDir(fileSet, tdProtoPath, nil, parser.ParseComments)
+}
+
+func extractTdapiAst(fileSet *token.FileSet) (map[string]*ast.Package, error) {
+	tdProtoPath := tdproto.SourceDir()
+	return parser.ParseDir(fileSet, path.Join(tdProtoPath, "tdapi"), nil, parser.ParseComments)
 }
 
 func cleanHelp(s string) string {
