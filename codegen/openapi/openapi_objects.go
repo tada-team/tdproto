@@ -56,6 +56,7 @@ type openApiOperation struct {
 	Description string                     `json:"description,omitempty"`
 	Responses   map[string]openApiResponse `json:"responses,omitempty"`
 	RequestBody *openApiRequestBody        `json:"requestBody,omitempty"`
+	Security    []map[string][]string      `json:"security,omitempty"`
 }
 
 type openApiPath struct {

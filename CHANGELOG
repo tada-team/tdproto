@@ -1,0 +1,3 @@
+v1.32
+ - features.calls deprecated. Use features.calls_version: (0 = disabled, 1 = audio only, 2 = audio+video)
+ - features.min_app_version deprecated. Use features.min_ios_version, features.min_android_version

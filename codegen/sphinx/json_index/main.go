@@ -88,6 +88,15 @@ var typeAliasTemplate = template.Must(template.New("rstType").Parse(`
 
 `))
 
+func isEventStruct(structName string, tdprotoInfo *codegen.TdInfo) bool {
+	if structName == "BaseEvent" {
+		return true
+	}
+
+	_, isEvent := tdprotoInfo.TdEvents[structName]
+	return isEvent
+}
+
 func generateRstJson(tdprotoInfo *codegen.TdInfo) error {
 
 	enumedTypeAliases := make(map[string]string)
@@ -128,7 +137,7 @@ func generateRstJson(tdprotoInfo *codegen.TdInfo) error {
 	var jsonObjects []rstJsonStruct
 
 	for _, tdStruct := range tdprotoInfo.TdStructs {
-		if tdStruct.Help == "MISSING CLASS DOCUMENTATION" {
+		if tdStruct.Help == "" {
 			// Do not print structures without help
 			continue
 		}
@@ -138,45 +147,34 @@ func generateRstJson(tdprotoInfo *codegen.TdInfo) error {
 			continue
 		}
 
-		isEvent := tdStruct.Name == "BaseEvent"
+		if isEventStruct(tdStruct.Name, tdprotoInfo) {
+			continue
+		}
 
 		newRstJson := rstJsonStruct{
 			TdStruct: tdStruct,
 		}
 
-		for _, originalField := range tdStruct.Fields {
-			newRstJson.Fields = append(newRstJson.Fields, rstJsonField{
-				TdStructField: originalField,
-			})
-		}
-
-		for _, anonStruct := range tdStruct.GetStructAnonymousStructs(tdprotoInfo) {
-			if anonStruct.Name == "BaseEvent" {
-				isEvent = true
+		for _, field := range tdStruct.GetAllJsonFields(tdprotoInfo) {
+			if field.Help == "" {
+				field.Help = "DOCUMENTATION MISSING"
 			}
 
-			for _, anonStructField := range anonStruct.Fields {
-				newRstJson.Fields = append(newRstJson.Fields, rstJsonField{
-					TdStructField: anonStructField,
-				})
-			}
-		}
+			goFieldType := field.TypeStr
 
-		if isEvent {
-			continue
-		}
-
-		for i, field := range newRstJson.Fields {
-			goFieldType := field.TdStructField.TypeStr
-
-			primitiveType, ok := jsTypesMap[goFieldType]
-			if ok {
-				newRstJson.Fields[i].TypeStr = primitiveType
-				newRstJson.Fields[i].IsJsonPrimitive = true
+			var jsTypeStr string
+			primitiveType, isJsonPrimitive := jsTypesMap[goFieldType]
+			if isJsonPrimitive {
+				jsTypeStr = primitiveType
 			} else {
-				newRstJson.Fields[i].TypeStr = goFieldType
-				newRstJson.Fields[i].IsJsonPrimitive = false
+				jsTypeStr = goFieldType
 			}
+
+			newRstJson.Fields = append(newRstJson.Fields, rstJsonField{
+				TdStructField:   field,
+				IsJsonPrimitive: isJsonPrimitive,
+				TypeStr:         jsTypeStr,
+			})
 		}
 
 		jsonObjects = append(jsonObjects, newRstJson)

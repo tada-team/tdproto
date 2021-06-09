@@ -17,18 +17,18 @@ type pathDoc struct {
 	Description        string
 	RequestDescription string
 	RequestObjectName  string
-	ResultIsArray      bool
 	ResultDescription  string
 	ResultObjectName   string
+	ResultKind         reflect.Kind
 }
 
 func (p pathDoc) ToSwaggerUrl() string {
 
 	suffix := fmt.Sprintf(
 		"%s%s", p.MethodName,
-		strings.ReplaceAll(strings.ReplaceAll(
+		strings.ReplaceAll(strings.ReplaceAll(strings.ReplaceAll(
 			strings.ReplaceAll(p.Path, "/", "_"),
-			"{", "_"), "}", "_"))
+			"{", "_"), "}", "_"), ".", "_"))
 
 	return fmt.Sprintf("`🔍 Try it! <https://tada-team.github.io/td-swagger-ui/#/default/%s>`__", suffix)
 }
@@ -40,7 +40,7 @@ func (p pathDoc) ToParams() string {
 	possibleParameters := []string{
 		"team_id", "contact_id",
 		"chat_id", "message_id",
-		"group_id"}
+		"group_id", "task_id"}
 
 	for _, paramString := range possibleParameters {
 		if strings.Contains(p.Path, paramString) {
@@ -69,11 +69,24 @@ func (p pathDoc) ToResultText() string {
 		return p.ResultDescription
 	}
 
-	if p.ResultIsArray {
+	if p.ResultKind == reflect.Slice {
 		return fmt.Sprintf("List of :ref:`tdproto-%s` objects.", p.ResultObjectName)
 	} else {
 		return fmt.Sprintf("The :ref:`tdproto-%s` object.", p.ResultObjectName)
 	}
+}
+
+func (p pathDoc) ToResultType() string {
+	switch p.ResultKind {
+	case reflect.Slice:
+		return "array"
+	case reflect.Struct:
+		return "object"
+	case reflect.String:
+		return "string"
+	}
+
+	panic(fmt.Errorf("unknown result kind %v", p.ResultKind))
 }
 
 var pathsTemplate = template.Must(template.New("rstPath").Parse(`
@@ -85,21 +98,21 @@ var pathsTemplate = template.Must(template.New("rstPath").Parse(`
   {{.ToParams}}{{if .ToRequestText}}
   :reqjson object: {{.ToRequestText}}{{end}}
   :resjson boolean ok: True if no error occured.{{if .ResultObjectName}}
-  {{if .ResultIsArray}}:resjson array result:{{else}}:resjson object result:{{end}} {{.ToResultText}}{{end}}
+  :resjson {{.ToResultType}} result: {{.ToResultText}}{{end}}
   :status 200: No error.
 `))
 
-func generateSpecRst(path string, spec api_paths.HttpSpec, method string) error {
+func generateSpecRst(path string, spec api_paths.OperationSpec, method string) error {
 
 	if spec.Description == nil {
 		return fmt.Errorf("path %s %s missing description", method, path)
 	}
 
 	var resultObjectName string
-	var isArray bool
+	var resultKind reflect.Kind
 	if spec.Responce != nil {
-		isArray = reflect.TypeOf(spec.Responce).Kind() == reflect.Slice
-		if isArray {
+		resultKind = reflect.TypeOf(spec.Responce).Kind()
+		if resultKind == reflect.Slice {
 			resultObjectName = reflect.TypeOf(spec.Responce).Elem().Name()
 		} else {
 			resultObjectName = reflect.TypeOf(spec.Responce).Name()
@@ -118,8 +131,10 @@ func generateSpecRst(path string, spec api_paths.HttpSpec, method string) error 
 	}
 
 	var requestObjectName string
+
 	if spec.Request != nil {
-		requestObjectName = reflect.TypeOf(spec.Request).Name()
+		requestTypeOf := reflect.TypeOf(spec.Request)
+		requestObjectName = requestTypeOf.Name()
 		if requestObjectName == "" && spec.Request != nil {
 			return fmt.Errorf("failed to get request type name %v", spec.Request)
 		}
@@ -132,8 +147,8 @@ func generateSpecRst(path string, spec api_paths.HttpSpec, method string) error 
 		RequestDescription: spec.RequestDescription,
 		RequestObjectName:  requestObjectName,
 		ResultDescription:  spec.ResponceDescription,
-		ResultIsArray:      isArray,
 		ResultObjectName:   resultObjectName,
+		ResultKind:         resultKind,
 	})
 	if err != nil {
 		return err

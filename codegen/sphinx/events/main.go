@@ -73,21 +73,16 @@ func generateRstServerEvents(tdprotoInfo *codegen.TdInfo) (clientEvents []rstEve
 			}
 		}
 
-		for _, paramField := range paramsStruct.Fields {
-			event.Fields = append(event.Fields, rstEventField{
-				Name: paramField.JsonName,
-				Help: paramField.Help,
-			})
-		}
-
-		for _, anonStruct := range paramsStruct.GetStructAnonymousStructs(tdprotoInfo) {
-			for _, anonStructField := range anonStruct.Fields {
-				event.Fields = append(event.Fields, rstEventField{
-					Name: anonStructField.JsonName,
-					Help: anonStructField.Help,
-				})
+		for _, paramField := range paramsStruct.GetAllJsonFields(tdprotoInfo) {
+			fieldHelp := paramField.Help
+			if fieldHelp == "" {
+				fieldHelp = "DOCUMENTATION MISSING"
 			}
 
+			event.Fields = append(event.Fields, rstEventField{
+				Name: paramField.JsonName,
+				Help: fieldHelp,
+			})
 		}
 
 		sort.Slice(event.Fields, func(i, j int) bool {

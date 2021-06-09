@@ -63,7 +63,7 @@ func generateMarkdown(tdprotoInfo *codegen.TdInfo) error {
 	_, _ = fmt.Fprintln(os.Stdout, "## Structures")
 
 	for _, tdStructInfo := range tdprotoInfo.TdStructs {
-		if tdStructInfo.Help == "MISSING CLASS DOCUMENTATION" {
+		if tdStructInfo.Help == "" {
 			continue
 		}
 
@@ -72,15 +72,8 @@ func generateMarkdown(tdprotoInfo *codegen.TdInfo) error {
 			Fields:   make([]markdownStructField, 0),
 		}
 
-		allfields := make([]codegen.TdStructField, 0)
-		allfields = append(allfields, tdStructInfo.Fields...)
-
-		for _, anonStruct := range tdStructInfo.GetStructAnonymousStructs(tdprotoInfo) {
-			allfields = append(allfields, anonStruct.Fields...)
-		}
-
-		for _, field := range allfields {
-			if field.Help == "DOCUMENTATION MISSING" {
+		for _, field := range tdStructInfo.GetAllJsonFields(tdprotoInfo) {
+			if field.Help == "" {
 				continue
 			}
 

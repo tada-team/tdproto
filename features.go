@@ -40,8 +40,11 @@ type Features struct {
 	// Default UI theme
 	Theme string `json:"theme"`
 
-	// Minimal application version required for this server. Used for breaking changes
-	MinAppVersion string `json:"min_app_version"`
+	// Minimal iOS application version required for this server. Used for breaking changes
+	MinIOSVersion string `json:"min_ios_version"`
+
+	// Minimal android application version required for this server. Used for breaking changes
+	MinAndroidVersion string `json:"min_android_version"`
 
 	// Free registration allowed
 	FreeRegistration bool `json:"free_registration"`
@@ -169,8 +172,8 @@ type Features struct {
 	// Firebase settings for web-push notifications
 	FirebaseStorageBucket string `json:"firebase_storage_bucket"`
 
-	// Calls functions enabled
-	Calls bool `json:"calls"`
+	// Calls version. 0 = disabled, 1 = audio only, 2 = audio+video
+	CallsVersion int `json:"calls_version"`
 
 	// Calls functions enabled for mobile applications
 	MobileCalls bool `json:"mobile_calls"`
@@ -225,6 +228,12 @@ type Features struct {
 
 	// Deprecated
 	TaskTags bool `json:"task_tags"`
+
+	// Deprecated
+	Calls bool `json:"calls"`
+
+	// Deprecated
+	MinAppVersion string `json:"min_app_version"`
 }
 
 // Interactive Connectivity Establishment Server for WEB Rtc connection. Readonly.

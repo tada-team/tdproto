@@ -7,11 +7,11 @@ import "github.com/tada-team/tdproto"
 var ChatPaths = []PathSpec{
 	{
 		Path: "/api/v4/teams/{team_id}/chats/{chat_id}",
-		Get: &HttpSpec{
+		Get: &OperationSpec{
 			Responce:    tdproto.Chat{},
 			Description: "Get the chat information.",
 		},
-		Put: &HttpSpec{
+		Put: &OperationSpec{
 			Request:     tdproto.Chat{},
 			Responce:    tdproto.Chat{},
 			Description: "Change chat settings.",
@@ -19,21 +19,40 @@ var ChatPaths = []PathSpec{
 	},
 	{
 		Path: "/api/v4/teams/{team_id}/chats/{chat_id}/messages",
-		Post: &HttpSpec{
+		Post: &OperationSpec{
 			Request:     tdproto.Message{},
 			Description: "Send text message to chat.",
 		},
 	},
 	{
 		Path: "/api/v4/teams/{team_id}/chats/{chat_id}/messages/{message_id}",
-		Post: &HttpSpec{
+		Post: &OperationSpec{
 			Request:     tdproto.Message{},
 			Responce:    tdproto.Message{},
 			Description: "Edit message.",
 		},
-		Delete: &HttpSpec{
+		Delete: &OperationSpec{
 			Responce:    tdproto.Message{},
 			Description: "Delete message.",
+		},
+	},
+	{
+		Path: "/api/v4/teams/{team_id}/chats/{contact_id}/messages",
+		Post: &OperationSpec{
+			Request:     tdproto.Message{},
+			Description: "Send text message to direct chat.",
+		},
+	},
+	{
+		Path: "/api/v4/teams/{team_id}/chats/{contact_id}/messages/{message_id}",
+		Post: &OperationSpec{
+			Request:     tdproto.Message{},
+			Responce:    tdproto.Message{},
+			Description: "Edit message in direct chat.",
+		},
+		Delete: &OperationSpec{
+			Responce:    tdproto.Message{},
+			Description: "Delete message in direct chat.",
 		},
 	},
 }

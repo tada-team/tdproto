@@ -118,13 +118,7 @@ func addStructSchema(components map[string]openApiSchema, name string, tdInfo *c
 		Description: tdStructInfo.Help,
 	}
 
-	var allStructFields []codegen.TdStructField
-	allStructFields = append(allStructFields, tdStructInfo.Fields...)
-	for _, anonStruct := range tdStructInfo.GetStructAnonymousStructs(tdInfo) {
-		allStructFields = append(allStructFields, anonStruct.Fields...)
-	}
-
-	for _, tdField := range allStructFields {
+	for _, tdField := range tdStructInfo.GetAllJsonFields(tdInfo) {
 		prop := schemaFromTdField(tdField)
 
 		schema.Properties[tdField.JsonName] = prop
@@ -173,6 +167,8 @@ func interfaceToOaContents(someData interface{}, newContents *openApiContents, w
 			resultSchema.Items = &openApiSchema{
 				openApiRef: schemaRef(dataType.Elem().Name()),
 			}
+		case reflect.String:
+			resultSchema.Type = openApiString
 		default:
 			return fmt.Errorf("cannot convert data to OpenApi %#v", someData)
 		}
@@ -198,7 +194,7 @@ func interfaceToOaContents(someData interface{}, newContents *openApiContents, w
 	return nil
 }
 
-func getDescription(method api_paths.HttpSpec) string {
+func getDescription(method api_paths.OperationSpec) string {
 	if method.Description == nil {
 		return ""
 	}
@@ -216,7 +212,7 @@ func getDescription(method api_paths.HttpSpec) string {
 	return ""
 }
 
-func convertPathSpecMethod(method api_paths.HttpSpec, operation **openApiOperation) error {
+func convertPathSpecMethod(method api_paths.OperationSpec, operation **openApiOperation) error {
 	getRepsonce := openApiResponse{}
 	err := interfaceToOaContents(method.Responce, &getRepsonce.Content, true)
 	if err != nil {
@@ -239,6 +235,10 @@ func convertPathSpecMethod(method api_paths.HttpSpec, operation **openApiOperati
 		}
 
 		(*operation).RequestBody = &requestBody
+	}
+
+	if method.SecurityIsOptional {
+		(*operation).Security = []map[string][]string{{}}
 	}
 
 	return nil
@@ -284,7 +284,7 @@ func addPathParameters(path string, newPath *openApiPath) error {
 	possibleParameters := []string{
 		"team_id", "contact_id",
 		"chat_id", "message_id",
-		"group_id"}
+		"group_id", "task_id"}
 
 	for _, paramString := range possibleParameters {
 		if strings.Contains(path, fmt.Sprintf("{%s}", paramString)) {

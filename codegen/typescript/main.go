@@ -73,6 +73,22 @@ type TypeScriptInfo struct {
 	SumTypes     []TypeScriptSumType
 }
 
+func getHelpClass(input string) string {
+	if input != "" {
+		return input
+	} else {
+		return "MISSING CLASS DOCUMENTATION"
+	}
+}
+
+func getHelpField(input string) string {
+	if input != "" {
+		return input
+	} else {
+		return "DOCUMENTATION MISSING"
+	}
+}
+
 func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) (tsInfo TypeScriptInfo, err error) {
 	var unwrapStructArrays = make(map[string]string)
 	var enumTypes = make(map[string]string)
@@ -119,26 +135,10 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) (tsInfo TypeScr
 	for _, tdprotoStructInfo := range tdprotoInfo.TdStructs {
 		tsNewClass := TypeScriptClassInfo{
 			Name: codegen.UppercaseFirstLetter(tdprotoStructInfo.Name),
-			Help: tdprotoStructInfo.Help,
+			Help: getHelpClass(tdprotoStructInfo.Help),
 		}
 
-		var tdprotoFields []codegen.TdStructField
-
-		// Add fields defined in the struct body
-		tdprotoFields = append(tdprotoFields, tdprotoStructInfo.Fields...)
-
-		// Insert anonymous fields
-		for _, anonymousFieldName := range tdprotoStructInfo.AnonnymousFields {
-			anonymousStruct, ok := tdprotoInfo.TdStructs[anonymousFieldName]
-			if !ok {
-				err = fmt.Errorf("anonymous struct missing %s", anonymousFieldName)
-				return
-			}
-
-			tdprotoFields = append(tdprotoFields, anonymousStruct.Fields...)
-		}
-
-		for _, tdprotoStructField := range tdprotoFields {
+		for _, tdprotoStructField := range tdprotoStructInfo.GetAllJsonFields(tdprotoInfo) {
 			if tdprotoStructField.IsNotSerialized {
 				continue
 			}
@@ -171,7 +171,7 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) (tsInfo TypeScr
 				TypeName:       tsTypeName,
 				IsNotPrimitive: isNotPrimitive,
 				IsList:         isList,
-				Help:           tdprotoStructField.Help,
+				Help:           getHelpField(tdprotoStructField.Help),
 			})
 		}
 
