@@ -194,7 +194,7 @@ func interfaceToOaContents(someData interface{}, newContents *openApiContents, w
 	return nil
 }
 
-func getDescription(method api_paths.HttpSpec) string {
+func getDescription(method api_paths.OperationSpec) string {
 	if method.Description == nil {
 		return ""
 	}
@@ -212,7 +212,7 @@ func getDescription(method api_paths.HttpSpec) string {
 	return ""
 }
 
-func convertPathSpecMethod(method api_paths.HttpSpec, operation **openApiOperation) error {
+func convertPathSpecMethod(method api_paths.OperationSpec, operation **openApiOperation) error {
 	getRepsonce := openApiResponse{}
 	err := interfaceToOaContents(method.Responce, &getRepsonce.Content, true)
 	if err != nil {

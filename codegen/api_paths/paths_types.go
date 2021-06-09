@@ -1,6 +1,6 @@
 package api_paths
 
-type HttpSpec struct {
+type OperationSpec struct {
 	Request             interface{}
 	Responce            interface{}
 	Description         interface{}
@@ -10,10 +10,10 @@ type HttpSpec struct {
 
 type PathSpec struct {
 	Path   string
-	Get    *HttpSpec
-	Put    *HttpSpec
-	Delete *HttpSpec
-	Post   *HttpSpec
+	Get    *OperationSpec
+	Put    *OperationSpec
+	Delete *OperationSpec
+	Post   *OperationSpec
 }
 
 var AllPaths = map[string][]PathSpec{

@@ -7,7 +7,7 @@ import (
 var TaskPaths = []PathSpec{
 	{
 		Path: "/api/v4/teams/{team_id}/tasks",
-		Post: &HttpSpec{
+		Post: &OperationSpec{
 			Request:     tdapi.Task{},
 			Responce:    tdapi.Task{},
 			Description: "Create new task",

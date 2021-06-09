@@ -102,7 +102,7 @@ var pathsTemplate = template.Must(template.New("rstPath").Parse(`
   :status 200: No error.
 `))
 
-func generateSpecRst(path string, spec api_paths.HttpSpec, method string) error {
+func generateSpecRst(path string, spec api_paths.OperationSpec, method string) error {
 
 	if spec.Description == nil {
 		return fmt.Errorf("path %s %s missing description", method, path)

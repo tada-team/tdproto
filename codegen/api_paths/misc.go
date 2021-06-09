@@ -5,7 +5,7 @@ import "github.com/tada-team/tdproto"
 var MiscPaths = []PathSpec{
 	{
 		Path: "/api/v4/addr",
-		Get: &HttpSpec{
+		Get: &OperationSpec{
 			Responce:            "",
 			Description:         "Returns client address for debuging purposes.",
 			ResponceDescription: "Address of the server.",
@@ -13,7 +13,7 @@ var MiscPaths = []PathSpec{
 	},
 	{
 		Path: "/api/v4/ping",
-		Get: &HttpSpec{
+		Get: &OperationSpec{
 			Responce:            "",
 			Description:         "Ping the server.",
 			ResponceDescription: "Set to ``\"pong\"``.",
@@ -21,7 +21,7 @@ var MiscPaths = []PathSpec{
 	},
 	{
 		Path: "/features.json",
-		Get: &HttpSpec{
+		Get: &OperationSpec{
 			Responce:    tdproto.Features{},
 			Description: "Get the server features information.",
 		},
