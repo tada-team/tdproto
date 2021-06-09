@@ -13,4 +13,20 @@ var TaskPaths = []PathSpec{
 			Description: "Create new task",
 		},
 	},
+	{
+		Path: "/api/v4/teams/{team_id}/tasks/{task_id}",
+		Get: &OperationSpec{
+			Responce:    tdapi.Task{},
+			Description: "Get task",
+		},
+		Post: &OperationSpec{
+			Request:     tdapi.Task{},
+			Responce:    tdapi.Task{},
+			Description: "Update task",
+		},
+		Delete: &OperationSpec{
+			Responce:    tdapi.Task{},
+			Description: "Delete task",
+		},
+	},
 }
