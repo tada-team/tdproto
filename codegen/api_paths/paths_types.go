@@ -6,6 +6,7 @@ type OperationSpec struct {
 	Description         interface{}
 	ResponceDescription string
 	RequestDescription  string
+	SecurityIsOptional  bool
 }
 
 type PathSpec struct {

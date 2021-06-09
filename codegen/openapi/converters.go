@@ -237,6 +237,10 @@ func convertPathSpecMethod(method api_paths.OperationSpec, operation **openApiOp
 		(*operation).RequestBody = &requestBody
 	}
 
+	if method.SecurityIsOptional {
+		(*operation).Security = []map[string][]string{{}}
+	}
+
 	return nil
 }
 

@@ -9,6 +9,7 @@ var MiscPaths = []PathSpec{
 			Responce:            "",
 			Description:         "Returns client address for debuging purposes.",
 			ResponceDescription: "Address of the server.",
+			SecurityIsOptional:  true,
 		},
 	},
 	{
@@ -17,13 +18,15 @@ var MiscPaths = []PathSpec{
 			Responce:            "",
 			Description:         "Ping the server.",
 			ResponceDescription: "Set to ``\"pong\"``.",
+			SecurityIsOptional:  true,
 		},
 	},
 	{
 		Path: "/features.json",
 		Get: &OperationSpec{
-			Responce:    tdproto.Features{},
-			Description: "Get the server features information.",
+			Responce:           tdproto.Features{},
+			Description:        "Get the server features information.",
+			SecurityIsOptional: true,
 		},
 	},
 }
