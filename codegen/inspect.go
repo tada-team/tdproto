@@ -60,6 +60,7 @@ type TdType struct {
 	Help     string
 	IsArray  bool
 	BaseType string
+	Filename string
 }
 
 type TdMapType struct {
@@ -67,6 +68,7 @@ type TdMapType struct {
 	Help         string
 	KeyTypeStr   string
 	ValueTypeStr string
+	Filename     string
 }
 
 type TdInfo struct {
@@ -277,7 +279,7 @@ func parseTypeDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl, decla
 
 	switch typeAst := declarationSpec.Type.(type) {
 	case *ast.Ident:
-		err := parseTypeDefinition(infoToFill, declarationSpec, typeAst)
+		err := parseTypeDefinition(infoToFill, declarationSpec, typeAst, helpString, fileName)
 		if err != nil {
 			return err
 		}
@@ -287,12 +289,12 @@ func parseTypeDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl, decla
 			return err
 		}
 	case *ast.ArrayType:
-		err := parseArrayTypeDefinition(infoToFill, declarationSpec, typeAst)
+		err := parseArrayTypeDefinition(infoToFill, declarationSpec, typeAst, helpString, fileName)
 		if err != nil {
 			return err
 		}
 	case *ast.MapType:
-		err := parseMapTypeDeclaration(infoToFill, declarationSpec, typeAst)
+		err := parseMapTypeDeclaration(infoToFill, declarationSpec, typeAst, helpString, fileName)
 		if err != nil {
 			return err
 		}
@@ -303,7 +305,7 @@ func parseTypeDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl, decla
 	return nil
 }
 
-func parseMapTypeDeclaration(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, mapAst *ast.MapType) error {
+func parseMapTypeDeclaration(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, mapAst *ast.MapType, helpString string, fileName string) error {
 	typeName := declarationSpec.Name.Name
 
 	keyTypeStr, err := parseExprToString(mapAst.Key)
@@ -320,12 +322,14 @@ func parseMapTypeDeclaration(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, 
 		Name:         typeName,
 		KeyTypeStr:   keyTypeStr,
 		ValueTypeStr: valueTypeStr,
+		Help:         helpString,
+		Filename:     fileName,
 	}
 
 	return nil
 }
 
-func parseArrayTypeDefinition(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, arrayAst *ast.ArrayType) error {
+func parseArrayTypeDefinition(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, arrayAst *ast.ArrayType, helpString string, fileName string) error {
 	typeName := declarationSpec.Name.Name
 	arrayExpressionAst := arrayAst.Elt.(*ast.Ident)
 	arrayTypeStr := arrayExpressionAst.Name
@@ -333,15 +337,19 @@ func parseArrayTypeDefinition(infoToFill *TdInfo, declarationSpec *ast.TypeSpec,
 		Name:     typeName,
 		BaseType: arrayTypeStr,
 		IsArray:  true,
+		Help:     helpString,
+		Filename: fileName,
 	}
 	return nil
 }
 
-func parseTypeDefinition(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, typeIndent *ast.Ident) error {
+func parseTypeDefinition(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, typeIndent *ast.Ident, helpString string, fileName string) error {
 	typeName := declarationSpec.Name.Name
 	infoToFill.TdTypes[typeName] = TdType{
 		Name:     typeName,
 		BaseType: typeIndent.Name,
+		Help:     helpString,
+		Filename: fileName,
 	}
 	return nil
 }
