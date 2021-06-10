@@ -474,7 +474,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 		case *ast.InterfaceType:
 			fieldTypeStr = "interface{}"
 		case *ast.MapType:
-			fmt.Fprint(os.Stderr, "TODO: support maps as field types")
+			fmt.Fprintln(os.Stderr, "TODO: support maps as field types")
 			continue
 		default:
 			return fmt.Errorf("unknown field of %s type %#v", structName, fieldTypeAst)
