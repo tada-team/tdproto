@@ -57,8 +57,7 @@ var jsonTemplate = template.Must(template.New("rstJson").Parse(`
 **Fields**:
 {{range $field := .Fields}}
 * ` + "``" + "{{$field.TdStructField.JsonName}}" + "``" +
-	` ({{- if $field.IsJsonPrimitive}}{{$field.TypeStr}}{{else}}:ref:` + "`" + `tdproto-{{$field.TdStructField.TypeStr}}` + "`" +
-	`{{end}}) - {{$field.TdStructField.Help}}
+	` ({{$field.TypeStr}}) - {{$field.TdStructField.Help}}
 {{- if $field.IsOmitEmpty}}\
   . Maybe omitted{{else -}}{{end}}
 {{- if $field.IsPointer}}\
@@ -168,7 +167,11 @@ func generateRstJson(tdprotoInfo *codegen.TdInfo) error {
 			if isJsonPrimitive {
 				jsTypeStr = primitiveType
 			} else {
-				jsTypeStr = goFieldType
+				jsTypeStr = fmt.Sprintf(":ref:`tdproto-%s`", goFieldType)
+			}
+
+			if field.IsList {
+				jsTypeStr = fmt.Sprintf("array[%s]", jsTypeStr)
 			}
 
 			newRstJson.Fields = append(newRstJson.Fields, rstJsonField{
