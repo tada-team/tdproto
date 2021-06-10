@@ -81,7 +81,14 @@ func schemaFromTdField(tdField codegen.TdStructField) (res openApiSchema) {
 		return
 	}
 
-	res.openApiRef = schemaRef(tdField.TypeStr)
+	if tdField.IsList {
+		res.Type = openApiArray
+		res.Items = &openApiSchema{
+			openApiRef: schemaRef(tdField.TypeStr),
+		}
+	} else {
+		res.openApiRef = schemaRef(tdField.TypeStr)
+	}
 
 	return
 }
