@@ -1,5 +1,8 @@
 package tdproto
 
+// Color in ``#rrggbb`` format where ``rr``, ``gg``, ``bb`` are
+// hexadecimal numbers from 00 to ff of red, green and blue channels
+// correspondingly. (yellow would be ``#ffff00``)
 type RGBColor = string
 
 // Color theme
