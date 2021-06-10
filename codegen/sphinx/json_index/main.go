@@ -81,11 +81,12 @@ var typeAliasTemplate = template.Must(template.New("rstType").Parse(`
 
 {{.Name}}
 -------------------------------------------------------------
+{{if .Help}}
 {{.Help}}
-**Base Type**: {{.BaseType}}
+{{end}}
+**Base Type**: {{.BaseType}}{{if .IsArray}}
 
-{{if .IsArray}}**Is array**{{end}}
-
+**Is array**{{end}}
 `))
 
 func isEventStruct(structName string, tdprotoInfo *codegen.TdInfo) bool {
@@ -101,7 +102,7 @@ func generateRstJson(tdprotoInfo *codegen.TdInfo) error {
 
 	enumedTypeAliases := make(map[string]string)
 
-	fmt.Fprintln(os.Stdout, "Enums index\n============================")
+	fmt.Fprintln(os.Stdout, "\nEnums index\n============================")
 	enumsList := tdprotoInfo.GetEnums()
 	sort.Slice(enumsList, func(i, j int) bool {
 		return strings.ToLower(enumsList[i].Name) < strings.ToLower(enumsList[j].Name)
@@ -114,7 +115,7 @@ func generateRstJson(tdprotoInfo *codegen.TdInfo) error {
 		enumedTypeAliases[enum.Name] = ""
 	}
 
-	fmt.Fprintln(os.Stdout, "Type aliases\n============================")
+	fmt.Fprintln(os.Stdout, "\nType aliases\n============================")
 	var typesList []codegen.TdType
 	for _, someType := range tdprotoInfo.TdTypes {
 		typesList = append(typesList, someType)
@@ -184,7 +185,7 @@ func generateRstJson(tdprotoInfo *codegen.TdInfo) error {
 		return strings.ToLower(jsonObjects[i].Name) < strings.ToLower(jsonObjects[j].Name)
 	})
 
-	fmt.Fprintln(os.Stdout, "JSON objects index\n============================")
+	fmt.Fprintln(os.Stdout, "\nJSON objects index\n============================")
 
 	for _, object := range jsonObjects {
 		err := jsonTemplate.Execute(os.Stdout, object)
