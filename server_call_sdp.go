@@ -1,6 +1,6 @@
 package tdproto
 
-func NewServerCallSdp(jid JID, uid, sdpType, sdp string) (r ServerCallSdp) {
+func NewServerCallSdp(jid JID, uid,sdp string, sdpType SDPType) (r ServerCallSdp) {
 	r.Name = r.GetName()
 	r.Params.Jid = jid
 	r.Params.JSEP.Type = sdpType

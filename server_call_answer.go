@@ -35,11 +35,6 @@ type serverCallAnswerParams struct {
 	Uid string `json:"uid"`
 }
 
-type JSEP struct {
-	SDP  string `json:"sdp"`
-	Type string `json:"type"`
-}
-
 type serverCallAnswerCandidate = struct {
 	Candidate     string `json:"candidate"`
 	SdpMLineIndex int    `json:"sdpMLineIndex"`
