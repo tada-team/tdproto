@@ -1,6 +1,6 @@
 package tdproto
 
-// Call parameters
+// For exchange Session Description with server when client's Local Session Description is changed
 type ClientCallSdp struct {
 	BaseEvent
 	Params clientCallSdpParams `json:"params"`

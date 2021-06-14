@@ -9,7 +9,7 @@ func NewServerCallSdp(jid JID, uid, sdpType, sdp string) (r ServerCallSdp) {
 	return r
 }
 
-// Call parameters
+// For exchange Session Description with client when server's Local Session Description is changed
 type ServerCallSdp struct {
 	BaseEvent
 	Params serverCallSdpParams `json:"params"`
