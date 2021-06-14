@@ -1,8 +1,12 @@
-v1.33
+v1.33.1
+ - tdapi.Draft
+ - gentime for draft renamed to draft_gentime
+
+v1.33.0
  - experimental client.call.sdp / server.call.sdp events
  - group wiki page removed
  - draft_num replaced by gentime in server.chat.draft
 
-v1.32
+v1.32.0
  - features.calls deprecated. Use features.calls_version: (0 = disabled, 1 = audio only, 2 = audio+video)
  - features.min_app_version deprecated. Use features.min_ios_version, features.min_android_version

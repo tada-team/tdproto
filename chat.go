@@ -71,8 +71,8 @@ type Chat struct {
 	// Last message draft, if any
 	Draft string `json:"draft,omitempty"`
 
-	// Last message draft version , if any
-	DraftNum int64 `json:"draft_num,omitempty"`
+	// Last message draft version, if any
+	DraftGentime int64 `json:"draft_gentime,omitempty"`
 
 	// Hidden chat
 	Hidden bool `json:"hidden,omitempty"`
@@ -238,6 +238,9 @@ type Chat struct {
 
 	// Date of the last message sent even if it was deleted
 	LastActivity ISODateTimeString `json:"last_activity,omitempty"`
+
+	// Deprecated
+	DraftNum int64 `json:"draft_num,omitempty"`
 }
 
 // Link to sub/sup task

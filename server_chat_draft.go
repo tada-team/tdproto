@@ -4,7 +4,7 @@ func NewServerChatDraft(jid JID, draft string, gentime int64) (r ServerChatDraft
 	r.Name = r.GetName()
 	r.Params.Jid = jid
 	r.Params.Draft = draft
-	r.Params.Gentime = gentime
+	r.Params.DraftGentime = gentime
 	return r
 }
 
@@ -20,11 +20,11 @@ type serverChatDraftParams struct {
 	// Chat or contact id
 	Jid JID `json:"jid"`
 
-	// Draft version
-	Gentime int64 `json:"gentime" tdproto:"readonly"`
-
 	// Draft text
 	Draft string `json:"draft"`
+
+	// Draft version
+	DraftGentime int64 `json:"draft_gentime"`
 
 	// Deprecated
 	DraftNum int64 `json:"draft_num"`
