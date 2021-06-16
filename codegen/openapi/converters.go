@@ -126,6 +126,10 @@ func addStructSchema(components map[string]openApiSchema, name string, tdInfo *c
 	}
 
 	for _, tdField := range tdStructInfo.GetAllJsonFields(tdInfo) {
+		if tdField.IsNotSerialized {
+			continue
+		}
+
 		property := schemaFromTdField(tdField)
 
 		// The field can either be:
