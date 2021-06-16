@@ -126,12 +126,18 @@ func addStructSchema(components map[string]openApiSchema, name string, tdInfo *c
 	}
 
 	for _, tdField := range tdStructInfo.GetAllJsonFields(tdInfo) {
-		prop := schemaFromTdField(tdField)
+		property := schemaFromTdField(tdField)
 
-		schema.Properties[tdField.JsonName] = prop
-		if !tdField.IsOmitEmpty {
+		// The field can either be:
+		// NOT omitempty AND pointer -> nullable
+		// NOT omitemty -> required
+		if !tdField.IsOmitEmpty && tdField.IsPointer {
+			property.IsNullable = true
+		} else if !tdField.IsOmitEmpty {
 			schema.Required = append(schema.Required, tdField.JsonName)
 		}
+
+		schema.Properties[tdField.JsonName] = property
 	}
 
 	components[name] = schema
