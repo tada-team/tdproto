@@ -41,6 +41,18 @@ type rstJsonField struct {
 	TypeStr         string
 }
 
+func (r rstJsonField) GetModifiers() string {
+	if r.TdStructField.IsOmitEmpty {
+		return " :abbr:`💥 (Maybe omitted)`"
+	}
+
+	if r.TdStructField.IsPointer {
+		return " :abbr:`0️⃣ (Might be null)`"
+	}
+
+	return ""
+}
+
 type rstJsonStruct struct {
 	codegen.TdStruct
 	Fields []rstJsonField
@@ -57,11 +69,7 @@ var jsonTemplate = template.Must(template.New("rstJson").Parse(`
 **Fields**:
 {{range $field := .Fields}}
 * ` + "``" + "{{$field.TdStructField.JsonName}}" + "``" +
-	` ({{$field.TypeStr}}) - {{$field.TdStructField.Help}}
-{{- if $field.IsOmitEmpty}}\
-  . Maybe omitted{{else -}}{{end}}
-{{- if $field.IsPointer}}\
-  . Might be null{{else -}}{{end}}{{end}}
+	` ({{$field.TypeStr}}){{.GetModifiers}} - {{$field.TdStructField.Help}}{{end}}
 `))
 
 var enumTemplate = template.Must(template.New("rstEnum").Parse(`
