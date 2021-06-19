@@ -32,9 +32,6 @@ type Contact struct {
 	// Last activity in this team (iso datetime)
 	LastActivity ISODateTimeString `json:"last_activity,omitempty"`
 
-	// Can contact add users to this team
-	AddToTeamRights bool `json:"add_to_team_rights,omitempty"`
-
 	// Contact deleted
 	IsArchive bool `json:"is_archive,omitempty"`
 

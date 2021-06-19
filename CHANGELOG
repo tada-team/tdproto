@@ -1,3 +1,9 @@
+v1.33.5
+ - tdapi.Contact, tdapi.Integration, tdapi.Team
+ - Contact.add_to_team_rights field removed
+ - Team.pinned field added
+ - PushDevice docs
+
 v1.33.4
  - features.min_corp_ios_version and features.min_corp_android_version
 
