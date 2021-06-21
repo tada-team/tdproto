@@ -355,15 +355,16 @@ func parseTypeDefinition(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, type
 }
 
 func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, structInfo *ast.StructType, helpString string, fileName string) error {
+	structName := declarationSpec.Name.Name
+
 	if helpString == "" {
-		errorLogger.Printf("WARN: TdStruct missing a doc string %+v in file %s", structInfo, fileName)
+		errorLogger.Printf("WARN: TdStruct %s missing a doc string in file %s", structName, fileName)
 	}
 
 	if strings.HasPrefix(strings.ToLower(helpString), "deprecated") {
 		return nil
 	}
 
-	structName := declarationSpec.Name.Name
 	isReadOnly := strings.Contains(helpString, "Readonly")
 
 	var fieldsList []TdStructField
