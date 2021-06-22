@@ -45,7 +45,7 @@ type User struct {
 	QuietTimeFinish *string `json:"quiet_time_finish"`
 }
 
-// Accouint data with extra information
+// Account data with extra information
 type UserWithMe struct {
 	User
 

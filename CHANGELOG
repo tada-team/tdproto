@@ -1,3 +1,20 @@
+v1.33.5
+ - tdapi.Contact, tdapi.Integration, tdapi.Team
+ - Contact.add_to_team_rights field removed
+ - Team.pinned field added
+ - PushDevice docs
+
+v1.33.4
+ - features.min_corp_ios_version and features.min_corp_android_version
+
+v1.33.3
+ - remove deprecated ServerCallOffer and ClientCallAnswer
+ - mark ServerCallAnswer as deprecated (left for backward compatibility)
+
+v1.33.2
+ - add comments to *.call.sdp events
+ - extract JSEP struct to file from server_call_answer.go
+
 v1.33.1
  - tdapi.Draft
  - gentime for draft renamed to draft_gentime

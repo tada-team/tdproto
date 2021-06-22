@@ -88,6 +88,9 @@ type Team struct {
 
 	// Don't show archived users by default
 	HideArchivedUsers bool `json:"hide_archived_users,omitempty"`
+
+	// Team pinned
+	Pinned bool `json:"pinned,omitempty"`
 }
 
 // Short team representation. For invites, push notifications, etc. Readonly.

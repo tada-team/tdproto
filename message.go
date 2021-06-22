@@ -167,7 +167,7 @@ type Message struct {
 	// This message is first in this chat. True or null
 	IsFirst bool `json:"is_first,omitempty" tdproto:"readonly"`
 
-	// This message is first in this chat. True or null
+	// This message is last in this chat. True or null
 	IsLast bool `json:"is_last,omitempty" tdproto:"readonly"`
 
 	// Message uploads

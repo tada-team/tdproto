@@ -46,6 +46,12 @@ type Features struct {
 	// Minimal android application version required for this server. Used for breaking changes
 	MinAndroidVersion string `json:"min_android_version"`
 
+	// Minimal iOS corp application version required for this server. Used for breaking changes
+	MinCorpIOSVersion string `json:"min_corp_ios_version"`
+
+	// Minimal android corp application version required for this server. Used for breaking changes
+	MinCorpAndroidVersion string `json:"min_corp_android_version"`
+
 	// Free registration allowed
 	FreeRegistration bool `json:"free_registration"`
 
