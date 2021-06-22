@@ -56,6 +56,7 @@ type Task struct {
 	Uploads []string `json:"uploads,omitempty"`
 }
 
+// Query parameters for listing messages
 type TaskFilter struct {
 	UserParams
 	Paginator
