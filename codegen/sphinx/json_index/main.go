@@ -163,9 +163,16 @@ func generateRstJson(tdprotoInfo *codegen.TdInfo) error {
 			TdStruct: tdStruct,
 		}
 
+		fieldMissingHelp := false
+
 		for _, field := range tdStruct.GetAllJsonFields(tdprotoInfo) {
+			if field.IsNotSerialized {
+				continue
+			}
+
 			if field.Help == "" {
-				field.Help = "DOCUMENTATION MISSING"
+				fieldMissingHelp = true
+				break
 			}
 
 			goFieldType := field.TypeStr
@@ -187,6 +194,10 @@ func generateRstJson(tdprotoInfo *codegen.TdInfo) error {
 				IsJsonPrimitive: isJsonPrimitive,
 				TypeStr:         jsTypeStr,
 			})
+		}
+
+		if fieldMissingHelp {
+			continue
 		}
 
 		jsonObjects = append(jsonObjects, newRstJson)
