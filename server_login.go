@@ -14,6 +14,7 @@ type ServerLogin struct {
 
 func (p ServerLogin) GetName() string { return "server.login" }
 
+// Params of the server.login event
 type serverLoginParams struct {
 	// Device name
 	DeviceName string `json:"device_name"`

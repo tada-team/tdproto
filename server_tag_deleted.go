@@ -14,6 +14,7 @@ type ServerTagDeleted struct {
 
 func (p ServerTagDeleted) GetName() string { return "server.tag.deleted" }
 
+// Params of the server.tag.deleted event
 type serverTagDeletedParams struct {
 	// Tags info
 	Tags []DeletedTag `json:"tags"`

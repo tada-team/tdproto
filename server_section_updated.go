@@ -16,13 +16,14 @@ type ServerSectionUpdated struct {
 
 func (p ServerSectionUpdated) GetName() string { return "server.section.updated" }
 
+// Params of the server.section.updated event
 type serverSectionUpdatedParams struct {
 	// Chat type
-	ChatType ChatType  `json:"chat_type"`
+	ChatType ChatType `json:"chat_type"`
 
 	// Section/project info
 	Sections []Section `json:"sections"`
 
 	// deprecated
-	Gentime  int64     `json:"gentime"`
+	Gentime int64 `json:"gentime"`
 }

@@ -14,6 +14,7 @@ type ServerTagUpdated struct {
 
 func (p ServerTagUpdated) GetName() string { return "server.tag.updated" }
 
+// Params of the server.tag.updated event
 type serverTagUpdatedParams struct {
 	// Tags info
 	Tags []Tag `json:"tags"`

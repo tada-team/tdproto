@@ -18,6 +18,7 @@ type ServerCallAnswer struct {
 
 func (p ServerCallAnswer) GetName() string { return "server.call.answer" }
 
+// Params of the server.call.answer event
 type serverCallAnswerParams struct {
 	// Chat or contact id
 	Jid JID `json:"jid"`

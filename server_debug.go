@@ -14,6 +14,7 @@ type ServerDebug struct {
 
 func (p ServerDebug) GetName() string { return "server.debug" }
 
+// Params of the server.debug event
 type serverDebugParams struct {
 	// Debug message
 	Text string `json:"text"`

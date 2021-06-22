@@ -14,6 +14,7 @@ type ServerUploadUpdated struct {
 
 func (p ServerUploadUpdated) GetName() string { return "server.upload.updated" }
 
+// Params of the server.upload.updated event
 type serverUploadUpdatedParams struct {
 	// Uploads data
 	Uploads []Upload `json:"uploads"`

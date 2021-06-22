@@ -16,6 +16,7 @@ type ServerChatLastread struct {
 
 func (p ServerChatLastread) GetName() string { return "server.chat.lastread" }
 
+// Params of the server.chat.lastread event
 type serverChatLastreadParams struct {
 	// Chat counters
 	Chats []ChatCounters `json:"chats"`

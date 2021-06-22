@@ -14,6 +14,7 @@ type ServerPanic struct {
 
 func (p ServerPanic) GetName() string { return "server.panic" }
 
+// Params of the server.panic event
 type serverPanicParams struct {
 	// Error code
 	Code string `json:"code"`

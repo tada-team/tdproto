@@ -14,6 +14,7 @@ type ServerRemindFired struct {
 
 func (p ServerRemindFired) GetName() string { return "server.remind.fired" }
 
+// Params of the server.remind.fired event
 type serverRemindFiredParams struct {
 	// Remind information
 	Reminds []Remind `json:"reminds"`

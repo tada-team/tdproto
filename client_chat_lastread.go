@@ -16,6 +16,7 @@ type ClientChatLastread struct {
 
 func (p ClientChatLastread) GetName() string { return "client.chat.lastread" }
 
+// Params of the client.chat.lastread event
 type clientChatLastreadParams struct {
 	// Chat or contact id
 	Jid JID `json:"jid"`

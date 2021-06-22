@@ -8,6 +8,7 @@ type ClientCallTrickle struct {
 
 func (p ClientCallTrickle) GetName() string { return "client.call.trickle" }
 
+// Params of client.call.trickle event
 type clientCallTrickleParams struct {
 	// Chat or contact id
 	Jid JID `json:"jid"`

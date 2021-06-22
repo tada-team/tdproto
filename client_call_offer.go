@@ -8,6 +8,7 @@ type ClientCallOffer struct {
 
 func (p ClientCallOffer) GetName() string { return "client.call.offer" }
 
+// Params of the client.call.offer event
 type clientCallOfferParams struct {
 	// Chat or contact id
 	Jid JID `json:"jid"`

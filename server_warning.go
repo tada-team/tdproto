@@ -15,6 +15,7 @@ type ServerWarning struct {
 
 func (p ServerWarning) GetName() string { return "server.warning" }
 
+// Params of the server.warning event
 type serverWarningParams struct {
 	// Message
 	Message string `json:"message"`

@@ -16,6 +16,7 @@ type ServerTime struct {
 
 func (p ServerTime) GetName() string { return "server.time" }
 
+// Params of the server.time event
 type serverTimeParams struct {
 	// Current time
 	Time ISODateTimeString `json:"time"`

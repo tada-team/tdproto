@@ -15,6 +15,7 @@ type ClientMessageUpdated struct {
 
 func (p ClientMessageUpdated) GetName() string { return "client.message.updated" }
 
+// Params of the client.message.updated event
 type ClientMessageUpdatedParams struct {
 	// Chat, task or contact jid. Required.
 	To JID `json:"to"`

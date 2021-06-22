@@ -14,6 +14,7 @@ type ClientActivity struct {
 
 func (p ClientActivity) GetName() string { return "client.activity" }
 
+// Params of the client.activity event
 type clientActivityParams struct {
 	// Is away from keyboard
 	Afk bool `json:"afk"`

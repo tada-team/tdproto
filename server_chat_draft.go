@@ -16,6 +16,7 @@ type ServerChatDraft struct {
 
 func (p ServerChatDraft) GetName() string { return "server.chat.draft" }
 
+// Params of the server.chat.draft event
 type serverChatDraftParams struct {
 	// Chat or contact id
 	Jid JID `json:"jid"`

@@ -30,6 +30,7 @@ type ServerMessageUpdated struct {
 
 func (p ServerMessageUpdated) GetName() string { return "server.message.updated" }
 
+// Params of the server.message.updated event
 type serverMessageUpdatedParams struct {
 	// Messages data
 	Messages []Message `json:"messages"`

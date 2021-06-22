@@ -18,6 +18,7 @@ type ServerSectionDeleted struct {
 
 func (p ServerSectionDeleted) GetName() string { return "server.section.deleted" }
 
+// Params of the server.section.deleted event
 type serverSectionDeletedParams struct {
 	// Chat type
 	ChatType ChatType `json:"chat_type"`

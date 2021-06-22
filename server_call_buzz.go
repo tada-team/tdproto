@@ -26,6 +26,7 @@ type ServerCallBuzz struct {
 
 func (p ServerCallBuzz) GetName() string { return "server.call.buzz" }
 
+// Params of the server.call.buzz event
 type serverCallBuzzParams struct {
 	// Chat or contact id
 	Jid JID `json:"jid"`

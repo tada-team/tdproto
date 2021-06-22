@@ -16,6 +16,7 @@ type ServerCallTalking struct {
 
 func (p ServerCallTalking) GetName() string { return "server.call.talking" }
 
+// Params of the server.call.talking event
 type serverCallTalkingParams struct {
 	// Chat or contact id
 	Jid JID `json:"jid"`

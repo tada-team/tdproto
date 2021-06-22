@@ -33,6 +33,7 @@ type ServerMessageReceived struct {
 
 func (p ServerMessageReceived) GetName() string { return "server.message.received" }
 
+// Params of the server.message.received event
 type serverMessageReceivedParams struct {
 	// received message data
 	Messages []ReceivedMessage `json:"messages"`

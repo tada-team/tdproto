@@ -16,6 +16,7 @@ type ClientChatComposing struct {
 
 func (p ClientChatComposing) GetName() string { return "client.chat.composing" }
 
+// Params of the client.chat.composing event
 type clientChatComposingParams struct {
 	// Chat or contact id
 	Jid JID `json:"jid"`

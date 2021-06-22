@@ -14,6 +14,7 @@ type ServerContactUpdated struct {
 
 func (p ServerContactUpdated) GetName() string { return "server.contact.updated" }
 
+// Params of the server.contact.updated event
 type serverContactUpdatedParams struct {
 	// Contact info
 	Contacts []Contact `json:"contacts"`

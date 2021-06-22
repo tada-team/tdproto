@@ -14,6 +14,7 @@ type ServerTeamUpdated struct {
 
 func (p ServerTeamUpdated) GetName() string { return "server.team.updated" }
 
+// Params of the server.team.updated event
 type serverTeamUpdatedParams struct {
 	Teams []Team `json:"teams"`
 }

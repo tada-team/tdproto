@@ -17,6 +17,7 @@ type ServerTeamCounters struct {
 
 func (p ServerTeamCounters) GetName() string { return "server.team.counters" }
 
+// Params of the server.team.counters event
 type serverTeamCountersParams struct {
 	// Counters
 	Teams []TeamCounter `json:"teams"`

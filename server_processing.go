@@ -18,6 +18,7 @@ type ServerProcessing struct {
 
 func (p ServerProcessing) GetName() string { return "server.processing" }
 
+// Params of the server.processing event
 type serverProcessingParams struct {
 	// Action name
 	Action string `json:"action"`

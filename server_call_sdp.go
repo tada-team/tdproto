@@ -17,6 +17,7 @@ type ServerCallSdp struct {
 
 func (p ServerCallSdp) GetName() string { return "server.call.sdp" }
 
+// Params of the server.call.sdp event
 type serverCallSdpParams struct {
 	// Chat or contact id
 	Jid JID `json:"jid"`

@@ -16,6 +16,7 @@ type ServerChatUpdated struct {
 
 func (p ServerChatUpdated) GetName() string { return "server.chat.updated" }
 
+// Params of the server.chat.updated event
 type serverChatUpdatedParams struct {
 	// Chat counters
 	Chats []Chat `json:"chats"`

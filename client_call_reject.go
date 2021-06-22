@@ -8,6 +8,7 @@ type ClientCallReject struct {
 
 func (p ClientCallReject) GetName() string { return "client.call.reject" }
 
+// Params of the client.call.reject event
 type clientCallRejectParams struct {
 	// Chat or contact id
 	Jid JID `json:"jid"`

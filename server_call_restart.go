@@ -16,6 +16,7 @@ type ServerCallRestart struct {
 
 func (p ServerCallRestart) GetName() string { return "server.call.restart" }
 
+// Params of the server.call.restart event
 type serverCallRestartParams struct {
 	// Chat or contact id
 	Jid JID `json:"jid"`

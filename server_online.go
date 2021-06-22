@@ -15,6 +15,7 @@ type ServerOnline struct {
 
 func (p ServerOnline) GetName() string { return "server.online" }
 
+// Params of the server.online event
 type serverOnlineParams struct {
 	// Online team members
 	Contacts []OnlineContact `json:"contacts"`

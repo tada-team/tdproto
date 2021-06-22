@@ -19,6 +19,7 @@ type ServerChatDeleted struct {
 
 func (p ServerChatDeleted) GetName() string { return "server.chat.deleted" }
 
+// Params of the server.chat.deleted event
 type serverChatDeletedParams struct {
 	// List of deleted chats
 	Chats []DeletedChat `json:"chats"`

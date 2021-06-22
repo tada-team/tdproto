@@ -14,6 +14,7 @@ type ServerCallCheckFingerprint struct {
 
 func (p ServerCallCheckFingerprint) GetName() string { return "server.call.checkfingerprint" }
 
+// Params of the server.call.checkfingerprint event
 type serverCallCheckFingerprintParams struct {
 	Fingerprint string `json:"fingerprint"`
 }
