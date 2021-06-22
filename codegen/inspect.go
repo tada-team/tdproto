@@ -144,7 +144,7 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 	}
 
 	tdprotoAst := tdprotoNameToAstMap["tdproto"]
-	err = parseTdprotoAst(tdprotoAst, infoToFill)
+	err = parseTdprotoAst(tdprotoAst, infoToFill, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -161,7 +161,11 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 	tdapiInfo.TdTypes = make(map[string]TdType)
 	tdapiInfo.TdMapTypes = make(map[string]TdMapType)
 
-	err = parseTdprotoAst(tdapiNameToAstMap["tdapi"], tdapiInfo)
+	err = parseTdprotoAst(tdapiNameToAstMap["tdapi"], tdapiInfo,
+		&map[string]string{
+			"task": "",
+		},
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -187,11 +191,18 @@ func cherryPick(tdproto *TdInfo, tdapi *TdInfo, name string) error {
 	return nil
 }
 
-func parseTdprotoAst(packageAst *ast.Package, infoToFill *TdInfo) error {
+func parseTdprotoAst(packageAst *ast.Package, infoToFill *TdInfo, fileFilter *map[string]string) error {
 	for fileName, fileAst := range packageAst.Files {
 
 		basePath := path.Base(fileName)
 		basePathNoExt := strings.TrimRight(basePath, path.Ext(basePath))
+
+		if fileFilter != nil {
+			_, ok := (*fileFilter)[basePathNoExt]
+			if !ok {
+				continue
+			}
+		}
 
 		err := ParseTdprotoFile(infoToFill, basePathNoExt, fileAst)
 		if err != nil {
