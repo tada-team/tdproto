@@ -4,6 +4,7 @@ import "time"
 
 type SimpleDailyIntStats map[time.Time]int
 
+// Active daily users statistics
 type ActiveUserDailyStat struct {
 	Day              time.Time `json:"day"`
 	UserId           int       `json:"user_id"`

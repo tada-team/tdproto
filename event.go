@@ -1,10 +1,12 @@
 package tdproto
 
+// Base of all events
 type BaseEvent struct {
 	Name      string `json:"event"`
 	ConfirmId string `json:"confirm_id,omitempty"`
 }
 
+// Generic event representation
 type AnyEvent struct {
 	BaseEvent
 	Params *map[string]interface{} `json:"params"`

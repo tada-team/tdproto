@@ -36,6 +36,7 @@ type serverCallAnswerParams struct {
 	Uid string `json:"uid"`
 }
 
+// ICE candidate for call answer
 type serverCallAnswerCandidate = struct {
 	Candidate     string `json:"candidate"`
 	SdpMLineIndex int    `json:"sdpMLineIndex"`

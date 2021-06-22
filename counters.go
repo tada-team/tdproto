@@ -1,5 +1,6 @@
 package tdproto
 
+// Unread messages counter
 type ChatCounters struct {
 	Jid                JID               `json:"jid"`
 	ChatType           ChatType          `json:"chat_type"`

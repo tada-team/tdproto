@@ -1,5 +1,6 @@
 package tdproto
 
+// Collection of stickers
 type Stickerpack struct {
 	Uid        string    `json:"uid"`
 	Name       string    `json:"name"`
@@ -9,6 +10,7 @@ type Stickerpack struct {
 	Stickers   []Sticker `json:"stickers"`
 }
 
+// Single sticker
 type Sticker struct {
 	Uid            string         `json:"uid"`
 	Icon64         string         `json:"icon64"`

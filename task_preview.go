@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Task Preview
 type TaskPreview struct {
 	Error       string      `json:"_error,omitempty"`
 	Assignee    JID         `json:"assignee"`
@@ -15,6 +16,7 @@ type TaskPreview struct {
 	Items       []TaskItems `json:"items"`
 }
 
+// Task item
 type TaskItems struct {
 	Name    string `json:"name"`
 	Checked bool   `json:"checked"`

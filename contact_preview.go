@@ -1,5 +1,6 @@
 package tdproto
 
+// Contact preview
 type ContactPreview struct {
 	Error      string `json:"_error,omitempty"`
 	Phone      string `json:"phone"`

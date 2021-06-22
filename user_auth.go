@@ -9,6 +9,7 @@ const (
 	AuthByBotToken       = "bot token"
 )
 
+// User authentication
 type UserAuth struct {
 	Created    time.Time `json:"created"`
 	LastAccess time.Time `json:"last_access,omitempty"`
