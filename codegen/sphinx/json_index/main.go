@@ -159,6 +159,10 @@ func generateRstJson(tdprotoInfo *codegen.TdInfo) error {
 			continue
 		}
 
+		if tdStruct.IsEventParams(tdprotoInfo) {
+			continue
+		}
+
 		newRstJson := rstJsonStruct{
 			TdStruct: tdStruct,
 		}

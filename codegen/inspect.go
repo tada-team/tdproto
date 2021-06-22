@@ -107,6 +107,25 @@ func (i TdInfo) GetEnums() []TdEnum {
 	return listOfEnums
 }
 
+func (tds TdStruct) IsEventParams(tdInfo *TdInfo) bool {
+
+	for eventStructName := range tdInfo.TdEvents {
+		eventStruct := tdInfo.TdStructs[eventStructName]
+
+		for _, field := range eventStruct.Fields {
+			if field.Name != "Params" {
+				continue
+			}
+
+			if field.TypeStr == tds.Name {
+				return true
+			}
+		}
+	}
+
+	return false
+}
+
 func (tds TdStruct) GetStructAnonymousStructs(tdInfo *TdInfo) []TdStruct {
 	anonymousStructs := make([]TdStruct, len(tds.AnonnymousFields))
 	for i, anonymousStructName := range tds.AnonnymousFields {
