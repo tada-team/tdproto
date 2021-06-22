@@ -1,14 +1,14 @@
 package tdproto
 
-// Send trickle candidate for webrtc connection
+// Send trickle candidate for webrtc connection from client
 type ClientCallTrickle struct {
 	BaseEvent
-	Params clientCallTrickleParams `json:"params"`
+	Params callTrickleParams `json:"params"`
 }
 
 func (p ClientCallTrickle) GetName() string { return "client.call.trickle" }
 
-type clientCallTrickleParams struct {
+type callTrickleParams struct {
 	// Chat or contact id
 	Jid JID `json:"jid"`
 
