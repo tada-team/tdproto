@@ -140,8 +140,11 @@ type Contact struct {
 	// Can I add new members to this team
 	CanAddToTeam bool `json:"can_add_to_team,omitempty"`
 
-	// Can I manage sections in this team
+	// Can I manage contact sections in this team
 	CanManageSections bool `json:"can_manage_sections,omitempty"`
+
+	// Can I manage task projects in this team
+	CanManageProjects bool `json:"can_manage_projects,omitempty"`
 
 	// Can I manage tags in this team
 	CanManageTags bool `json:"can_manage_tags,omitempty"`
