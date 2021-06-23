@@ -53,6 +53,9 @@ type Contact struct {
 	// Can I call create task for this contact
 	CanCreateTask bool `json:"can_create_task,omitempty"`
 
+	// Can I import tasks in this team
+	CanImportTasks bool `json:"can_import_tasks,omitempty"`
+
 	// Can I add this contact to group chats
 	CanAddToGroup bool `json:"can_add_to_group,omitempty"`
 
