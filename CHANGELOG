@@ -1,3 +1,6 @@
+v1.34.0
+ - tdapi.upload.go and UploadFilter added
+
 v1.33.7
  - Contact.can_import_tasks field
 
