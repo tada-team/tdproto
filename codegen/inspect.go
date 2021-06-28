@@ -33,6 +33,11 @@ type TdConstFields struct {
 	Help  string
 }
 
+type TdQuery struct {
+	Help               string
+	ParamsNamesAndHelp map[string]string
+}
+
 type TdStructField struct {
 	Name            string
 	Help            string
@@ -77,6 +82,7 @@ type TdInfo struct {
 	TdEvents   map[string]string
 	TdMapTypes map[string]TdMapType
 	TdConsts   []TdConstFields
+	TdQueries  map[string]TdQuery
 }
 
 type TdEnum struct {
@@ -156,6 +162,7 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 	infoToFill.TdStructs = make(map[string]TdStruct)
 	infoToFill.TdTypes = make(map[string]TdType)
 	infoToFill.TdMapTypes = make(map[string]TdMapType)
+	infoToFill.TdQueries = make(map[string]TdQuery)
 
 	tdprotoNameToAstMap, err := extractTdprotoAst(tdprotoFileSet)
 	if err != nil {
@@ -191,7 +198,12 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 
 	// Cherry picking
 	// Task
-	err = cherryPick(infoToFill, tdapiInfo, "Task")
+	err = cherryPickStruct(infoToFill, tdapiInfo, "Task")
+	if err != nil {
+		return nil, err
+	}
+	// TaskFilter query
+	err = cherryPickQuery(infoToFill, tdapiInfo, "TaskFilter")
 	if err != nil {
 		return nil, err
 	}
@@ -199,11 +211,31 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 	return infoToFill, nil
 }
 
-func cherryPick(tdproto *TdInfo, tdapi *TdInfo, name string) error {
+func cherryPickQuery(tdproto *TdInfo, tdapi *TdInfo, name string) error {
 
 	pickObject, ok := tdapi.TdStructs[name]
 	if !ok {
-		return fmt.Errorf("failed to cherry pick %s", name)
+		return fmt.Errorf("failed to cherry pick query %s", name)
+	}
+
+	var newQuery TdQuery
+
+	newQuery.Help = pickObject.Help
+	newQuery.ParamsNamesAndHelp = make(map[string]string)
+	for _, field := range pickObject.Fields {
+		newQuery.ParamsNamesAndHelp[field.Name] = field.Help
+	}
+
+	tdproto.TdQueries[name] = newQuery
+
+	return nil
+}
+
+func cherryPickStruct(tdproto *TdInfo, tdapi *TdInfo, name string) error {
+
+	pickObject, ok := tdapi.TdStructs[name]
+	if !ok {
+		return fmt.Errorf("failed to cherry pick struct %s", name)
 	}
 	tdproto.TdStructs[name] = pickObject
 
