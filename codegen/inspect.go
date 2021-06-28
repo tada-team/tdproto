@@ -34,6 +34,7 @@ type TdConstFields struct {
 }
 
 type TdQuery struct {
+	Name               string
 	Help               string
 	ParamsNamesAndHelp map[string]string
 }
@@ -222,6 +223,7 @@ func cherryPickQuery(tdproto *TdInfo, tdapi *TdInfo, name string) error {
 
 	newQuery.Help = pickObject.Help
 	newQuery.ParamsNamesAndHelp = make(map[string]string)
+	newQuery.Name = name
 	for _, field := range pickObject.Fields {
 		newQuery.ParamsNamesAndHelp[field.Name] = field.Help
 	}
