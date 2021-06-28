@@ -2,14 +2,13 @@ package tdapi
 
 import "github.com/tada-team/tdproto"
 
-type GroupMember struct {
-	// Member jid
-	Jid tdproto.JID `json:"jid"`
-
-	// Status: member or admin
-	Status tdproto.GroupStatus `json:"status,omitempty"`
+// Group members
+type GroupMembers struct {
+	// Group members lust
+	Members []tdproto.GroupMembership `json:"members"`
 }
 
+// Group form
 type Group struct {
 	// Group title
 	DisplayName string `json:"display_name"`
@@ -33,7 +32,7 @@ type Group struct {
 	PinnedMessage string `json:"pinned_message"`
 
 	// Group members list
-	Members []GroupMember `json:"members"`
+	Members []tdproto.GroupMembership `json:"members"`
 
 	// Deprecated
 	Section string `json:"section"`

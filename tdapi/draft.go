@@ -10,9 +10,9 @@ type Draft struct {
 	// Draft version
 	DraftGentime int64 `json:"draft_gentime,omitempty"  tdproto:"readonly"`
 
-	// Links found in content
-	Links tdproto.MessageLinks `json:"links,omitempty"  tdproto:"readonly"`
-
-	// TdMorkup found in content (links included)
+	// TdMarkup found in content (links included)
 	Markup []tdproto.MarkupEntity `json:"markup,omitempty"  tdproto:"readonly"`
+
+	// Deprecated: use Markup instead
+	Links tdproto.MessageLinks `json:"links,omitempty"  tdproto:"readonly"`
 }

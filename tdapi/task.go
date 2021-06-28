@@ -121,3 +121,10 @@ type TaskFilter struct {
 	// gentime great than group/chat
 	GentimeGT int64 `schema:"gentime_gt"`
 }
+
+// Task cards colors
+type TaskColors struct {
+	// Color list
+	Colors []tdproto.TaskColor `json:"colors"`
+}
+

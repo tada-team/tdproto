@@ -291,7 +291,7 @@ type GroupMembership struct {
 	Jid JID `json:"jid"`
 
 	// Status in group
-	Status GroupStatus `json:"status"`
+	Status GroupStatus `json:"status,omitempty"`
 
 	// Can I remove this member
 	CanRemove bool `json:"can_remove,omitempty"`

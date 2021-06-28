@@ -15,10 +15,10 @@ type ColorRule struct {
 	ColorIndex uint16 `json:"color_index"`
 
 	// Project filter enabled
-	SectionEnabled *bool `json:"section_enabled,omitempty"`
+	ProjectEnabled *bool `json:"section_enabled,omitempty"` // TODO: rename to "project_enabled
 
 	// Project id if project filter enabled
-	Section string `json:"section,omitempty"`
+	Project string `json:"section,omitempty"` // TODO: rename to "project"
 
 	// Tags filter enabled
 	TagsEnabled *bool `json:"tags_enabled,omitempty"`

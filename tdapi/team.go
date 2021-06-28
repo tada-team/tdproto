@@ -1,5 +1,7 @@
 package tdapi
 
+import "github.com/tada-team/tdproto"
+
 type Team struct {
 	// Team name
 	Name string `json:"name"`
@@ -33,4 +35,10 @@ type Team struct {
 
 	// Team pinned
 	Pinned bool `json:"pinned,omitempty"`
+}
+
+// Invitation information
+type TeamPrejoinInfo struct {
+	// Short team information
+	Team tdproto.TeamShort `json:"team"`
 }

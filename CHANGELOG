@@ -1,5 +1,14 @@
+v1.34.1
+ - tdapi.MyReactions
+ - tdapi.DevicePing
+ - tdapi.GroupMembers
+ - tdapi.MessageMarkup
+ - tdapi.TaskColors
+ - tdapi.ColorRule
+ - removed tdapi.GroupMember, use tdproto.GroupMembership instead
+
 v1.34.0
- - tdapi.upload.go and UploadFilter added
+ - tdapi.UploadFilter
 
 v1.33.7
  - Contact.can_import_tasks field
