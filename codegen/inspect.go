@@ -43,6 +43,7 @@ type TdStructField struct {
 	Name            string
 	Help            string
 	JsonName        string
+	SchemaName      string
 	TypeStr         string
 	IsPrimitive     bool
 	IsReadOnly      bool
@@ -225,7 +226,7 @@ func cherryPickQuery(tdproto *TdInfo, tdapi *TdInfo, name string) error {
 	newQuery.ParamsNamesAndHelp = make(map[string]string)
 	newQuery.Name = name
 	for _, field := range pickObject.Fields {
-		newQuery.ParamsNamesAndHelp[field.Name] = field.Help
+		newQuery.ParamsNamesAndHelp[field.SchemaName] = field.Help
 	}
 
 	tdproto.TdQueries[name] = newQuery
@@ -452,6 +453,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 		isNotSerialized := false
 		jsonName := fieldName
 		fieldDoc := cleanHelp(field.Doc.Text())
+		var schemaName string
 
 		if field.Tag != nil {
 			structTags := reflect.StructTag(strings.Trim(field.Tag.Value, "`"))
@@ -489,6 +491,16 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 				} else {
 					return fmt.Errorf("unknown tdproto tag %s", aTag)
 				}
+			}
+
+			var schemaTags []string
+			schemaTagsStr, ok := structTags.Lookup("schema")
+			if ok {
+				schemaTags = strings.Split(schemaTagsStr, ",")
+			}
+
+			for _, sTag := range schemaTags {
+				schemaName = sTag
 			}
 		}
 
@@ -557,6 +569,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 			IsReadOnly:      isReadOnly,
 			IsOmitEmpty:     isOmitEmpty,
 			JsonName:        jsonName,
+			SchemaName:      schemaName,
 			TypeStr:         fieldTypeStr,
 			IsList:          isList,
 			IsPointer:       isPointer,
