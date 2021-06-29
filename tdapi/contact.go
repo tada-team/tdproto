@@ -1,6 +1,8 @@
 package tdapi
 
-import "github.com/tada-team/tdproto"
+import (
+	"github.com/tada-team/tdproto/tdmodels"
+)
 
 // Contact invite/edit form
 type Contact struct {
@@ -35,7 +37,7 @@ type Contact struct {
 	DebugShowActivity bool `json:"debug_show_activity"`
 
 	// Status in team
-	Status tdproto.TeamStatus `json:"status"`
+	Status tdmodels.TeamStatus `json:"status"`
 
 	// ContactSection uids, if any
 	Sections []string `json:"sections"`
