@@ -2,7 +2,6 @@ package api_paths
 
 import (
 	"github.com/tada-team/tdproto"
-	"github.com/tada-team/tdproto/tdapi"
 )
 
 // TODO: http:get:: /api/v4/teams/{team_uid}/chats/{chat_jid}/messages
@@ -22,10 +21,11 @@ var ChatPaths = []PathSpec{
 	},
 	{
 		Path: "/api/v4/teams/{team_id}/chats/{chat_id}/messages",
-		Get: &OperationSpec{
+		/*Get: &OperationSpec{
 			QueryStruct: tdapi.MessageFilter{},
 			Responce:    []tdproto.Message{},
-		},
+			Description: "Get multiple messages",
+		},*/
 		Post: &OperationSpec{
 			Request:     tdproto.Message{},
 			Description: "Send text message to chat.",
