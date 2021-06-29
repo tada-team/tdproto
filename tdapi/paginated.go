@@ -1,11 +1,11 @@
 package tdapi
 
-import "github.com/tada-team/tdproto/tdmodels"
+import "github.com/tada-team/tdproto"
 
 // Paginated chats
 type PaginatedChats struct {
-	Contacts []tdmodels.Contact `json:"contacts,omitempty"`
-	Objects  []tdmodels.Chat    `json:"objects"`
+	Contacts []tdproto.Contact `json:"contacts,omitempty"`
+	Objects  []tdproto.Chat    `json:"objects"`
 	Count    int                `json:"count"`
 	Limit    int                `json:"limit"`
 	Offset   int                `json:"offset"`
@@ -13,7 +13,7 @@ type PaginatedChats struct {
 
 // Paginated messages
 type PaginatedMessages struct {
-	Objects []tdmodels.Message `json:"objects"`
+	Objects []tdproto.Message `json:"objects"`
 	Count   int                `json:"count"`
 	Limit   int                `json:"limit"`
 	Offset  int                `json:"offset"`
@@ -21,7 +21,7 @@ type PaginatedMessages struct {
 
 // Paginated contacts
 type PaginatedContacts struct {
-	Objects []tdmodels.Contact `json:"objects"`
+	Objects []tdproto.Contact `json:"objects"`
 	Count   int                `json:"count"`
 	Limit   int                `json:"limit"`
 	Offset  int                `json:"offset"`
@@ -29,12 +29,12 @@ type PaginatedContacts struct {
 
 // Chat messages
 type ChatMessages struct {
-	Messages []tdmodels.Message `json:"messages"`
+	Messages []tdproto.Message `json:"messages"`
 }
 
 // Paginated UploadShortMessage
 type PaginatedUploadShortMessages struct {
-	Objects []tdmodels.UploadShortMessage `json:"objects"`
+	Objects []tdproto.UploadShortMessage `json:"objects"`
 	Count   int                           `json:"count"`
 	Limit   int                           `json:"limit"`
 	Offset  int                           `json:"offset"`
