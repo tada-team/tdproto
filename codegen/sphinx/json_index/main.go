@@ -97,7 +97,7 @@ var typeAliasTemplate = template.Must(template.New("rstType").Parse(`
 `))
 
 var httpQueryTemplate = template.Must(template.New("rstQuery").Parse(`
-.. _tdproto-{{- .Name}}:
+.. _tdproto-{{- .Name}}Query:
 
 {{.Name}}
 -------------------------------------------------------------
