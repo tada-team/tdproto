@@ -1,7 +1,8 @@
 v2.0.0
  - websocket events moved to tdws package
- - removed deprecated server.roster event
- - not nullable IconData
+ - PaginatedXXX structs moved to tdapi
+ - IconData now always not nullable
+ - server.roster event removed
 
 v1.34.1
  - tdapi.MyReactions

@@ -1,6 +1,6 @@
 package tdapi
 
-import 	"github.com/tada-team/tdproto"
+import "github.com/tada-team/tdproto"
 
 // Contact invite/edit form
 type Contact struct {

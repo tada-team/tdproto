@@ -110,12 +110,12 @@ func generateSpecRst(path string, spec api_paths.OperationSpec, method string) e
 
 	var resultObjectName string
 	var resultKind reflect.Kind
-	if spec.Responce != nil {
-		resultKind = reflect.TypeOf(spec.Responce).Kind()
+	if spec.Response != nil {
+		resultKind = reflect.TypeOf(spec.Response).Kind()
 		if resultKind == reflect.Slice {
-			resultObjectName = reflect.TypeOf(spec.Responce).Elem().Name()
+			resultObjectName = reflect.TypeOf(spec.Response).Elem().Name()
 		} else {
-			resultObjectName = reflect.TypeOf(spec.Responce).Name()
+			resultObjectName = reflect.TypeOf(spec.Response).Name()
 		}
 	}
 
@@ -146,7 +146,7 @@ func generateSpecRst(path string, spec api_paths.OperationSpec, method string) e
 		Description:        description,
 		RequestDescription: spec.RequestDescription,
 		RequestObjectName:  requestObjectName,
-		ResultDescription:  spec.ResponceDescription,
+		ResultDescription:  spec.ResponseDescription,
 		ResultObjectName:   resultObjectName,
 		ResultKind:         resultKind,
 	})
