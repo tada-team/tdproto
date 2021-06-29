@@ -1,5 +1,6 @@
 package tdapi
 
+// Chat filter
 type ChatFilter struct {
 	UserParams
 	Paginator

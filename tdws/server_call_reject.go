@@ -1,6 +1,8 @@
 package tdws
 
-func NewServerCallReject(jid JID, reason string, uid string) (r ServerCallReject) {
+import "github.com/tada-team/tdproto"
+
+func NewServerCallReject(jid tdproto.JID, reason string, uid string) (r ServerCallReject) {
 	r.Name = r.GetName()
 	r.Params.Jid = jid
 	r.Params.Reason = reason
@@ -19,7 +21,7 @@ func (p ServerCallReject) GetName() string { return "server.call.reject" }
 // Params of the server.call.reject event
 type serverCallRejectParams struct {
 	// Chat or contact id
-	Jid JID `json:"jid"`
+	Jid tdproto.JID `json:"jid"`
 
 	// Call id
 	Uid string `json:"uid"`

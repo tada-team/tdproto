@@ -1,6 +1,8 @@
 package tdws
 
-func NewServerCallState(callEvent CallEvent) (r ServerCallState) {
+import "github.com/tada-team/tdproto"
+
+func NewServerCallState(callEvent tdproto.CallEvent) (r ServerCallState) {
 	r.Name = r.GetName()
 	r.Params = callEvent
 	return
@@ -9,7 +11,7 @@ func NewServerCallState(callEvent CallEvent) (r ServerCallState) {
 // Call information
 type ServerCallState struct {
 	BaseEvent
-	Params CallEvent `json:"params"`
+	Params tdproto.CallEvent `json:"params"`
 }
 
 func (p ServerCallState) GetName() string { return "server.call.state" }

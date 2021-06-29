@@ -2,9 +2,17 @@ package tdapi
 
 import "github.com/tada-team/tdproto"
 
+// Sms code response
 type SmsCode struct {
-	Phone          string                    `json:"phone"`
+	// Phone number
+	Phone string `json:"phone"`
+
+	// Code expiration date
 	CodeValidUntil tdproto.ISODateTimeString `json:"code_valid_until"`
-	NextCodeAt     tdproto.ISODateTimeString `json:"next_code_at"`
-	CodeLength     int                       `json:"code_length"`
+
+	// Next code date
+	NextCodeAt tdproto.ISODateTimeString `json:"next_code_at"`
+
+	// Code length, symbols
+	CodeLength int `json:"code_length"`
 }

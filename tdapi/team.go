@@ -2,6 +2,7 @@ package tdapi
 
 import "github.com/tada-team/tdproto"
 
+// Team response
 type Team struct {
 	// Team name
 	Name string `json:"name"`

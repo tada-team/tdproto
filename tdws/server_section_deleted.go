@@ -1,12 +1,14 @@
 package tdws
 
-func NewServerSectionDeleted(ct ChatType, section DeletedSection) (r ServerSectionDeleted) {
-	section.Gentime = Gentime() // XXX
+import "github.com/tada-team/tdproto"
+
+func NewServerSectionDeleted(ct tdproto.ChatType, section tdproto.DeletedSection) (r ServerSectionDeleted) {
+	section.Gentime = tdproto.Gentime() // XXX
 
 	r.Name = r.GetName()
 	r.Params.ChatType = ct
 	r.Params.Gentime = section.Gentime
-	r.Params.Sections = []DeletedSection{section}
+	r.Params.Sections = []tdproto.DeletedSection{section}
 	return r
 }
 
@@ -21,10 +23,10 @@ func (p ServerSectionDeleted) GetName() string { return "server.section.deleted"
 // Params of the server.section.deleted event
 type serverSectionDeletedParams struct {
 	// Chat type
-	ChatType ChatType `json:"chat_type"`
+	ChatType tdproto.ChatType `json:"chat_type"`
 
 	// Section/project info
-	Sections []DeletedSection `json:"sections"`
+	Sections []tdproto.DeletedSection `json:"sections"`
 
 	// Deprecated
 	Gentime int64 `json:"gentime"`

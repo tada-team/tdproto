@@ -1,5 +1,7 @@
 package tdws
 
+import "github.com/tada-team/tdproto"
+
 func NewServerOnline(contacts []OnlineContact, calls []OnlineCall) (r ServerOnline) {
 	r.Name = r.GetName()
 	r.Params.Contacts = contacts
@@ -27,7 +29,7 @@ type serverOnlineParams struct {
 // Contact online status
 type OnlineContact struct {
 	// Contact id
-	Jid JID `json:"jid"`
+	Jid tdproto.JID `json:"jid"`
 
 	// Is away from keyboard
 	Afk bool `json:"afk,omitempty"`
@@ -39,13 +41,13 @@ type OnlineContact struct {
 // Active call status
 type OnlineCall struct {
 	// Chat or contact id
-	Jid JID `json:"jid"`
+	Jid tdproto.JID `json:"jid"`
 
 	// Call id
 	Uid string `json:"uid"`
 
 	// Call start
-	Start ISODateTimeString `json:"start,omitempty"`
+	Start tdproto.ISODateTimeString `json:"start,omitempty"`
 
 	// Number participants in call
 	OnlineCount int `json:"online_count,omitempty"`

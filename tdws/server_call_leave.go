@@ -1,6 +1,8 @@
 package tdws
 
-func NewServerCallLeave(jid JID, uid string) (r ServerCallLeave) {
+import "github.com/tada-team/tdproto"
+
+func NewServerCallLeave(jid tdproto.JID, uid string) (r ServerCallLeave) {
 	r.Name = r.GetName()
 	r.Params.Jid = jid
 	r.Params.Uid = uid
@@ -18,7 +20,7 @@ func (p ServerCallLeave) GetName() string { return "server.call.leave" }
 // Params of the server.call.leave event
 type serverCallLeaveParams struct {
 	// Chat or contact id
-	Jid JID `json:"jid"`
+	Jid tdproto.JID `json:"jid"`
 
 	// Call uid
 	Uid string `json:"uid"`

@@ -2,9 +2,11 @@ package tdws
 
 import (
 	"time"
+
+	"github.com/tada-team/tdproto"
 )
 
-func NewServerCallBuzz(teamShort TeamShort, chatShort ChatShort, actorShort ContactShort, uid string, timeout time.Duration) (r ServerCallBuzz) {
+func NewServerCallBuzz(teamShort tdproto.TeamShort, chatShort tdproto.ChatShort, actorShort tdproto.ContactShort, uid string, timeout time.Duration) (r ServerCallBuzz) {
 	r.Name = r.GetName()
 	r.Params.TeamShort = teamShort
 	r.Params.ChatShort = chatShort
@@ -29,22 +31,22 @@ func (p ServerCallBuzz) GetName() string { return "server.call.buzz" }
 // Params of the server.call.buzz event
 type serverCallBuzzParams struct {
 	// Chat or contact id
-	Jid JID `json:"jid"`
+	Jid tdproto.JID `json:"jid"`
 
 	// Chat icons
-	Icons *IconData `json:"icons"`
+	Icons tdproto.IconData `json:"icons"`
 
 	// Chat title
 	DisplayName string `json:"display_name"`
 
 	// Short team information
-	TeamShort TeamShort `json:"teaminfo"`
+	TeamShort tdproto.TeamShort `json:"teaminfo"`
 
 	// Short chat information
-	ChatShort ChatShort `json:"chat"`
+	ChatShort tdproto.ChatShort `json:"chat"`
 
 	// Short call creator information
-	ActorShort ContactShort `json:"actor"`
+	ActorShort tdproto.ContactShort `json:"actor"`
 
 	// Call id
 	Uid string `json:"uid"`

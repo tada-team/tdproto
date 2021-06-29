@@ -1,5 +1,7 @@
 package tdws
 
+import "github.com/tada-team/tdproto"
+
 // Send trickle candidate for webrtc connection
 type ClientCallTrickle struct {
 	BaseEvent
@@ -11,7 +13,7 @@ func (p ClientCallTrickle) GetName() string { return "client.call.trickle" }
 // Params of client.call.trickle event
 type clientCallTrickleParams struct {
 	// Chat or contact id
-	Jid JID `json:"jid"`
+	Jid tdproto.JID `json:"jid"`
 
 	// Trickle candidate
 	Candidate string `json:"candidate"`

@@ -1,9 +1,11 @@
 package tdws
 
-func NewServerSectionUpdated(ct ChatType, sections ...Section) (r ServerSectionUpdated) {
+import "github.com/tada-team/tdproto"
+
+func NewServerSectionUpdated(ct tdproto.ChatType, sections ...tdproto.Section) (r ServerSectionUpdated) {
 	r.Name = r.GetName()
 	r.Params.ChatType = ct
-	r.Params.Gentime = Gentime() // XXX
+	r.Params.Gentime = tdproto.Gentime() // XXX
 	r.Params.Sections = sections
 	return r
 }
@@ -19,10 +21,10 @@ func (p ServerSectionUpdated) GetName() string { return "server.section.updated"
 // Params of the server.section.updated event
 type serverSectionUpdatedParams struct {
 	// Chat type
-	ChatType ChatType `json:"chat_type"`
+	ChatType tdproto.ChatType `json:"chat_type"`
 
 	// Section/project info
-	Sections []Section `json:"sections"`
+	Sections []tdproto.Section `json:"sections"`
 
 	// deprecated
 	Gentime int64 `json:"gentime"`

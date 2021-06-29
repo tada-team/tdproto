@@ -1,6 +1,8 @@
 package tdws
 
-func NewServerCallTalking(talking bool, chat, actor JID) (r ServerCallTalking) {
+import "github.com/tada-team/tdproto"
+
+func NewServerCallTalking(talking bool, chat, actor tdproto.JID) (r ServerCallTalking) {
 	r.Name = r.GetName()
 	r.Params.Jid = chat
 	r.Params.Actor = actor
@@ -19,10 +21,10 @@ func (p ServerCallTalking) GetName() string { return "server.call.talking" }
 // Params of the server.call.talking event
 type serverCallTalkingParams struct {
 	// Chat or contact id
-	Jid JID `json:"jid"`
+	Jid tdproto.JID `json:"jid"`
 
 	// Actor id
-	Actor JID `json:"actor"`
+	Actor tdproto.JID `json:"actor"`
 
 	// Is talking
 	Talking bool `json:"talking"`

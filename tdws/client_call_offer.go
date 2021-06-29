@@ -1,5 +1,7 @@
 package tdws
 
+import "github.com/tada-team/tdproto"
+
 // Start a call
 type ClientCallOffer struct {
 	BaseEvent
@@ -11,7 +13,7 @@ func (p ClientCallOffer) GetName() string { return "client.call.offer" }
 // Params of the client.call.offer event
 type clientCallOfferParams struct {
 	// Chat or contact id
-	Jid JID `json:"jid"`
+	Jid tdproto.JID `json:"jid"`
 
 	// Mute state
 	Muted bool `json:"muted"`

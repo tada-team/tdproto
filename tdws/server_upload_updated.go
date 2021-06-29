@@ -1,6 +1,8 @@
 package tdws
 
-func NewServerUploadUpdated(uploads ...Upload) (r ServerUploadUpdated) {
+import "github.com/tada-team/tdproto"
+
+func NewServerUploadUpdated(uploads ...tdproto.Upload) (r ServerUploadUpdated) {
 	r.Name = r.GetName()
 	r.Params.Uploads = uploads
 	return r
@@ -17,5 +19,5 @@ func (p ServerUploadUpdated) GetName() string { return "server.upload.updated" }
 // Params of the server.upload.updated event
 type serverUploadUpdatedParams struct {
 	// Uploads data
-	Uploads []Upload `json:"uploads"`
+	Uploads []tdproto.Upload `json:"uploads"`
 }

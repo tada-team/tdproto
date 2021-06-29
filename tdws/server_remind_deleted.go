@@ -1,8 +1,10 @@
 package tdws
 
+import "github.com/tada-team/tdproto"
+
 func NewServerRemindDeleted(uid string) (r ServerRemindDeleted) {
 	r.Name = r.GetName()
-	r.Params.Remind = []DeletedRemind{
+	r.Params.Remind = []tdproto.DeletedRemind{
 		{Uid: uid},
 	}
 	return r
@@ -19,5 +21,5 @@ func (p ServerRemindDeleted) GetName() string { return "server.remind.deleted" }
 // Params of the server.remind.deleted event
 type serverRemindDeletedParams struct {
 	// Remind information
-	Remind []DeletedRemind `json:"reminds"`
+	Remind []tdproto.DeletedRemind `json:"reminds"`
 }

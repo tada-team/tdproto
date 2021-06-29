@@ -1,6 +1,8 @@
 package tdws
 
-func NewServerTagUpdated(tags ...Tag) (r ServerTagUpdated) {
+import "github.com/tada-team/tdproto"
+
+func NewServerTagUpdated(tags ...tdproto.Tag) (r ServerTagUpdated) {
 	r.Name = r.GetName()
 	r.Params.Tags = tags
 	return r
@@ -17,5 +19,5 @@ func (p ServerTagUpdated) GetName() string { return "server.tag.updated" }
 // Params of the server.tag.updated event
 type serverTagUpdatedParams struct {
 	// Tags info
-	Tags []Tag `json:"tags"`
+	Tags []tdproto.Tag `json:"tags"`
 }

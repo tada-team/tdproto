@@ -1,6 +1,8 @@
 package tdws
 
-func NewServerCallRestart(chat JID, teamUid string, uid string) (r ServerCallRestart) {
+import "github.com/tada-team/tdproto"
+
+func NewServerCallRestart(chat tdproto.JID, teamUid string, uid string) (r ServerCallRestart) {
 	r.Name = r.GetName()
 	r.Params.Jid = chat
 	r.Params.Team = teamUid
@@ -19,7 +21,7 @@ func (p ServerCallRestart) GetName() string { return "server.call.restart" }
 // Params of the server.call.restart event
 type serverCallRestartParams struct {
 	// Chat or contact id
-	Jid JID `json:"jid"`
+	Jid tdproto.JID `json:"jid"`
 
 	// Call id
 	Uid string `json:"uid"`

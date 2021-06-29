@@ -1,6 +1,8 @@
 package tdws
 
-func NewServerChatDraft(jid JID, draft string, gentime int64) (r ServerChatDraft) {
+import "github.com/tada-team/tdproto"
+
+func NewServerChatDraft(jid tdproto.JID, draft string, gentime int64) (r ServerChatDraft) {
 	r.Name = r.GetName()
 	r.Params.Jid = jid
 	r.Params.Draft = draft
@@ -19,7 +21,7 @@ func (p ServerChatDraft) GetName() string { return "server.chat.draft" }
 // Params of the server.chat.draft event
 type serverChatDraftParams struct {
 	// Chat or contact id
-	Jid JID `json:"jid"`
+	Jid tdproto.JID `json:"jid"`
 
 	// Draft text
 	Draft string `json:"draft"`

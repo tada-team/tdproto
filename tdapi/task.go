@@ -2,7 +2,7 @@ package tdapi
 
 import "github.com/tada-team/tdproto"
 
-// Task
+// Task response
 type Task struct {
 	// Custom task color
 	CustomColorIndex *uint16 `json:"custom_color_index,omitempty"`

@@ -1,11 +1,13 @@
 package tdws
 
-func NewServerChatDeleted(chat DeletedChat, teamUnread *TeamUnread, badge uint) (r ServerChatDeleted) {
+import "github.com/tada-team/tdproto"
+
+func NewServerChatDeleted(chat tdproto.DeletedChat, teamUnread *tdproto.TeamUnread, badge uint) (r ServerChatDeleted) {
 	chat.IsArchive = true
-	chat.Gentime = Gentime()
+	chat.Gentime = tdproto.Gentime()
 
 	r.Name = r.GetName()
-	r.Params.Chats = []DeletedChat{chat}
+	r.Params.Chats = []tdproto.DeletedChat{chat}
 	r.Params.TeamUnread = teamUnread
 	r.Params.Badge = badge
 	return r
@@ -22,10 +24,10 @@ func (p ServerChatDeleted) GetName() string { return "server.chat.deleted" }
 // Params of the server.chat.deleted event
 type serverChatDeletedParams struct {
 	// List of deleted chats
-	Chats []DeletedChat `json:"chats"`
+	Chats []tdproto.DeletedChat `json:"chats"`
 
 	// Current team counters
-	TeamUnread *TeamUnread `json:"team_unread"`
+	TeamUnread *tdproto.TeamUnread `json:"team_unread"`
 
 	// Total number of unreads
 	Badge uint `json:"badge"`

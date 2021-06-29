@@ -1,9 +1,11 @@
 package tdws
 
+import "github.com/tada-team/tdproto"
+
 // Message receiving status
 type ReceivedMessage struct {
 	// Chat or contact id
-	Chat JID `json:"chat"`
+	Chat tdproto.JID `json:"chat"`
 
 	// Message id
 	MessageId string `json:"message_id"`

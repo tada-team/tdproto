@@ -1,6 +1,8 @@
 package tdws
 
-func NewServerMessagePush(p MessagePush) (r ServerMessagePush) {
+import "github.com/tada-team/tdproto"
+
+func NewServerMessagePush(p tdproto.MessagePush) (r ServerMessagePush) {
 	r.Name = r.GetName()
 	r.Params = p
 	return r
@@ -9,7 +11,7 @@ func NewServerMessagePush(p MessagePush) (r ServerMessagePush) {
 // Push replacement for desktop application
 type ServerMessagePush struct {
 	BaseEvent
-	Params MessagePush `json:"params"`
+	Params tdproto.MessagePush `json:"params"`
 }
 
 func (p ServerMessagePush) GetName() string { return "server.message.push" }

@@ -1,6 +1,8 @@
 package tdws
 
-func NewServerTagDeleted(tags ...DeletedTag) (r ServerTagDeleted) {
+import "github.com/tada-team/tdproto"
+
+func NewServerTagDeleted(tags ...tdproto.DeletedTag) (r ServerTagDeleted) {
 	r.Name = r.GetName()
 	r.Params.Tags = tags
 	return r
@@ -17,5 +19,5 @@ func (p ServerTagDeleted) GetName() string { return "server.tag.deleted" }
 // Params of the server.tag.deleted event
 type serverTagDeletedParams struct {
 	// Tags info
-	Tags []DeletedTag `json:"tags"`
+	Tags []tdproto.DeletedTag `json:"tags"`
 }

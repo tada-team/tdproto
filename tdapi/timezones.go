@@ -1,5 +1,6 @@
 package tdapi
 
-type TimezonesResp struct {
+// Timezones response
+type Timezones struct {
 	Timezones []string `json:"timezones"`
 }

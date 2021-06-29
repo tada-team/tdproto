@@ -1,5 +1,7 @@
 package tdws
 
+import "github.com/tada-team/tdproto"
+
 func NewClientMessageUpdated(p ClientMessageUpdatedParams) (r ClientMessageUpdated) {
 	r.Name = r.GetName()
 	r.ConfirmId = ConfirmId()
@@ -18,10 +20,10 @@ func (p ClientMessageUpdated) GetName() string { return "client.message.updated"
 // Params of the client.message.updated event
 type ClientMessageUpdatedParams struct {
 	// Chat, task or contact jid. Required.
-	To JID `json:"to"`
+	To tdproto.JID `json:"to"`
 
 	// Message content. Required.
-	Content MessageContent `json:"content"`
+	Content tdproto.MessageContent `json:"content"`
 
 	// Uid created by client. Recommended.
 	MessageId string `json:"message_id,omitempty"`

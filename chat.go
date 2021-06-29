@@ -12,7 +12,7 @@ type ChatShort struct {
 	DisplayName string `json:"display_name"`
 
 	// Icon data
-	Icons *IconData `json:"icons"`
+	Icons IconData `json:"icons"`
 }
 
 // Minimal chat representation for deletion
@@ -51,7 +51,7 @@ type Chat struct {
 	DisplayName string `json:"display_name"`
 
 	// Icons info
-	Icons *IconData `json:"icons"`
+	Icons IconData `json:"icons"`
 
 	// Include unread messages to counters
 	CountersEnabled bool `json:"counters_enabled,omitempty"`

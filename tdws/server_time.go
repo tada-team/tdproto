@@ -1,10 +1,14 @@
 package tdws
 
-import "time"
+import (
+	"time"
+
+	"github.com/tada-team/tdproto"
+)
 
 func NewServerTime() (r ServerTime) {
 	r.Name = r.GetName()
-	r.Params.Time = IsoDatetime(time.Now())
+	r.Params.Time = tdproto.IsoDatetime(time.Now())
 	return r
 }
 
@@ -19,5 +23,5 @@ func (p ServerTime) GetName() string { return "server.time" }
 // Params of the server.time event
 type serverTimeParams struct {
 	// Current time
-	Time ISODateTimeString `json:"time"`
+	Time tdproto.ISODateTimeString `json:"time"`
 }

@@ -1,6 +1,8 @@
 package tdws
 
-func NewServerCallSdp(jid JID, uid, sdpType, sdp string) (r ServerCallSdp) {
+import "github.com/tada-team/tdproto"
+
+func NewServerCallSdp(jid tdproto.JID, uid, sdpType, sdp string) (r ServerCallSdp) {
 	r.Name = r.GetName()
 	r.Params.Jid = jid
 	r.Params.JSEP.Type = sdpType
@@ -20,11 +22,11 @@ func (p ServerCallSdp) GetName() string { return "server.call.sdp" }
 // Params of the server.call.sdp event
 type serverCallSdpParams struct {
 	// Chat or contact id
-	Jid JID `json:"jid"`
+	Jid tdproto.JID `json:"jid"`
 
 	// Call id
 	Uid string `json:"uid"`
 
 	// SDP data
-	JSEP JSEP `json:"jsep"`
+	JSEP tdproto.JSEP `json:"jsep"`
 }

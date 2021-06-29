@@ -1,12 +1,14 @@
 package tdws
 
-func NewServerMessageUpdated(messages []Message, delayed bool, counters *ChatCounters, teamUnread *TeamUnread, badge *uint) (r ServerMessageUpdated) {
+import "github.com/tada-team/tdproto"
+
+func NewServerMessageUpdated(messages []tdproto.Message, delayed bool, counters *tdproto.ChatCounters, teamUnread *tdproto.TeamUnread, badge *uint) (r ServerMessageUpdated) {
 	r.Name = r.GetName()
 	r.ConfirmId = ConfirmId()
 	r.Params.Messages = messages
 	r.Params.Delayed = delayed
 
-	r.Params.ChatCounters = make([]ChatCounters, 0)
+	r.Params.ChatCounters = make([]tdproto.ChatCounters, 0)
 	if counters != nil {
 		r.Params.ChatCounters = append(r.Params.ChatCounters, *counters)
 	}
@@ -33,16 +35,16 @@ func (p ServerMessageUpdated) GetName() string { return "server.message.updated"
 // Params of the server.message.updated event
 type serverMessageUpdatedParams struct {
 	// Messages data
-	Messages []Message `json:"messages"`
+	Messages []tdproto.Message `json:"messages"`
 
 	// true = silently message update, false = new message
 	Delayed bool `json:"delayed"`
 
 	// Chat counters
-	ChatCounters []ChatCounters `json:"chat_counters"`
+	ChatCounters []tdproto.ChatCounters `json:"chat_counters"`
 
 	// Current team counters
-	TeamUnread *TeamUnread `json:"team_unread"`
+	TeamUnread *tdproto.TeamUnread `json:"team_unread"`
 
 	// Total number of unreads, if changed
 	Badge *uint `json:"badge"`
