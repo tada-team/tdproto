@@ -1,5 +1,5 @@
 v2.0.0
- - websocket events moved to tdws package
+ - websocket events moved to tdevents package
  - PaginatedXXX structs moved to tdapi
  - IconData now always not nullable
  - server.roster event removed
