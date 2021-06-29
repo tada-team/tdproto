@@ -92,10 +92,10 @@ func (p pathDoc) ToResultType() string {
 var pathsTemplate = template.Must(template.New("rstPath").Parse(`
 .. http:{{- .MethodName -}}:: {{.Path}}
 
-  {{.Description}}
+  {{.Description}}{{.ToQueryLink}}
 
   {{.ToSwaggerUrl}}
-  {{.ToParams}}{{if .ToRequestText}}
+{{.ToParams}}{{if .ToRequestText}}
   :reqjson object: {{.ToRequestText}}{{end}}
   :resjson boolean ok: True if no error occured.{{if .ResultObjectName}}
   :resjson {{.ToResultType}} result: {{.ToResultText}}{{end}}
