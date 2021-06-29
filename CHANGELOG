@@ -1,3 +1,8 @@
+v2.0.0
+ - websocket events moved to tdws package
+ - removed deprecated server.roster event
+ - not nullable IconData
+
 v1.34.1
  - tdapi.MyReactions
  - tdapi.DevicePing

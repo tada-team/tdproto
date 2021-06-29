@@ -18,7 +18,7 @@ type Contact struct {
 	ContactPhone string `json:"contact_phone"`
 
 	// Icons data
-	Icons *IconData `json:"icons"`
+	Icons IconData `json:"icons"`
 
 	// Role in this team
 	Role string `json:"role"`
@@ -204,5 +204,5 @@ type ContactShort struct {
 	ShortName string `json:"short_name"`
 
 	// Icons data
-	Icons *IconData `json:"icons"`
+	Icons IconData `json:"icons"`
 }
