@@ -191,7 +191,8 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 
 	err = parseTdprotoAst(tdapiNameToAstMap["tdapi"], tdapiInfo,
 		&map[string]string{
-			"task": "",
+			"task":         "",
+			"my_reactions": "",
 		},
 	)
 	if err != nil {
@@ -206,6 +207,11 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 	}
 	// TaskFilter query
 	err = cherryPickQuery(infoToFill, tdapiInfo, "TaskFilter")
+	if err != nil {
+		return nil, err
+	}
+	// MyReactions
+	err = cherryPickStruct(infoToFill, tdapiInfo, "MyReactions")
 	if err != nil {
 		return nil, err
 	}
