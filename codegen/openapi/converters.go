@@ -261,7 +261,7 @@ func addQueryParameters(operation *openApiOperation, queryStruct interface{}) er
 
 func convertPathSpecMethod(method api_paths.OperationSpec, operation **openApiOperation) error {
 	getRepsonce := openApiResponse{}
-	err := interfaceToOaContents(method.Responce, &getRepsonce.Content, true)
+	err := interfaceToOaContents(method.Response, &getRepsonce.Content, true)
 	if err != nil {
 		return err
 	}

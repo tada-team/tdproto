@@ -6,7 +6,7 @@ var GroupPaths = []PathSpec{
 	{
 		Path: "/api/v4/teams/{team_id}/groups",
 		Get: &OperationSpec{
-			Responce:    []tdproto.Chat{},
+			Response:    []tdproto.Chat{},
 			Description: "Get all groups in the team.",
 		},
 		Delete: &OperationSpec{
@@ -16,14 +16,14 @@ var GroupPaths = []PathSpec{
 	{
 		Path: "/api/v4/teams/{team_id}/groups/{group_id}/members",
 		Get: &OperationSpec{
-			Responce:    []tdproto.GroupMembership{},
+			Response:    []tdproto.GroupMembership{},
 			Description: "Get the list of group members.",
 		},
 	},
 	{
 		Path: "/api/v4/teams/{team_id}/groups/{group_id}/members/{contact_id}",
 		Delete: &OperationSpec{
-			Responce:    tdproto.GroupMembership{},
+			Response:    tdproto.GroupMembership{},
 			Description: "Remove member from the group.",
 		},
 	},

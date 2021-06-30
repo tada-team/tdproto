@@ -2,9 +2,9 @@ package api_paths
 
 type OperationSpec struct {
 	Request             interface{}
-	Responce            interface{}
+	Response            interface{}
 	Description         interface{}
-	ResponceDescription string
+	ResponseDescription string
 	RequestDescription  string
 	SecurityIsOptional  bool
 	QueryStruct         interface{}
@@ -30,6 +30,6 @@ var PathTitles = map[string]string{
 	"group": "Group related paths",
 	"team":  "Team related paths",
 	"chat":  "Chat related paths",
-	"misc":  "Miscelaneos paths",
+	"misc":  "Miscellaneous paths",
 	"task":  "Task related paths",
 }
