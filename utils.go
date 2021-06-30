@@ -1,8 +1,6 @@
 package tdproto
 
 import (
-	"crypto/rand"
-	"log"
 	"path/filepath"
 	"runtime"
 	"strings"
