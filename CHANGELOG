@@ -1,3 +1,6 @@
+v.1.34.4
+ - tdproto.InvitableUser
+
 v.1.34.3
  - Contact.node, tdproto.Node
 
