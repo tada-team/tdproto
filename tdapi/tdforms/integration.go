@@ -1,7 +1,8 @@
-package tdapi
+package tdforms
 
 import "github.com/tada-team/tdproto"
 
+// Integration
 type Integration struct {
 	// Enabled
 	Enabled bool `json:"enabled"`

@@ -1,4 +1,4 @@
-package tdapi
+package tdresp
 
 // Background action (for example: Excel import) information
 type BackgroundAction struct {

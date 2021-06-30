@@ -1,8 +1,8 @@
-package tdapi
+package tdresp
 
 import "github.com/tada-team/tdproto"
 
-// Draft form and response
+// Draft response
 type Draft struct {
 	// Draft content
 	Draft string `json:"draft"`

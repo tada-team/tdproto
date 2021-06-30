@@ -1,4 +1,4 @@
-package tdapi
+package tdresp
 
 import "github.com/tada-team/tdproto"
 

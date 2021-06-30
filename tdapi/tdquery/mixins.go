@@ -1,4 +1,4 @@
-package tdapi
+package tdquery
 
 type Paginator struct {
 	// Limit

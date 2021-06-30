@@ -1,4 +1,4 @@
-package tdapi
+package tdforms
 
 // Device ping response
 type DevicePing struct {

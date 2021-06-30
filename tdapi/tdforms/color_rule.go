@@ -1,4 +1,4 @@
-package tdapi
+package tdforms
 
 // Task color rule form
 type ColorRule struct {
