@@ -1,11 +1,17 @@
 package tdapi
 
 type Paginator struct {
-	Limit  int `schema:"limit"`
-	Offset int `schema:"offset"`
+	// Limit
+	Limit int `json:"limit,omitempty"`
+
+	// Offset
+	Offset int `json:"offset,omitempty"`
 }
 
 type UserParams struct {
-	Lang     string `schema:"lang"`
-	Timezone string `schema:"timezone"`
+	// Language code
+	Lang     string `schema:"lang,omitempty"`
+
+	// Timezone
+	Timezone string `schema:"timezone,omitempty"`
 }

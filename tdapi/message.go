@@ -2,6 +2,40 @@ package tdapi
 
 import "github.com/tada-team/tdproto"
 
+// Messages response
+type Messages struct {
+	// Message list
+	Objects []tdproto.Message `json:"objects"`
+
+	// Count
+	Count int `json:"count"`
+
+	// Limit
+	Limit int `json:"limit"`
+
+	// Offset
+	Offset int `json:"offset"`
+}
+
+// Chat messages
+type ChatMessages struct {
+	// Message list
+	Messages []tdproto.Message `json:"messages"`
+}
+
+// All-in-one response with all messages info for fast chat rendering
+type Hotmessages struct {
+	// chat information
+	Chat tdproto.Chat `json:"chat"`
+
+	// Messages list
+	Messages []tdproto.Message `json:"messages"`
+
+	// Contacts list
+	Contacts []tdproto.Contact `json:"contacts"`
+}
+
+// Message filter
 type MessageFilter struct {
 	UserParams
 	Paginator
@@ -61,6 +95,7 @@ type MessageFilter struct {
 	Around string `schema:"around"`
 }
 
+// Update message form
 type MessageUpdate struct {
 	// Important flag. Not required. Default: false
 	Important bool `json:"important,omitempty"`
@@ -72,6 +107,7 @@ type MessageUpdate struct {
 	SendAt string `json:"send_at,omitempty"`
 }
 
+// Update message response
 type Message struct {
 	// Message type
 	Type tdproto.Mediatype `json:"type"`
@@ -99,8 +135,3 @@ type MessageMarkup struct {
 	// Deprecated: use markup instead
 	Links tdproto.MessageLinks `json:"links"`
 }
-
-// file upload:
-// <form action="...?message_id=..." method="post" enctype="multipart/form-data">
-//   <input type="file" name="file">
-// </form>
