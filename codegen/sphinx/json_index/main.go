@@ -96,6 +96,17 @@ var typeAliasTemplate = template.Must(template.New("rstType").Parse(`
 **Is array**{{end}}
 `))
 
+var httpQueryTemplate = template.Must(template.New("rstQuery").Parse(`
+.. _tdproto-{{- .Name}}Query:
+
+{{.Name}}
+-------------------------------------------------------------
+{{if .Help}}
+{{.Help}}{{end}}
+{{range $paramName, $help := .ParamsNamesAndHelp}}
+* ` + "``" + "{{$paramName}}" + "``" + ` - {{$help}}{{end}}
+`))
+
 func isEventStruct(structName string, tdprotoInfo *codegen.TdInfo) bool {
 	if structName == "BaseEvent" {
 		return true
@@ -215,6 +226,15 @@ func generateRstJson(tdprotoInfo *codegen.TdInfo) error {
 
 	for _, object := range jsonObjects {
 		err := jsonTemplate.Execute(os.Stdout, object)
+		if err != nil {
+			return err
+		}
+	}
+
+	fmt.Fprintln(os.Stdout, "\nHTTP Queries\n============================")
+
+	for _, query := range tdprotoInfo.TdQueries {
+		err := httpQueryTemplate.Execute(os.Stdout, query)
 		if err != nil {
 			return err
 		}

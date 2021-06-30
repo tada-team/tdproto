@@ -17,6 +17,7 @@ type pathDoc struct {
 	Description        string
 	RequestDescription string
 	RequestObjectName  string
+	RequestQueryName   string
 	ResultDescription  string
 	ResultObjectName   string
 	ResultKind         reflect.Kind
@@ -89,13 +90,21 @@ func (p pathDoc) ToResultType() string {
 	panic(fmt.Errorf("unknown result kind %v", p.ResultKind))
 }
 
+func (p pathDoc) ToQueryLink() string {
+	if p.RequestQueryName == "" {
+		return ""
+	}
+
+	return fmt.Sprintf("\n\n  Query parameters: :ref:`tdproto-%sQuery`", p.RequestQueryName)
+}
+
 var pathsTemplate = template.Must(template.New("rstPath").Parse(`
 .. http:{{- .MethodName -}}:: {{.Path}}
 
-  {{.Description}}
+  {{.Description}}{{.ToQueryLink}}
 
   {{.ToSwaggerUrl}}
-  {{.ToParams}}{{if .ToRequestText}}
+{{.ToParams}}{{if .ToRequestText}}
   :reqjson object: {{.ToRequestText}}{{end}}
   :resjson boolean ok: True if no error occured.{{if .ResultObjectName}}
   :resjson {{.ToResultType}} result: {{.ToResultText}}{{end}}
@@ -140,12 +149,22 @@ func generateSpecRst(path string, spec api_paths.OperationSpec, method string) e
 		}
 	}
 
+	var requestQueryName string
+	if spec.QueryStruct != nil {
+		queryTypeOf := reflect.TypeOf(spec.QueryStruct)
+		requestQueryName = queryTypeOf.Name()
+		if requestQueryName == "" {
+			return fmt.Errorf("failed to get query type name %v", spec.QueryStruct)
+		}
+	}
+
 	err := pathsTemplate.Execute(os.Stdout, pathDoc{
 		Path:               path,
 		MethodName:         method,
 		Description:        description,
 		RequestDescription: spec.RequestDescription,
 		RequestObjectName:  requestObjectName,
+		RequestQueryName:   requestQueryName,
 		ResultDescription:  spec.ResponseDescription,
 		ResultObjectName:   resultObjectName,
 		ResultKind:         resultKind,

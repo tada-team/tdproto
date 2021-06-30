@@ -7,6 +7,7 @@ type OperationSpec struct {
 	ResponseDescription string
 	RequestDescription  string
 	SecurityIsOptional  bool
+	QueryStruct         interface{}
 }
 
 type PathSpec struct {

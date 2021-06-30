@@ -229,6 +229,36 @@ func getDescription(method api_paths.OperationSpec) string {
 	return ""
 }
 
+func addQueryParameters(operation *openApiOperation, queryStruct interface{}) error {
+
+	structureInfo := reflect.TypeOf(queryStruct)
+	if structureInfo.Kind() != reflect.Struct {
+		return fmt.Errorf("expected struct as query structure got %v", structureInfo)
+	}
+
+	operation.Parameters = make([]openApiParameter, 0)
+
+	for i := 0; i < structureInfo.NumField(); i++ {
+		field := structureInfo.Field(i)
+		if field.Anonymous {
+			// TODO
+			continue
+		}
+		paramName := field.Tag.Get("schema")
+
+		operation.Parameters = append(operation.Parameters, openApiParameter{
+			Name:     paramName,
+			In:       InQuery,
+			Required: false,
+			Schema: openApiSchema{
+				Type: openApiString,
+			},
+		})
+	}
+
+	return nil
+}
+
 func convertPathSpecMethod(method api_paths.OperationSpec, operation **openApiOperation) error {
 	getRepsonce := openApiResponse{}
 	err := interfaceToOaContents(method.Response, &getRepsonce.Content, true)
@@ -256,6 +286,13 @@ func convertPathSpecMethod(method api_paths.OperationSpec, operation **openApiOp
 
 	if method.SecurityIsOptional {
 		(*operation).Security = []map[string][]string{{}}
+	}
+
+	if method.QueryStruct != nil {
+		err = addQueryParameters(*operation, method.QueryStruct)
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil

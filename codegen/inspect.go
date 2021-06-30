@@ -33,10 +33,17 @@ type TdConstFields struct {
 	Help  string
 }
 
+type TdQuery struct {
+	Name               string
+	Help               string
+	ParamsNamesAndHelp map[string]string
+}
+
 type TdStructField struct {
 	Name            string
 	Help            string
 	JsonName        string
+	SchemaName      string
 	TypeStr         string
 	IsPrimitive     bool
 	IsReadOnly      bool
@@ -77,6 +84,7 @@ type TdInfo struct {
 	TdEvents   map[string]string
 	TdMapTypes map[string]TdMapType
 	TdConsts   []TdConstFields
+	TdQueries  map[string]TdQuery
 }
 
 type TdEnum struct {
@@ -156,6 +164,7 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 	infoToFill.TdStructs = make(map[string]TdStruct)
 	infoToFill.TdTypes = make(map[string]TdType)
 	infoToFill.TdMapTypes = make(map[string]TdMapType)
+	infoToFill.TdQueries = make(map[string]TdQuery)
 
 	tdprotoNameToAstMap, err := extractTdprotoAst(tdprotoFileSet)
 	if err != nil {
@@ -182,7 +191,8 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 
 	err = parseTdprotoAst(tdapiNameToAstMap["tdapi"], tdapiInfo,
 		&map[string]string{
-			"task": "",
+			"task":         "",
+			"my_reactions": "",
 		},
 	)
 	if err != nil {
@@ -191,7 +201,17 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 
 	// Cherry picking
 	// Task
-	err = cherryPick(infoToFill, tdapiInfo, "Task")
+	err = cherryPickStruct(infoToFill, tdapiInfo, "Task")
+	if err != nil {
+		return nil, err
+	}
+	// TaskFilter query
+	err = cherryPickQuery(infoToFill, tdapiInfo, "TaskFilter")
+	if err != nil {
+		return nil, err
+	}
+	// MyReactions
+	err = cherryPickStruct(infoToFill, tdapiInfo, "MyReactions")
 	if err != nil {
 		return nil, err
 	}
@@ -199,11 +219,32 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 	return infoToFill, nil
 }
 
-func cherryPick(tdproto *TdInfo, tdapi *TdInfo, name string) error {
+func cherryPickQuery(tdproto *TdInfo, tdapi *TdInfo, name string) error {
 
 	pickObject, ok := tdapi.TdStructs[name]
 	if !ok {
-		return fmt.Errorf("failed to cherry pick %s", name)
+		return fmt.Errorf("failed to cherry pick query %s", name)
+	}
+
+	var newQuery TdQuery
+
+	newQuery.Help = pickObject.Help
+	newQuery.ParamsNamesAndHelp = make(map[string]string)
+	newQuery.Name = name
+	for _, field := range pickObject.Fields {
+		newQuery.ParamsNamesAndHelp[field.SchemaName] = field.Help
+	}
+
+	tdproto.TdQueries[name] = newQuery
+
+	return nil
+}
+
+func cherryPickStruct(tdproto *TdInfo, tdapi *TdInfo, name string) error {
+
+	pickObject, ok := tdapi.TdStructs[name]
+	if !ok {
+		return fmt.Errorf("failed to cherry pick struct %s", name)
 	}
 	tdproto.TdStructs[name] = pickObject
 
@@ -418,6 +459,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 		isNotSerialized := false
 		jsonName := fieldName
 		fieldDoc := cleanHelp(field.Doc.Text())
+		var schemaName string
 
 		if field.Tag != nil {
 			structTags := reflect.StructTag(strings.Trim(field.Tag.Value, "`"))
@@ -455,6 +497,16 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 				} else {
 					return fmt.Errorf("unknown tdproto tag %s", aTag)
 				}
+			}
+
+			var schemaTags []string
+			schemaTagsStr, ok := structTags.Lookup("schema")
+			if ok {
+				schemaTags = strings.Split(schemaTagsStr, ",")
+			}
+
+			for _, sTag := range schemaTags {
+				schemaName = sTag
 			}
 		}
 
@@ -523,6 +575,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 			IsReadOnly:      isReadOnly,
 			IsOmitEmpty:     isOmitEmpty,
 			JsonName:        jsonName,
+			SchemaName:      schemaName,
 			TypeStr:         fieldTypeStr,
 			IsList:          isList,
 			IsPointer:       isPointer,

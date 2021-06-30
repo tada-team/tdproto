@@ -217,6 +217,9 @@ type Features struct {
 	// Support email
 	SupportEmail string `json:"support_email"`
 
+	// Theme settings containing colors for app and web
+	ThemeSettings *Theme `json:"theme_settings,omitempty"`
+
 	// Deprecated
 	TaskChecklist bool `json:"task_checklist"`
 
