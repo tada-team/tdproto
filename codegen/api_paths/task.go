@@ -14,7 +14,7 @@ var TaskPaths = []PathSpec{
 		},
 		Get: &OperationSpec{
 			QueryStruct: tdapi.TaskFilter{},
-			Responce:    []tdapi.Task{},
+			Response:    []tdapi.Task{},
 			Description: "Get the list of tasks",
 		},
 	},
