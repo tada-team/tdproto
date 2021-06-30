@@ -240,6 +240,8 @@ type Features struct {
 
 	// Deprecated
 	MinAppVersion string `json:"min_app_version"`
+
+	ThemeSettings *Theme `json:"theme_settings,omitempty"`
 }
 
 // Interactive Connectivity Establishment Server for WEB Rtc connection. Readonly.
