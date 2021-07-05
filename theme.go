@@ -226,10 +226,15 @@ type IconColors struct {
 
 // WebBase base colors for web
 type WebBase struct {
-	Brand      RGBColor `json:"brand"`
-	BrandLight RGBColor `json:"brand_light"`
-	BrandDark  RGBColor `json:"brand_dark"`
-	BackLight  RGBColor `json:"back_light"`
-	Error      RGBColor `json:"error"`
-	ErrorLight RGBColor `json:"error_light"`
+	Brand          RGBColor `json:"brand"`
+	BrandLight     RGBColor `json:"brand_light"`
+	BrandDark      RGBColor `json:"brand_dark"`
+	BackLight      RGBColor `json:"back_light"`
+	Error          RGBColor `json:"error"`
+	ErrorLight     RGBColor `json:"error_light"`
+	Success        RGBColor `json:"success"`
+	SuccessLight   RGBColor `json:"success_light"`
+	Attention      RGBColor `json:"attention"`
+	AttentionLight RGBColor `json:"attention_light"`
+	Fade           RGBColor `json:"fade"`
 }
