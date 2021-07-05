@@ -37,6 +37,12 @@ type Features struct {
 	// Link to Google Play
 	AndroidApp string `json:"android_app"`
 
+	// Link to AppStore for corporate app
+	IOSCorpApp string `json:"ios_corp_app"`
+
+	// Link to Google Play for corporate app
+	AndroidCorpApp string `json:"android_corp_app"`
+
 	// Default UI theme
 	Theme string `json:"theme"`
 
