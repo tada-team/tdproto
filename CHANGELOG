@@ -1,5 +1,8 @@
+v.1.35.2
+ - features.amplitude_api_key
+
 v.1.35.1
- - features.CustomTheme flag if server has custom theme
+ - features.custom_theme flag if server has custom theme
 
 v.1.35.0
  - TaskItem.gentime

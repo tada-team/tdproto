@@ -151,6 +151,9 @@ type Features struct {
 	// Yandex metrika counter id
 	Metrika string `json:"metrika"`
 
+	// Amplitude api key
+	AmplitudeApiKey string `json:"amplitude_api_key,omitempty"`
+
 	// Minimal chars number for starting global search
 	MinSearchLength int `json:"min_search_length"`
 
