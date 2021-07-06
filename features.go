@@ -37,6 +37,12 @@ type Features struct {
 	// Link to Google Play
 	AndroidApp string `json:"android_app"`
 
+	// Link to AppStore for corporate app
+	IOSCorpApp string `json:"ios_corp_app"`
+
+	// Link to Google Play for corporate app
+	AndroidCorpApp string `json:"android_corp_app"`
+
 	// Default UI theme
 	Theme string `json:"theme"`
 
@@ -217,8 +223,8 @@ type Features struct {
 	// Support email
 	SupportEmail string `json:"support_email"`
 
-	// Theme settings containing colors for app and web
-	ThemeSettings *Theme `json:"theme_settings,omitempty"`
+	// True if server has custom theme
+	CustomTheme bool `json:"custom_theme"`
 
 	// Deprecated
 	TaskChecklist bool `json:"task_checklist"`

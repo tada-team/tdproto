@@ -5,6 +5,9 @@ type Contact struct {
 	// Contact Id
 	Jid JID `json:"jid"`
 
+	// Node uid for external users
+	Node string `json:"node,omitempty"`
+
 	// Full name in chats
 	DisplayName string `json:"display_name"`
 

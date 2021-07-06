@@ -269,6 +269,9 @@ type TaskItem struct {
 	// Id
 	Uid string `json:"uid,omitempty"`
 
+	// Object version
+	Gentime int64 `json:"gentime" tdproto:"readonly"`
+
 	// Sort ordering
 	SortOrdering uint `json:"sort_ordering,omitempty"`
 

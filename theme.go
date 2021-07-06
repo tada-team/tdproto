@@ -112,6 +112,9 @@ type Theme struct {
 	// Icon colors for app
 	Icon *IconColors `json:"ic"`
 
+	// WebBase colors for web
+	WebBase *WebBase `json:"web_base"`
+
 	// Deprecated
 	AppAccentColor RGBColor
 
@@ -119,7 +122,7 @@ type Theme struct {
 	AppPrimaryColor RGBColor
 }
 
-// Button colors for app
+// ButtonColors button colors for app
 type ButtonColors struct {
 	// Brand static color
 	BrandStatic RGBColor `json:"brand_static"`
@@ -140,7 +143,7 @@ type ButtonColors struct {
 	SimpleDisable RGBColor `json:"simple_disable"`
 }
 
-// Font colors for app
+// FontColors font colors for app
 type FontColors struct {
 	// Text color
 	Text RGBColor `json:"text"`
@@ -164,7 +167,7 @@ type FontColors struct {
 	BubbleReceived RGBColor `json:"bubble_received"`
 }
 
-// Message colors for app
+// MessageColors message colors for app
 type MessageColors struct {
 	// Bubble sent color
 	BubbleSent RGBColor `json:"bubble_sent"`
@@ -185,7 +188,7 @@ type MessageColors struct {
 	Allocated RGBColor `json:"allocated"`
 }
 
-// Input colors for app
+// InputColors input colors for app
 type InputColors struct {
 	// Static color
 	Static RGBColor `json:"static"`
@@ -200,7 +203,7 @@ type InputColors struct {
 	Error RGBColor `json:"error"`
 }
 
-// Switcher colors for app
+// SwitcherColors switcher colors for app
 type SwitcherColors struct {
 	// On color
 	On RGBColor `json:"on"`
@@ -209,7 +212,7 @@ type SwitcherColors struct {
 	Off RGBColor `json:"off"`
 }
 
-// Icon colors for app
+// IconColors icon colors for app
 type IconColors struct {
 	// Title color
 	Title RGBColor `json:"title"`
@@ -219,4 +222,19 @@ type IconColors struct {
 
 	// Other color
 	Other RGBColor `json:"other"`
+}
+
+// WebBase base colors for web
+type WebBase struct {
+	Brand          RGBColor `json:"brand"`
+	BrandLight     RGBColor `json:"brand_light"`
+	BrandDark      RGBColor `json:"brand_dark"`
+	BackLight      RGBColor `json:"back_light"`
+	Error          RGBColor `json:"error"`
+	ErrorLight     RGBColor `json:"error_light"`
+	Success        RGBColor `json:"success"`
+	SuccessLight   RGBColor `json:"success_light"`
+	Attention      RGBColor `json:"attention"`
+	AttentionLight RGBColor `json:"attention_light"`
+	Fade           RGBColor `json:"fade"`
 }
