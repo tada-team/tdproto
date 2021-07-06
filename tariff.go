@@ -2,6 +2,12 @@ package tdproto
 
 // Tariff for teams
 type Tariff struct {
+	// Name of tariff on english
+	NameEn string `json:"name_en"`
+
+	// Name of tariff on russian
+	NameRu string `json:"name_ru"`
+
 	// Cloud space reserved for storing team users uploads in megabytes
 	CloudSpace int `json:"cloud_space"`
 
