@@ -262,6 +262,9 @@ type Subtask struct {
 
 	// Can other team member see this task/group chat
 	Public bool `json:"public,omitempty"`
+
+	// Subtask task status
+	TaskStatus string `json:"task_status,omitempty"`
 }
 
 // Task checklist item
