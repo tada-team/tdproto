@@ -2,6 +2,9 @@ package tdproto
 
 // Tariff for teams
 type Tariff struct {
+	// Key for updating tariff in team
+	Key string `json:"key"`
+
 	// Name of tariff on english
 	NameEn string `json:"name_en"`
 
