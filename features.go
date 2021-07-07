@@ -151,6 +151,9 @@ type Features struct {
 	// Yandex metrika counter id
 	Metrika string `json:"metrika"`
 
+	// Amplitude api key
+	AmplitudeApiKey string `json:"amplitude_api_key,omitempty"`
+
 	// Minimal chars number for starting global search
 	MinSearchLength int `json:"min_search_length"`
 
@@ -223,8 +226,8 @@ type Features struct {
 	// Support email
 	SupportEmail string `json:"support_email"`
 
-	// Theme settings containing colors for app and web
-	ThemeSettings *Theme `json:"theme_settings,omitempty"`
+	// True if server has custom theme
+	CustomTheme bool `json:"custom_theme"`
 
 	// Deprecated
 	TaskChecklist bool `json:"task_checklist"`

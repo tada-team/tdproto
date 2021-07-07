@@ -72,10 +72,10 @@ type Team struct {
 	UploadsSizeLimit int64 `json:"uploads_size_limit,omitempty" tdproto:"readonly"`
 
 	// Unread message counters
-	Unreads *TeamUnread `json:"unread" tdproto:"readonly"`
+	Unreads *TeamUnread `json:"unread"`
 
 	// My profile in this team
-	Me Contact `json:"me" tdproto:"readonly"`
+	Me Contact `json:"me"`
 
 	// Team contacts. Used only for team creation
 	Contacts []Contact `json:"contacts,omitempty" tdproto:"readonly"`
