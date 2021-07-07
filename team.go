@@ -75,7 +75,7 @@ type Team struct {
 	Unreads *TeamUnread `json:"unread"`
 
 	// My profile in this team
-	Me Contact `json:"me" tdproto:"readonly"`
+	Me Contact `json:"me"`
 
 	// Team contacts. Used only for team creation
 	Contacts []Contact `json:"contacts,omitempty" tdproto:"readonly"`
