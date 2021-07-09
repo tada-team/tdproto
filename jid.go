@@ -5,6 +5,7 @@ import (
 	"log"
 	"strings"
 
+	"github.com/fxamacker/cbor/v2"
 	"github.com/vmihailenco/msgpack/v5"
 )
 
@@ -79,6 +80,19 @@ func (jid JID) MarshalMsgpack() ([]byte, error) {
 func (jid *JID) UnmarshalMsgpack(data []byte) error {
 	var s string
 	if err := msgpack.Unmarshal(data, &s); err != nil {
+		return err
+	}
+	* jid = JID(s)
+	return nil
+}
+
+func (jid JID) MarshalCBOR() ([]byte, error) {
+	return cbor.Marshal(jid.String())
+}
+
+func (jid *JID) UnmarshalCBOR(data []byte) error {
+	var s string
+	if err := cbor.Unmarshal(data, &s); err != nil {
 		return err
 	}
 	* jid = JID(s)
