@@ -1,3 +1,6 @@
+v.1.36.0
+ - CBOR support
+
 v.1.35.3
  - subtask.task_status
 
