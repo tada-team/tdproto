@@ -43,11 +43,11 @@ type rstJsonField struct {
 
 func (r rstJsonField) GetModifiers() string {
 	if r.TdStructField.IsOmitEmpty {
-		return " :abbr:`💥 (Maybe omitted)`"
+		return " omitempty"
 	}
 
 	if r.TdStructField.IsPointer {
-		return " :abbr:`0️⃣ (Might be null)`"
+		return " nullable"
 	}
 
 	return ""
@@ -64,12 +64,11 @@ var jsonTemplate = template.Must(template.New("rstJson").Parse(`
 {{.TdStruct.Name}}
 -------------------------------------------------------------
 
-{{.TdStruct.Help}}
+.. tdproto-struct:: {{.TdStruct.Name}}
 
-**Fields**:
+  {{.TdStruct.Help}}
 {{range $field := .Fields}}
-* ` + "``" + "{{$field.TdStructField.JsonName}}" + "``" +
-	` ({{$field.TypeStr}}){{.GetModifiers}} - {{$field.TdStructField.Help}}{{end}}
+  :field {{$field.TdStructField.JsonName}} {{$field.TypeStr}}{{.GetModifiers}}: {{$field.TdStructField.Help}}{{end}}
 `))
 
 var enumTemplate = template.Must(template.New("rstEnum").Parse(`
@@ -197,7 +196,7 @@ func generateRstJson(tdprotoInfo *codegen.TdPackage) error {
 			if isJsonPrimitive {
 				jsTypeStr = primitiveType
 			} else {
-				jsTypeStr = fmt.Sprintf(":ref:`tdproto-%s`", goFieldType)
+				jsTypeStr = fmt.Sprintf("`tdproto-%s`", goFieldType)
 			}
 
 			if field.IsList {
