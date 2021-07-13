@@ -12,7 +12,7 @@ type Tariff struct {
 	NameRu string `json:"name_ru"`
 
 	// Cloud space reserved for storing team users uploads in megabytes
-	CloudSpace int `json:"cloud_space"`
+	CloudSpace int64 `json:"cloud_space"`
 
 	// Maximum allowed number of members in a team
 	MaxMembersInTeam int `json:"max_members_in_team"`
