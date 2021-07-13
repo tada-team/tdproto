@@ -193,6 +193,7 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 		&map[string]string{
 			"task":         "",
 			"my_reactions": "",
+			"resp":         "",
 		},
 	)
 	if err != nil {
@@ -212,6 +213,12 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 	}
 	// MyReactions
 	err = cherryPickStruct(infoToFill, tdapiInfo, "MyReactions")
+	if err != nil {
+		return nil, err
+	}
+
+	// Resp
+	err = cherryPickStruct(infoToFill, tdapiInfo, "Resp")
 	if err != nil {
 		return nil, err
 	}
