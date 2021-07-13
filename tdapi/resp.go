@@ -1,5 +1,6 @@
 package tdapi
 
+// Server responce
 type Resp struct {
 	DebugTime string            `json:"_time,omitempty"`
 	Ok        bool              `json:"ok"`

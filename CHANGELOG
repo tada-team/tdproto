@@ -4,8 +4,17 @@ v2.0.0
  - IconData now always not nullable
  - server.roster event removed
 
+v.1.36.0
+ - CBOR support
+
+v.1.35.3
+ - subtask.task_status
+
+v.1.35.2
+ - features.amplitude_api_key
+
 v.1.35.1
- - features.CustomTheme flag if server has custom theme
+ - features.custom_theme flag if server has custom theme
 
 v.1.35.0
  - TaskItem.gentime
