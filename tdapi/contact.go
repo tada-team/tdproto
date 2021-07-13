@@ -2,6 +2,11 @@ package tdapi
 
 import "github.com/tada-team/tdproto"
 
+type ContactFilter struct {
+	// Comma separated statuses in team
+	Status string `schema:"status"`
+}
+
 // Contact invite/edit form
 type Contact struct {
 	// User uid (for invitation from other team)
