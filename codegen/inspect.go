@@ -5,7 +5,6 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
-	"os"
 	"path"
 	"reflect"
 	"strings"
@@ -45,6 +44,7 @@ type TdStructField struct {
 	JsonName        string
 	SchemaName      string
 	TypeStr         string
+	KeyTypeStr      string
 	IsPrimitive     bool
 	IsReadOnly      bool
 	IsPointer       bool
@@ -538,6 +538,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 		isList := false
 		isPointer := false
 		fieldTypeStr := ""
+		keyTypeStr := ""
 
 		switch fieldTypeAst := field.Type.(type) {
 		case *ast.Ident:
@@ -582,8 +583,15 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 		case *ast.InterfaceType:
 			fieldTypeStr = "interface{}"
 		case *ast.MapType:
-			fmt.Fprintln(os.Stderr, "TODO: support maps as field types")
-			continue
+			var err error
+			keyTypeStr, err = parseExprToString(fieldTypeAst.Key)
+			if err != nil {
+				return err
+			}
+			fieldTypeStr, err = parseExprToString(fieldTypeAst.Value)
+			if err != nil {
+				return err
+			}
 		default:
 			return fmt.Errorf("unknown field of %s type %#v", structName, fieldTypeAst)
 		}
@@ -602,6 +610,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 			JsonName:        jsonName,
 			SchemaName:      schemaName,
 			TypeStr:         fieldTypeStr,
+			KeyTypeStr:      keyTypeStr,
 			IsList:          isList,
 			IsPointer:       isPointer,
 			IsPrimitive:     isPrimitive,
