@@ -194,6 +194,7 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 			"task":         "",
 			"my_reactions": "",
 			"resp":         "",
+			"err":          "",
 		},
 	)
 	if err != nil {
@@ -223,7 +224,24 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 		return nil, err
 	}
 
+	// Err
+	err = cherryPickTypeAlias(infoToFill, tdapiInfo, "Err")
+	if err != nil {
+		return nil, err
+	}
+
 	return infoToFill, nil
+}
+
+func cherryPickTypeAlias(tdproto *TdInfo, tdapi *TdInfo, name string) error {
+
+	pickObject, ok := tdapi.TdTypes[name]
+	if !ok {
+		return fmt.Errorf("failed to cherry pick query %s", name)
+	}
+	tdproto.TdTypes[name] = pickObject
+
+	return nil
 }
 
 func cherryPickQuery(tdproto *TdInfo, tdapi *TdInfo, name string) error {
