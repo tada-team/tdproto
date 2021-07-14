@@ -1,3 +1,5 @@
+v.1.36.2
+ - add Tariff struct
 v.1.36.1
  - tdapi.ContactFilter
 
