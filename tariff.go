@@ -19,4 +19,7 @@ type Tariff struct {
 
 	// Maximum number of participants per call
 	MaxParticipantsPerCall int `json:"max_participants_per_call"`
+
+	//maximum file size for uploading
+	MaxUploadFilesize int64 `json:"max_upload_filesize`
 }
