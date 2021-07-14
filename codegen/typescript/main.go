@@ -162,6 +162,9 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) (tsInfo TypeScr
 				tsTypeName = unwrappedTypeName
 				isList = true
 			}
+			if tdprotoStructField.KeyTypeStr != "" {
+				tsTypeName = fmt.Sprintf("Record<%s, %s>", tdprotoStructField.KeyTypeStr, tsTypeName)
+			}
 
 			tsNewClass.Fields = append(tsNewClass.Fields, TypeScriptFieldInfo{
 				Name:           tsFieldName,

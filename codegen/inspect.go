@@ -5,7 +5,6 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
-	"os"
 	"path"
 	"reflect"
 	"strings"
@@ -45,6 +44,7 @@ type TdStructField struct {
 	JsonName        string
 	SchemaName      string
 	TypeStr         string
+	KeyTypeStr      string
 	IsPrimitive     bool
 	IsReadOnly      bool
 	IsPointer       bool
@@ -193,6 +193,8 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 		&map[string]string{
 			"task":         "",
 			"my_reactions": "",
+			"resp":         "",
+			"err":          "",
 		},
 	)
 	if err != nil {
@@ -216,7 +218,30 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 		return nil, err
 	}
 
+	// Resp
+	err = cherryPickStruct(infoToFill, tdapiInfo, "Resp")
+	if err != nil {
+		return nil, err
+	}
+
+	// Err
+	err = cherryPickTypeAlias(infoToFill, tdapiInfo, "Err")
+	if err != nil {
+		return nil, err
+	}
+
 	return infoToFill, nil
+}
+
+func cherryPickTypeAlias(tdproto *TdInfo, tdapi *TdInfo, name string) error {
+
+	pickObject, ok := tdapi.TdTypes[name]
+	if !ok {
+		return fmt.Errorf("failed to cherry pick query %s", name)
+	}
+	tdproto.TdTypes[name] = pickObject
+
+	return nil
 }
 
 func cherryPickQuery(tdproto *TdInfo, tdapi *TdInfo, name string) error {
@@ -513,6 +538,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 		isList := false
 		isPointer := false
 		fieldTypeStr := ""
+		keyTypeStr := ""
 
 		switch fieldTypeAst := field.Type.(type) {
 		case *ast.Ident:
@@ -557,8 +583,15 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 		case *ast.InterfaceType:
 			fieldTypeStr = "interface{}"
 		case *ast.MapType:
-			fmt.Fprintln(os.Stderr, "TODO: support maps as field types")
-			continue
+			var err error
+			keyTypeStr, err = parseExprToString(fieldTypeAst.Key)
+			if err != nil {
+				return err
+			}
+			fieldTypeStr, err = parseExprToString(fieldTypeAst.Value)
+			if err != nil {
+				return err
+			}
 		default:
 			return fmt.Errorf("unknown field of %s type %#v", structName, fieldTypeAst)
 		}
@@ -577,6 +610,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 			JsonName:        jsonName,
 			SchemaName:      schemaName,
 			TypeStr:         fieldTypeStr,
+			KeyTypeStr:      keyTypeStr,
 			IsList:          isList,
 			IsPointer:       isPointer,
 			IsPrimitive:     isPrimitive,
