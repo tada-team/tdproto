@@ -1,3 +1,12 @@
+v.1.36.4
+ - Tariff: add Uid
+ - Tariff: NameEn -> TitleEn
+ - Tariff: NameRu -> TitleRu
+ - Tariff: "CloudSpace" omitempty now
+ - Tariff: "MaxUploadFilesize" omitempty now
+ - Tariff: "MaxMembersInTeam" omitempty now
+ - Tariff: "MaxParticipantsPerCall" omitempty now
+ 
 v.1.36.3
  - add MaxUploadFilesize field
 
