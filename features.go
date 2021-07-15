@@ -139,6 +139,9 @@ type Features struct {
 	// Installation title, used on login screen
 	InstallationTitle string `json:"installation_title,omitempty"`
 
+	// Custom application icon name, if any
+	CustomAppIconName string `json:"custom_app_icon_name,omitempty"`
+
 	// AppBackground image url, if any
 	AppLoginBackground string `json:"app_login_background,omitempty"`
 

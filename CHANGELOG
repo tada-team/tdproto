@@ -1,3 +1,6 @@
+v.1.36.5
+ - features.custom_app_icon_name
+
 v.1.36.4
  - Tariff: add Uid
  - Tariff: NameEn -> TitleEn
