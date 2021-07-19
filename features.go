@@ -109,6 +109,9 @@ type Features struct {
 	// Maximum search result
 	MaxMessageSearchLimit int `json:"max_message_search_limit"`
 
+	// Multi nodes mode (federation) enabled
+	MultiNodes bool `json:"multi_nodes,omitempty"`
+
 	// Max inactivity seconds
 	AfkAge int `json:"afk_age"`
 
