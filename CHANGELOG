@@ -1,3 +1,6 @@
+v.1.36.7
+ - tdapi.resp.reason
+
 v.1.36.6
  - features.multi_nodes
 
