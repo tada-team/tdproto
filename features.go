@@ -85,8 +85,11 @@ type Features struct {
 	// Maximum chars for text message
 	MaxMessageLength int `json:"max_message_length"`
 
-	// Maximum length for project and contact's sections names
+	// Maximum length for contact's sections names
 	MaxSectionLength int `json:"max_section_length"`
+
+	// Maximum length for project
+	MaxProjectLength int `json:"max_project_length"`
 
 	// Maximum length for tags
 	MaxTagLength int `json:"max_tag_length"`
