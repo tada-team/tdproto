@@ -85,8 +85,11 @@ type Features struct {
 	// Maximum chars for text message
 	MaxMessageLength int `json:"max_message_length"`
 
-	// Maximum length for project and contact's sections names
+	// Maximum length for contact's sections names
 	MaxSectionLength int `json:"max_section_length"`
+
+	// Maximum length for project
+	MaxProjectLength int `json:"max_project_length"`
 
 	// Maximum length for tags
 	MaxTagLength int `json:"max_tag_length"`
@@ -108,6 +111,9 @@ type Features struct {
 
 	// Maximum search result
 	MaxMessageSearchLimit int `json:"max_message_search_limit"`
+
+	// Multi nodes mode (federation) enabled
+	MultiNodes bool `json:"multi_nodes,omitempty"`
 
 	// Max inactivity seconds
 	AfkAge int `json:"afk_age"`
@@ -138,6 +144,9 @@ type Features struct {
 
 	// Installation title, used on login screen
 	InstallationTitle string `json:"installation_title,omitempty"`
+
+	// Custom application icon name, if any
+	CustomAppIconName string `json:"custom_app_icon_name,omitempty"`
 
 	// AppBackground image url, if any
 	AppLoginBackground string `json:"app_login_background,omitempty"`

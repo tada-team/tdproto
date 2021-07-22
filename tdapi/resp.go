@@ -7,4 +7,5 @@ type Resp struct {
 	Result    interface{}       `json:"result,omitempty"`
 	Error     Err               `json:"error,omitempty"`
 	Details   map[string]string `json:"details,omitempty"`
+	Reason    string            `json:"reason,omitempty"`
 }

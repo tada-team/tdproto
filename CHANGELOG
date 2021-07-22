@@ -4,6 +4,36 @@ v2.0.0
  - IconData now always not nullable
  - server.roster event removed
 
+v.1.36.8
+ - features.MaxProjectLength
+
+v.1.36.7
+ - tdapi.resp.reason
+
+v.1.36.6
+ - features.multi_nodes
+
+v.1.36.5
+ - features.custom_app_icon_name
+
+v.1.36.4
+ - Tariff: add Uid
+ - Tariff: NameEn -> TitleEn
+ - Tariff: NameRu -> TitleRu
+ - Tariff: "CloudSpace" omitempty now
+ - Tariff: "MaxUploadFilesize" omitempty now
+ - Tariff: "MaxMembersInTeam" omitempty now
+ - Tariff: "MaxParticipantsPerCall" omitempty now
+ 
+v.1.36.3
+ - add MaxUploadFilesize field
+
+v.1.36.2
+ - add Tariff struct
+
+v.1.36.1
+ - tdapi.ContactFilter
+
 v.1.36.0
  - CBOR support
 
