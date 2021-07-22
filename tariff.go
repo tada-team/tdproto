@@ -5,10 +5,10 @@ type Tariff struct {
 	// Tariff id
 	Uid string `json:"uid"`
 
-	// Title of tariff on enlish
+	// Title of tariff in enlish
 	TitleEn string `json:"title_en"`
 
-	// Title of tariff on russian
+	// Title of tariff in russian
 	TitleRu string `json:"title_ru"`
 
 	// Cloud space reserved for storing team users uploads in megabytes
