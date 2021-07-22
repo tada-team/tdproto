@@ -1,3 +1,6 @@
+v.1.36.9
+ - tdapi.Resp.Markup
+
 v.1.36.8
  - features.MaxProjectLength
 
