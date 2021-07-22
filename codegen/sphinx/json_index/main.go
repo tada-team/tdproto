@@ -59,12 +59,7 @@ type rstJsonStruct struct {
 }
 
 var jsonTemplate = template.Must(template.New("rstJson").Parse(`
-.. _tdproto-{{- .TdStruct.Name}}:
-
-{{.TdStruct.Name}}
--------------------------------------------------------------
-
-.. tdproto-struct:: {{.TdStruct.Name}}
+.. tdproto:struct:: {{.TdStruct.Name}}
 
   {{.TdStruct.Help}}
 {{range $field := .Fields}}
@@ -72,27 +67,23 @@ var jsonTemplate = template.Must(template.New("rstJson").Parse(`
 `))
 
 var enumTemplate = template.Must(template.New("rstEnum").Parse(`
-.. _tdproto-{{- .Name}}:
+.. tdproto:enum:: {{.Name}}
 
-{{.Name}}
--------------------------------------------------------------
-**Possible values**:
+  **Possible values**:
 {{range $value := .Values}}
-* {{$value}}{{end}}
+  * {{$value}}{{end}}
 
 `))
 
 var typeAliasTemplate = template.Must(template.New("rstType").Parse(`
-.. _tdproto-{{- .Name}}:
+.. tdproto:type:: {{.Name}}
 
-{{.Name}}
--------------------------------------------------------------
-{{if .Help}}
-{{.Help}}
-{{end}}
-**Base Type**: {{.BaseType}}{{if .IsArray}}
+  {{if .Help}}
+  {{.Help}}
+  {{end}}
+  **Base Type**: {{.BaseType}}{{if .IsArray}}
 
-**Is array**{{end}}
+  **Is array**{{end}}
 `))
 
 var httpQueryTemplate = template.Must(template.New("rstQuery").Parse(`
