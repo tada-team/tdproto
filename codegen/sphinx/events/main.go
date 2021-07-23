@@ -39,7 +39,7 @@ type rstEvent struct {
 	Fields         []rstEventField
 }
 
-func generateRstServerEvents(tdprotoInfo *codegen.TdInfo) (clientEvents []rstEvent, serverEvents []rstEvent, err error) {
+func generateRstServerEvents(tdprotoInfo *codegen.TdPackage) (clientEvents []rstEvent, serverEvents []rstEvent, err error) {
 	for eventStructName, eventStr := range tdprotoInfo.TdEvents {
 		eventExample, ok := eventExampleStr[eventStr]
 		if !ok {

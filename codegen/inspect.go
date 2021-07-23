@@ -78,7 +78,7 @@ type TdMapType struct {
 	Filename     string
 }
 
-type TdInfo struct {
+type TdPackage struct {
 	TdStructs  map[string]TdStruct
 	TdTypes    map[string]TdType
 	TdEvents   map[string]string
@@ -87,12 +87,17 @@ type TdInfo struct {
 	TdQueries  map[string]TdQuery
 }
 
+type TdProto struct {
+	TdForms  TdPackage
+	TdModels TdPackage
+}
+
 type TdEnum struct {
 	Name   string
 	Values []string
 }
 
-func (i TdInfo) GetEnums() []TdEnum {
+func (i TdPackage) GetEnums() []TdEnum {
 	constMap := make(map[string][]string)
 
 	for _, aConst := range i.TdConsts {
@@ -115,7 +120,7 @@ func (i TdInfo) GetEnums() []TdEnum {
 	return listOfEnums
 }
 
-func (tds TdStruct) IsEventParams(tdInfo *TdInfo) bool {
+func (tds TdStruct) IsEventParams(tdInfo *TdPackage) bool {
 
 	for eventStructName := range tdInfo.TdEvents {
 		eventStruct := tdInfo.TdStructs[eventStructName]
@@ -134,7 +139,7 @@ func (tds TdStruct) IsEventParams(tdInfo *TdInfo) bool {
 	return false
 }
 
-func (tds TdStruct) GetStructAnonymousStructs(tdInfo *TdInfo) []TdStruct {
+func (tds TdStruct) GetStructAnonymousStructs(tdInfo *TdPackage) []TdStruct {
 	anonymousStructs := make([]TdStruct, len(tds.AnonnymousFields))
 	for i, anonymousStructName := range tds.AnonnymousFields {
 		anonymousStructs[i] = tdInfo.TdStructs[anonymousStructName]
@@ -144,7 +149,7 @@ func (tds TdStruct) GetStructAnonymousStructs(tdInfo *TdInfo) []TdStruct {
 	return anonymousStructs
 }
 
-func (tds TdStruct) GetAllJsonFields(tdInfo *TdInfo) []TdStructField {
+func (tds TdStruct) GetAllJsonFields(tdInfo *TdPackage) []TdStructField {
 	var allFields []TdStructField
 
 	allFields = append(allFields, tds.Fields...)
@@ -156,10 +161,10 @@ func (tds TdStruct) GetAllJsonFields(tdInfo *TdInfo) []TdStructField {
 	return allFields
 }
 
-func ParseTdproto() (infoToFill *TdInfo, err error) {
+func ParseTdproto() (infoToFill *TdPackage, err error) {
 	tdprotoFileSet := token.NewFileSet()
 
-	infoToFill = new(TdInfo)
+	infoToFill = new(TdPackage)
 	infoToFill.TdEvents = make(map[string]string)
 	infoToFill.TdStructs = make(map[string]TdStruct)
 	infoToFill.TdTypes = make(map[string]TdType)
@@ -183,7 +188,7 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 		return nil, err
 	}
 
-	tdapiInfo := new(TdInfo)
+	tdapiInfo := new(TdPackage)
 	tdapiInfo.TdEvents = make(map[string]string)
 	tdapiInfo.TdStructs = make(map[string]TdStruct)
 	tdapiInfo.TdTypes = make(map[string]TdType)
@@ -233,7 +238,7 @@ func ParseTdproto() (infoToFill *TdInfo, err error) {
 	return infoToFill, nil
 }
 
-func cherryPickTypeAlias(tdproto *TdInfo, tdapi *TdInfo, name string) error {
+func cherryPickTypeAlias(tdproto *TdPackage, tdapi *TdPackage, name string) error {
 
 	pickObject, ok := tdapi.TdTypes[name]
 	if !ok {
@@ -244,7 +249,7 @@ func cherryPickTypeAlias(tdproto *TdInfo, tdapi *TdInfo, name string) error {
 	return nil
 }
 
-func cherryPickQuery(tdproto *TdInfo, tdapi *TdInfo, name string) error {
+func cherryPickQuery(tdproto *TdPackage, tdapi *TdPackage, name string) error {
 
 	pickObject, ok := tdapi.TdStructs[name]
 	if !ok {
@@ -265,7 +270,7 @@ func cherryPickQuery(tdproto *TdInfo, tdapi *TdInfo, name string) error {
 	return nil
 }
 
-func cherryPickStruct(tdproto *TdInfo, tdapi *TdInfo, name string) error {
+func cherryPickStruct(tdproto *TdPackage, tdapi *TdPackage, name string) error {
 
 	pickObject, ok := tdapi.TdStructs[name]
 	if !ok {
@@ -276,7 +281,7 @@ func cherryPickStruct(tdproto *TdInfo, tdapi *TdInfo, name string) error {
 	return nil
 }
 
-func parseTdprotoAst(packageAst *ast.Package, infoToFill *TdInfo, fileFilter *map[string]string) error {
+func parseTdprotoAst(packageAst *ast.Package, infoToFill *TdPackage, fileFilter *map[string]string) error {
 	for fileName, fileAst := range packageAst.Files {
 
 		basePath := path.Base(fileName)
@@ -298,7 +303,7 @@ func parseTdprotoAst(packageAst *ast.Package, infoToFill *TdInfo, fileFilter *ma
 	return nil
 }
 
-func ParseTdprotoFile(infoToFill *TdInfo, fileName string, fileAst *ast.File) error {
+func ParseTdprotoFile(infoToFill *TdPackage, fileName string, fileAst *ast.File) error {
 	for _, declaration := range fileAst.Decls {
 		switch declarationType := declaration.(type) {
 		case *ast.GenDecl:
@@ -317,7 +322,7 @@ func ParseTdprotoFile(infoToFill *TdInfo, fileName string, fileAst *ast.File) er
 	return nil
 }
 
-func parseFunctionDeclaration(infoToFill *TdInfo, functionDeclaration *ast.FuncDecl) error {
+func parseFunctionDeclaration(infoToFill *TdPackage, functionDeclaration *ast.FuncDecl) error {
 
 	if !functionDeclaration.Name.IsExported() {
 		return nil
@@ -352,7 +357,7 @@ func parseFunctionDeclaration(infoToFill *TdInfo, functionDeclaration *ast.FuncD
 	return nil
 }
 
-func ParseGenericDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl, fileName string) error {
+func ParseGenericDeclaration(infoToFill *TdPackage, genDeclaration *ast.GenDecl, fileName string) error {
 	switch genDeclaration.Tok {
 	case token.CONST:
 		return parseConstDeclaration(infoToFill, genDeclaration)
@@ -369,7 +374,7 @@ func ParseGenericDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl, fi
 }
 
 // parse type Name struct|type {Field} declarations
-func parseTypeDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl, declarationSpec *ast.TypeSpec, fileName string) error {
+func parseTypeDeclaration(infoToFill *TdPackage, genDeclaration *ast.GenDecl, declarationSpec *ast.TypeSpec, fileName string) error {
 
 	helpString := cleanHelp(genDeclaration.Doc.Text())
 
@@ -401,7 +406,7 @@ func parseTypeDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl, decla
 	return nil
 }
 
-func parseMapTypeDeclaration(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, mapAst *ast.MapType, helpString string, fileName string) error {
+func parseMapTypeDeclaration(infoToFill *TdPackage, declarationSpec *ast.TypeSpec, mapAst *ast.MapType, helpString string, fileName string) error {
 	typeName := declarationSpec.Name.Name
 
 	keyTypeStr, err := parseExprToString(mapAst.Key)
@@ -425,7 +430,7 @@ func parseMapTypeDeclaration(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, 
 	return nil
 }
 
-func parseArrayTypeDefinition(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, arrayAst *ast.ArrayType, helpString string, fileName string) error {
+func parseArrayTypeDefinition(infoToFill *TdPackage, declarationSpec *ast.TypeSpec, arrayAst *ast.ArrayType, helpString string, fileName string) error {
 	typeName := declarationSpec.Name.Name
 	arrayExpressionAst := arrayAst.Elt.(*ast.Ident)
 	arrayTypeStr := arrayExpressionAst.Name
@@ -439,7 +444,7 @@ func parseArrayTypeDefinition(infoToFill *TdInfo, declarationSpec *ast.TypeSpec,
 	return nil
 }
 
-func parseTypeDefinition(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, typeIndent *ast.Ident, helpString string, fileName string) error {
+func parseTypeDefinition(infoToFill *TdPackage, declarationSpec *ast.TypeSpec, typeIndent *ast.Ident, helpString string, fileName string) error {
 	typeName := declarationSpec.Name.Name
 	infoToFill.TdTypes[typeName] = TdType{
 		Name:     typeName,
@@ -450,7 +455,7 @@ func parseTypeDefinition(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, type
 	return nil
 }
 
-func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec, structInfo *ast.StructType, helpString string, fileName string) error {
+func parseStructDefinitionInfo(infoToFill *TdPackage, declarationSpec *ast.TypeSpec, structInfo *ast.StructType, helpString string, fileName string) error {
 	structName := declarationSpec.Name.Name
 
 	if helpString == "" {
@@ -632,7 +637,7 @@ func parseStructDefinitionInfo(infoToFill *TdInfo, declarationSpec *ast.TypeSpec
 }
 
 // Parse const ( name Type = value ...) expressions
-func parseConstDeclaration(infoToFill *TdInfo, genDeclaration *ast.GenDecl) error {
+func parseConstDeclaration(infoToFill *TdPackage, genDeclaration *ast.GenDecl) error {
 	for _, spec := range genDeclaration.Specs {
 		valueSpec, ok := spec.(*ast.ValueSpec)
 		if !ok {

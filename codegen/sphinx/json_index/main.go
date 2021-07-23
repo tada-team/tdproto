@@ -107,7 +107,7 @@ var httpQueryTemplate = template.Must(template.New("rstQuery").Parse(`
 * ` + "``" + "{{$paramName}}" + "``" + ` - {{$help}}{{end}}
 `))
 
-func isEventStruct(structName string, tdprotoInfo *codegen.TdInfo) bool {
+func isEventStruct(structName string, tdprotoInfo *codegen.TdPackage) bool {
 	if structName == "BaseEvent" {
 		return true
 	}
@@ -116,7 +116,7 @@ func isEventStruct(structName string, tdprotoInfo *codegen.TdInfo) bool {
 	return isEvent
 }
 
-func generateRstJson(tdprotoInfo *codegen.TdInfo) error {
+func generateRstJson(tdprotoInfo *codegen.TdPackage) error {
 
 	enumedTypeAliases := make(map[string]string)
 
