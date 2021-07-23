@@ -4,6 +4,12 @@ v2.0.0
  - IconData now always not nullable
  - server.roster event removed
 
+v.1.37.1
+ - tdmocks submodule
+
+v.1.36.9
+ - tdapi.Resp.Markup
+
 v.1.36.8
  - features.MaxProjectLength
 
