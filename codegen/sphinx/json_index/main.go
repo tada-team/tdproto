@@ -17,7 +17,7 @@ func main() {
 		panic(err)
 	}
 
-	err = generateRstJson(tdprotoInfo)
+	err = generateRstJson(tdprotoInfo.TdModels)
 	if err != nil {
 		panic(err)
 	}

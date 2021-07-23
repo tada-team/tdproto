@@ -16,7 +16,7 @@ func main() {
 		panic(err)
 	}
 
-	clientEvents, serverEvents, err := generateRstServerEvents(tdprotoInfo)
+	clientEvents, serverEvents, err := generateRstServerEvents(tdprotoInfo.TdModels)
 	if err != nil {
 		panic(err)
 	}

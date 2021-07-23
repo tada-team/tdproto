@@ -88,8 +88,8 @@ type TdPackage struct {
 }
 
 type TdProto struct {
-	TdForms  TdPackage
-	TdModels TdPackage
+	TdForms  *TdPackage
+	TdModels *TdPackage
 }
 
 type TdEnum struct {
@@ -161,15 +161,19 @@ func (tds TdStruct) GetAllJsonFields(tdInfo *TdPackage) []TdStructField {
 	return allFields
 }
 
-func ParseTdproto() (infoToFill *TdPackage, err error) {
+func ParseTdproto() (infoToFill *TdProto, err error) {
+	infoToFill = new(TdProto)
+
 	tdprotoFileSet := token.NewFileSet()
 
-	infoToFill = new(TdPackage)
-	infoToFill.TdEvents = make(map[string]string)
-	infoToFill.TdStructs = make(map[string]TdStruct)
-	infoToFill.TdTypes = make(map[string]TdType)
-	infoToFill.TdMapTypes = make(map[string]TdMapType)
-	infoToFill.TdQueries = make(map[string]TdQuery)
+	tdModelsPackage := new(TdPackage)
+	tdModelsPackage.TdEvents = make(map[string]string)
+	tdModelsPackage.TdStructs = make(map[string]TdStruct)
+	tdModelsPackage.TdTypes = make(map[string]TdType)
+	tdModelsPackage.TdMapTypes = make(map[string]TdMapType)
+	tdModelsPackage.TdQueries = make(map[string]TdQuery)
+
+	infoToFill.TdModels = tdModelsPackage
 
 	tdprotoNameToAstMap, err := extractTdprotoAst(tdprotoFileSet)
 	if err != nil {
@@ -177,7 +181,7 @@ func ParseTdproto() (infoToFill *TdPackage, err error) {
 	}
 
 	tdprotoAst := tdprotoNameToAstMap["tdproto"]
-	err = parseTdprotoAst(tdprotoAst, infoToFill, nil)
+	err = parseTdprotoAst(tdprotoAst, tdModelsPackage, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -188,13 +192,15 @@ func ParseTdproto() (infoToFill *TdPackage, err error) {
 		return nil, err
 	}
 
-	tdapiInfo := new(TdPackage)
-	tdapiInfo.TdEvents = make(map[string]string)
-	tdapiInfo.TdStructs = make(map[string]TdStruct)
-	tdapiInfo.TdTypes = make(map[string]TdType)
-	tdapiInfo.TdMapTypes = make(map[string]TdMapType)
+	tdFormsPackage := new(TdPackage)
+	tdFormsPackage.TdEvents = make(map[string]string)
+	tdFormsPackage.TdStructs = make(map[string]TdStruct)
+	tdFormsPackage.TdTypes = make(map[string]TdType)
+	tdFormsPackage.TdMapTypes = make(map[string]TdMapType)
 
-	err = parseTdprotoAst(tdapiNameToAstMap["tdapi"], tdapiInfo,
+	infoToFill.TdForms = tdFormsPackage
+
+	err = parseTdprotoAst(tdapiNameToAstMap["tdapi"], tdFormsPackage,
 		&map[string]string{
 			"task":         "",
 			"my_reactions": "",
@@ -208,29 +214,29 @@ func ParseTdproto() (infoToFill *TdPackage, err error) {
 
 	// Cherry picking
 	// Task
-	err = cherryPickStruct(infoToFill, tdapiInfo, "Task")
+	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "Task")
 	if err != nil {
 		return nil, err
 	}
 	// TaskFilter query
-	err = cherryPickQuery(infoToFill, tdapiInfo, "TaskFilter")
+	err = cherryPickQuery(tdModelsPackage, tdFormsPackage, "TaskFilter")
 	if err != nil {
 		return nil, err
 	}
 	// MyReactions
-	err = cherryPickStruct(infoToFill, tdapiInfo, "MyReactions")
+	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "MyReactions")
 	if err != nil {
 		return nil, err
 	}
 
 	// Resp
-	err = cherryPickStruct(infoToFill, tdapiInfo, "Resp")
+	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "Resp")
 	if err != nil {
 		return nil, err
 	}
 
 	// Err
-	err = cherryPickTypeAlias(infoToFill, tdapiInfo, "Err")
+	err = cherryPickTypeAlias(tdModelsPackage, tdFormsPackage, "Err")
 	if err != nil {
 		return nil, err
 	}

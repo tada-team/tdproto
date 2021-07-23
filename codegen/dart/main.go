@@ -22,5 +22,5 @@ func main() {
 		panic(err)
 	}
 
-	generateDart(tdprotoInfo)
+	generateDart(tdprotoInfo.TdModels)
 }

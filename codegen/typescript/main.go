@@ -15,7 +15,7 @@ func main() {
 		panic(err)
 	}
 
-	if err := generateTypeScript(tdprotoInfo); err != nil {
+	if err := generateTypeScript(tdprotoInfo.TdModels); err != nil {
 		panic(err)
 	}
 }

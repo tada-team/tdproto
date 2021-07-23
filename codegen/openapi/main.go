@@ -14,7 +14,7 @@ func main() {
 		panic(err)
 	}
 
-	openapiInfo, err := generateOpenApiRoot(tdInfo)
+	openapiInfo, err := generateOpenApiRoot(tdInfo.TdModels)
 	if err != nil {
 		panic(err)
 	}

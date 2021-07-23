@@ -16,7 +16,7 @@ func main() {
 		panic(err)
 	}
 
-	if err := generateMarkdown(tdprotoInfo); err != nil {
+	if err := generateMarkdown(tdprotoInfo.TdModels); err != nil {
 		panic(err)
 	}
 }
