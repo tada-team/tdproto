@@ -15,7 +15,7 @@ func main() {
 		panic(err)
 	}
 
-	if err := generateTypeScript(tdprotoInfo); err != nil {
+	if err := generateTypeScript(tdprotoInfo.TdModels); err != nil {
 		panic(err)
 	}
 }
@@ -89,7 +89,7 @@ func getHelpField(input string) string {
 	}
 }
 
-func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) (tsInfo TypeScriptInfo, err error) {
+func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdPackage) (tsInfo TypeScriptInfo, err error) {
 	var unwrapStructArrays = make(map[string]string)
 	var enumTypes = make(map[string]string)
 
@@ -206,7 +206,7 @@ func convertTdprotoInfoToTypeScript(tdprotoInfo *codegen.TdInfo) (tsInfo TypeScr
 	return tsInfo, nil
 }
 
-func generateTypeScript(tdprotoInfo *codegen.TdInfo) error {
+func generateTypeScript(tdprotoInfo *codegen.TdPackage) error {
 	tsInfo, err := convertTdprotoInfoToTypeScript(tdprotoInfo)
 	if err != nil {
 		return err

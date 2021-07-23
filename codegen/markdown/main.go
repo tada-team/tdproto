@@ -16,7 +16,7 @@ func main() {
 		panic(err)
 	}
 
-	if err := generateMarkdown(tdprotoInfo); err != nil {
+	if err := generateMarkdown(tdprotoInfo.TdModels); err != nil {
 		panic(err)
 	}
 }
@@ -37,7 +37,7 @@ type markdownStruct struct {
 	Fields []markdownStructField
 }
 
-func createMarkdownEvents(tdprotoInfo *codegen.TdInfo) (events []markdownEvent, err error) {
+func createMarkdownEvents(tdprotoInfo *codegen.TdPackage) (events []markdownEvent, err error) {
 	for eventStructName, eventStr := range tdprotoInfo.TdEvents {
 		eventExample, ok := eventExampleStr[eventStr]
 		if !ok {
@@ -59,7 +59,7 @@ func createMarkdownEvents(tdprotoInfo *codegen.TdInfo) (events []markdownEvent, 
 	return events, nil
 }
 
-func generateMarkdown(tdprotoInfo *codegen.TdInfo) error {
+func generateMarkdown(tdprotoInfo *codegen.TdPackage) error {
 	_, _ = fmt.Fprintln(os.Stdout, "## Structures")
 
 	for _, tdStructInfo := range tdprotoInfo.TdStructs {

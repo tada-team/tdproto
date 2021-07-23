@@ -11,7 +11,7 @@ const dartClassTemplate = `
 
 `
 
-func generateDart(tdprotoInfo *codegen.TdInfo) {
+func generateDart(tdprotoInfo *codegen.TdPackage) {
 
 }
 
@@ -22,5 +22,5 @@ func main() {
 		panic(err)
 	}
 
-	generateDart(tdprotoInfo)
+	generateDart(tdprotoInfo.TdModels)
 }

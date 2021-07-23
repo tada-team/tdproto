@@ -93,7 +93,7 @@ func schemaFromTdField(tdField codegen.TdStructField) (res openApiSchema) {
 	return
 }
 
-func addTypeSchema(components map[string]openApiSchema, name string, tdInfo *codegen.TdInfo) error {
+func addTypeSchema(components map[string]openApiSchema, name string, tdInfo *codegen.TdPackage) error {
 	tdTypeInfo, found := tdInfo.TdTypes[name]
 	if !found {
 		return fmt.Errorf("type alias not found: %s", name)
@@ -113,7 +113,7 @@ func addTypeSchema(components map[string]openApiSchema, name string, tdInfo *cod
 	return nil
 }
 
-func addStructSchema(components map[string]openApiSchema, name string, tdInfo *codegen.TdInfo) error {
+func addStructSchema(components map[string]openApiSchema, name string, tdInfo *codegen.TdPackage) error {
 	tdStructInfo, found := tdInfo.TdStructs[name]
 	if !found {
 		return fmt.Errorf("struct type not found: %s", name)
@@ -148,7 +148,7 @@ func addStructSchema(components map[string]openApiSchema, name string, tdInfo *c
 	return nil
 }
 
-func addMapType(components map[string]openApiSchema, name string, tdInfo *codegen.TdInfo) error {
+func addMapType(components map[string]openApiSchema, name string, tdInfo *codegen.TdPackage) error {
 	mapInfo, found := tdInfo.TdMapTypes[name]
 	if !found {
 		return fmt.Errorf("map type not found: %s", name)

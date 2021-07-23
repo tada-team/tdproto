@@ -14,7 +14,7 @@ func main() {
 		panic(err)
 	}
 
-	openapiInfo, err := generateOpenApiRoot(tdInfo)
+	openapiInfo, err := generateOpenApiRoot(tdInfo.TdModels)
 	if err != nil {
 		panic(err)
 	}
@@ -29,7 +29,7 @@ func main() {
 	}
 }
 
-func addAllSchemas(tdInfo *codegen.TdInfo, root openApiRoot) error {
+func addAllSchemas(tdInfo *codegen.TdPackage, root openApiRoot) error {
 	for structName := range tdInfo.TdStructs {
 		err := addStructSchema(root.Components.Schemas, structName, tdInfo)
 		if err != nil {
@@ -74,7 +74,7 @@ func addPaths(root *openApiRoot, pathsToAdd []api_paths.PathSpec) error {
 	return nil
 }
 
-func generateOpenApiRoot(tdInfo *codegen.TdInfo) (openApiRoot, error) {
+func generateOpenApiRoot(tdInfo *codegen.TdPackage) (openApiRoot, error) {
 	root := openApiRoot{
 		OpenApiVersion: "3.0.3",
 		Info: openApiInfo{
