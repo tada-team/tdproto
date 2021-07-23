@@ -1,4 +1,4 @@
-package tdapi
+package tdforms
 
 import "github.com/tada-team/tdproto"
 
