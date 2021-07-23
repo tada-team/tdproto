@@ -1,1 +1,1 @@
-HTTP API responses
+HTTP API responses.
