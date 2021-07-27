@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"path"
@@ -11,6 +12,7 @@ import (
 	"github.com/tada-team/tdproto/codegen"
 )
 
+const libPathPrefix = "./lib/"
 const enumsPathPrefix = "./src/enums"
 const modelsPathPrefix = "./src/models"
 
@@ -70,6 +72,13 @@ enum {{.Name}} { {{range $value :=  .Values}}
 
 var dartLibTemplate = template.Must(template.New("dartLib").Parse(`library tdproto_dart;
 
+// Converters:
+export 'src/converters/date_time_converter.dart';
+
+// Interfaces:
+export 'src/interfaces/i_response.dart';
+export 'src/interfaces/i_websocket_event.dart';
+
 // Generated enums:
 {{range $value := .GeneratedEnums}}export '{{$value}}';
 {{end}}
@@ -118,7 +127,7 @@ func lowercaseFirstOrAll(input string) string {
 	return strings.ToLower(input)
 }
 
-func generateDart(tdprotoInfo *codegen.TdPackage, basePath string) error {
+func generateDart(tdprotoInfo *codegen.TdPackage, baseLibPath string) error {
 	var libInfo DartLibInfo
 
 	for _, tdEnum := range tdprotoInfo.GetEnums() {
@@ -126,7 +135,7 @@ func generateDart(tdprotoInfo *codegen.TdPackage, basePath string) error {
 		enumFilePath := path.Join(enumsPathPrefix, fmt.Sprintf("%s.dart", enumFileName))
 		libInfo.GeneratedEnums = append(libInfo.GeneratedEnums, enumFilePath)
 
-		enumFile, err := os.Create(path.Join(basePath, enumFilePath))
+		enumFile, err := os.OpenFile(path.Join(baseLibPath, enumFilePath), os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0o640)
 		if err != nil {
 			return err
 		}
@@ -150,12 +159,12 @@ func generateDart(tdprotoInfo *codegen.TdPackage, basePath string) error {
 		dartClassFilePath := path.Join(dartClassFolderPath, fmt.Sprintf("%s.dart", dartClassFilename))
 		libInfo.GeneratedModels = append(libInfo.GeneratedModels, dartClassFilePath)
 
-		err := os.Mkdir(path.Join(basePath, dartClassFolderPath), 0o750)
+		err := os.Mkdir(path.Join(baseLibPath, dartClassFolderPath), 0o750)
 		if err != nil {
 			return nil
 		}
 
-		classFile, err := os.Create(path.Join(basePath, dartClassFilePath))
+		classFile, err := os.OpenFile(path.Join(baseLibPath, dartClassFilePath), os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0o640)
 		if err != nil {
 			return err
 		}
@@ -171,7 +180,7 @@ func generateDart(tdprotoInfo *codegen.TdPackage, basePath string) error {
 		}
 	}
 
-	libFile, err := os.Create(path.Join(basePath, "tdproto_dart.dart"))
+	libFile, err := os.OpenFile(path.Join(baseLibPath, "./tdproto_dart.dart"), os.O_WRONLY|os.O_CREATE, 0o640)
 	if err != nil {
 		return err
 	}
@@ -267,8 +276,8 @@ func generateDartClasses(tdprotoInfo *codegen.TdPackage) (dartClasses []DartClas
 }
 
 func createDirectoryStructure(basePath string) error {
-	enumsPath := path.Join(basePath, enumsPathPrefix)
-	modelsPath := path.Join(basePath, modelsPathPrefix)
+	enumsPath := path.Join(basePath, libPathPrefix, enumsPathPrefix)
+	modelsPath := path.Join(basePath, libPathPrefix, modelsPathPrefix)
 
 	err := os.MkdirAll(enumsPath, 0o750)
 	if err != nil {
@@ -284,20 +293,36 @@ func createDirectoryStructure(basePath string) error {
 }
 
 func main() {
+
 	tdprotoInfo, err := codegen.ParseTdproto()
 
 	if err != nil {
 		panic(err)
 	}
 
-	newTempDir, err := os.MkdirTemp("", "tdproto_dart")
+	flag.Parse()
+
+	var dartLibPath string
+	switch len_args := len(flag.Args()); len_args {
+	case 0:
+		newTempDir, err := os.MkdirTemp("", "tdproto_dart")
+		if err != nil {
+			panic(err)
+		}
+		dartLibPath = newTempDir
+		println("Temp directory: ", newTempDir)
+	case 1:
+		dartLibPath = flag.Arg(0)
+	default:
+		panic(fmt.Errorf("expected zero or one argument got %d", len_args))
+	}
+
+	err = createDirectoryStructure(dartLibPath)
 	if err != nil {
 		panic(err)
 	}
-	println(newTempDir)
-	createDirectoryStructure(newTempDir)
 
-	err = generateDart(tdprotoInfo.TdModels, newTempDir)
+	err = generateDart(tdprotoInfo.TdModels, path.Join(dartLibPath, libPathPrefix))
 	if err != nil {
 		panic(err)
 	}
