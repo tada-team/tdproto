@@ -9,8 +9,8 @@ import (
 	"github.com/tada-team/tdproto/codegen"
 )
 
-const enumsPathPrefix = "src/enums"
-const modelsPathPrefix = "src/models"
+const enumsPathPrefix = "./src/enums"
+const modelsPathPrefix = "./src/models"
 
 var dartTypeMap = map[string]string{
 	"string":            "String",
@@ -59,10 +59,10 @@ enum {{.Name}} { {{range $value :=  .Values}}
 var dartLibTemplate = template.Must(template.New("dartLib").Parse(`library tdproto_dart;
 
 // Generated enums:
-{{range $value := .GeneratedEnums}}export './src/enums/{{$value}}.dart';
+{{range $value := .GeneratedEnums}}export '{{$value}}';
 {{end}}
 // Generated models:
-{{range $value := .GeneratedModels}}export './src/models/{{$value}}/{{$value}}.dart';
+{{range $value := .GeneratedModels}}export '{{$value}}';
 {{end}}
 `))
 
@@ -82,38 +82,15 @@ type DartClass struct {
 	Parent codegen.TdStruct
 }
 
-func generateDartLibInfo(tdprotoInfo *codegen.TdPackage) (libInfo DartLibInfo) {
-	for structName := range tdprotoInfo.TdStructs {
-		libInfo.GeneratedModels = append(libInfo.GeneratedModels, structName)
-	}
-
-	for _, tdEnum := range tdprotoInfo.GetEnums() {
-		libInfo.GeneratedEnums = append(libInfo.GeneratedEnums, tdEnum.Name)
-	}
-
-	return
-}
-
 func generateDart(tdprotoInfo *codegen.TdPackage, basePath string) error {
-	libFile, err := os.Create(path.Join(basePath, "tdproto_dart.dart"))
-	if err != nil {
-		return err
-	}
-
-	err = dartLibTemplate.Execute(libFile, generateDartLibInfo(tdprotoInfo))
-	if err != nil {
-		return err
-	}
-
-	err = libFile.Close()
-	if err != nil {
-		return err
-	}
+	var libInfo DartLibInfo
 
 	for _, tdEnum := range tdprotoInfo.GetEnums() {
 		enumFileName := codegen.ToSnakeCase(tdEnum.Name)
+		enumFilePath := path.Join(enumsPathPrefix, fmt.Sprintf("%s.dart", enumFileName))
+		libInfo.GeneratedEnums = append(libInfo.GeneratedEnums, enumFilePath)
 
-		enumFile, err := os.Create(path.Join(basePath, enumsPathPrefix, fmt.Sprintf("%s.dart", enumFileName)))
+		enumFile, err := os.Create(path.Join(basePath, enumFilePath))
 		if err != nil {
 			return err
 		}
@@ -133,15 +110,16 @@ func generateDart(tdprotoInfo *codegen.TdPackage, basePath string) error {
 
 	for _, dartClass := range dartClasses {
 		dartClassFilename := codegen.ToSnakeCase(dartClass.Parent.Name)
+		dartClassFolderPath := path.Join(modelsPathPrefix, dartClassFilename)
+		dartClassFilePath := path.Join(dartClassFolderPath, fmt.Sprintf("%s.dart", dartClassFilename))
+		libInfo.GeneratedModels = append(libInfo.GeneratedModels, dartClassFilePath)
 
-		classFolderPath := path.Join(basePath, modelsPathPrefix, dartClassFilename)
-
-		err := os.Mkdir(classFolderPath, 0o750)
+		err := os.Mkdir(path.Join(basePath, dartClassFolderPath), 0o750)
 		if err != nil {
 			return nil
 		}
 
-		classFile, err := os.Create(path.Join(classFolderPath, fmt.Sprintf("%s.dart", dartClassFilename)))
+		classFile, err := os.Create(path.Join(basePath, dartClassFilePath))
 		if err != nil {
 			return err
 		}
@@ -157,10 +135,25 @@ func generateDart(tdprotoInfo *codegen.TdPackage, basePath string) error {
 		}
 	}
 
+	libFile, err := os.Create(path.Join(basePath, "tdproto_dart.dart"))
+	if err != nil {
+		return err
+	}
+
+	err = dartLibTemplate.Execute(libFile, libInfo)
+	if err != nil {
+		return err
+	}
+
+	err = libFile.Close()
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
-func getDartTypeFromGoType(goType string, tdprotoInfo *codegen.TdInfo) string {
+func getDartTypeFromGoType(goType string, tdprotoInfo *codegen.TdPackage) string {
 	primitiveType, ok := dartTypeMap[goType]
 	if ok {
 		return primitiveType
