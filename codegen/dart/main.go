@@ -65,7 +65,7 @@ var dartEnumTemplate = template.Must(template.New("dartEnum").Parse(`import 'pac
 
 enum {{.Name}} { {{range $value :=  .Values}}
   @JsonValue('{{$value}}')
-  {{$value}} = '{{$value}}',
+  {{$value}} = '{{$value}}';
   {{end}}
 }
 `))
