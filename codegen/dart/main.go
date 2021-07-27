@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"strings"
 	"text/template"
+	"unicode"
 
 	"github.com/tada-team/tdproto/codegen"
 )
@@ -93,6 +95,26 @@ type DartClass struct {
 	SnakeCase string
 }
 
+func snakeCaseOrLower(input string) string {
+	for _, char := range input {
+		if unicode.IsLower(char) {
+			return codegen.ToSnakeCase(input)
+		}
+	}
+
+	return strings.ToLower(input)
+}
+
+func lowercaseFirstOrAll(input string) string {
+	for _, char := range input {
+		if unicode.IsLower(char) {
+			return codegen.LowercaseFirstLetter(input)
+		}
+	}
+
+	return strings.ToLower(input)
+}
+
 func generateDart(tdprotoInfo *codegen.TdPackage, basePath string) error {
 	var libInfo DartLibInfo
 
@@ -177,7 +199,7 @@ func getDartTypeFromGoType(goType string, tdprotoInfo *codegen.TdPackage) (strin
 		}
 	}
 
-	return goType, false
+	return codegen.UppercaseFirstLetter(goType), false
 }
 
 func generateDartClasses(tdprotoInfo *codegen.TdPackage) (dartClasses []DartClass) {
@@ -186,7 +208,7 @@ func generateDartClasses(tdprotoInfo *codegen.TdPackage) (dartClasses []DartClas
 		newDartClass := DartClass{
 			Parent:    structInfo,
 			Name:      codegen.UppercaseFirstLetter(structInfo.Name),
-			SnakeCase: codegen.ToSnakeCase(structInfo.Name),
+			SnakeCase: snakeCaseOrLower(structInfo.Name),
 		}
 
 		var allFields []codegen.TdStructField
@@ -200,7 +222,7 @@ func generateDartClasses(tdprotoInfo *codegen.TdPackage) (dartClasses []DartClas
 
 			dartFieldName, isSubstituted := dartFieldNameSubstitutions[tdField.Name]
 			if !isSubstituted {
-				dartFieldName = codegen.LowercaseFirstLetter(tdField.Name)
+				dartFieldName = lowercaseFirstOrAll(tdField.Name)
 			}
 
 			newDartClass.Fields = append(newDartClass.Fields, DartClassField{
