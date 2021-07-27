@@ -75,6 +75,7 @@ type DartLibInfo struct {
 type DartClassField struct {
 	Name     string
 	DartType string
+	IsList   bool
 	Parent   codegen.TdStructField
 }
 
@@ -156,19 +157,20 @@ func generateDart(tdprotoInfo *codegen.TdPackage, basePath string) error {
 	return nil
 }
 
-func getDartTypeFromGoType(goType string, tdprotoInfo *codegen.TdPackage) string {
+func getDartTypeFromGoType(goType string, tdprotoInfo *codegen.TdPackage) (string, bool) {
 	primitiveType, ok := dartTypeMap[goType]
 	if ok {
-		return primitiveType
+		return primitiveType, false
 	}
 
 	for _, tdType := range tdprotoInfo.TdTypes {
 		if tdType.Name == goType {
-			return getDartTypeFromGoType(tdType.BaseType, tdprotoInfo)
+			unwrappedTypeName, isUnwrappedArray := getDartTypeFromGoType(tdType.BaseType, tdprotoInfo)
+			return unwrappedTypeName, isUnwrappedArray || tdType.IsArray
 		}
 	}
 
-	return goType
+	return goType, false
 }
 
 func generateDartClasses(tdprotoInfo *codegen.TdPackage) (dartClasses []DartClass) {
@@ -187,9 +189,12 @@ func generateDartClasses(tdprotoInfo *codegen.TdPackage) (dartClasses []DartClas
 		}
 
 		for _, tdField := range allFields {
+			dartTypeStr, isList := getDartTypeFromGoType(tdField.TypeStr, tdprotoInfo)
+
 			newDartClass.Fields = append(newDartClass.Fields, DartClassField{
 				Name:     codegen.LowercaseFirstLetter(tdField.Name),
-				DartType: getDartTypeFromGoType(tdField.TypeStr, tdprotoInfo),
+				DartType: dartTypeStr,
+				IsList:   isList || tdField.IsList,
 				Parent:   tdField,
 			})
 		}
