@@ -172,7 +172,7 @@ func getDartTypeFromGoType(goType string, tdprotoInfo *codegen.TdPackage) string
 }
 
 func generateDartClasses(tdprotoInfo *codegen.TdPackage) (dartClasses []DartClass) {
-	for structName, structInfo := range tdprotoInfo.TdStructs {
+	for _, structInfo := range tdprotoInfo.TdStructs {
 
 		newDartClass := DartClass{
 			Parent:    structInfo,
@@ -188,7 +188,7 @@ func generateDartClasses(tdprotoInfo *codegen.TdPackage) (dartClasses []DartClas
 
 		for _, tdField := range allFields {
 			newDartClass.Fields = append(newDartClass.Fields, DartClassField{
-				Name:     codegen.LowercaseFirstLetter(structName),
+				Name:     codegen.LowercaseFirstLetter(tdField.Name),
 				DartType: getDartTypeFromGoType(tdField.TypeStr, tdprotoInfo),
 				Parent:   tdField,
 			})
