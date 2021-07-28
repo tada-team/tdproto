@@ -38,7 +38,7 @@ type Team struct {
 	// Patronymic in usernames for this team
 	UsePatronymic bool `json:"use_patronymic,omitempty"`
 
-	// Username fields ordering
+	// Username fields ordering. Possible values: "family_name", "given_name", "patronymic"
 	UserFields []string `json:"user_fields" tdproto:"readonly"`
 
 	// Family name should be first in display name
