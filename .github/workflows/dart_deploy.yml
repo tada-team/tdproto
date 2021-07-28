@@ -1,0 +1,45 @@
+---
+name: Deploy Dart
+
+on: [push, workflow_dispatch]
+
+env:
+  TDPROTO_DIR: tdproto
+  CLONE_DIR: clone_dir
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    environment: dart_deployment
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          path: ${{ env.TDPROTO_DIR }}
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '1.16'
+      - name: Clone tdproto_dart repo
+        uses: actions/checkout@v2
+        with:
+          repository: 'tada-team/tdproto_dart'
+          ssh-key: ${{ secrets.DART_DEPLOYMENT_KEY }}
+          ref: autogen
+          path: ${{ env.CLONE_DIR }}
+      - name: Install flutter
+        uses: subosito/flutter-action@4389e6cbc6cb8a4b18c628ff96ff90be0e926aa8
+        with:
+          flutter-version: '1.22.6'
+      - name: Generate Dart
+        working-directory: ${{ env.TDPROTO_DIR }}
+        run: |
+          cd ./codegen
+          ./make-dart.sh "${GITHUB_WORKSPACE}/${CLONE_DIR}/"
+      - name: Commit and upload dart
+        if: github.ref == 'refs/heads/master'
+        working-directory: ${{ env.CLONE_DIR }}
+        run: |
+          git add --all
+          git config --global user.email "action@github.com"
+          git config --global user.name "Github Action"
+          git commit -m "Generate dart on $(date)" --allow-empty
+          git push
