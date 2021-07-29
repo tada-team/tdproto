@@ -32,7 +32,7 @@ type serverCallBuzzParams struct {
 	Jid JID `json:"jid"`
 
 	// Chat icons
-	Icons *IconData `json:"icons"`
+	Icons IconData `json:"icons"`
 
 	// Chat title
 	DisplayName string `json:"display_name"`

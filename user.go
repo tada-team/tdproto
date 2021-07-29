@@ -43,6 +43,9 @@ type User struct {
 
 	// Finish silently time (no pushes, no sounds)
 	QuietTimeFinish *string `json:"quiet_time_finish"`
+
+	// Icon data
+	Icons IconData `json:"icons"`
 }
 
 // Account data with extra information
