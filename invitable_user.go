@@ -1,6 +1,6 @@
 package tdproto
 
-// Account from other team, Active Directory or server
+// Account from other team, Active Directory or node
 type InvitableUser struct {
 	// Account id
 	Uid string `json:"uid"`
@@ -13,4 +13,7 @@ type InvitableUser struct {
 
 	// Icons
 	Icons IconData `json:"icons"`
+
+	// Common team uids, if any
+	Teams []string `json:"teams,omitempty"`
 }

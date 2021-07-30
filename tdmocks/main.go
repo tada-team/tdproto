@@ -38,6 +38,7 @@ var Alice = tdproto.Contact{
 	ContactEmail:     "alice@example.com",
 	ContactPhone:     "+7 (555) 000-00-01",
 	Icons:            StubIcons,
+	Gentime:          Gentime,
 	Role:             "manager",
 	Mood:             "🤦",
 	TeamStatus:       tdproto.TeamMember,

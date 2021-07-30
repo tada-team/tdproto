@@ -4,6 +4,12 @@ v2.0.0
  - IconData now always not nullable
  - server.roster event removed
 
+v.1.38.2
+ - Contact.gentime / ShortContact.gentime
+
+v.1.38.1
+ - User.teams field
+
 v.1.38.0
  - User.icon_data field
  - all icon_data fields now are not nullable
