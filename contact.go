@@ -23,6 +23,9 @@ type Contact struct {
 	// Icons data
 	Icons IconData `json:"icons"`
 
+	// Object version
+	Gentime int64 `json:"gentime"`
+
 	// Role in this team
 	Role string `json:"role"`
 
@@ -170,11 +173,11 @@ type Contact struct {
 	// Can I view/join public tasks in this team
 	CanJoinPublicTasks bool `json:"can_join_public_tasks,omitempty"`
 
-	// Deprecated: use CanDeleteAnyMessage in chat object
-	CanDeleteAnyMessage bool `json:"can_delete_any_message,omitempty"`
-
 	// Extra contact fields
 	CustomFields *ContactCustomFields `json:"custom_fields,omitempty"`
+
+	// Deprecated
+	CanDeleteAnyMessage bool `json:"can_delete_any_message,omitempty"`
 }
 
 // Extra contact fields
@@ -208,4 +211,7 @@ type ContactShort struct {
 
 	// Icons data
 	Icons IconData `json:"icons"`
+
+	// Object version
+	Gentime int64 `json:"gentime"`
 }
