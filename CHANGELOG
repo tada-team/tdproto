@@ -1,3 +1,6 @@
+v.1.38.1
+ - User.teams field
+
 v.1.38.0
  - User.icon_data field
  - all icon_data fields now are not nullable
