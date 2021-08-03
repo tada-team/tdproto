@@ -32,6 +32,9 @@ type OnlineContact struct {
 	// Is away from keyboard
 	Afk bool `json:"afk,omitempty"`
 
+	// DND mode enabled
+	Dnd bool `json:"dnd,omitempty"`
+
 	// Is mobile client
 	Mobile bool `json:"mobile"` // TODO: omitempty. 17feb2020
 }
