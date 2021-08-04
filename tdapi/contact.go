@@ -57,6 +57,9 @@ type Contact struct {
 	// Send push notifications even contact is online
 	AlwaysSendPushes bool `json:"always_send_pushes"`
 
+	// Hide pushes body
+	HidePushesContent bool `json:"hide_pushes_content"`
+
 	// Show unread chats first (web/desktop)
 	UnreadFirst bool `json:"unread_first"`
 
