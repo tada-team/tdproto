@@ -1,5 +1,8 @@
+v.1.41.1
+ - contact.hide_pushes_content
+
 v.1.41.0
- - user.hide_pushes_content / contact.hide_pushes_content
+ - user.hide_pushes_content
 
 v.1.40.0
  - Add Team.available_tariffs field
