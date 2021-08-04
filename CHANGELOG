@@ -1,5 +1,8 @@
-v.1.39.1
+v.1.42.0
  - user.hide_pushes_content / contact.hide_pushes_content
+
+v.1.40.0
+ - Add Team.availabel_tariffs field
 
 v.1.39.0
  - Experimental DND features: editable Contact.dnd_until field, readonly OnlineContact.dnd field
