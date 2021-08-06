@@ -11,6 +11,9 @@ type Tariff struct {
 	// Title of tariff in russian
 	TitleRu string `json:"title_ru"`
 
+	// Price of tariff
+	Price string `json:"price,omitempty"`
+
 	// Cloud space reserved for storing team users uploads in megabytes
 	CloudSpace int64 `json:"cloud_space,omitempty"`
 
