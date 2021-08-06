@@ -48,8 +48,8 @@ type Contact struct {
 	// Use Ctrl/Cmd + Enter instead Enter
 	AltSend bool `json:"alt_send"`
 
-	// DND mode enabled until
-	DndUntil tdproto.ISODateTimeString `json:"dnd_until"`
+	// Focus mode enabled until
+	FocusUntil tdproto.ISODateTimeString `json:"focus_until"`
 
 	// Use * as @ for mentions
 	AsteriskMention bool `json:"asterisk_mention"`

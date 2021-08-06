@@ -110,8 +110,8 @@ type Contact struct {
 	// Quiet time finish
 	QuietTimeFinish *string `json:"quiet_time_finish,omitempty"`
 
-	// DND mode enabled until
-	DndUntil ISODateTimeString `json:"dnd_until,omitempty"`
+	// Focus mode enabled until
+	FocusUntil ISODateTimeString `json:"focus_until,omitempty"`
 
 	// Push notifications for group chats
 	GroupNotificationsEnabled *bool `json:"group_notifications_enabled,omitempty"`
