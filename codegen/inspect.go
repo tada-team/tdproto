@@ -186,105 +186,7 @@ func ParseTdproto() (infoToFill *TdProto, err error) {
 		return nil, err
 	}
 
-	tdapiFileSet := token.NewFileSet()
-	tdapiNameToAstMap, err := extractTdapiAst(tdapiFileSet)
-	if err != nil {
-		return nil, err
-	}
-
-	tdFormsPackage := new(TdPackage)
-	tdFormsPackage.TdEvents = make(map[string]string)
-	tdFormsPackage.TdStructs = make(map[string]TdStruct)
-	tdFormsPackage.TdTypes = make(map[string]TdType)
-	tdFormsPackage.TdMapTypes = make(map[string]TdMapType)
-
-	infoToFill.TdForms = tdFormsPackage
-
-	err = parseTdprotoAst(tdapiNameToAstMap["tdapi"], tdFormsPackage,
-		&map[string]string{
-			"task":         "",
-			"my_reactions": "",
-			"resp":         "",
-			"err":          "",
-		},
-	)
-	if err != nil {
-		return nil, err
-	}
-
-	// Cherry picking
-	// Task
-	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "Task")
-	if err != nil {
-		return nil, err
-	}
-	// TaskFilter query
-	err = cherryPickQuery(tdModelsPackage, tdFormsPackage, "TaskFilter")
-	if err != nil {
-		return nil, err
-	}
-	// MyReactions
-	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "MyReactions")
-	if err != nil {
-		return nil, err
-	}
-
-	// Resp
-	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "Resp")
-	if err != nil {
-		return nil, err
-	}
-
-	// Err
-	err = cherryPickTypeAlias(tdModelsPackage, tdFormsPackage, "Err")
-	if err != nil {
-		return nil, err
-	}
-
 	return infoToFill, nil
-}
-
-func cherryPickTypeAlias(tdproto *TdPackage, tdapi *TdPackage, name string) error {
-
-	pickObject, ok := tdapi.TdTypes[name]
-	if !ok {
-		return fmt.Errorf("failed to cherry pick query %s", name)
-	}
-	tdproto.TdTypes[name] = pickObject
-
-	return nil
-}
-
-func cherryPickQuery(tdproto *TdPackage, tdapi *TdPackage, name string) error {
-
-	pickObject, ok := tdapi.TdStructs[name]
-	if !ok {
-		return fmt.Errorf("failed to cherry pick query %s", name)
-	}
-
-	var newQuery TdQuery
-
-	newQuery.Help = pickObject.Help
-	newQuery.ParamsNamesAndHelp = make(map[string]string)
-	newQuery.Name = name
-	for _, field := range pickObject.Fields {
-		newQuery.ParamsNamesAndHelp[field.SchemaName] = field.Help
-	}
-
-	tdproto.TdQueries[name] = newQuery
-
-	return nil
-}
-
-func cherryPickStruct(tdproto *TdPackage, tdapi *TdPackage, name string) error {
-
-	pickObject, ok := tdapi.TdStructs[name]
-	if !ok {
-		return fmt.Errorf("failed to cherry pick struct %s", name)
-	}
-	tdproto.TdStructs[name] = pickObject
-
-	return nil
 }
 
 func parseTdprotoAst(packageAst *ast.Package, infoToFill *TdPackage, fileFilter *map[string]string) error {
@@ -717,11 +619,6 @@ func parseSelectorAst(selectorNode *ast.SelectorExpr) string {
 func extractTdprotoAst(fileSet *token.FileSet) (map[string]*ast.Package, error) {
 	tdProtoPath := tdproto.SourceDir()
 	return parser.ParseDir(fileSet, tdProtoPath, nil, parser.ParseComments)
-}
-
-func extractTdapiAst(fileSet *token.FileSet) (map[string]*ast.Package, error) {
-	tdProtoPath := tdproto.SourceDir()
-	return parser.ParseDir(fileSet, path.Join(tdProtoPath, "tdapi"), nil, parser.ParseComments)
 }
 
 func cleanHelp(s string) string {
