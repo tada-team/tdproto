@@ -2,6 +2,12 @@ package tdapi
 
 import "github.com/tada-team/tdproto"
 
+// #-links filter
+type SharpLinksFilter struct {
+	// Enable markdown
+	Markdown bool `schema:"markdown"`
+}
+
 // #-links autocomplete response
 type SharpLinks []SharpLink
 
@@ -17,6 +23,7 @@ type SharpLink struct {
 	Meta SharpLinkMeta `json:"meta"`
 }
 
+// #-link autocomplete details
 type SharpLinkMeta struct {
 	// Chat id
 	Jid tdproto.JID `json:"jid"`
