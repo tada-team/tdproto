@@ -19,7 +19,7 @@ type Group struct {
 	// Readonly for non-admins group chat (Like Channels in Telegram bug switchable)
 	ReadonlyForMembers bool `json:"readonly_for_members"`
 
-	// Can other team member see this group
+	// Is task or group public for non-guests
 	Public bool `json:"public"`
 
 	// Any new team member will be added to this group chat
