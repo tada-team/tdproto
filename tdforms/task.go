@@ -2,7 +2,7 @@ package tdforms
 
 import "github.com/tada-team/tdproto"
 
-// Task form
+// Task
 type Task struct {
 	// Custom task color
 	CustomColorIndex *uint16 `json:"custom_color_index,omitempty"`
@@ -28,7 +28,7 @@ type Task struct {
 	// Deadline time, if any
 	Deadline tdproto.ISODateTimeString `json:"deadline,omitempty"`
 
-	// Is task public
+	// Is task or group public for non-guests
 	Public bool `json:"public,omitempty"`
 
 	// Fire a reminder at this time

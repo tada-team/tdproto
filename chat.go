@@ -260,7 +260,7 @@ type Subtask struct {
 	// Title
 	DisplayName string `json:"display_name"`
 
-	// Can other team member see this task/group chat
+	// Is task or group public for non-guests
 	Public bool `json:"public,omitempty"`
 
 	// Subtask task status

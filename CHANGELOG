@@ -4,6 +4,11 @@ v2.0.0
  - IconData now always not nullable
  - server.roster event removed
 
+v.1.43.0
+ - tdapi.AtLinks
+ - tdapi.SharpLinks
+ - tdapi.BotCommands
+
 v.1.42.0
  - DND renamed to Focus Mode
 
