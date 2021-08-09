@@ -61,7 +61,7 @@ func (p pathDoc) ToRequestText() string {
 		return ""
 	}
 
-	return fmt.Sprintf("The :ref:`tdproto-%s` object.", p.RequestObjectName)
+	return fmt.Sprintf("The :tdproto:ref:`%s` object.", p.RequestObjectName)
 
 }
 
@@ -71,9 +71,9 @@ func (p pathDoc) ToResultText() string {
 	}
 
 	if p.ResultKind == reflect.Slice {
-		return fmt.Sprintf("List of :ref:`tdproto-%s` objects.", p.ResultObjectName)
+		return fmt.Sprintf("List of :tdproto:ref:`%s` objects.", p.ResultObjectName)
 	} else {
-		return fmt.Sprintf("The :ref:`tdproto-%s` object.", p.ResultObjectName)
+		return fmt.Sprintf("The :tdproto:ref:`%s` object.", p.ResultObjectName)
 	}
 }
 

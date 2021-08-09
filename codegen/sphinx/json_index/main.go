@@ -43,11 +43,11 @@ type rstJsonField struct {
 
 func (r rstJsonField) GetModifiers() string {
 	if r.TdStructField.IsOmitEmpty {
-		return " :abbr:`💥 (Maybe omitted)`"
+		return " omitempty"
 	}
 
 	if r.TdStructField.IsPointer {
-		return " :abbr:`0️⃣ (Might be null)`"
+		return " nullable"
 	}
 
 	return ""
@@ -59,41 +59,31 @@ type rstJsonStruct struct {
 }
 
 var jsonTemplate = template.Must(template.New("rstJson").Parse(`
-.. _tdproto-{{- .TdStruct.Name}}:
+.. tdproto:struct:: {{.TdStruct.Name}}
 
-{{.TdStruct.Name}}
--------------------------------------------------------------
-
-{{.TdStruct.Help}}
-
-**Fields**:
+  {{.TdStruct.Help}}
 {{range $field := .Fields}}
-* ` + "``" + "{{$field.TdStructField.JsonName}}" + "``" +
-	` ({{$field.TypeStr}}){{.GetModifiers}} - {{$field.TdStructField.Help}}{{end}}
+  :field {{$field.TdStructField.JsonName}} {{$field.TypeStr}}{{.GetModifiers}}: {{$field.TdStructField.Help}}{{end}}
 `))
 
 var enumTemplate = template.Must(template.New("rstEnum").Parse(`
-.. _tdproto-{{- .Name}}:
+.. tdproto:enum:: {{.Name}}
 
-{{.Name}}
--------------------------------------------------------------
-**Possible values**:
+  **Possible values**:
 {{range $value := .Values}}
-* {{$value}}{{end}}
+  * {{$value}}{{end}}
 
 `))
 
 var typeAliasTemplate = template.Must(template.New("rstType").Parse(`
-.. _tdproto-{{- .Name}}:
+.. tdproto:type:: {{.Name}}
 
-{{.Name}}
--------------------------------------------------------------
-{{if .Help}}
-{{.Help}}
-{{end}}
-**Base Type**: {{.BaseType}}{{if .IsArray}}
+  {{if .Help}}
+  {{.Help}}
+  {{end}}
+  **Base Type**: {{.BaseType}}{{if .IsArray}}
 
-**Is array**{{end}}
+  **Is array**{{end}}
 `))
 
 var httpQueryTemplate = template.Must(template.New("rstQuery").Parse(`
@@ -197,7 +187,7 @@ func generateRstJson(tdprotoInfo *codegen.TdPackage) error {
 			if isJsonPrimitive {
 				jsTypeStr = primitiveType
 			} else {
-				jsTypeStr = fmt.Sprintf(":ref:`tdproto-%s`", goFieldType)
+				jsTypeStr = fmt.Sprintf("`tdproto-%s`", goFieldType)
 			}
 
 			if field.IsList {

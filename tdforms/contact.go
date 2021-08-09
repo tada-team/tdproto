@@ -48,11 +48,17 @@ type Contact struct {
 	// Use Ctrl/Cmd + Enter instead Enter
 	AltSend bool `json:"alt_send"`
 
+	// Focus mode enabled until
+	FocusUntil tdproto.ISODateTimeString `json:"focus_until"`
+
 	// Use * as @ for mentions
 	AsteriskMention bool `json:"asterisk_mention"`
 
 	// Send push notifications even contact is online
 	AlwaysSendPushes bool `json:"always_send_pushes"`
+
+	// Hide pushes body
+	HidePushesContent bool `json:"hide_pushes_content"`
 
 	// Show unread chats first (web/desktop)
 	UnreadFirst bool `json:"unread_first"`

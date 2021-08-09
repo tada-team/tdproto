@@ -29,6 +29,9 @@ type User struct {
 	// Send pushes even user is online
 	AlwaysSendPushes bool `json:"always_send_pushes"`
 
+	// Hide pushes body
+	HidePushesContent bool `json:"hide_pushes_content"`
+
 	// Show unread chats in chat list first
 	UnreadFirst bool `json:"unread_first"`
 

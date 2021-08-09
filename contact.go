@@ -98,6 +98,9 @@ type Contact struct {
 	// Send push notifications even contact is online
 	AlwaysSendPushes *bool `json:"always_send_pushes,omitempty"`
 
+	// Hide pushes body
+	HidePushesContent *bool `json:"hide_pushes_content"`
+
 	// Timezone, if any
 	Timezone *string `json:"timezone,omitempty"`
 
@@ -106,6 +109,9 @@ type Contact struct {
 
 	// Quiet time finish
 	QuietTimeFinish *string `json:"quiet_time_finish,omitempty"`
+
+	// Focus mode enabled until
+	FocusUntil ISODateTimeString `json:"focus_until,omitempty"`
 
 	// Push notifications for group chats
 	GroupNotificationsEnabled *bool `json:"group_notifications_enabled,omitempty"`
