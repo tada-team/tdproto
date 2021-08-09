@@ -1,4 +1,4 @@
-package tdproto
+package tdevents
 
 func NewClientActivity(afk bool) (r ClientActivity) {
 	r.Name = r.GetName()
