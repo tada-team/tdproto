@@ -262,7 +262,7 @@ func generateDartClasses(tdprotoInfo *codegen.TdPackage) (dartClasses []DartClas
 			}},
 			{Name: "Task", DartType: "Unread", Parent: codegen.TdStructField{
 				Help:     "Manually added",
-				JsonName: "taks",
+				JsonName: "task",
 			}},
 		},
 	})
