@@ -79,12 +79,12 @@ type TdMapType struct {
 }
 
 type TdPackage struct {
-	TdStructs  map[string]TdStruct
-	TdTypes    map[string]TdType
-	TdEvents   map[string]string
-	TdMapTypes map[string]TdMapType
-	TdConsts   []TdConstFields
-	TdQueries  map[string]TdQuery
+	TdStructs   map[string]TdStruct
+	TdTypes     map[string]TdType
+	TdEvents    map[string]string
+	TdMapTypes  map[string]TdMapType
+	TdConstants []TdConstFields
+	TdQueries   map[string]TdQuery
 }
 
 type TdProto struct {
@@ -100,7 +100,7 @@ type TdEnum struct {
 func (i TdPackage) GetEnums() []TdEnum {
 	constMap := make(map[string][]string)
 
-	for _, aConst := range i.TdConsts {
+	for _, aConst := range i.TdConstants {
 		constType := aConst.Type
 		constValue := aConst.Value
 
@@ -145,7 +145,7 @@ func (tds TdStruct) GetStructAnonymousStructs(tdInfo *TdPackage) []TdStruct {
 		anonymousStructs[i] = tdInfo.TdStructs[anonymousStructName]
 	}
 
-	// TODO: Deep copy Fields and AnonnymousFields
+	// TODO: Deep copy Fields and AnonymousFields
 	return anonymousStructs
 }
 
@@ -250,12 +250,12 @@ func parseFunctionDeclaration(infoToFill *TdPackage, functionDeclaration *ast.Fu
 	}
 
 	returnStatementAst := functionDeclaration.Body.List[0].(*ast.ReturnStmt)
-	returnStatemetExpression, ok := returnStatementAst.Results[0].(*ast.BasicLit)
+	returnStatementExpression, ok := returnStatementAst.Results[0].(*ast.BasicLit)
 	if !ok {
 		return nil
 	}
 
-	eventName := strings.Trim(returnStatemetExpression.Value, "\"")
+	eventName := strings.Trim(returnStatementExpression.Value, "\"")
 
 	typeIdent := functionDeclaration.Recv.List[0].Type.(*ast.Ident)
 	typeEventBelongsTo := typeIdent.Obj.Name
@@ -573,7 +573,7 @@ func parseConstDeclaration(infoToFill *TdPackage, genDeclaration *ast.GenDecl) e
 			return fmt.Errorf("could not extract constant value %+v", valueSpec.Values[0])
 		}
 
-		infoToFill.TdConsts = append(infoToFill.TdConsts, TdConstFields{
+		infoToFill.TdConstants = append(infoToFill.TdConstants, TdConstFields{
 			Name:  constName,
 			Type:  constTypeName,
 			Value: constValue.Value,
@@ -608,8 +608,8 @@ func parseStarAst(starAst *ast.StarExpr) (string, error) {
 }
 
 func parseSelectorAst(selectorNode *ast.SelectorExpr) string {
-	expresionIdent := selectorNode.X.(*ast.Ident)
-	expressionStr := expresionIdent.Name
+	expressionIdent := selectorNode.X.(*ast.Ident)
+	expressionStr := expressionIdent.Name
 	if expressionStr == "tdproto" { // HACK: when tdapi references tdproto
 		return selectorNode.Sel.Name
 	}
