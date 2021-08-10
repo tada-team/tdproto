@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"flag"
 	"fmt"
 	"log"
@@ -13,9 +14,11 @@ import (
 	"github.com/tada-team/tdproto/codegen"
 )
 
-const libPathPrefix = "./lib/"
-const enumsPathPrefix = "./src/enums"
-const modelsPathPrefix = "./src/models"
+const (
+	libPathPrefix    = "./lib/"
+	enumsPathPrefix  = "./src/enums"
+	modelsPathPrefix = "./src/models"
+)
 
 var dartTypeMap = map[string]string{
 	"string":            "String",
@@ -131,23 +134,14 @@ func lowercaseFirstOrAll(input string) string {
 	return strings.ToLower(input)
 }
 
-func writeFileFromTemplate(fileName string, template *template.Template, data interface{}, useExclusive bool) error {
-	fileFlags := os.O_WRONLY | os.O_CREATE
-	if useExclusive {
-		fileFlags |= os.O_EXCL
-	}
-
-	file, err := os.OpenFile(fileName, fileFlags, 0o640)
+func renderToFile(fileName string, template *template.Template, data interface{}) error {
+	var buf bytes.Buffer
+	err := template.Execute(&buf, data)
 	if err != nil {
 		return err
 	}
 
-	err = template.Execute(file, data)
-	if err != nil {
-		return err
-	}
-
-	err = file.Close()
+	err = os.WriteFile(fileName, buf.Bytes(), 0640)
 	if err != nil {
 		return err
 	}
@@ -170,7 +164,7 @@ func generateDart(tdprotoInfo *codegen.TdPackage, baseLibPath string) error {
 		enumFilePath := path.Join(enumsPathPrefix, fmt.Sprintf("%s.dart", enumFileName))
 		libInfo.GeneratedEnums = append(libInfo.GeneratedEnums, enumFilePath)
 
-		err := writeFileFromTemplate(path.Join(baseLibPath, enumFilePath), dartEnumTemplate, tdEnum, true)
+		err := renderToFile(path.Join(baseLibPath, enumFilePath), dartEnumTemplate, tdEnum)
 		if err != nil {
 			return err
 		}
@@ -189,13 +183,13 @@ func generateDart(tdprotoInfo *codegen.TdPackage, baseLibPath string) error {
 			return nil
 		}
 
-		err = writeFileFromTemplate(path.Join(baseLibPath, dartClassFilePath), dartClassTemplate, dartClass, true)
+		err = renderToFile(path.Join(baseLibPath, dartClassFilePath), dartClassTemplate, dartClass)
 		if err != nil {
 			return err
 		}
 	}
 
-	err := writeFileFromTemplate(path.Join(baseLibPath, "./tdproto_dart.dart"), dartLibTemplate, libInfo, false)
+	err := renderToFile(path.Join(baseLibPath, "./tdproto_dart.dart"), dartLibTemplate, libInfo)
 	if err != nil {
 		return err
 	}
@@ -308,7 +302,7 @@ func main() {
 	flag.Parse()
 
 	var dartLibPath string
-	switch len_args := len(flag.Args()); len_args {
+	switch lenArgs := len(flag.Args()); lenArgs {
 	case 0:
 		newTempDir, err := os.MkdirTemp("", "tdproto_dart")
 		if err != nil {
@@ -319,7 +313,7 @@ func main() {
 	case 1:
 		dartLibPath = flag.Arg(0)
 	default:
-		panic(fmt.Errorf("expected zero or one argument got %d", len_args))
+		panic(fmt.Errorf("expected zero or one argument got %d", lenArgs))
 	}
 
 	err = createDirectoryStructure(dartLibPath)
