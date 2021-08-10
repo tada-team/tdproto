@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
 	"path"
 	"strings"
@@ -128,7 +129,6 @@ func lowercaseFirstOrAll(input string) string {
 }
 
 func writeFileFromTemplate(fileName string, template *template.Template, data interface{}, useExclusive bool) error {
-
 	fileFlags := os.O_WRONLY | os.O_CREATE
 	if useExclusive {
 		fileFlags |= os.O_EXCL
@@ -148,6 +148,13 @@ func writeFileFromTemplate(fileName string, template *template.Template, data in
 	if err != nil {
 		return err
 	}
+
+	b, err := os.ReadFile(fileName)
+	if err != nil {
+		return err
+	}
+
+	log.Printf("writeFileFromTemplate:\n%s\n---", string(b))
 
 	return nil
 }
