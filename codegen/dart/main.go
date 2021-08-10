@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
-	"log"
 	"os"
 	"path"
 	"strings"
@@ -84,14 +83,11 @@ export 'src/interfaces/i_response.dart';
 export 'src/interfaces/i_websocket_event.dart';
 
 // Generated enums:
-{{ range $value := .GeneratedEnums -}}
-	export '{{ $value }}';
-{{ end }}
+{{range $value := .GeneratedEnums}}export '{{$value}}';
+{{end}}
 // Generated models:
-{{ range $value := .GeneratedModels -}}
-	// export '{{ $value }}';
-	export '{{ $value }}';
-{{ end }}
+{{range $value := .GeneratedModels}}export '{{$value}}';
+{{end}}
 `))
 
 type DartLibInfo struct {
@@ -120,7 +116,6 @@ func snakeCaseOrLower(input string) string {
 			return codegen.ToSnakeCase(input)
 		}
 	}
-
 	return strings.ToLower(input)
 }
 
@@ -130,7 +125,6 @@ func lowercaseFirstOrAll(input string) string {
 			return codegen.LowercaseFirstLetter(input)
 		}
 	}
-
 	return strings.ToLower(input)
 }
 
@@ -145,13 +139,6 @@ func renderToFile(fileName string, template *template.Template, data interface{}
 	if err != nil {
 		return err
 	}
-
-	b, err := os.ReadFile(fileName)
-	if err != nil {
-		return err
-	}
-
-	log.Printf("writeFileFromTemplate:\n%s\n---", string(b))
 
 	return nil
 }
@@ -292,9 +279,7 @@ func createDirectoryStructure(basePath string) error {
 }
 
 func main() {
-
 	tdprotoInfo, err := codegen.ParseTdproto()
-
 	if err != nil {
 		panic(err)
 	}
@@ -325,5 +310,4 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-
 }
