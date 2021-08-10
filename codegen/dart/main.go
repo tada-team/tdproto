@@ -81,11 +81,14 @@ export 'src/interfaces/i_response.dart';
 export 'src/interfaces/i_websocket_event.dart';
 
 // Generated enums:
-{{range $value := .GeneratedEnums}}export '{{$value}}';
-{{end}}
+{{ range $value := .GeneratedEnums -}}
+	export '{{ $value }}';
+{{ end }}
 // Generated models:
-{{range $value := .GeneratedModels}}export '{{$value}}';
-{{end}}
+{{ range $value := .GeneratedModels -}}
+	// export '{{ $value }}';
+	export '{{ $value }}';
+{{ end }}
 `))
 
 type DartLibInfo struct {
