@@ -13,6 +13,5 @@ jobs:
         with:
           go-version: '1.16'
       - name: Test codegen
-        run: |          
+        run: |
           go test ./codegen/...
-
