@@ -206,6 +206,8 @@ func ParseTdproto() (infoToFill *TdProto, err error) {
 			"my_reactions": "",
 			"resp":         "",
 			"err":          "",
+			"sharplinks":   "",
+			"easy_api":     "",
 		},
 	)
 	if err != nil {
@@ -237,6 +239,30 @@ func ParseTdproto() (infoToFill *TdProto, err error) {
 
 	// Err
 	err = cherryPickTypeAlias(tdModelsPackage, tdFormsPackage, "Err")
+	if err != nil {
+		return nil, err
+	}
+
+	// EasyApiMessage
+	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "EasyApiMessage")
+	if err != nil {
+		return nil, err
+	}
+
+	// SharpLink
+	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "SharpLink")
+	if err != nil {
+		return nil, err
+	}
+
+	// SharpLinks
+	err = cherryPickTypeAlias(tdModelsPackage, tdFormsPackage, "SharpLinks")
+	if err != nil {
+		return nil, err
+	}
+
+	//  SharpLinkMeta
+	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "SharpLinkMeta")
 	if err != nil {
 		return nil, err
 	}
