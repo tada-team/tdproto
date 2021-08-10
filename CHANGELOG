@@ -1,3 +1,6 @@
+v.1.44.0
+ - remove deprecated server.panic event
+
 v.1.43.1
  - tdapi.EasyApiMessage
 
