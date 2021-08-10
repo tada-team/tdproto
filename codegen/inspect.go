@@ -54,12 +54,12 @@ type TdStructField struct {
 }
 
 type TdStruct struct {
-	Name             string
-	Help             string
-	Fields           []TdStructField
-	ReadOnly         bool
-	AnonnymousFields []string
-	FileName         string
+	Name            string
+	Help            string
+	Fields          []TdStructField
+	ReadOnly        bool
+	AnonymousFields []string
+	FileName        string
 }
 
 type TdType struct {
@@ -140,8 +140,8 @@ func (tds TdStruct) IsEventParams(tdInfo *TdPackage) bool {
 }
 
 func (tds TdStruct) GetStructAnonymousStructs(tdInfo *TdPackage) []TdStruct {
-	anonymousStructs := make([]TdStruct, len(tds.AnonnymousFields))
-	for i, anonymousStructName := range tds.AnonnymousFields {
+	anonymousStructs := make([]TdStruct, len(tds.AnonymousFields))
+	for i, anonymousStructName := range tds.AnonymousFields {
 		anonymousStructs[i] = tdInfo.TdStructs[anonymousStructName]
 	}
 
@@ -533,12 +533,12 @@ func parseStructDefinitionInfo(infoToFill *TdPackage, declarationSpec *ast.TypeS
 	}
 
 	infoToFill.TdStructs[structName] = TdStruct{
-		Help:             helpString,
-		ReadOnly:         isReadOnly,
-		Name:             structName,
-		Fields:           fieldsList,
-		AnonnymousFields: anonymousFieldsList,
-		FileName:         fileName,
+		Help:            helpString,
+		ReadOnly:        isReadOnly,
+		Name:            structName,
+		Fields:          fieldsList,
+		AnonymousFields: anonymousFieldsList,
+		FileName:        fileName,
 	}
 
 	return nil

@@ -7,6 +7,10 @@ env:
   CLONE_DIR: clone_dir
   TYPESCRIPT_FILE: src/index.ts
 
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-20.04

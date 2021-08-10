@@ -127,6 +127,31 @@ func lowercaseFirstOrAll(input string) string {
 	return strings.ToLower(input)
 }
 
+func writeFileFromTemplate(fileName string, template *template.Template, data interface{}, useExclusive bool) error {
+
+	fileFlags := os.O_WRONLY | os.O_CREATE
+	if useExclusive {
+		fileFlags |= os.O_EXCL
+	}
+
+	file, err := os.OpenFile(fileName, fileFlags, 0o640)
+	if err != nil {
+		return err
+	}
+
+	err = template.Execute(file, data)
+	if err != nil {
+		return err
+	}
+
+	err = file.Close()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func generateDart(tdprotoInfo *codegen.TdPackage, baseLibPath string) error {
 	var libInfo DartLibInfo
 
@@ -135,17 +160,7 @@ func generateDart(tdprotoInfo *codegen.TdPackage, baseLibPath string) error {
 		enumFilePath := path.Join(enumsPathPrefix, fmt.Sprintf("%s.dart", enumFileName))
 		libInfo.GeneratedEnums = append(libInfo.GeneratedEnums, enumFilePath)
 
-		enumFile, err := os.OpenFile(path.Join(baseLibPath, enumFilePath), os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0o640)
-		if err != nil {
-			return err
-		}
-
-		err = dartEnumTemplate.Execute(enumFile, tdEnum)
-		if err != nil {
-			return err
-		}
-
-		err = enumFile.Close()
+		err := writeFileFromTemplate(path.Join(baseLibPath, enumFilePath), dartEnumTemplate, tdEnum, true)
 		if err != nil {
 			return err
 		}
@@ -164,33 +179,13 @@ func generateDart(tdprotoInfo *codegen.TdPackage, baseLibPath string) error {
 			return nil
 		}
 
-		classFile, err := os.OpenFile(path.Join(baseLibPath, dartClassFilePath), os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0o640)
-		if err != nil {
-			return err
-		}
-
-		err = dartClassTemplate.Execute(classFile, dartClass)
-		if err != nil {
-			return err
-		}
-
-		err = classFile.Close()
+		err = writeFileFromTemplate(path.Join(baseLibPath, dartClassFilePath), dartClassTemplate, dartClass, true)
 		if err != nil {
 			return err
 		}
 	}
 
-	libFile, err := os.OpenFile(path.Join(baseLibPath, "./tdproto_dart.dart"), os.O_WRONLY|os.O_CREATE, 0o640)
-	if err != nil {
-		return err
-	}
-
-	err = dartLibTemplate.Execute(libFile, libInfo)
-	if err != nil {
-		return err
-	}
-
-	err = libFile.Close()
+	err := writeFileFromTemplate(path.Join(baseLibPath, "./tdproto_dart.dart"), dartLibTemplate, libInfo, false)
 	if err != nil {
 		return err
 	}
@@ -267,7 +262,7 @@ func generateDartClasses(tdprotoInfo *codegen.TdPackage) (dartClasses []DartClas
 			}},
 			{Name: "Task", DartType: "Unread", Parent: codegen.TdStructField{
 				Help:     "Manually added",
-				JsonName: "taks",
+				JsonName: "task",
 			}},
 		},
 	})
