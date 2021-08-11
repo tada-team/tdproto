@@ -185,7 +185,7 @@ func generateDart(tdprotoInfo *codegen.TdPackage, baseLibPath string) error {
 		}
 	}
 
-	err := writeFileFromTemplate(path.Join(baseLibPath, "./tdproto_dart.dart"), dartLibTemplate, libInfo, false)
+	err := writeFileFromTemplate(path.Join(baseLibPath, "./tdproto_dart.dart"), dartLibTemplate, libInfo, true)
 	if err != nil {
 		return err
 	}

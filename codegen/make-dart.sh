@@ -51,9 +51,11 @@ DART_LIB_FOLDER="$(readlink --canonicalize $DART_LIB_FOLDER)"
 
 LIB_ENUMS_PATH="${DART_LIB_FOLDER}/lib/src/enums"
 LIB_MODELS_PATH="${DART_LIB_FOLDER}/lib/src/models"
+LIB_FILE_PATH="${DART_LIB_FOLDER}/lib/tdproto_dart.dart"
 
 if [ -d "$LIB_ENUMS_PATH" ]; then rm -r "$LIB_ENUMS_PATH"; fi
 if [ -d "$LIB_MODELS_PATH" ]; then rm -r "$LIB_MODELS_PATH"; fi
+if [ -f "$LIB_FILE_PATH" ]; then rm "$LIB_FILE_PATH"; fi
 
 go run "./dart" "$DART_LIB_FOLDER"
 
