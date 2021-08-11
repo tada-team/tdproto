@@ -115,6 +115,7 @@ func snakeCaseOrLower(input string) string {
 			return codegen.ToSnakeCase(input)
 		}
 	}
+
 	return strings.ToLower(input)
 }
 
@@ -124,6 +125,7 @@ func lowercaseFirstOrAll(input string) string {
 			return codegen.LowercaseFirstLetter(input)
 		}
 	}
+
 	return strings.ToLower(input)
 }
 
@@ -284,7 +286,9 @@ func createDirectoryStructure(basePath string) error {
 }
 
 func main() {
+
 	tdprotoInfo, err := codegen.ParseTdproto()
+
 	if err != nil {
 		panic(err)
 	}
@@ -315,4 +319,5 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
 }
