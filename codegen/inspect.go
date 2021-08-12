@@ -90,6 +90,8 @@ type TdPackage struct {
 type TdProto struct {
 	TdForms  *TdPackage
 	TdModels *TdPackage
+	TdEvents *TdPackage
+	TdQuery  *TdPackage
 }
 
 type TdEnum struct {
@@ -164,29 +166,50 @@ func (tds TdStruct) GetAllJsonFields(tdInfo *TdPackage) []TdStructField {
 func ParseTdproto() (infoToFill *TdProto, err error) {
 	infoToFill = new(TdProto)
 
-	tdprotoFileSet := token.NewFileSet()
-
-	tdModelsPackage := new(TdPackage)
-	tdModelsPackage.TdEvents = make(map[string]string)
-	tdModelsPackage.TdStructs = make(map[string]TdStruct)
-	tdModelsPackage.TdTypes = make(map[string]TdType)
-	tdModelsPackage.TdMapTypes = make(map[string]TdMapType)
-	tdModelsPackage.TdQueries = make(map[string]TdQuery)
-
-	infoToFill.TdModels = tdModelsPackage
-
-	tdprotoNameToAstMap, err := extractTdprotoAst(tdprotoFileSet)
+	allPackages := make(map[string]*ast.Package)
+	err = extractTdprotoAst(&allPackages)
 	if err != nil {
-		return nil, err
+		return infoToFill, err
 	}
 
-	tdprotoAst := tdprotoNameToAstMap["tdproto"]
-	err = parseTdprotoAst(tdprotoAst, tdModelsPackage, nil)
+	err = createTdProtoPackage(&infoToFill.TdModels, "tdproto", allPackages)
 	if err != nil {
-		return nil, err
+		return infoToFill, err
+	}
+
+	err = createTdProtoPackage(&infoToFill.TdForms, "tdforms", allPackages)
+	if err != nil {
+		return infoToFill, err
+	}
+
+	err = createTdProtoPackage(&infoToFill.TdEvents, "tdevents", allPackages)
+	if err != nil {
+		return infoToFill, err
+	}
+
+	err = createTdProtoPackage(&infoToFill.TdQuery, "tdquery", allPackages)
+	if err != nil {
+		return infoToFill, err
 	}
 
 	return infoToFill, nil
+}
+
+func createTdProtoPackage(packageSlot **TdPackage, packageName string, allPackagesAst map[string]*ast.Package) error {
+	*packageSlot = new(TdPackage)
+	(*packageSlot).TdEvents = make(map[string]string)
+	(*packageSlot).TdStructs = make(map[string]TdStruct)
+	(*packageSlot).TdTypes = make(map[string]TdType)
+	(*packageSlot).TdMapTypes = make(map[string]TdMapType)
+	(*packageSlot).TdQueries = make(map[string]TdQuery)
+
+	tdprotoAst := allPackagesAst[packageName]
+	err := parseTdprotoAst(tdprotoAst, *packageSlot, nil)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func parseTdprotoAst(packageAst *ast.Package, infoToFill *TdPackage, fileFilter *map[string]string) error {
@@ -616,9 +639,23 @@ func parseSelectorAst(selectorNode *ast.SelectorExpr) string {
 	return expressionStr + "." + selectorNode.Sel.Name
 }
 
-func extractTdprotoAst(fileSet *token.FileSet) (map[string]*ast.Package, error) {
+func extractTdprotoAst(packages *map[string]*ast.Package) error {
+
 	tdProtoPath := tdproto.SourceDir()
-	return parser.ParseDir(fileSet, tdProtoPath, nil, parser.ParseComments)
+
+	for _, packageName := range []string{"", "tdforms", "tdevents", "tdquery"} {
+		fileSet := token.NewFileSet()
+		pkgs, err := parser.ParseDir(fileSet, path.Join(tdProtoPath, packageName), nil, parser.ParseComments)
+		if err != nil {
+			return err
+		}
+
+		for key, value := range pkgs {
+			(*packages)[key] = value
+		}
+	}
+
+	return nil
 }
 
 func cleanHelp(s string) string {
