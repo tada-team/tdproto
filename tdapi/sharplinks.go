@@ -19,6 +19,9 @@ type SharpLink struct {
 	// What should be visible by user
 	Title string `json:"title"`
 
+	// Icon data, if any
+	Icons *tdproto.IconData `json:"icons,omitempty"`
+
 	// Internal details
 	Meta SharpLinkMeta `json:"meta"`
 }
