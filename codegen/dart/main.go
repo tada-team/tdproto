@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"flag"
 	"fmt"
 	"os"
@@ -116,6 +115,7 @@ func snakeCaseOrLower(input string) string {
 			return codegen.ToSnakeCase(input)
 		}
 	}
+
 	return strings.ToLower(input)
 }
 
@@ -125,17 +125,24 @@ func lowercaseFirstOrAll(input string) string {
 			return codegen.LowercaseFirstLetter(input)
 		}
 	}
+
 	return strings.ToLower(input)
 }
 
 func renderToFile(fileName string, template *template.Template, data interface{}) error {
-	var buf bytes.Buffer
-	err := template.Execute(&buf, data)
+	fileFlags := os.O_WRONLY | os.O_CREATE | os.O_EXCL
+
+	file, err := os.OpenFile(fileName, fileFlags, 0o640)
 	if err != nil {
 		return err
 	}
 
-	err = os.WriteFile(fileName, buf.Bytes(), 0640)
+	err = template.Execute(file, data)
+	if err != nil {
+		return err
+	}
+
+	err = file.Close()
 	if err != nil {
 		return err
 	}
@@ -279,7 +286,9 @@ func createDirectoryStructure(basePath string) error {
 }
 
 func main() {
+
 	tdprotoInfo, err := codegen.ParseTdproto()
+
 	if err != nil {
 		panic(err)
 	}
@@ -310,4 +319,5 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
 }
