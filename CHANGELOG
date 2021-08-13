@@ -4,6 +4,9 @@ v2.0.0
  - IconData now always not nullable
  - server.roster event removed
 
+v.1.45.0
+ - experimental optional field icons if tdapi.AtLinks and tdapi.SharpLinks
+
 v.1.44.0
  - remove deprecated server.panic event
 

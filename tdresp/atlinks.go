@@ -16,6 +16,9 @@ type AtLink struct {
 	// Hint for user, if any
 	Help string `json:"help,omitempty"`
 
+	// Icon data, if any
+	Icons *tdproto.IconData `json:"icons,omitempty"`
+
 	// Internal details, if any
 	Meta *AtLinkMeta `json:"meta,omitempty"`
 }
