@@ -1,3 +1,6 @@
+v.1.45.1
+ - libs upgrade
+
 v.1.45.0
  - experimental optional field icons if tdapi.AtLinks and tdapi.SharpLinks
 
