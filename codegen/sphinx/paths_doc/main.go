@@ -61,7 +61,7 @@ func (p pathDoc) ToRequestText() string {
 		return ""
 	}
 
-	return fmt.Sprintf("The :tdproto:ref:`%s` object.", p.RequestObjectName)
+	return fmt.Sprintf("The :tdproto:tdmodels:`%s` object.", p.RequestObjectName)
 
 }
 
