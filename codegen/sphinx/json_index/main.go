@@ -60,6 +60,7 @@ type rstJsonStruct struct {
 
 var jsonTemplate = template.Must(template.New("rstJson").Parse(`
 .. tdproto:struct:: {{.TdStruct.Name}}
+  :tdpackage: tdmodels
 
   {{.TdStruct.Help}}
 {{range $field := .Fields}}
@@ -68,6 +69,7 @@ var jsonTemplate = template.Must(template.New("rstJson").Parse(`
 
 var enumTemplate = template.Must(template.New("rstEnum").Parse(`
 .. tdproto:enum:: {{.Name}}
+  :tdpackage: tdmodels
 
   **Possible values**:
 {{range $value := .Values}}
@@ -77,6 +79,7 @@ var enumTemplate = template.Must(template.New("rstEnum").Parse(`
 
 var typeAliasTemplate = template.Must(template.New("rstType").Parse(`
 .. tdproto:type:: {{.Name}}
+  :tdpackage: tdmodels
 
   {{if .Help}}
   {{.Help}}
