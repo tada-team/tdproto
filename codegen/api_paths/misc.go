@@ -29,4 +29,12 @@ var MiscPaths = []PathSpec{
 			SecurityIsOptional: true,
 		},
 	},
+	{
+		Path: "/api/v4/badge",
+		Get: &OperationSpec{
+			Response:            0,
+			Description:         "Return number of unread messages.",
+			ResponseDescription: "Number of unread messages",
+		},
+	},
 }
