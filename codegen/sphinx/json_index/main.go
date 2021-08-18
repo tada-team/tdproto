@@ -17,7 +17,12 @@ func main() {
 		panic(err)
 	}
 
-	err = generateRstJson(tdprotoInfo.TdModels)
+	err = generateRstJson(tdprotoInfo.TdModels, "tdmodels")
+	if err != nil {
+		panic(err)
+	}
+
+	err = generateRstJson(tdprotoInfo.TdForms, "tdforms")
 	if err != nil {
 		panic(err)
 	}
@@ -55,12 +60,23 @@ func (r rstJsonField) GetModifiers() string {
 
 type rstJsonStruct struct {
 	codegen.TdStruct
-	Fields []rstJsonField
+	Fields    []rstJsonField
+	TdPackage string
+}
+
+type rstEnum struct {
+	codegen.TdEnum
+	TdPackage string
+}
+
+type rstType struct {
+	codegen.TdType
+	TdPackage string
 }
 
 var jsonTemplate = template.Must(template.New("rstJson").Parse(`
 .. tdproto:struct:: {{.TdStruct.Name}}
-  :tdpackage: tdmodels
+  :tdpackage: {{.TdPackage}}
 
   {{.TdStruct.Help}}
 {{range $field := .Fields}}
@@ -69,7 +85,7 @@ var jsonTemplate = template.Must(template.New("rstJson").Parse(`
 
 var enumTemplate = template.Must(template.New("rstEnum").Parse(`
 .. tdproto:enum:: {{.Name}}
-  :tdpackage: tdmodels
+  :tdpackage: {{.TdPackage}}
 
   **Possible values**:
 {{range $value := .Values}}
@@ -79,7 +95,7 @@ var enumTemplate = template.Must(template.New("rstEnum").Parse(`
 
 var typeAliasTemplate = template.Must(template.New("rstType").Parse(`
 .. tdproto:type:: {{.Name}}
-  :tdpackage: tdmodels
+  :tdpackage: {{.TdPackage}}
 
   {{if .Help}}
   {{.Help}}
@@ -109,46 +125,60 @@ func isEventStruct(structName string, tdprotoInfo *codegen.TdPackage) bool {
 	return isEvent
 }
 
-func generateRstJson(tdprotoInfo *codegen.TdPackage) error {
+func generateEnumsRst(enumsList []codegen.TdEnum, tdPackageName string, enumedTypeAliases *map[string]string) error {
 
-	enumedTypeAliases := make(map[string]string)
+	fmt.Fprintf(os.Stdout, "\n%s enums index\n============================\n", tdPackageName)
 
-	fmt.Fprintln(os.Stdout, "\nEnums index\n============================")
-	enumsList := tdprotoInfo.GetEnums()
 	sort.Slice(enumsList, func(i, j int) bool {
 		return strings.ToLower(enumsList[i].Name) < strings.ToLower(enumsList[j].Name)
 	})
 	for _, enum := range enumsList {
-		err := enumTemplate.Execute(os.Stdout, enum)
+		err := enumTemplate.Execute(os.Stdout, rstEnum{
+			TdEnum:    enum,
+			TdPackage: tdPackageName,
+		})
 		if err != nil {
 			return err
 		}
-		enumedTypeAliases[enum.Name] = ""
+		(*enumedTypeAliases)[enum.Name] = ""
 	}
 
-	fmt.Fprintln(os.Stdout, "\nType aliases\n============================")
+	return nil
+}
+
+func generateTypeAliasesRst(tdPackage *codegen.TdPackage, tdPackageName string, enumedTypeAliases *map[string]string) error {
+
+	fmt.Fprintf(os.Stdout, "\n%s type aliases\n============================\n", tdPackageName)
 	var typesList []codegen.TdType
-	for _, someType := range tdprotoInfo.TdTypes {
+	for _, someType := range tdPackage.TdTypes {
 		typesList = append(typesList, someType)
 	}
 	sort.Slice(typesList, func(i, j int) bool {
 		return strings.ToLower(typesList[i].Name) < strings.ToLower(typesList[j].Name)
 	})
 	for _, typeAlias := range typesList {
-		_, isEnumed := enumedTypeAliases[typeAlias.Name]
+		_, isEnumed := (*enumedTypeAliases)[typeAlias.Name]
 		if isEnumed {
 			continue
 		}
 
-		err := typeAliasTemplate.Execute(os.Stdout, typeAlias)
+		err := typeAliasTemplate.Execute(os.Stdout, rstType{
+			TdType:    typeAlias,
+			TdPackage: tdPackageName,
+		})
 		if err != nil {
 			return err
 		}
 	}
 
+	return nil
+}
+
+func generateStructsRst(tdPackage *codegen.TdPackage, tdPackageName string, enumedTypeAliases *map[string]string) error {
+
 	var jsonObjects []rstJsonStruct
 
-	for _, tdStruct := range tdprotoInfo.TdStructs {
+	for _, tdStruct := range tdPackage.TdStructs {
 		if tdStruct.Help == "" {
 			// Do not print structures without help
 			continue
@@ -159,21 +189,22 @@ func generateRstJson(tdprotoInfo *codegen.TdPackage) error {
 			continue
 		}
 
-		if isEventStruct(tdStruct.Name, tdprotoInfo) {
+		if isEventStruct(tdStruct.Name, tdPackage) {
 			continue
 		}
 
-		if tdStruct.IsEventParams(tdprotoInfo) {
+		if tdStruct.IsEventParams(tdPackage) {
 			continue
 		}
 
 		newRstJson := rstJsonStruct{
-			TdStruct: tdStruct,
+			TdStruct:  tdStruct,
+			TdPackage: tdPackageName,
 		}
 
 		fieldMissingHelp := false
 
-		for _, field := range tdStruct.GetAllJsonFields(tdprotoInfo) {
+		for _, field := range tdStruct.GetAllJsonFields(tdPackage) {
 			if field.IsNotSerialized {
 				continue
 			}
@@ -215,7 +246,7 @@ func generateRstJson(tdprotoInfo *codegen.TdPackage) error {
 		return strings.ToLower(jsonObjects[i].Name) < strings.ToLower(jsonObjects[j].Name)
 	})
 
-	fmt.Fprintln(os.Stdout, "\nJSON objects index\n============================")
+	fmt.Fprintf(os.Stdout, "\n%s JSON objects index\n============================\n", tdPackageName)
 
 	for _, object := range jsonObjects {
 		err := jsonTemplate.Execute(os.Stdout, object)
@@ -224,10 +255,49 @@ func generateRstJson(tdprotoInfo *codegen.TdPackage) error {
 		}
 	}
 
-	fmt.Fprintln(os.Stdout, "\nHTTP Queries\n============================")
+	return nil
+}
 
-	for _, query := range tdprotoInfo.TdQueries {
+func generateQueryRst(tdPackage *codegen.TdPackage, tdPackageName string) error {
+	fmt.Fprintf(os.Stdout, "\n%s HTTP Queries\n============================\n", tdPackageName)
+
+	for _, query := range tdPackage.TdQueries {
 		err := httpQueryTemplate.Execute(os.Stdout, query)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func generateRstJson(tdPackage *codegen.TdPackage, tdPackageName string) error {
+
+	enumedTypeAliases := make(map[string]string)
+	enumsList := tdPackage.GetEnums()
+
+	if len(enumsList) > 0 {
+		err := generateEnumsRst(enumsList, tdPackageName, &enumedTypeAliases)
+		if err != nil {
+			return err
+		}
+	}
+
+	if len(tdPackage.TdTypes) > 0 {
+		err := generateTypeAliasesRst(tdPackage, tdPackageName, &enumedTypeAliases)
+		if err != nil {
+			return err
+		}
+	}
+	if len(tdPackage.TdStructs) > 0 {
+		err := generateStructsRst(tdPackage, tdPackageName, &enumedTypeAliases)
+		if err != nil {
+			return err
+		}
+	}
+
+	if len(tdPackage.TdQueries) > 0 {
+		err := generateQueryRst(tdPackage, tdPackageName)
 		if err != nil {
 			return err
 		}
