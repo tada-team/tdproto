@@ -85,6 +85,8 @@ func (p pathDoc) ToResultType() string {
 		return "object"
 	case reflect.String:
 		return "string"
+	case reflect.Int:
+		return "int"
 	}
 
 	panic(fmt.Errorf("unknown result kind %v", p.ResultKind))
