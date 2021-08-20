@@ -61,7 +61,7 @@ func (p pathDoc) ToRequestText() string {
 		return ""
 	}
 
-	return fmt.Sprintf("The :tdproto:ref:`%s` object.", p.RequestObjectName)
+	return fmt.Sprintf("The :tdproto:tdmodels:`%s` object.", p.RequestObjectName)
 
 }
 
@@ -85,6 +85,8 @@ func (p pathDoc) ToResultType() string {
 		return "object"
 	case reflect.String:
 		return "string"
+	case reflect.Int:
+		return "int"
 	}
 
 	panic(fmt.Errorf("unknown result kind %v", p.ResultKind))
