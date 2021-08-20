@@ -60,14 +60,16 @@ type TdStruct struct {
 	ReadOnly        bool
 	AnonymousFields []string
 	FileName        string
+	PackageName     string
 }
 
 type TdType struct {
-	Name     string
-	Help     string
-	IsArray  bool
-	BaseType string
-	Filename string
+	Name        string
+	Help        string
+	IsArray     bool
+	BaseType    string
+	Filename    string
+	PackageName string
 }
 
 type TdMapType struct {
@@ -76,6 +78,7 @@ type TdMapType struct {
 	KeyTypeStr   string
 	ValueTypeStr string
 	Filename     string
+	PackageName  string
 }
 
 type TdPackage struct {
@@ -85,6 +88,7 @@ type TdPackage struct {
 	TdMapTypes  map[string]TdMapType
 	TdConstants []TdConstFields
 	TdQueries   map[string]TdQuery
+	Name        string
 }
 
 type TdProto struct {
@@ -95,8 +99,9 @@ type TdProto struct {
 }
 
 type TdEnum struct {
-	Name   string
-	Values []string
+	Name        string
+	Values      []string
+	PackageName string
 }
 
 func (i TdPackage) GetEnums() []TdEnum {
@@ -114,8 +119,9 @@ func (i TdPackage) GetEnums() []TdEnum {
 
 	for key, value := range constMap {
 		listOfEnums = append(listOfEnums, TdEnum{
-			Name:   key,
-			Values: value,
+			Name:        key,
+			Values:      value,
+			PackageName: i.Name,
 		})
 	}
 
@@ -202,6 +208,7 @@ func createTdProtoPackage(packageSlot **TdPackage, packageName string, allPackag
 	(*packageSlot).TdTypes = make(map[string]TdType)
 	(*packageSlot).TdMapTypes = make(map[string]TdMapType)
 	(*packageSlot).TdQueries = make(map[string]TdQuery)
+	(*packageSlot).Name = packageName
 
 	tdprotoAst := allPackagesAst[packageName]
 	err := parseTdprotoAst(tdprotoAst, *packageSlot, nil)
@@ -356,6 +363,7 @@ func parseMapTypeDeclaration(infoToFill *TdPackage, declarationSpec *ast.TypeSpe
 		ValueTypeStr: valueTypeStr,
 		Help:         helpString,
 		Filename:     fileName,
+		PackageName:  infoToFill.Name,
 	}
 
 	return nil
@@ -366,11 +374,12 @@ func parseArrayTypeDefinition(infoToFill *TdPackage, declarationSpec *ast.TypeSp
 	arrayExpressionAst := arrayAst.Elt.(*ast.Ident)
 	arrayTypeStr := arrayExpressionAst.Name
 	infoToFill.TdTypes[typeName] = TdType{
-		Name:     typeName,
-		BaseType: arrayTypeStr,
-		IsArray:  true,
-		Help:     helpString,
-		Filename: fileName,
+		Name:        typeName,
+		BaseType:    arrayTypeStr,
+		IsArray:     true,
+		Help:        helpString,
+		Filename:    fileName,
+		PackageName: infoToFill.Name,
 	}
 	return nil
 }
@@ -378,10 +387,11 @@ func parseArrayTypeDefinition(infoToFill *TdPackage, declarationSpec *ast.TypeSp
 func parseTypeDefinition(infoToFill *TdPackage, declarationSpec *ast.TypeSpec, typeIndent *ast.Ident, helpString string, fileName string) error {
 	typeName := declarationSpec.Name.Name
 	infoToFill.TdTypes[typeName] = TdType{
-		Name:     typeName,
-		BaseType: typeIndent.Name,
-		Help:     helpString,
-		Filename: fileName,
+		Name:        typeName,
+		BaseType:    typeIndent.Name,
+		Help:        helpString,
+		Filename:    fileName,
+		PackageName: infoToFill.Name,
 	}
 	return nil
 }
@@ -562,6 +572,7 @@ func parseStructDefinitionInfo(infoToFill *TdPackage, declarationSpec *ast.TypeS
 		Fields:          fieldsList,
 		AnonymousFields: anonymousFieldsList,
 		FileName:        fileName,
+		PackageName:     infoToFill.Name,
 	}
 
 	return nil

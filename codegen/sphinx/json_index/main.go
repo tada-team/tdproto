@@ -60,23 +60,20 @@ func (r rstJsonField) GetModifiers() string {
 
 type rstJsonStruct struct {
 	codegen.TdStruct
-	Fields    []rstJsonField
-	TdPackage string
+	Fields []rstJsonField
 }
 
 type rstEnum struct {
 	codegen.TdEnum
-	TdPackage string
 }
 
 type rstType struct {
 	codegen.TdType
-	TdPackage string
 }
 
 var jsonTemplate = template.Must(template.New("rstJson").Parse(`
 .. tdproto:struct:: {{.TdStruct.Name}}
-  :tdpackage: {{.TdPackage}}
+  :tdpackage: {{.PackageName}}
 
   {{.TdStruct.Help}}
 {{range $field := .Fields}}
@@ -85,7 +82,7 @@ var jsonTemplate = template.Must(template.New("rstJson").Parse(`
 
 var enumTemplate = template.Must(template.New("rstEnum").Parse(`
 .. tdproto:enum:: {{.Name}}
-  :tdpackage: {{.TdPackage}}
+  :tdpackage: {{.PackageName}}
 
   **Possible values**:
 {{range $value := .Values}}
@@ -95,7 +92,7 @@ var enumTemplate = template.Must(template.New("rstEnum").Parse(`
 
 var typeAliasTemplate = template.Must(template.New("rstType").Parse(`
 .. tdproto:type:: {{.Name}}
-  :tdpackage: {{.TdPackage}}
+  :tdpackage: {{.PackageName}}
 
   {{if .Help}}
   {{.Help}}
@@ -134,8 +131,7 @@ func generateEnumsRst(enumsList []codegen.TdEnum, tdPackageName string, enumedTy
 	})
 	for _, enum := range enumsList {
 		err := enumTemplate.Execute(os.Stdout, rstEnum{
-			TdEnum:    enum,
-			TdPackage: tdPackageName,
+			TdEnum: enum,
 		})
 		if err != nil {
 			return err
@@ -163,8 +159,7 @@ func generateTypeAliasesRst(tdPackage *codegen.TdPackage, tdPackageName string, 
 		}
 
 		err := typeAliasTemplate.Execute(os.Stdout, rstType{
-			TdType:    typeAlias,
-			TdPackage: tdPackageName,
+			TdType: typeAlias,
 		})
 		if err != nil {
 			return err
@@ -198,8 +193,7 @@ func generateStructsRst(tdPackage *codegen.TdPackage, tdPackageName string, enum
 		}
 
 		newRstJson := rstJsonStruct{
-			TdStruct:  tdStruct,
-			TdPackage: tdPackageName,
+			TdStruct: tdStruct,
 		}
 
 		fieldMissingHelp := false
