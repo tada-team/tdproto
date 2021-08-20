@@ -186,6 +186,8 @@ func interfaceToOaContents(someData interface{}, newContents *openApiContents, w
 			}
 		case reflect.String:
 			resultSchema.Type = openApiString
+		case reflect.Int:
+			resultSchema.Type = openApiInteger
 		default:
 			return fmt.Errorf("cannot convert data to OpenApi %#v", someData)
 		}
