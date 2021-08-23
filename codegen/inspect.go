@@ -51,6 +51,7 @@ type TdStructField struct {
 	IsList          bool
 	IsOmitEmpty     bool
 	IsNotSerialized bool
+	PackageName     string
 }
 
 type TdStruct struct {
@@ -60,14 +61,16 @@ type TdStruct struct {
 	ReadOnly        bool
 	AnonymousFields []string
 	FileName        string
+	PackageName     string
 }
 
 type TdType struct {
-	Name     string
-	Help     string
-	IsArray  bool
-	BaseType string
-	Filename string
+	Name        string
+	Help        string
+	IsArray     bool
+	BaseType    string
+	Filename    string
+	PackageName string
 }
 
 type TdMapType struct {
@@ -76,6 +79,7 @@ type TdMapType struct {
 	KeyTypeStr   string
 	ValueTypeStr string
 	Filename     string
+	PackageName  string
 }
 
 type TdPackage struct {
@@ -85,6 +89,7 @@ type TdPackage struct {
 	TdMapTypes  map[string]TdMapType
 	TdConstants []TdConstFields
 	TdQueries   map[string]TdQuery
+	Name        string
 }
 
 type TdProto struct {
@@ -95,8 +100,9 @@ type TdProto struct {
 }
 
 type TdEnum struct {
-	Name   string
-	Values []string
+	Name        string
+	Values      []string
+	PackageName string
 }
 
 func (i TdPackage) GetEnums() []TdEnum {
@@ -114,8 +120,9 @@ func (i TdPackage) GetEnums() []TdEnum {
 
 	for key, value := range constMap {
 		listOfEnums = append(listOfEnums, TdEnum{
-			Name:   key,
-			Values: value,
+			Name:        key,
+			Values:      value,
+			PackageName: i.Name,
 		})
 	}
 
@@ -202,6 +209,7 @@ func createTdProtoPackage(packageSlot **TdPackage, packageName string, allPackag
 	(*packageSlot).TdTypes = make(map[string]TdType)
 	(*packageSlot).TdMapTypes = make(map[string]TdMapType)
 	(*packageSlot).TdQueries = make(map[string]TdQuery)
+	(*packageSlot).Name = packageName
 
 	tdprotoAst := allPackagesAst[packageName]
 	err := parseTdprotoAst(tdprotoAst, *packageSlot, nil)
@@ -339,13 +347,15 @@ func parseTypeDeclaration(infoToFill *TdPackage, genDeclaration *ast.GenDecl, de
 
 func parseMapTypeDeclaration(infoToFill *TdPackage, declarationSpec *ast.TypeSpec, mapAst *ast.MapType, helpString string, fileName string) error {
 	typeName := declarationSpec.Name.Name
+	var keyPackageName, keyTypeStr string
 
-	keyTypeStr, err := parseExprToString(mapAst.Key)
+	err := parseExprToString(mapAst.Key, &keyPackageName, &keyTypeStr)
 	if err != nil {
 		return err
 	}
 
-	valueTypeStr, err := parseExprToString(mapAst.Value)
+	var valuePackageName, valueTypeStr string
+	err = parseExprToString(mapAst.Value, &valuePackageName, &valueTypeStr)
 	if err != nil {
 		return err
 	}
@@ -356,6 +366,7 @@ func parseMapTypeDeclaration(infoToFill *TdPackage, declarationSpec *ast.TypeSpe
 		ValueTypeStr: valueTypeStr,
 		Help:         helpString,
 		Filename:     fileName,
+		PackageName:  infoToFill.Name,
 	}
 
 	return nil
@@ -366,11 +377,12 @@ func parseArrayTypeDefinition(infoToFill *TdPackage, declarationSpec *ast.TypeSp
 	arrayExpressionAst := arrayAst.Elt.(*ast.Ident)
 	arrayTypeStr := arrayExpressionAst.Name
 	infoToFill.TdTypes[typeName] = TdType{
-		Name:     typeName,
-		BaseType: arrayTypeStr,
-		IsArray:  true,
-		Help:     helpString,
-		Filename: fileName,
+		Name:        typeName,
+		BaseType:    arrayTypeStr,
+		IsArray:     true,
+		Help:        helpString,
+		Filename:    fileName,
+		PackageName: infoToFill.Name,
 	}
 	return nil
 }
@@ -378,10 +390,11 @@ func parseArrayTypeDefinition(infoToFill *TdPackage, declarationSpec *ast.TypeSp
 func parseTypeDefinition(infoToFill *TdPackage, declarationSpec *ast.TypeSpec, typeIndent *ast.Ident, helpString string, fileName string) error {
 	typeName := declarationSpec.Name.Name
 	infoToFill.TdTypes[typeName] = TdType{
-		Name:     typeName,
-		BaseType: typeIndent.Name,
-		Help:     helpString,
-		Filename: fileName,
+		Name:        typeName,
+		BaseType:    typeIndent.Name,
+		Help:        helpString,
+		Filename:    fileName,
+		PackageName: infoToFill.Name,
 	}
 	return nil
 }
@@ -474,6 +487,7 @@ func parseStructDefinitionInfo(infoToFill *TdPackage, declarationSpec *ast.TypeS
 		isList := false
 		isPointer := false
 		fieldTypeStr := ""
+		fieldPackageName := ""
 		keyTypeStr := ""
 
 		switch fieldTypeAst := field.Type.(type) {
@@ -488,7 +502,7 @@ func parseStructDefinitionInfo(infoToFill *TdPackage, declarationSpec *ast.TypeS
 			case *ast.InterfaceType:
 				fieldTypeStr = "interface{}"
 			case *ast.SelectorExpr:
-				fieldTypeStr = parseSelectorAst(arrayTypeAst)
+				fieldPackageName, fieldTypeStr = parseSelectorAst(arrayTypeAst)
 			default:
 				return fmt.Errorf("unknown array type %#v", arrayTypeAst)
 			}
@@ -509,22 +523,22 @@ func parseStructDefinitionInfo(infoToFill *TdPackage, declarationSpec *ast.TypeS
 				// TODO: Implement pointers to maps
 				continue
 			case *ast.SelectorExpr:
-				fieldTypeStr = parseSelectorAst(pointedType)
+				fieldPackageName, fieldTypeStr = parseSelectorAst(pointedType)
 			default:
 				return fmt.Errorf("unknown pointer field of %s type %#v", structName, pointedType)
 			}
 
 		case *ast.SelectorExpr:
-			fieldTypeStr = parseSelectorAst(fieldTypeAst)
+			fieldPackageName, fieldTypeStr = parseSelectorAst(fieldTypeAst)
 		case *ast.InterfaceType:
 			fieldTypeStr = "interface{}"
 		case *ast.MapType:
 			var err error
-			keyTypeStr, err = parseExprToString(fieldTypeAst.Key)
+			err = parseExprToString(fieldTypeAst.Key, &fieldPackageName, &fieldTypeStr)
 			if err != nil {
 				return err
 			}
-			fieldTypeStr, err = parseExprToString(fieldTypeAst.Value)
+			err = parseExprToString(fieldTypeAst.Value, &fieldPackageName, &fieldTypeStr)
 			if err != nil {
 				return err
 			}
@@ -539,6 +553,10 @@ func parseStructDefinitionInfo(infoToFill *TdPackage, declarationSpec *ast.TypeS
 
 		_, isPrimitive := GolangPrimitiveTypes[fieldTypeStr]
 
+		if fieldPackageName == "" && !isPrimitive {
+			fieldPackageName = infoToFill.Name
+		}
+
 		fieldsList = append(fieldsList, TdStructField{
 			Name:            fieldName,
 			IsReadOnly:      isReadOnly,
@@ -552,6 +570,7 @@ func parseStructDefinitionInfo(infoToFill *TdPackage, declarationSpec *ast.TypeS
 			IsPrimitive:     isPrimitive,
 			IsNotSerialized: isNotSerialized,
 			Help:            fieldDoc,
+			PackageName:     fieldPackageName,
 		})
 	}
 
@@ -562,6 +581,7 @@ func parseStructDefinitionInfo(infoToFill *TdPackage, declarationSpec *ast.TypeS
 		Fields:          fieldsList,
 		AnonymousFields: anonymousFieldsList,
 		FileName:        fileName,
+		PackageName:     infoToFill.Name,
 	}
 
 	return nil
@@ -607,36 +627,43 @@ func parseConstDeclaration(infoToFill *TdPackage, genDeclaration *ast.GenDecl) e
 	return nil
 }
 
-func parseExprToString(expr interface{}) (string, error) {
+func parseExprToString(expr interface{}, packageName *string, expression *string) error {
 	switch exprType := expr.(type) {
 	case *ast.SelectorExpr:
-		return parseSelectorAst(exprType), nil
+		(*packageName), (*expression) = parseSelectorAst(exprType)
+		return nil
 	case *ast.Ident:
-		return exprType.Name, nil
+		*packageName = ""
+		*expression = exprType.Name
+		return nil
 	case *ast.InterfaceType:
-		return "interface{}", nil
+		*packageName = ""
+		*expression = "interface{}"
+		return nil
 	case *ast.StarExpr:
-		return parseStarAst(exprType)
+		err := parseStarAst(exprType, packageName, expression)
+		if err != nil {
+			return err
+		}
+		return nil
 	}
 
-	return "", fmt.Errorf("cannot parse expression %#v", expr)
+	return fmt.Errorf("cannot parse expression %#v", expr)
 }
 
-func parseStarAst(starAst *ast.StarExpr) (string, error) {
-	pointedType, err := parseExprToString(starAst.X)
+func parseStarAst(starAst *ast.StarExpr, packageName *string, expression *string) error {
+	err := parseExprToString(starAst.X, packageName, expression)
 	if err != nil {
-		return "", err
+		return err
 	}
-	return pointedType, nil
+	return nil
 }
 
-func parseSelectorAst(selectorNode *ast.SelectorExpr) string {
+func parseSelectorAst(selectorNode *ast.SelectorExpr) (string, string) {
 	expressionIdent := selectorNode.X.(*ast.Ident)
 	expressionStr := expressionIdent.Name
-	if expressionStr == "tdproto" { // HACK: when tdapi references tdproto
-		return selectorNode.Sel.Name
-	}
-	return expressionStr + "." + selectorNode.Sel.Name
+
+	return expressionStr, selectorNode.Sel.Name
 }
 
 func extractTdprotoAst(packages *map[string]*ast.Package) error {
