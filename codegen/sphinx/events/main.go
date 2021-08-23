@@ -16,7 +16,7 @@ func main() {
 		panic(err)
 	}
 
-	clientEvents, serverEvents, err := generateRstServerEvents(tdprotoInfo.TdModels)
+	clientEvents, serverEvents, err := generateRstServerEvents(tdprotoInfo)
 	if err != nil {
 		panic(err)
 	}
@@ -39,17 +39,16 @@ type rstEvent struct {
 	Fields         []rstEventField
 }
 
-func generateRstServerEvents(tdprotoInfo *codegen.TdPackage) (clientEvents []rstEvent, serverEvents []rstEvent, err error) {
-	for eventStructName, eventStr := range tdprotoInfo.TdEvents {
+func generateRstServerEvents(tdprotoInfo *codegen.TdProto) (clientEvents []rstEvent, serverEvents []rstEvent, err error) {
+	for eventStructName, eventStr := range tdprotoInfo.TdEvents.TdEvents {
 		eventExample, ok := eventExampleStr[eventStr]
 		if !ok {
 			eventExample = ""
 		}
 
-		originalStruct, ok := tdprotoInfo.TdStructs[eventStructName]
+		originalStruct, ok := tdprotoInfo.TdEvents.TdStructs[eventStructName]
 		if !ok {
-			fmt.Fprintf(os.Stderr, "Failed to find struct %s of event %s.\n", eventStructName, eventStr)
-			continue
+			return clientEvents, serverEvents, fmt.Errorf("failed to find struct %s of event %s", eventStructName, eventStr)
 		}
 
 		eventExampleFormatted := strings.ReplaceAll(eventExample, "\n", "\n   ")
@@ -64,16 +63,26 @@ func generateRstServerEvents(tdprotoInfo *codegen.TdPackage) (clientEvents []rst
 		var paramsStruct codegen.TdStruct
 
 		for _, originalField := range originalStruct.Fields {
-			if originalField.Name == "Params" {
-				paramsStruct, ok = tdprotoInfo.TdStructs[originalField.TypeStr]
-				if !ok {
-					fmt.Fprintf(os.Stderr, "Failed to find parameter type %s of event %s.\n", originalField.TypeStr, eventStructName)
-					continue
-				}
+			if originalField.Name != "Params" {
+				continue
 			}
+			switch originalField.PackageName {
+			case "tdevents":
+				paramsStruct, ok = tdprotoInfo.TdEvents.TdStructs[originalField.TypeStr]
+			case "tdproto":
+				paramsStruct, ok = tdprotoInfo.TdModels.TdStructs[originalField.TypeStr]
+			default:
+				ok = false
+			}
+
+			if !ok {
+				fmt.Fprintf(os.Stderr, "Failed to find struct %s of event %s.\n", eventStructName, eventStr)
+				continue
+			}
+
 		}
 
-		for _, paramField := range paramsStruct.GetAllJsonFields(tdprotoInfo) {
+		for _, paramField := range paramsStruct.GetAllJsonFields(tdprotoInfo.TdEvents) {
 			fieldHelp := paramField.Help
 			if fieldHelp == "" {
 				fieldHelp = "DOCUMENTATION MISSING"
