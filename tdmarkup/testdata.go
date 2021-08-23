@@ -462,4 +462,9 @@ var MarkupTestCases = []struct {
 		Html:  `<a href="app://path">x]y</a>`,
 		Plain: "x]y",
 	},
+	{
+		Title: "complex message with emoji and markup",
+		Raw:   "`branch` ℹ️ result #[15381](https://host/15381)\n\n - ✅ `test:unit` - xxx: #[72964](https://host/72964)",
+		Plain: "branch ℹ️ result #15381\n\n - ✅ test:unit - xxx: #72964",
+	},
 }
