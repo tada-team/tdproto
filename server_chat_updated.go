@@ -1,8 +1,12 @@
 package tdproto
 
 func NewServerChatUpdated(chat Chat, teamUnread *TeamUnread, badge uint) (r ServerChatUpdated) {
+	return NewServerChatsUpdated([]Chat{chat}, teamUnread, badge)
+}
+
+func NewServerChatsUpdated(chats []Chat, teamUnread *TeamUnread, badge uint) (r ServerChatUpdated) {
 	r.Name = r.GetName()
-	r.Params.Chats = []Chat{chat}
+	r.Params.Chats = chats
 	r.Params.TeamUnread = teamUnread
 	r.Params.Badge = badge
 	return r
