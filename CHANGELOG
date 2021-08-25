@@ -1,3 +1,6 @@
+v.1.46.0
+ - server.uisettings params changed from {"params": data} to {"params": {"namespace": namespace, "data": data}}
+
 v.1.45.3
  - features.MaxTeamTitleLength
 
