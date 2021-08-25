@@ -10,7 +10,6 @@ const (
 	AccessDenied        = Err("ACCESS_DENIED")
 	NotFound            = Err("NOT_FOUND")
 	NotModified         = Err("NOT_MODIFIED")
-	Gone                = Err("GONE")
 	RateLimit           = Err("RATE_LIMIT")
 	InternalServerError = Err("INTERNAL_SERVER_ERROR")
 	InvalidMethod       = Err("INVALID_METHOD")
@@ -29,8 +28,6 @@ func (e Err) StatusCode() int {
 		return 403
 	case NotFound:
 		return 404
-	case Gone:
-		return 410
 	case RateLimit:
 		return 429
 	case InternalServerError:
