@@ -7,7 +7,16 @@ import (
 func TestParsing(t *testing.T) {
 	_, err := ParseTdproto()
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
+	}
+}
+
+func TestParsing2(t *testing.T) {
+	tdproto := make(TdProto2)
+
+	err := ParseTdproto2(&tdproto)
+	if err != nil {
+		t.Fatal(err)
 	}
 }
 
