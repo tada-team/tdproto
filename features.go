@@ -205,7 +205,7 @@ type Features struct {
 	// Calls record enabled
 	CallsRecord bool `json:"calls_record"`
 
-	// Disallow call from multiply devices. Experimental
+	// Disallow call from multiple devices. Experimental
 	OnlyOneDevicePerCall bool `json:"only_one_device_per_call,omitempty"`
 
 	// Maximum number of participants per call
