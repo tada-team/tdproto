@@ -13,7 +13,7 @@ type Subscription struct {
 	// Subscription expiration time
 	Expires *time.Time `json:"expires,omitempty"`
 	// ID of the tariff for which the subscription is valid
-	TariffUid TariffPk `json:"tariff_uid,omitempty"`
+	TariffUid string `json:"tariff_uid,omitempty"`
 	// ID of the user who subscribed
-	UserUid *UserPk `json:"user_uid,omitempty"`
+	UserUid *string `json:"user_uid,omitempty"`
 }
