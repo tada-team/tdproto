@@ -15,5 +15,5 @@ type Subscription struct {
 	// ID of the tariff for which the subscription is valid
 	TariffUid string `json:"tariff_uid,omitempty"`
 	// ID of the user who subscribed
-	UserUid *string `json:"user_uid,omitempty"`
+	UserUid string `json:"user_uid,omitempty"`
 }
