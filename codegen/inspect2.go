@@ -9,6 +9,8 @@ import (
 	"strings"
 )
 
+const StringTypeName = "string"
+
 type TdElement struct {
 	TypeName    string
 	TypeKind    reflect.Kind
@@ -20,6 +22,11 @@ type TdElement struct {
 type TdConstant struct {
 	TdElement
 	ConstValue string
+}
+
+type TdType2 struct {
+	TdElement
+	BaseTypeName string
 }
 
 type TdPackage2 map[string]interface{}
@@ -105,27 +112,39 @@ func parseConstDeclaration2(packageMap *TdPackage2, fileName string, genDeclarat
 		}
 
 		constName := valueSpec.Names[0].Name
+		constTypeKind := reflect.String
 
 		constTypeName := fmt.Sprintf("%s", valueSpec.Type)
 		if constTypeName == "" || valueSpec.Type == nil {
-			errorLogger.Printf("WARN: const has no typeName %s", constName)
-			continue
+			constTypeName = StringTypeName
 		}
 
 		if len(valueSpec.Values) != 1 {
 			return fmt.Errorf("expected one constant value got %+v", valueSpec.Values)
 		}
 
-		constValue, ok := valueSpec.Values[0].(*ast.BasicLit)
+		var constValue string
+
+		switch constExpr := valueSpec.Values[0]; constExpr.(type) {
+		case *ast.BasicLit:
+			constValue = constExpr.(*ast.BasicLit).Value
+		case *ast.CallExpr:
+			callExpr := constExpr.(*ast.CallExpr)
+			constTypeName = callExpr.Fun.(*ast.Ident).Name
+			constValue = callExpr.Fun.(*ast.Ident).Obj.Kind.String()
+			constTypeKind = reflect.Int
+		}
+
 		if !ok {
 			return fmt.Errorf("could not extract constant value %+v", valueSpec.Values[0])
 		}
 
 		(*packageMap)[constName] = TdConstant{
-			ConstValue: constValue.Value,
+			ConstValue: constValue,
 			TdElement: TdElement{
+				TypeName: constTypeName,
 				FileName: fileName,
-				TypeKind: reflect.String,
+				TypeKind: constTypeKind,
 				Help:     cleanHelp(valueSpec.Doc.Text()),
 			},
 		}
@@ -136,6 +155,62 @@ func parseConstDeclaration2(packageMap *TdPackage2, fileName string, genDeclarat
 }
 
 func parseTypeDeclaration2(packageMap *TdPackage2, genDeclaration *ast.GenDecl, declarationSpec *ast.TypeSpec, fileName string) error {
+
+	helpString := cleanHelp(genDeclaration.Doc.Text())
+
+	switch typeAst := declarationSpec.Type.(type) {
+	case *ast.Ident:
+		err := parseTypeDefinition2(packageMap, declarationSpec, typeAst, helpString, fileName)
+		if err != nil {
+			return err
+		}
+	case *ast.StructType:
+
+	case *ast.ArrayType:
+		err := parseArrayDefinition2(packageMap, declarationSpec, typeAst, helpString, fileName)
+		if err != nil {
+			return err
+		}
+	case *ast.MapType:
+
+	default:
+		errorLogger.Printf("WARN: Not implemented type declaration %#v", typeAst)
+	}
+
+	return nil
+}
+
+func parseTypeDefinition2(packageMap *TdPackage2, declarationSpec *ast.TypeSpec, typeIndent *ast.Ident, helpString string, fileName string) error {
+
+	typeName := declarationSpec.Name.Name
+
+	(*packageMap)[typeName] = TdType2{
+		TdElement: TdElement{
+			TypeName: typeName,
+			Help:     helpString,
+			FileName: fileName,
+			TypeKind: reflect.String,
+		},
+		BaseTypeName: typeIndent.Name,
+	}
+
+	return nil
+}
+
+func parseArrayDefinition2(packageMap *TdPackage2, declarationSpec *ast.TypeSpec, arrayAst *ast.ArrayType, helpString string, fileName string) error {
+	typeName := declarationSpec.Name.Name
+	arrayExpressionAst := arrayAst.Elt.(*ast.Ident)
+	arrayTypeStr := arrayExpressionAst.Name
+
+	(*packageMap)[typeName] = TdType2{
+		TdElement: TdElement{
+			TypeName: typeName,
+			Help:     helpString,
+			FileName: fileName,
+			TypeKind: reflect.Array,
+		},
+		BaseTypeName: arrayTypeStr,
+	}
 
 	return nil
 }
