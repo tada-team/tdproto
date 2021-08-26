@@ -1,3 +1,9 @@
+v.1.46.3
+ - more docs added
+
+v.1.46.2
+ - tdapi.Team.display_family_name_first
+
 v.1.46.2
  - tdapi.Team.display_family_name_first
 
