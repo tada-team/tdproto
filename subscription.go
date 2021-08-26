@@ -1,6 +1,6 @@
 package tdproto
 
-import time
+import "time"
 
 // Subscription - an entity that signifies the fact
 // of subscribing to the tariff of any team for a certain period
