@@ -4,9 +4,6 @@ v.1.46.3
 v.1.46.2
  - tdapi.Team.display_family_name_first
 
-v.1.46.2
- - tdapi.Team.display_family_name_first
-
 v.1.46.1
  - remove unused tdapi.Gone
 
