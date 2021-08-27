@@ -4,6 +4,24 @@ v.2.0.0
  - IconData now always not nullable
  - server.roster event removed
 
+v.1.46.3
+ - more docs added
+
+v.1.46.2
+ - tdapi.Team.display_family_name_first
+
+v.1.46.1
+ - remove unused tdapi.Gone
+
+v.1.46.0
+ - server.uisettings params changed from {"params": data} to {"params": {"namespace": namespace, "data": data}}
+
+v.1.45.3
+ - features.MaxTeamTitleLength
+
+v.1.45.2
+ - NewServerChatsUpdated shortcut
+
 v.1.45.1
  - libs upgrade
 

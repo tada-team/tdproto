@@ -14,6 +14,9 @@ type Team struct {
 	// Patronymic in usernames for this team
 	UsePatronymic bool `json:"use_patronymic"`
 
+	// Family name should be first in display name
+	DisplayFamilyNameFirst bool `json:"display_family_name_first"`
+
 	// Use importance field in task
 	UseTaskImportance bool `json:"use_task_importance"`
 
@@ -29,9 +32,9 @@ type Team struct {
 	// Is singlegroup (for creation only)
 	SingleGroup bool `json:"single_group"`
 
-	// Contacts (for creation only)
-	Contacts []Contact `json:"contacts"`
-
 	// Team pinned
 	Pinned bool `json:"pinned,omitempty"`
+
+	// Contacts (for creation only)
+	Contacts []Contact `json:"contacts"`
 }

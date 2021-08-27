@@ -2,9 +2,9 @@ package tdevents
 
 import "github.com/tada-team/tdproto"
 
-func NewServerChatUpdated(chat tdproto.Chat, teamUnread *tdproto.TeamUnread, badge uint) (r ServerChatUpdated) {
+func NewServerChatUpdated(chats []tdproto.Chat, teamUnread *tdproto.TeamUnread, badge uint) (r ServerChatUpdated) {
 	r.Name = r.GetName()
-	r.Params.Chats = []tdproto.Chat{chat}
+	r.Params.Chats = chats
 	r.Params.TeamUnread = teamUnread
 	r.Params.Badge = badge
 	return r

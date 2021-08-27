@@ -76,6 +76,9 @@ type Features struct {
 	// Maximum chars for group chat name
 	MaxGroupTitleLength int `json:"max_group_title_length"`
 
+	// Maximum chars for team name
+	MaxTeamTitleLength int `json:"max_team_title_length"`
+
 	// Maximum chars for role in team
 	MaxRoleLength int `json:"max_role_length"`
 
@@ -205,7 +208,7 @@ type Features struct {
 	// Calls record enabled
 	CallsRecord bool `json:"calls_record"`
 
-	// Disallow call from multiply devices. Experimental
+	// Disallow call from multiple devices. Experimental
 	OnlyOneDevicePerCall bool `json:"only_one_device_per_call,omitempty"`
 
 	// Maximum number of participants per call
