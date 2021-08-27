@@ -1,0 +1,63 @@
+package tdquery
+
+import "github.com/tada-team/tdproto"
+
+// Message filter
+type Messages struct {
+	UserParams
+	Paginator
+
+	// ?chat=jid,jid
+	Chat string `schema:"chat"`
+
+	// ?chat_type=task,group,direct|any (default: any)
+	ChatType string `schema:"chat_type"`
+
+	// ?sender=jid,jid
+	Sender string `schema:"sender"`
+
+	// ?has_upload=true|false|any (default: any)
+	HasUpload string `schema:"has_upload"`
+
+	// ?text=substr
+	Text string `schema:"text"`
+
+	// ?type=image,video,plain,file
+	Type tdproto.Mediatype `schema:"type"`
+
+	// ?important=true|any
+	Important string `schema:"important"`
+
+	// ?date_from=dt (include)
+	DateFrom string `schema:"date_from"`
+
+	// ?date_to=dt
+	DateTo string `schema:"date_to"`
+
+	// ?include_deleted=true|false (default: false)
+	IncludeDeleted string `schema:"include_deleted"`
+
+	// ?gentime_from=
+	GentimeFrom string `schema:"gentime_from"`
+
+	// ?exact=msgId
+	Exact string `schema:"exact"`
+
+	// ?unread=(true|false)
+	Unread string `schema:"unread"`
+
+	// ?old_from=msgId (exclude msgId)
+	OldFrom string `schema:"old_from"`
+
+	// ?new_from=msgId (exclude msgId)
+	NewFrom string `schema:"new_from"`
+
+	// ?old_from_inc=msgId (include msgId)
+	OldFromInc string `schema:"old_from_inc"`
+
+	// ?new_from_inc=msgId (include msgId)
+	NewFromInc string `schema:"new_from_inc"`
+
+	// ?around=msgId (include msgId)
+	Around string `schema:"around"`
+}

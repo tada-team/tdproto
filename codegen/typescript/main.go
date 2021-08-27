@@ -29,7 +29,7 @@ var tsTypesMap = map[string]string{
 	"bool":              "boolean",
 	"interface{}":       "any",
 	"ISODateTimeString": "string",
-	"time.Time":         "string",
+	"Time":              "string",
 	"UiSettings":        "UiSettings",
 }
 

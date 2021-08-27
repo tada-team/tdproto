@@ -1,36 +1,37 @@
 package api_paths
 
 import (
-	"github.com/tada-team/tdproto/tdapi"
+	"github.com/tada-team/tdproto/tdforms"
+	"github.com/tada-team/tdproto/tdquery"
 )
 
 var TaskPaths = []PathSpec{
 	{
 		Path: "/api/v4/teams/{team_id}/tasks",
 		Post: &OperationSpec{
-			Request:     tdapi.Task{},
-			Response:    tdapi.Task{},
+			Request:     tdforms.Task{},
+			Response:    tdforms.Task{},
 			Description: "Create new task",
 		},
 		Get: &OperationSpec{
-			QueryStruct: tdapi.TaskFilter{},
-			Response:    []tdapi.Task{},
+			QueryStruct: tdquery.Tasks{},
+			Response:    []tdforms.Task{},
 			Description: "Get the list of tasks",
 		},
 	},
 	{
 		Path: "/api/v4/teams/{team_id}/tasks/{task_id}",
 		Get: &OperationSpec{
-			Response:    tdapi.Task{},
+			Response:    tdforms.Task{},
 			Description: "Get task",
 		},
 		Post: &OperationSpec{
-			Request:     tdapi.Task{},
-			Response:    tdapi.Task{},
+			Request:     tdforms.Task{},
+			Response:    tdforms.Task{},
 			Description: "Update task",
 		},
 		Delete: &OperationSpec{
-			Response:    tdapi.Task{},
+			Response:    tdforms.Task{},
 			Description: "Delete task",
 		},
 	},

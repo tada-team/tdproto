@@ -51,23 +51,26 @@ type TdStructField struct {
 	IsList          bool
 	IsOmitEmpty     bool
 	IsNotSerialized bool
+	PackageName     string
 }
 
 type TdStruct struct {
-	Name             string
-	Help             string
-	Fields           []TdStructField
-	ReadOnly         bool
-	AnonnymousFields []string
-	FileName         string
+	Name            string
+	Help            string
+	Fields          []TdStructField
+	ReadOnly        bool
+	AnonymousFields []string
+	FileName        string
+	PackageName     string
 }
 
 type TdType struct {
-	Name     string
-	Help     string
-	IsArray  bool
-	BaseType string
-	Filename string
+	Name        string
+	Help        string
+	IsArray     bool
+	BaseType    string
+	Filename    string
+	PackageName string
 }
 
 type TdMapType struct {
@@ -76,31 +79,36 @@ type TdMapType struct {
 	KeyTypeStr   string
 	ValueTypeStr string
 	Filename     string
+	PackageName  string
 }
 
 type TdPackage struct {
-	TdStructs  map[string]TdStruct
-	TdTypes    map[string]TdType
-	TdEvents   map[string]string
-	TdMapTypes map[string]TdMapType
-	TdConsts   []TdConstFields
-	TdQueries  map[string]TdQuery
+	TdStructs   map[string]TdStruct
+	TdTypes     map[string]TdType
+	TdEvents    map[string]string
+	TdMapTypes  map[string]TdMapType
+	TdConstants []TdConstFields
+	TdQueries   map[string]TdQuery
+	Name        string
 }
 
 type TdProto struct {
 	TdForms  *TdPackage
 	TdModels *TdPackage
+	TdEvents *TdPackage
+	TdQuery  *TdPackage
 }
 
 type TdEnum struct {
-	Name   string
-	Values []string
+	Name        string
+	Values      []string
+	PackageName string
 }
 
 func (i TdPackage) GetEnums() []TdEnum {
 	constMap := make(map[string][]string)
 
-	for _, aConst := range i.TdConsts {
+	for _, aConst := range i.TdConstants {
 		constType := aConst.Type
 		constValue := aConst.Value
 
@@ -112,8 +120,9 @@ func (i TdPackage) GetEnums() []TdEnum {
 
 	for key, value := range constMap {
 		listOfEnums = append(listOfEnums, TdEnum{
-			Name:   key,
-			Values: value,
+			Name:        key,
+			Values:      value,
+			PackageName: i.Name,
 		})
 	}
 
@@ -140,12 +149,12 @@ func (tds TdStruct) IsEventParams(tdInfo *TdPackage) bool {
 }
 
 func (tds TdStruct) GetStructAnonymousStructs(tdInfo *TdPackage) []TdStruct {
-	anonymousStructs := make([]TdStruct, len(tds.AnonnymousFields))
-	for i, anonymousStructName := range tds.AnonnymousFields {
+	anonymousStructs := make([]TdStruct, len(tds.AnonymousFields))
+	for i, anonymousStructName := range tds.AnonymousFields {
 		anonymousStructs[i] = tdInfo.TdStructs[anonymousStructName]
 	}
 
-	// TODO: Deep copy Fields and AnonnymousFields
+	// TODO: Deep copy Fields and AnonymousFields
 	return anonymousStructs
 }
 
@@ -164,164 +173,49 @@ func (tds TdStruct) GetAllJsonFields(tdInfo *TdPackage) []TdStructField {
 func ParseTdproto() (infoToFill *TdProto, err error) {
 	infoToFill = new(TdProto)
 
-	tdprotoFileSet := token.NewFileSet()
-
-	tdModelsPackage := new(TdPackage)
-	tdModelsPackage.TdEvents = make(map[string]string)
-	tdModelsPackage.TdStructs = make(map[string]TdStruct)
-	tdModelsPackage.TdTypes = make(map[string]TdType)
-	tdModelsPackage.TdMapTypes = make(map[string]TdMapType)
-	tdModelsPackage.TdQueries = make(map[string]TdQuery)
-
-	infoToFill.TdModels = tdModelsPackage
-
-	tdprotoNameToAstMap, err := extractTdprotoAst(tdprotoFileSet)
+	allPackages := make(map[string]*ast.Package)
+	err = extractTdprotoAst(&allPackages)
 	if err != nil {
-		return nil, err
+		return infoToFill, err
 	}
 
-	tdprotoAst := tdprotoNameToAstMap["tdproto"]
-	err = parseTdprotoAst(tdprotoAst, tdModelsPackage, nil)
+	err = createTdProtoPackage(&infoToFill.TdModels, "tdproto", allPackages)
 	if err != nil {
-		return nil, err
+		return infoToFill, err
 	}
 
-	tdapiFileSet := token.NewFileSet()
-	tdapiNameToAstMap, err := extractTdapiAst(tdapiFileSet)
+	err = createTdProtoPackage(&infoToFill.TdForms, "tdforms", allPackages)
 	if err != nil {
-		return nil, err
+		return infoToFill, err
 	}
 
-	tdFormsPackage := new(TdPackage)
-	tdFormsPackage.TdEvents = make(map[string]string)
-	tdFormsPackage.TdStructs = make(map[string]TdStruct)
-	tdFormsPackage.TdTypes = make(map[string]TdType)
-	tdFormsPackage.TdMapTypes = make(map[string]TdMapType)
-
-	infoToFill.TdForms = tdFormsPackage
-
-	err = parseTdprotoAst(tdapiNameToAstMap["tdapi"], tdFormsPackage,
-		&map[string]string{
-			"task":         "",
-			"my_reactions": "",
-			"resp":         "",
-			"err":          "",
-			"sharplinks":   "",
-			"easy_api":     "",
-			"botcommands":  "",
-		},
-	)
+	err = createTdProtoPackage(&infoToFill.TdEvents, "tdevents", allPackages)
 	if err != nil {
-		return nil, err
+		return infoToFill, err
 	}
 
-	// Cherry picking
-	// Task
-	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "Task")
+	err = createTdProtoPackage(&infoToFill.TdQuery, "tdquery", allPackages)
 	if err != nil {
-		return nil, err
-	}
-	// TaskFilter query
-	err = cherryPickQuery(tdModelsPackage, tdFormsPackage, "TaskFilter")
-	if err != nil {
-		return nil, err
-	}
-	// MyReactions
-	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "MyReactions")
-	if err != nil {
-		return nil, err
-	}
-
-	// Resp
-	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "Resp")
-	if err != nil {
-		return nil, err
-	}
-
-	// Err
-	err = cherryPickTypeAlias(tdModelsPackage, tdFormsPackage, "Err")
-	if err != nil {
-		return nil, err
-	}
-
-	// EasyApiMessage
-	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "EasyApiMessage")
-	if err != nil {
-		return nil, err
-	}
-
-	// SharpLink
-	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "SharpLink")
-	if err != nil {
-		return nil, err
-	}
-
-	// SharpLinks
-	err = cherryPickTypeAlias(tdModelsPackage, tdFormsPackage, "SharpLinks")
-	if err != nil {
-		return nil, err
-	}
-
-	//  SharpLinkMeta
-	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "SharpLinkMeta")
-	if err != nil {
-		return nil, err
-	}
-
-	// BotCommand
-	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "BotCommand")
-	if err != nil {
-		return nil, err
-	}
-
-	// BotCommands
-	err = cherryPickTypeAlias(tdModelsPackage, tdFormsPackage, "BotCommands")
-	if err != nil {
-		return nil, err
+		return infoToFill, err
 	}
 
 	return infoToFill, nil
 }
 
-func cherryPickTypeAlias(tdproto *TdPackage, tdapi *TdPackage, name string) error {
+func createTdProtoPackage(packageSlot **TdPackage, packageName string, allPackagesAst map[string]*ast.Package) error {
+	*packageSlot = new(TdPackage)
+	(*packageSlot).TdEvents = make(map[string]string)
+	(*packageSlot).TdStructs = make(map[string]TdStruct)
+	(*packageSlot).TdTypes = make(map[string]TdType)
+	(*packageSlot).TdMapTypes = make(map[string]TdMapType)
+	(*packageSlot).TdQueries = make(map[string]TdQuery)
+	(*packageSlot).Name = packageName
 
-	pickObject, ok := tdapi.TdTypes[name]
-	if !ok {
-		return fmt.Errorf("failed to cherry pick query %s", name)
+	tdprotoAst := allPackagesAst[packageName]
+	err := parseTdprotoAst(tdprotoAst, *packageSlot, nil)
+	if err != nil {
+		return err
 	}
-	tdproto.TdTypes[name] = pickObject
-
-	return nil
-}
-
-func cherryPickQuery(tdproto *TdPackage, tdapi *TdPackage, name string) error {
-
-	pickObject, ok := tdapi.TdStructs[name]
-	if !ok {
-		return fmt.Errorf("failed to cherry pick query %s", name)
-	}
-
-	var newQuery TdQuery
-
-	newQuery.Help = pickObject.Help
-	newQuery.ParamsNamesAndHelp = make(map[string]string)
-	newQuery.Name = name
-	for _, field := range pickObject.Fields {
-		newQuery.ParamsNamesAndHelp[field.SchemaName] = field.Help
-	}
-
-	tdproto.TdQueries[name] = newQuery
-
-	return nil
-}
-
-func cherryPickStruct(tdproto *TdPackage, tdapi *TdPackage, name string) error {
-
-	pickObject, ok := tdapi.TdStructs[name]
-	if !ok {
-		return fmt.Errorf("failed to cherry pick struct %s", name)
-	}
-	tdproto.TdStructs[name] = pickObject
 
 	return nil
 }
@@ -387,12 +281,12 @@ func parseFunctionDeclaration(infoToFill *TdPackage, functionDeclaration *ast.Fu
 	}
 
 	returnStatementAst := functionDeclaration.Body.List[0].(*ast.ReturnStmt)
-	returnStatemetExpression, ok := returnStatementAst.Results[0].(*ast.BasicLit)
+	returnStatementExpression, ok := returnStatementAst.Results[0].(*ast.BasicLit)
 	if !ok {
 		return nil
 	}
 
-	eventName := strings.Trim(returnStatemetExpression.Value, "\"")
+	eventName := strings.Trim(returnStatementExpression.Value, "\"")
 
 	typeIdent := functionDeclaration.Recv.List[0].Type.(*ast.Ident)
 	typeEventBelongsTo := typeIdent.Obj.Name
@@ -453,13 +347,15 @@ func parseTypeDeclaration(infoToFill *TdPackage, genDeclaration *ast.GenDecl, de
 
 func parseMapTypeDeclaration(infoToFill *TdPackage, declarationSpec *ast.TypeSpec, mapAst *ast.MapType, helpString string, fileName string) error {
 	typeName := declarationSpec.Name.Name
+	var keyPackageName, keyTypeStr string
 
-	keyTypeStr, err := parseExprToString(mapAst.Key)
+	err := parseExprToString(mapAst.Key, &keyPackageName, &keyTypeStr)
 	if err != nil {
 		return err
 	}
 
-	valueTypeStr, err := parseExprToString(mapAst.Value)
+	var valuePackageName, valueTypeStr string
+	err = parseExprToString(mapAst.Value, &valuePackageName, &valueTypeStr)
 	if err != nil {
 		return err
 	}
@@ -470,6 +366,7 @@ func parseMapTypeDeclaration(infoToFill *TdPackage, declarationSpec *ast.TypeSpe
 		ValueTypeStr: valueTypeStr,
 		Help:         helpString,
 		Filename:     fileName,
+		PackageName:  infoToFill.Name,
 	}
 
 	return nil
@@ -480,11 +377,12 @@ func parseArrayTypeDefinition(infoToFill *TdPackage, declarationSpec *ast.TypeSp
 	arrayExpressionAst := arrayAst.Elt.(*ast.Ident)
 	arrayTypeStr := arrayExpressionAst.Name
 	infoToFill.TdTypes[typeName] = TdType{
-		Name:     typeName,
-		BaseType: arrayTypeStr,
-		IsArray:  true,
-		Help:     helpString,
-		Filename: fileName,
+		Name:        typeName,
+		BaseType:    arrayTypeStr,
+		IsArray:     true,
+		Help:        helpString,
+		Filename:    fileName,
+		PackageName: infoToFill.Name,
 	}
 	return nil
 }
@@ -492,10 +390,11 @@ func parseArrayTypeDefinition(infoToFill *TdPackage, declarationSpec *ast.TypeSp
 func parseTypeDefinition(infoToFill *TdPackage, declarationSpec *ast.TypeSpec, typeIndent *ast.Ident, helpString string, fileName string) error {
 	typeName := declarationSpec.Name.Name
 	infoToFill.TdTypes[typeName] = TdType{
-		Name:     typeName,
-		BaseType: typeIndent.Name,
-		Help:     helpString,
-		Filename: fileName,
+		Name:        typeName,
+		BaseType:    typeIndent.Name,
+		Help:        helpString,
+		Filename:    fileName,
+		PackageName: infoToFill.Name,
 	}
 	return nil
 }
@@ -588,6 +487,7 @@ func parseStructDefinitionInfo(infoToFill *TdPackage, declarationSpec *ast.TypeS
 		isList := false
 		isPointer := false
 		fieldTypeStr := ""
+		fieldPackageName := ""
 		keyTypeStr := ""
 
 		switch fieldTypeAst := field.Type.(type) {
@@ -602,7 +502,7 @@ func parseStructDefinitionInfo(infoToFill *TdPackage, declarationSpec *ast.TypeS
 			case *ast.InterfaceType:
 				fieldTypeStr = "interface{}"
 			case *ast.SelectorExpr:
-				fieldTypeStr = parseSelectorAst(arrayTypeAst)
+				fieldPackageName, fieldTypeStr = parseSelectorAst(arrayTypeAst)
 			default:
 				return fmt.Errorf("unknown array type %#v", arrayTypeAst)
 			}
@@ -623,22 +523,22 @@ func parseStructDefinitionInfo(infoToFill *TdPackage, declarationSpec *ast.TypeS
 				// TODO: Implement pointers to maps
 				continue
 			case *ast.SelectorExpr:
-				fieldTypeStr = parseSelectorAst(pointedType)
+				fieldPackageName, fieldTypeStr = parseSelectorAst(pointedType)
 			default:
 				return fmt.Errorf("unknown pointer field of %s type %#v", structName, pointedType)
 			}
 
 		case *ast.SelectorExpr:
-			fieldTypeStr = parseSelectorAst(fieldTypeAst)
+			fieldPackageName, fieldTypeStr = parseSelectorAst(fieldTypeAst)
 		case *ast.InterfaceType:
 			fieldTypeStr = "interface{}"
 		case *ast.MapType:
 			var err error
-			keyTypeStr, err = parseExprToString(fieldTypeAst.Key)
+			err = parseExprToString(fieldTypeAst.Key, &fieldPackageName, &fieldTypeStr)
 			if err != nil {
 				return err
 			}
-			fieldTypeStr, err = parseExprToString(fieldTypeAst.Value)
+			err = parseExprToString(fieldTypeAst.Value, &fieldPackageName, &fieldTypeStr)
 			if err != nil {
 				return err
 			}
@@ -653,6 +553,10 @@ func parseStructDefinitionInfo(infoToFill *TdPackage, declarationSpec *ast.TypeS
 
 		_, isPrimitive := GolangPrimitiveTypes[fieldTypeStr]
 
+		if fieldPackageName == "" && !isPrimitive {
+			fieldPackageName = infoToFill.Name
+		}
+
 		fieldsList = append(fieldsList, TdStructField{
 			Name:            fieldName,
 			IsReadOnly:      isReadOnly,
@@ -666,16 +570,18 @@ func parseStructDefinitionInfo(infoToFill *TdPackage, declarationSpec *ast.TypeS
 			IsPrimitive:     isPrimitive,
 			IsNotSerialized: isNotSerialized,
 			Help:            fieldDoc,
+			PackageName:     fieldPackageName,
 		})
 	}
 
 	infoToFill.TdStructs[structName] = TdStruct{
-		Help:             helpString,
-		ReadOnly:         isReadOnly,
-		Name:             structName,
-		Fields:           fieldsList,
-		AnonnymousFields: anonymousFieldsList,
-		FileName:         fileName,
+		Help:            helpString,
+		ReadOnly:        isReadOnly,
+		Name:            structName,
+		Fields:          fieldsList,
+		AnonymousFields: anonymousFieldsList,
+		FileName:        fileName,
+		PackageName:     infoToFill.Name,
 	}
 
 	return nil
@@ -710,7 +616,7 @@ func parseConstDeclaration(infoToFill *TdPackage, genDeclaration *ast.GenDecl) e
 			return fmt.Errorf("could not extract constant value %+v", valueSpec.Values[0])
 		}
 
-		infoToFill.TdConsts = append(infoToFill.TdConsts, TdConstFields{
+		infoToFill.TdConstants = append(infoToFill.TdConstants, TdConstFields{
 			Name:  constName,
 			Type:  constTypeName,
 			Value: constValue.Value,
@@ -721,46 +627,62 @@ func parseConstDeclaration(infoToFill *TdPackage, genDeclaration *ast.GenDecl) e
 	return nil
 }
 
-func parseExprToString(expr interface{}) (string, error) {
+func parseExprToString(expr interface{}, packageName *string, expression *string) error {
 	switch exprType := expr.(type) {
 	case *ast.SelectorExpr:
-		return parseSelectorAst(exprType), nil
+		(*packageName), (*expression) = parseSelectorAst(exprType)
+		return nil
 	case *ast.Ident:
-		return exprType.Name, nil
+		*packageName = ""
+		*expression = exprType.Name
+		return nil
 	case *ast.InterfaceType:
-		return "interface{}", nil
+		*packageName = ""
+		*expression = "interface{}"
+		return nil
 	case *ast.StarExpr:
-		return parseStarAst(exprType)
+		err := parseStarAst(exprType, packageName, expression)
+		if err != nil {
+			return err
+		}
+		return nil
 	}
 
-	return "", fmt.Errorf("cannot parse expression %#v", expr)
+	return fmt.Errorf("cannot parse expression %#v", expr)
 }
 
-func parseStarAst(starAst *ast.StarExpr) (string, error) {
-	pointedType, err := parseExprToString(starAst.X)
+func parseStarAst(starAst *ast.StarExpr, packageName *string, expression *string) error {
+	err := parseExprToString(starAst.X, packageName, expression)
 	if err != nil {
-		return "", err
+		return err
 	}
-	return pointedType, nil
+	return nil
 }
 
-func parseSelectorAst(selectorNode *ast.SelectorExpr) string {
-	expresionIdent := selectorNode.X.(*ast.Ident)
-	expressionStr := expresionIdent.Name
-	if expressionStr == "tdproto" { // HACK: when tdapi references tdproto
-		return selectorNode.Sel.Name
+func parseSelectorAst(selectorNode *ast.SelectorExpr) (string, string) {
+	expressionIdent := selectorNode.X.(*ast.Ident)
+	expressionStr := expressionIdent.Name
+
+	return expressionStr, selectorNode.Sel.Name
+}
+
+func extractTdprotoAst(packages *map[string]*ast.Package) error {
+
+	tdProtoPath := tdproto.SourceDir()
+
+	for _, packageName := range []string{"", "tdforms", "tdevents", "tdquery"} {
+		fileSet := token.NewFileSet()
+		pkgs, err := parser.ParseDir(fileSet, path.Join(tdProtoPath, packageName), nil, parser.ParseComments)
+		if err != nil {
+			return err
+		}
+
+		for key, value := range pkgs {
+			(*packages)[key] = value
+		}
 	}
-	return expressionStr + "." + selectorNode.Sel.Name
-}
 
-func extractTdprotoAst(fileSet *token.FileSet) (map[string]*ast.Package, error) {
-	tdProtoPath := tdproto.SourceDir()
-	return parser.ParseDir(fileSet, tdProtoPath, nil, parser.ParseComments)
-}
-
-func extractTdapiAst(fileSet *token.FileSet) (map[string]*ast.Package, error) {
-	tdProtoPath := tdproto.SourceDir()
-	return parser.ParseDir(fileSet, path.Join(tdProtoPath, "tdapi"), nil, parser.ParseComments)
+	return nil
 }
 
 func cleanHelp(s string) string {

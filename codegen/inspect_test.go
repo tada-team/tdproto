@@ -4,10 +4,12 @@ import (
 	"testing"
 )
 
-func TestParsing(t *testing.T) {
-	_, err := ParseTdproto()
+func TestParsing2(t *testing.T) {
+	tdproto := make(TdProto2)
+
+	err := ParseTdproto2(&tdproto)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 }
 
