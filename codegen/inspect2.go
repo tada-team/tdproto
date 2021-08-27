@@ -5,15 +5,12 @@ import (
 	"go/ast"
 	"go/token"
 	"path"
-	"reflect"
 	"strings"
 )
 
 const StringTypeName = "string"
 
 type TdElement struct {
-	TypeName    string
-	TypeKind    reflect.Kind
 	PackageName string
 	FileName    string
 	Help        string
@@ -22,15 +19,35 @@ type TdElement struct {
 type TdConstant struct {
 	TdElement
 	ConstValue string
+	TypeName   string
 }
 
 type TdType2 struct {
 	TdElement
-	BaseTypeName string
+	TypeName string
+}
+
+type TdTypeArray struct {
+	TdElement
+	TypeName string
+}
+
+type TdTypeMap struct {
+	TdElement
+	KeyTypeStr       string
+	KeyTypePackage   string
+	ValueTypeStr     string
+	ValueTypePackage string
 }
 
 type TdPackage2 map[string]interface{}
 type TdProto2 map[string]TdPackage2
+
+type ParserState struct {
+	CurrentFile        string
+	CurrentPackageName string
+	CurrentPackageMap  *TdPackage2
+}
 
 func ParseTdproto2(infoToFill *TdProto2) error {
 
@@ -58,7 +75,11 @@ func parseAst(packageName string, packageMap *TdPackage2, packageAst *ast.Packag
 		basePath := path.Base(fileName)
 		basePathNoExt := strings.TrimRight(basePath, path.Ext(basePath))
 
-		err := parseFileAst(packageMap, basePathNoExt, fileAst)
+		err := parseFileAst(ParserState{
+			CurrentFile:        basePathNoExt,
+			CurrentPackageName: packageName,
+			CurrentPackageMap:  packageMap,
+		}, fileAst)
 		if err != nil {
 			return err
 		}
@@ -67,11 +88,11 @@ func parseAst(packageName string, packageMap *TdPackage2, packageAst *ast.Packag
 	return nil
 }
 
-func parseFileAst(packageMap *TdPackage2, fileName string, fileAst *ast.File) error {
+func parseFileAst(parser ParserState, fileAst *ast.File) error {
 	for _, declaration := range fileAst.Decls {
 		switch declarationType := declaration.(type) {
 		case *ast.GenDecl:
-			err := parseGenericDeclaration(packageMap, fileName, declarationType)
+			err := parseGenericDeclaration(parser, declarationType)
 			if err != nil {
 				return err
 			}
@@ -83,14 +104,14 @@ func parseFileAst(packageMap *TdPackage2, fileName string, fileAst *ast.File) er
 	return nil
 }
 
-func parseGenericDeclaration(packageMap *TdPackage2, fileName string, genDeclaration *ast.GenDecl) error {
+func parseGenericDeclaration(parser ParserState, genDeclaration *ast.GenDecl) error {
 	switch genDeclaration.Tok {
 	case token.CONST:
-		return parseConstDeclaration2(packageMap, fileName, genDeclaration)
+		return parseConstDeclaration2(parser, genDeclaration)
 	case token.TYPE:
 		for _, aSpec := range genDeclaration.Specs {
 			aTypeSpec := aSpec.(*ast.TypeSpec)
-			err := parseTypeDeclaration2(packageMap, genDeclaration, aTypeSpec, fileName)
+			err := parseTypeDeclaration2(parser, genDeclaration, aTypeSpec)
 			if err != nil {
 				return err
 			}
@@ -100,7 +121,7 @@ func parseGenericDeclaration(packageMap *TdPackage2, fileName string, genDeclara
 	return nil
 }
 
-func parseConstDeclaration2(packageMap *TdPackage2, fileName string, genDeclaration *ast.GenDecl) error {
+func parseConstDeclaration2(parser ParserState, genDeclaration *ast.GenDecl) error {
 	for _, spec := range genDeclaration.Specs {
 		valueSpec, ok := spec.(*ast.ValueSpec)
 		if !ok {
@@ -112,7 +133,6 @@ func parseConstDeclaration2(packageMap *TdPackage2, fileName string, genDeclarat
 		}
 
 		constName := valueSpec.Names[0].Name
-		constTypeKind := reflect.String
 
 		constTypeName := fmt.Sprintf("%s", valueSpec.Type)
 		if constTypeName == "" || valueSpec.Type == nil {
@@ -132,21 +152,20 @@ func parseConstDeclaration2(packageMap *TdPackage2, fileName string, genDeclarat
 			callExpr := constExpr.(*ast.CallExpr)
 			constTypeName = callExpr.Fun.(*ast.Ident).Name
 			constValue = callExpr.Fun.(*ast.Ident).Obj.Kind.String()
-			constTypeKind = reflect.Int
 		}
 
 		if !ok {
 			return fmt.Errorf("could not extract constant value %+v", valueSpec.Values[0])
 		}
 
-		(*packageMap)[constName] = TdConstant{
-			ConstValue: constValue,
+		(*parser.CurrentPackageMap)[constName] = TdConstant{
 			TdElement: TdElement{
-				TypeName: constTypeName,
-				FileName: fileName,
-				TypeKind: constTypeKind,
-				Help:     cleanHelp(valueSpec.Doc.Text()),
+				PackageName: parser.CurrentPackageName,
+				FileName:    parser.CurrentFile,
+				Help:        cleanHelp(valueSpec.Doc.Text()),
 			},
+			ConstValue: constValue,
+			TypeName:   constTypeName,
 		}
 
 	}
@@ -154,62 +173,96 @@ func parseConstDeclaration2(packageMap *TdPackage2, fileName string, genDeclarat
 	return nil
 }
 
-func parseTypeDeclaration2(packageMap *TdPackage2, genDeclaration *ast.GenDecl, declarationSpec *ast.TypeSpec, fileName string) error {
+func parseTypeDeclaration2(parser ParserState, genDeclaration *ast.GenDecl, declarationSpec *ast.TypeSpec) error {
 
 	helpString := cleanHelp(genDeclaration.Doc.Text())
 
 	switch typeAst := declarationSpec.Type.(type) {
 	case *ast.Ident:
-		err := parseTypeDefinition2(packageMap, declarationSpec, typeAst, helpString, fileName)
+		err := parseTypeDefinition2(parser, declarationSpec, typeAst, helpString)
 		if err != nil {
 			return err
 		}
 	case *ast.StructType:
 
 	case *ast.ArrayType:
-		err := parseArrayDefinition2(packageMap, declarationSpec, typeAst, helpString, fileName)
+		err := parseArrayDefinition2(parser, declarationSpec, typeAst, helpString)
 		if err != nil {
 			return err
 		}
 	case *ast.MapType:
-
+		err := parseMapTypeDefinition(parser, declarationSpec, typeAst, helpString)
+		if err != nil {
+			return nil
+		}
 	default:
-		errorLogger.Printf("WARN: Not implemented type declaration %#v", typeAst)
+		errorLogger.Printf("WARN: Not implemented type declaration %#v in file %s", typeAst, parser.CurrentFile)
 	}
 
 	return nil
 }
 
-func parseTypeDefinition2(packageMap *TdPackage2, declarationSpec *ast.TypeSpec, typeIndent *ast.Ident, helpString string, fileName string) error {
+func parseTypeDefinition2(parser ParserState, declarationSpec *ast.TypeSpec, typeIndent *ast.Ident, helpString string) error {
 
 	typeName := declarationSpec.Name.Name
 
-	(*packageMap)[typeName] = TdType2{
+	(*parser.CurrentPackageMap)[typeName] = TdType2{
 		TdElement: TdElement{
-			TypeName: typeName,
-			Help:     helpString,
-			FileName: fileName,
-			TypeKind: reflect.String,
+
+			Help:        helpString,
+			FileName:    parser.CurrentFile,
+			PackageName: parser.CurrentPackageName,
 		},
-		BaseTypeName: typeIndent.Name,
+		TypeName: typeIndent.Name,
 	}
 
 	return nil
 }
 
-func parseArrayDefinition2(packageMap *TdPackage2, declarationSpec *ast.TypeSpec, arrayAst *ast.ArrayType, helpString string, fileName string) error {
+func parseArrayDefinition2(parser ParserState, declarationSpec *ast.TypeSpec, arrayAst *ast.ArrayType, helpString string) error {
 	typeName := declarationSpec.Name.Name
 	arrayExpressionAst := arrayAst.Elt.(*ast.Ident)
 	arrayTypeStr := arrayExpressionAst.Name
 
-	(*packageMap)[typeName] = TdType2{
+	(*parser.CurrentPackageMap)[typeName] = TdType2{
 		TdElement: TdElement{
-			TypeName: typeName,
-			Help:     helpString,
-			FileName: fileName,
-			TypeKind: reflect.Array,
+
+			Help:        helpString,
+			FileName:    parser.CurrentFile,
+			PackageName: parser.CurrentPackageName,
 		},
-		BaseTypeName: arrayTypeStr,
+		TypeName: arrayTypeStr,
+	}
+
+	return nil
+}
+
+func parseMapTypeDefinition(parser ParserState, declarationSpec *ast.TypeSpec, mapAst *ast.MapType, helpString string) error {
+	typeName := declarationSpec.Name.Name
+	var keyPackageName, keyTypeStr string
+
+	err := parseExprToString(mapAst.Key, &keyPackageName, &keyTypeStr)
+	if err != nil {
+		return err
+	}
+
+	var valuePackageName, valueTypeStr string
+	err = parseExprToString(mapAst.Value, &valuePackageName, &valueTypeStr)
+	if err != nil {
+		return err
+	}
+
+	(*parser.CurrentPackageMap)[typeName] = TdTypeMap{
+		TdElement: TdElement{
+
+			Help:        helpString,
+			FileName:    parser.CurrentFile,
+			PackageName: parser.CurrentPackageName,
+		},
+		KeyTypeStr:       keyTypeStr,
+		KeyTypePackage:   keyPackageName,
+		ValueTypeStr:     valueTypeStr,
+		ValueTypePackage: valuePackageName,
 	}
 
 	return nil
