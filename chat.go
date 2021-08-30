@@ -287,6 +287,9 @@ type TaskItem struct {
 	// Can I toggle this item
 	CanToggle bool `json:"can_toggle,omitempty"`
 
+	// Can I change this item
+	CanChange bool `json:"can_change,omitempty"`
+
 	// Link to subtask. Optional
 	Subtask *Subtask `json:"subtask,omitempty"`
 }
