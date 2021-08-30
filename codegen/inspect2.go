@@ -5,6 +5,7 @@ import (
 	"go/ast"
 	"go/token"
 	"path"
+	"reflect"
 	"strings"
 )
 
@@ -38,6 +39,26 @@ type TdTypeMap struct {
 	KeyTypePackage   string
 	ValueTypeStr     string
 	ValueTypePackage string
+}
+
+type TdStruct2 struct {
+	TdElement
+	Fields          []TdStructField2
+	AnonymousFields []string
+	TypeName        string
+}
+
+type TdStructField2 struct {
+	TdElement
+	FieldName       string
+	TypeName        string
+	JsonName        string
+	SchemaName      string
+	IsPrimitive     bool
+	IsReadOnly      bool
+	IsPointer       bool
+	IsOmitEmpty     bool
+	IsNotSerialized bool
 }
 
 type TdPackage2 map[string]interface{}
@@ -184,7 +205,10 @@ func parseTypeDeclaration2(parser ParserState, genDeclaration *ast.GenDecl, decl
 			return err
 		}
 	case *ast.StructType:
-
+		err := parseStructDefinition(parser, declarationSpec, typeAst, helpString)
+		if err != nil {
+			return err
+		}
 	case *ast.ArrayType:
 		err := parseArrayDefinition2(parser, declarationSpec, typeAst, helpString)
 		if err != nil {
@@ -263,6 +287,193 @@ func parseMapTypeDefinition(parser ParserState, declarationSpec *ast.TypeSpec, m
 		KeyTypePackage:   keyPackageName,
 		ValueTypeStr:     valueTypeStr,
 		ValueTypePackage: valuePackageName,
+	}
+
+	return nil
+}
+
+func parseStructDefinition(parser ParserState, declarationSpec *ast.TypeSpec, structInfo *ast.StructType, helpString string) error {
+	structName := declarationSpec.Name.Name
+
+	if helpString == "" {
+		errorLogger.Printf("WARN: TdStruct %s missing a doc string in file %s", structName, parser.CurrentFile)
+	}
+
+	if strings.HasPrefix(strings.ToLower(helpString), "deprecated") {
+		return nil
+	}
+
+	var fieldsList []TdStructField2
+	var anonymousFieldsList []string
+
+	for _, field := range structInfo.Fields.List {
+		switch len(field.Names) {
+		case 0:
+			anonymousIdent := field.Type.(*ast.Ident)
+			anonymousFieldName := anonymousIdent.Name
+			anonymousFieldsList = append(anonymousFieldsList, anonymousFieldName)
+			continue
+		case 1:
+		default:
+			return fmt.Errorf("unexpected struct %s field name amount of %d", structName, len(field.Names))
+		}
+
+		fieldName := field.Names[0].Name
+		isOmitEmpty := false
+		isReadOnly := false
+		isNotSerialized := false
+		jsonName := fieldName
+		fieldDoc := cleanHelp(field.Doc.Text())
+		var schemaName string
+
+		if field.Tag != nil {
+			structTags := reflect.StructTag(strings.Trim(field.Tag.Value, "`"))
+
+			var jsonTags []string
+			if jsonTagsStr, ok := structTags.Lookup("json"); ok {
+				jsonTags = strings.Split(jsonTagsStr, ",")
+			}
+
+			for i, aTag := range jsonTags {
+				if i == 0 {
+					if aTag == "-" {
+						isNotSerialized = true
+					}
+
+					jsonName = aTag
+				} else {
+					if aTag == "omitempty" {
+						isOmitEmpty = true
+					} else {
+						return fmt.Errorf("unknown json tag %s", aTag)
+					}
+				}
+			}
+
+			var tdprotoTags []string
+			tdprotoTagsStr, ok := structTags.Lookup("tdproto")
+			if ok {
+				tdprotoTags = strings.Split(tdprotoTagsStr, ",")
+			}
+
+			for _, aTag := range tdprotoTags {
+				if aTag == "readonly" {
+					isReadOnly = true
+				} else {
+					return fmt.Errorf("unknown tdproto tag %s", aTag)
+				}
+			}
+
+			var schemaTags []string
+			schemaTagsStr, ok := structTags.Lookup("schema")
+			if ok {
+				schemaTags = strings.Split(schemaTagsStr, ",")
+			}
+
+			for _, sTag := range schemaTags {
+				schemaName = sTag
+			}
+		}
+
+		// isList := false
+		isPointer := false
+		fieldTypeStr := ""
+		fieldPackageName := ""
+		// keyTypeStr := ""
+
+		switch fieldTypeAst := field.Type.(type) {
+		case *ast.Ident:
+			fieldTypeStr = fieldTypeAst.Name
+		case *ast.ArrayType:
+			// isList = true
+
+			switch arrayTypeAst := fieldTypeAst.Elt.(type) {
+			case *ast.Ident:
+				fieldTypeStr = arrayTypeAst.Name
+			case *ast.InterfaceType:
+				fieldTypeStr = "interface{}"
+			case *ast.SelectorExpr:
+				fieldPackageName, fieldTypeStr = parseSelectorAst(arrayTypeAst)
+			default:
+				return fmt.Errorf("unknown array type %#v", arrayTypeAst)
+			}
+
+		case *ast.StarExpr:
+			isPointer = true
+
+			switch pointedType := fieldTypeAst.X.(type) {
+			case *ast.Ident:
+				fieldTypeStr = pointedType.Name
+			case *ast.ArrayType:
+				// isList = true
+
+				arrayExprAst := pointedType.Elt.(*ast.Ident)
+
+				fieldTypeStr = arrayExprAst.Name
+			case *ast.MapType:
+				// TODO: Implement pointers to maps
+				continue
+			case *ast.SelectorExpr:
+				fieldPackageName, fieldTypeStr = parseSelectorAst(pointedType)
+			default:
+				return fmt.Errorf("unknown pointer field of %s type %#v", structName, pointedType)
+			}
+
+		case *ast.SelectorExpr:
+			fieldPackageName, fieldTypeStr = parseSelectorAst(fieldTypeAst)
+		case *ast.InterfaceType:
+			fieldTypeStr = "interface{}"
+		case *ast.MapType:
+			var err error
+			err = parseExprToString(fieldTypeAst.Key, &fieldPackageName, &fieldTypeStr)
+			if err != nil {
+				return err
+			}
+			err = parseExprToString(fieldTypeAst.Value, &fieldPackageName, &fieldTypeStr)
+			if err != nil {
+				return err
+			}
+		default:
+			return fmt.Errorf("unknown field of %s type %#v", structName, fieldTypeAst)
+		}
+
+		if fieldTypeStr == "" {
+			return fmt.Errorf("empty field name %s of %s", structName, fieldName)
+
+		}
+
+		_, isPrimitive := GolangPrimitiveTypes[fieldTypeStr]
+
+		if fieldPackageName == "" && !isPrimitive {
+			fieldPackageName = parser.CurrentPackageName
+		}
+
+		fieldsList = append(fieldsList, TdStructField2{
+			TdElement: TdElement{
+				Help:        fieldDoc,
+				PackageName: fieldPackageName,
+				FileName:    parser.CurrentFile,
+			},
+			FieldName:       fieldName,
+			IsReadOnly:      isReadOnly,
+			IsOmitEmpty:     isOmitEmpty,
+			JsonName:        jsonName,
+			SchemaName:      schemaName,
+			IsPointer:       isPointer,
+			IsPrimitive:     isPrimitive,
+			IsNotSerialized: isNotSerialized,
+		})
+	}
+
+	(*parser.CurrentPackageMap)[structName] = TdStruct2{
+		TdElement: TdElement{
+			Help:        helpString,
+			PackageName: parser.CurrentPackageName,
+			FileName:    parser.CurrentFile,
+		},
+		TypeName:        structName,
+		Fields:          fieldsList,
+		AnonymousFields: anonymousFieldsList,
 	}
 
 	return nil
