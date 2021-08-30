@@ -21,6 +21,9 @@ type Team struct {
 	// Use importance field in task
 	UseTaskImportance bool `json:"use_task_importance"`
 
+	// Reverse importance
+	TaskImportanceRev bool `json:"task_importance_rev"`
+
 	// Use urgency field in task
 	UseTaskUrgency bool `json:"use_task_urgency"`
 
