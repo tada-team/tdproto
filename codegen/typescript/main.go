@@ -31,6 +31,7 @@ var tsTypesMap = map[string]string{
 	"ISODateTimeString": "string",
 	"time.Time":         "string",
 	"UiSettings":        "UiSettings",
+	"UiSettingsData":    "UiSettingsData",
 }
 
 var tsFieldNameSubstitutions = map[string]string{
@@ -251,6 +252,8 @@ interface TDProtoClass<T> {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type UiSettings = Record<string, any>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type UiSettingsData = Record<string, any>
 
 `
 
