@@ -94,6 +94,9 @@ type Team struct {
 
 	// Team's available tariff by includig archive ones
 	AvailableTariffs []string `json:"available_tariffs,omitempty"`
+
+	// Сurrent team subscription
+	Subscription Subscription `json:"subscription,omitempty"`
 }
 
 // Short team representation. For invites, push notifications, etc. Readonly.
