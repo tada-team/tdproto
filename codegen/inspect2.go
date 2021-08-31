@@ -11,6 +11,19 @@ import (
 
 const StringTypeName = "string"
 
+var golangePrimitiveToKind = map[string]reflect.Kind{
+	"string": reflect.String,
+}
+
+type TdPrimitive struct {
+	PrimitiveType reflect.Kind
+}
+
+type TdRefrence struct {
+	Package string
+	Name    string
+}
+
 type TdElement struct {
 	PackageName string
 	FileName    string
@@ -20,17 +33,17 @@ type TdElement struct {
 type TdConstant struct {
 	TdElement
 	ConstValue string
-	TypeName   string
+	ConstType  interface{}
 }
 
 type TdType2 struct {
 	TdElement
-	TypeName string
+	Type interface{}
 }
 
 type TdTypeArray struct {
 	TdElement
-	TypeName string
+	ArrayType interface{}
 }
 
 type TdTypeMap struct {
@@ -153,11 +166,13 @@ func parseConstDeclaration2(parser ParserState, genDeclaration *ast.GenDecl) err
 			return fmt.Errorf("expected one constant name got %+v", valueSpec.Names)
 		}
 
+		var constKind reflect.Kind
+
 		constName := valueSpec.Names[0].Name
 
 		constTypeName := fmt.Sprintf("%s", valueSpec.Type)
 		if constTypeName == "" || valueSpec.Type == nil {
-			constTypeName = StringTypeName
+			constKind = reflect.String
 		}
 
 		if len(valueSpec.Values) != 1 {
@@ -179,6 +194,19 @@ func parseConstDeclaration2(parser ParserState, genDeclaration *ast.GenDecl) err
 			return fmt.Errorf("could not extract constant value %+v", valueSpec.Values[0])
 		}
 
+		var constType interface{}
+
+		if constKind != 0 {
+			constType = TdPrimitive{
+				PrimitiveType: constKind,
+			}
+		} else {
+			constType = TdRefrence{
+				Package: parser.CurrentPackageName,
+				Name:    constTypeName,
+			}
+		}
+
 		(*parser.CurrentPackageMap)[constName] = TdConstant{
 			TdElement: TdElement{
 				PackageName: parser.CurrentPackageName,
@@ -186,7 +214,7 @@ func parseConstDeclaration2(parser ParserState, genDeclaration *ast.GenDecl) err
 				Help:        cleanHelp(valueSpec.Doc.Text()),
 			},
 			ConstValue: constValue,
-			TypeName:   constTypeName,
+			ConstType:  constType,
 		}
 
 	}
@@ -229,6 +257,21 @@ func parseTypeDeclaration2(parser ParserState, genDeclaration *ast.GenDecl, decl
 func parseTypeDefinition2(parser ParserState, declarationSpec *ast.TypeSpec, typeIndent *ast.Ident, helpString string) error {
 
 	typeName := declarationSpec.Name.Name
+	typeTypeName := typeIndent.Name
+
+	typeKind, isPrimitive := golangePrimitiveToKind[typeTypeName]
+
+	var typeType interface{}
+	if isPrimitive {
+		typeType = TdPrimitive{
+			PrimitiveType: typeKind,
+		}
+	} else {
+		typeType = TdRefrence{
+			Package: parser.CurrentPackageName,
+			Name:    typeTypeName,
+		}
+	}
 
 	(*parser.CurrentPackageMap)[typeName] = TdType2{
 		TdElement: TdElement{
@@ -237,7 +280,7 @@ func parseTypeDefinition2(parser ParserState, declarationSpec *ast.TypeSpec, typ
 			FileName:    parser.CurrentFile,
 			PackageName: parser.CurrentPackageName,
 		},
-		TypeName: typeIndent.Name,
+		Type: typeType,
 	}
 
 	return nil
@@ -248,14 +291,28 @@ func parseArrayDefinition2(parser ParserState, declarationSpec *ast.TypeSpec, ar
 	arrayExpressionAst := arrayAst.Elt.(*ast.Ident)
 	arrayTypeStr := arrayExpressionAst.Name
 
-	(*parser.CurrentPackageMap)[typeName] = TdType2{
+	typeKind, isPrimitive := golangePrimitiveToKind[arrayTypeStr]
+
+	var arrayType interface{}
+	if isPrimitive {
+		arrayType = TdPrimitive{
+			PrimitiveType: typeKind,
+		}
+	} else {
+		arrayType = TdRefrence{
+			Package: parser.CurrentPackageName,
+			Name:    arrayTypeStr,
+		}
+	}
+
+	(*parser.CurrentPackageMap)[typeName] = TdTypeArray{
 		TdElement: TdElement{
 
 			Help:        helpString,
 			FileName:    parser.CurrentFile,
 			PackageName: parser.CurrentPackageName,
 		},
-		TypeName: arrayTypeStr,
+		ArrayType: arrayType,
 	}
 
 	return nil
