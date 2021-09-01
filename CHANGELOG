@@ -1,3 +1,9 @@
+v.1.46.8
+ - added Subscription struct
+
+v.1.46.7
+ - added form for create payment
+
 v.1.46.6
  - added Subscription struct
 
