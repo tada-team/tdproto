@@ -1,5 +1,5 @@
 v.1.46.8
- - added Subscription struct
+ - tdapi.Resp._time field position fix
 
 v.1.46.7
  - added form for create payment
