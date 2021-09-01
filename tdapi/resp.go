@@ -4,6 +4,9 @@ import "github.com/tada-team/tdproto"
 
 // Server response
 type Resp struct {
+	// Server side work time
+	DebugTime string `json:"_time,omitempty"`
+
 	// Request status
 	Ok bool `json:"ok"`
 
@@ -21,7 +24,4 @@ type Resp struct {
 
 	// Reason markup (only if ok is false and Error is `AccessDenied`)
 	Markup []tdproto.MarkupEntity `json:"markup,omitempty"`
-
-	// Server side work time
-	DebugTime string `json:"_time,omitempty"`
 }
