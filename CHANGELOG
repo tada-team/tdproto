@@ -1,3 +1,6 @@
+v.1.46.9
+ - added ADUid CustomField
+
 v.1.46.8
  - tdapi.Resp._time field position fix
 
