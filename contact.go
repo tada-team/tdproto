@@ -99,7 +99,7 @@ type Contact struct {
 	AlwaysSendPushes *bool `json:"always_send_pushes,omitempty"`
 
 	// Hide pushes body
-	HidePushesContent *bool `json:"hide_pushes_content"`
+	HidePushesContent *bool `json:"hide_pushes_content,omitempty"`
 
 	// Timezone, if any
 	Timezone *string `json:"timezone,omitempty"`
