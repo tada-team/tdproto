@@ -1,3 +1,12 @@
+v.1.47.1
+ - fix: remove omitempty tag for IsPinCodeRequired and PinCodeWrongLimit fields
+
+v.1.47.0
+ - added IsPinCodeRequired and PinCodeWrongLimit fields in Features struct for pin-codes support
+
+v.1.46.9
+ - added ADUid CustomField
+
 v.1.46.8
  - tdapi.Resp._time field position fix
 

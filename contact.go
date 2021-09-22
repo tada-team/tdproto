@@ -202,6 +202,9 @@ type ContactCustomFields struct {
 
 	// Import source
 	Source string `json:"source,omitempty"`
+
+	// AD UID
+	ADUid string `json:"ad_uid,omitempty"`
 }
 
 // Short contact representation
