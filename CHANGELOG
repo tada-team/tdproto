@@ -1,3 +1,6 @@
+v.1.48.0
+ - tdapi.TeamConfirmation
+
 v.1.47.1
  - fix: remove omitempty tag for IsPinCodeRequired and PinCodeWrongLimit fields
 

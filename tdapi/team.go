@@ -48,3 +48,9 @@ type TeamPrejoinInfo struct {
 	// Short team information
 	Team tdproto.TeamShort `json:"team"`
 }
+
+// Team confirmation
+type TeamConfirmation struct {
+	// Need confirmation after invite to this team
+	NeedConfirmation bool `json:"need_confirmation" tdproto:"readonly"`
+}
