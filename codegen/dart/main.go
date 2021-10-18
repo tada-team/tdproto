@@ -67,7 +67,7 @@ part '{{.SnakeCase}}.g.dart';
 
 {{if eq .Parent.Help "MISSING CLASS DOCUMENTATION"}}// {{else}}/// {{end}}{{.Parent.Help}}.
 @freezed
-abstract class {{.Name}} with _${{.Name}} {
+class {{.Name}} with _${{.Name}} {
   const factory {{.Name}}({
     {{range $field := .Fields -}}
     {{if eq $field.Parent.Help "DOCUMENTATION MISSING"}}// {{else}}/// {{end}}{{$field.Parent.Help}}.
