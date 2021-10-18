@@ -48,7 +48,7 @@ abstract class {{.Name}} with _${{.Name}} {
   const factory {{.Name}}({
     {{range $field := .Fields -}}
     {{if eq $field.Parent.Help "DOCUMENTATION MISSING"}}// {{else}}/// {{end}}{{$field.Parent.Help}}.
-    {{if $field.IsDeprecated}}@Deprecated('{{$field.Parent.Help}}.') {{end}}@JsonKey(name: '{{$field.Parent.JsonName}}') 
+    {{$field.DefaultStr}}{{if $field.IsDeprecated}}@Deprecated('{{$field.Parent.Help}}.') {{end}}@JsonKey(name: '{{$field.Parent.JsonName}}') 
 	{{- if eq $field.DartType "DateTime"}} @DateTimeConverter(){{end -}}
     {{- if $field.IsNotRequired}} {{else}} required {{end -}}
     {{if $field.Parent.IsList}}List<{{$field.DartType}}> {{else}}{{$field.DartType}} {{end -}}
@@ -102,6 +102,14 @@ type DartClassField struct {
 
 func (s *DartClassField) IsNotRequired() bool {
 	return s.Parent.IsOmitEmpty || s.Parent.IsPointer
+}
+
+func (s *DartClassField) DefaultStr() string {
+	if s.DartType == "bool" {
+		return "@Default(false) "
+	}
+
+	return ""
 }
 
 type DartClass struct {
