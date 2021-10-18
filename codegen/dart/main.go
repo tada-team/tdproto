@@ -141,7 +141,7 @@ func lowercaseFirstOrAll(input string) string {
 
 func writeFileFromTemplate(fileName string, template *template.Template, data interface{}, useExclusive bool) error {
 
-	fileFlags := os.O_WRONLY | os.O_CREATE
+	fileFlags := os.O_WRONLY | os.O_CREATE | os.O_TRUNC
 	if useExclusive {
 		fileFlags |= os.O_EXCL
 	}
