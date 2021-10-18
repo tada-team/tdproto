@@ -16,6 +16,23 @@ const libPathPrefix = "./lib/"
 const enumsPathPrefix = "./src/enums"
 const modelsPathPrefix = "./src/models"
 
+var pubspecYamlTemplate = template.Must(template.New("pubspecYaml").Parse(`
+environment:
+  sdk: ">=2.13.0 <3.0.0"
+
+dependencies:
+  meta: ^1.7.0
+  json_annotation: ^4.1.0
+  freezed_annotation: ^0.14.3
+
+dev_dependencies:
+  pedantic: ^1.11.1
+  build_runner: ^2.1.2
+  json_serializable: ^5.0.2
+  freezed: ^0.14.5
+  test: ^1.17.12
+`))
+
 var dartTypeMap = map[string]string{
 	"string":            "String",
 	"int":               "int",
@@ -164,8 +181,12 @@ func writeFileFromTemplate(fileName string, template *template.Template, data in
 	return nil
 }
 
-func generateDart(tdprotoInfo *codegen.TdPackage, baseLibPath string) error {
+func generateDart(tdprotoInfo *codegen.TdPackage, dartPackagePath string) error {
 	var libInfo DartLibInfo
+
+	baseLibPath := path.Join(dartPackagePath, libPathPrefix)
+
+	writeFileFromTemplate(path.Join(dartPackagePath, "pubspec.yaml"), pubspecYamlTemplate, "", true)
 
 	for _, tdEnum := range tdprotoInfo.GetEnums() {
 		enumFileName := codegen.ToSnakeCase(tdEnum.Name)
@@ -329,7 +350,7 @@ func main() {
 		panic(err)
 	}
 
-	err = generateDart(tdprotoInfo.TdModels, path.Join(dartLibPath, libPathPrefix))
+	err = generateDart(tdprotoInfo.TdModels, dartLibPath)
 	if err != nil {
 		panic(err)
 	}
