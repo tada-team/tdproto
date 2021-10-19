@@ -1,3 +1,6 @@
+v.1.48.2
+ - update comment ADUid field in ContactCustomFields struct for docs
+
 v.1.48.1
  - added FileExtensionWhitelist, FileExtensionBlacklist and FileExtensionWhitelistPriority params in Features struct
 
