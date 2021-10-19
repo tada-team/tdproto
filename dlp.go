@@ -5,7 +5,7 @@ import "time"
 // DLPBasicData structure for basic data (used for team, group, task, etc.)
 type DLPBasicData struct {
 	UUID        string
-	Number      uint64
+	Number      uint
 	Name        string
 	Description string
 }
