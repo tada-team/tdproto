@@ -1,3 +1,6 @@
+v.1.49.0
+- feat(dlp): add DLPEvent structures for DLP integration
+
 v.1.48.2
  - update comment ADUid field in ContactCustomFields struct for docs
 
