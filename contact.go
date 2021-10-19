@@ -203,7 +203,7 @@ type ContactCustomFields struct {
 	// Import source
 	Source string `json:"source,omitempty"`
 
-	// AD UID
+	// User UUID in Active Directory
 	ADUid string `json:"ad_uid,omitempty"`
 }
 
