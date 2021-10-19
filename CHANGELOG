@@ -1,3 +1,6 @@
+v.1.49.0
+ - feat(dlp): add DLPEvent structures for DLP integration
+
 v.1.48.1
  - added FileExtensionWhitelist, FileExtensionBlacklist and FileExtensionWhitelistPriority params in Features struct
 
