@@ -272,13 +272,13 @@ type Features struct {
 	MinAppVersion string `json:"min_app_version"`
 
 	// File Extension Whitelist
-	FileExtensionWhitelist []string `json:"file_extension_whitelist"`
+	FileExtensionWhitelist []string `json:"file_extension_whitelist,omitempty"`
 
 	// File Extension Blacklist
-	FileExtensionBlacklist []string `json:"file_extension_blacklist"`
+	FileExtensionBlacklist []string `json:"file_extension_blacklist,omitempty"`
 
 	// File Extension Whitelist Priority
-	FileExtensionWhitelistPriority bool `json:"file_extension_whitelist_priority"`
+	FileExtensionWhitelistPriority bool `json:"file_extension_whitelist_priority,omitempty"`
 }
 
 // Interactive Connectivity Establishment Server for WEB Rtc connection. Readonly.
