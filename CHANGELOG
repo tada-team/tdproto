@@ -1,3 +1,6 @@
+v.1.49.1
+- chore(features): add omitempty tag for FileExtensions fields in Features struct
+
 v.1.49.0
 - feat(dlp): add DLPEvent structures for DLP integration
 
