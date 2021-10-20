@@ -1,3 +1,6 @@
+v.1.49.2
+- feat(video_calls): add structures for support video calls with back compatibility
+
 v.1.49.1
 - chore(features): add omitempty tag for FileExtensions fields in Features struct
 
