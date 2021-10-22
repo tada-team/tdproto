@@ -14,6 +14,7 @@ type clientCallOfferParams struct {
 	Jid JID `json:"jid"`
 
 	// Mute state
+	// Deprecated: use EnabledAudio
 	Muted bool `json:"muted"`
 
 	// Is trickle mode enabled
@@ -21,4 +22,13 @@ type clientCallOfferParams struct {
 
 	// SDP (session description protocol) data
 	Sdp string `json:"sdp"`
+
+	// CallType is a type of call("audio" - audio room, "video" - video room). default = "audio"
+	CallType string `json:"call_type,omitempty"`
+
+	// Audio state
+	EnabledAudio bool `json:"enabled_audio,omitempty"`
+
+	// Video state
+	EnabledVideo bool `json:"enabled_video,omitempty"`
 }

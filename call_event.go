@@ -50,6 +50,9 @@ type CallOnliner struct {
 	// Microphone muted. Computed from devices muted states
 	Muted bool `json:"muted"`
 
+	// Video state
+	EnabledVideo bool `json:"enabled_video,omitempty"`
+
 	// Member devices, strictly one for now
 	Devices []CallDevice `json:"devices"`
 }

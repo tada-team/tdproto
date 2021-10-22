@@ -54,4 +54,7 @@ type serverCallBuzzParams struct {
 
 	// Deprecated
 	Team string `json:"team"`
+
+	// CallType is a type of call("audio" - audio room, "video" - video room)
+	CallType string `json:"call_type,omitempty"`
 }
