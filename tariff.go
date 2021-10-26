@@ -28,19 +28,49 @@ type Tariff struct {
 
 // TariffBilling struct of billing api
 type TariffBilling struct {
-	TariffId           int64      `json:"tariff_id"`
-	TariffName         string     `json:"tariff_name"`
-	FreeWorkplace      int64      `json:"free_workplace"`
-	DiskSpaceQuota     string     `json:"disk_space_quota"`
-	BillingFree        bool       `json:"billing_free"`
-	BillingFullTime    bool       `json:"billing_full_time"`
-	PeriodDays         int64      `json:"period_days"`
-	CostWorkplace      string     `json:"cost_workplace"`
-	Currency           string     `json:"currency"`
-	RecalcChangeTariff bool       `json:"recalc_change_tariff"`
-	MaxVoiceUser       int64      `json:"max_voice_user"`
-	MaxVideoUser       int64      `json:"max_video_user"`
-	DefaultTariff      bool       `json:"default_tariff"`
-	OpenDate           *time.Time `json:"open_date"`
-	CloseDate          *time.Time `json:"close_date"`
+
+	// Tariff id
+	TariffId int64 `json:"tariff_id"`
+
+	// Name of tariff on russian
+	TariffName string `json:"tariff_name"`
+
+	// Count of free workspaces
+	FreeWorkplace int64 `json:"free_workplace"`
+
+	// Disk space limit per user
+	DiskSpaceQuota string `json:"disk_space_quota"`
+
+	// Flag of availability of free seats when exceeding FreeWorkplace
+	BillingFree bool `json:"billing_free"`
+
+	// Flag of accounting without looking at the number of days before the billing period
+	BillingFullTime bool `json:"billing_full_time"`
+
+	// Number of paid days
+	PeriodDays int64 `json:"period_days"`
+
+	// Cost of one workplace
+	CostWorkplace string `json:"cost_workplace"`
+
+	// Currency of tariff in ISO
+	Currency string `json:"currency"`
+
+	// Flag for accounting for unspent days when switching to a new tariff
+	RecalcChangeTariff bool `json:"recalc_change_tariff"`
+
+	// Maximum count of users in voice conference
+	MaxVoiceUser int64 `json:"max_voice_user"`
+
+	// Maximum count of users in video conference
+	MaxVideoUser int64 `json:"max_video_user"`
+
+	// Default tariff flag that is set when registering an account
+	DefaultTariff bool `json:"default_tariff"`
+
+	// Date of opening tariff
+	OpenDate *time.Time `json:"open_date"`
+
+	// Date of closing tariff
+	CloseDate *time.Time `json:"close_date"`
 }
