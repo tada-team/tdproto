@@ -133,6 +133,9 @@ type Features struct {
 	// Two-factor authentication (2FA) enabled
 	Auth2fa bool `json:"auth_2fa,omitempty"`
 
+	// NTLM authentication enabled
+	AuthByNTLM bool `json:"auth_by_ntlm,omitempty"`
+
 	// Mandatory setting of the pin code in the application
 	IsPinCodeRequired bool `json:"is_pin_code_required"`
 
