@@ -137,7 +137,10 @@ type Features struct {
 	AuthByNTLM bool `json:"auth_by_ntlm,omitempty"`
 
 	// Captcha enabled
-	IsCaptchaEnabled bool `json:"is_captcha_enabled,omitempty"`
+	ReCaptchaEnabled bool `json:"recaptcha_enabled,omitempty"`
+
+	// ReCaptcha Web Key
+	ReCaptchaWebKey bool `json:"recaptcha_web_key,omitempty"`
 
 	// Mandatory setting of the pin code in the application
 	IsPinCodeRequired bool `json:"is_pin_code_required"`
