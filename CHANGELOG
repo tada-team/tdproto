@@ -1,3 +1,6 @@
+v.1.49.4
+- feat(features): add ReCaptchaWebKey param in features for captcha settings
+
 v.1.49.3
 - feat(features): add param in features for support NTLM authentication
 - feat(features): add param in features for captcha settings
