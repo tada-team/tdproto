@@ -1,3 +1,6 @@
+v.1.49.6
+- fix(features): fix type of field
+
 v.1.49.5
 - fix(features): fix broken versioning
 
