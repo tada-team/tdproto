@@ -137,7 +137,7 @@ type Features struct {
 	AuthByNTLM bool `json:"auth_by_ntlm,omitempty"`
 
 	// Captcha enabled
-	ReCaptchaEnabled bool `json:"recaptcha_enabled,omitempty"`
+	ReCaptchaEnabled bool `json:"is_recaptcha_enabled,omitempty"`
 
 	// ReCaptcha Web Key
 	ReCaptchaWebKey bool `json:"recaptcha_web_key,omitempty"`
