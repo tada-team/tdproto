@@ -139,8 +139,11 @@ type Features struct {
 	// Captcha enabled
 	ReCaptchaEnabled bool `json:"is_recaptcha_enabled,omitempty"`
 
-	// ReCaptcha Web Key
-	ReCaptchaWebKey string `json:"recaptcha_web_key,omitempty"`
+	// ReCaptcha Web Key V3
+	ReCaptchaWebKeyV3 string `json:"recaptcha_web_key_v3,omitempty"`
+
+	// ReCaptcha Web Key V2
+	ReCaptchaWebKeyV2 string `json:"recaptcha_web_key_v2,omitempty"`
 
 	// Mandatory setting of the pin code in the application
 	IsPinCodeRequired bool `json:"is_pin_code_required"`
