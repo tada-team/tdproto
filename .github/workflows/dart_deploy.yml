@@ -41,7 +41,7 @@ jobs:
       - name: Analyze flutter
         run: |
           cd "${GITHUB_WORKSPACE}/${CLONE_DIR}/"
-          flutter analyze
+          flutter analyze --no-fatal-infos
       - name: Commit and upload dart
         if: github.ref == 'refs/heads/master'
         working-directory: ${{ env.CLONE_DIR }}
