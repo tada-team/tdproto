@@ -5,11 +5,6 @@
 ### Added
 - Null-safety rework
 
-## [Unreleased]
-### Added
-- Add `User` model.
-
-
 ## [1.0.1-dev] - 2020-12-27
 ### Added
 - Add `Features` export to `lib/tdproto_dart.dart`.
