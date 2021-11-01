@@ -1,0 +1,8 @@
+include: package:pedantic/analysis_options.1.9.0.yaml
+
+analyzer:
+  errors:
+    # Required to use the deprecation annotation on fields in this package and
+    # in the same time avoid issues with generated code by json_serializable.
+    deprecated_member_use_from_same_package: ignore
+    invalid_annotation_target: ignore

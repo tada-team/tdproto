@@ -16,29 +16,6 @@ const libPathPrefix = "./lib/"
 const enumsPathPrefix = "./src/enums"
 const modelsPathPrefix = "./src/models"
 
-var pubspecYamlTemplate = template.Must(template.New("pubspecYaml").Parse(`name: tdproto_dart
-description: Tada API data types that are generated from go code to dart code and make data serialization easy.
-homepage: https://github.com/tada-team/tdproto_dart
-repository: https://github.com/tada-team/tdproto_dart
-issue_tracker: https://github.com/tada-team/tdproto_dart/issues
-
-version: 1.0.2-dev
-environment:
-  sdk: ">=2.13.0 <3.0.0"
-
-dependencies:
-  meta: ^1.7.0
-  json_annotation: ^4.1.0
-  freezed_annotation: ^0.14.3
-
-dev_dependencies:
-  pedantic: ^1.11.1
-  build_runner: ^2.1.2
-  json_serializable: ^5.0.2
-  freezed: ^0.14.5
-  test: ^1.17.12
-`))
-
 var dartTypeMap = map[string]string{
 	"string":            "String",
 	"int":               "int",
@@ -197,11 +174,6 @@ func generateDart(tdprotoInfo *codegen.TdPackage, dartPackagePath string) error 
 
 	baseLibPath := path.Join(dartPackagePath, libPathPrefix)
 
-	err := writeFileFromTemplate(path.Join(dartPackagePath, "pubspec.yaml"), pubspecYamlTemplate, "", false)
-	if err != nil {
-		return err
-	}
-
 	for _, tdEnum := range tdprotoInfo.GetEnums() {
 		enumFileName := codegen.ToSnakeCase(tdEnum.Name)
 		enumFilePath := path.Join(enumsPathPrefix, fmt.Sprintf("%s.dart", enumFileName))
@@ -232,7 +204,7 @@ func generateDart(tdprotoInfo *codegen.TdPackage, dartPackagePath string) error 
 		}
 	}
 
-	err = writeFileFromTemplate(path.Join(baseLibPath, "./tdproto_dart.dart"), dartLibTemplate, libInfo, true)
+	err := writeFileFromTemplate(path.Join(baseLibPath, "./tdproto_dart.dart"), dartLibTemplate, libInfo, true)
 	if err != nil {
 		return err
 	}

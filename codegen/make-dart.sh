@@ -1,6 +1,6 @@
 #!/bin/bash
 set -euo pipefail
-shopt -s extdebug
+shopt -s extdebug dotglob
 IFS=$'\n\t'
 
 # Setup command line arguments
@@ -53,9 +53,15 @@ LIB_ENUMS_PATH="${DART_LIB_FOLDER}/lib/src/enums"
 LIB_MODELS_PATH="${DART_LIB_FOLDER}/lib/src/models"
 LIB_FILE_PATH="${DART_LIB_FOLDER}/lib/tdproto_dart.dart"
 
+LIB_TEMPLATE_DIR="./dart/lib_template"
+
+cp -r "$LIB_TEMPLATE_DIR"/* "$DART_LIB_FOLDER"
+
 if [ -d "$LIB_ENUMS_PATH" ]; then rm -r "$LIB_ENUMS_PATH"; fi
 if [ -d "$LIB_MODELS_PATH" ]; then rm -r "$LIB_MODELS_PATH"; fi
 if [ -f "$LIB_FILE_PATH" ]; then rm "$LIB_FILE_PATH"; fi
+
+if [ -d "${DART_LIB_FOLDER}/.git" ]; then git -C "${DART_LIB_FOLDER}" rm --cached -r . ; fi
 
 go run "./dart" "$DART_LIB_FOLDER"
 

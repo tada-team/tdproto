@@ -1,0 +1,15 @@
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          # Options configure how source code is generated for every
+          # `@JsonSerializable`-annotated class in the package.
+
+          # If true, generated toJson methods will explicitly call toJson on nested objects.
+          explicit_to_json: true
+
+          # When true on classes with type parameters (generic types),
+          # extra "helper" parameters will be generated for fromJson and/or toJson
+          # to support serializing values of those types.
+          generic_argument_factories: true
