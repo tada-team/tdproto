@@ -38,6 +38,10 @@ jobs:
         run: |
           cd ./codegen
           ./make-dart.sh "${GITHUB_WORKSPACE}/${CLONE_DIR}/"
+      - name: Analyze flutter
+        run: |
+          cd "${GITHUB_WORKSPACE}/${CLONE_DIR}/"
+          flutter analyze
       - name: Commit and upload dart
         if: github.ref == 'refs/heads/master'
         working-directory: ${{ env.CLONE_DIR }}
