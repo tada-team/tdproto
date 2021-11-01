@@ -129,6 +129,10 @@ func (s *DartClassField) IsNotRequired() bool {
 }
 
 func (s *DartClassField) DefaultStr() string {
+	if !s.IsNotRequired() {
+		return ""
+	}
+
 	if s.DartType == "bool" {
 		return "@Default(false) "
 	}
