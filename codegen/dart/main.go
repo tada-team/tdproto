@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"sort"
 	"strings"
 	"text/template"
 	"unicode"
@@ -203,6 +204,14 @@ func generateDart(tdprotoInfo *codegen.TdPackage, dartPackagePath string) error 
 			return err
 		}
 	}
+
+	sort.Slice(libInfo.GeneratedEnums, func(i, j int) bool {
+		return libInfo.GeneratedEnums[i] < libInfo.GeneratedEnums[j]
+	})
+
+	sort.Slice(libInfo.GeneratedModels, func(i, j int) bool {
+		return libInfo.GeneratedModels[i] < libInfo.GeneratedModels[j]
+	})
 
 	err := writeFileFromTemplate(path.Join(baseLibPath, "./tdproto_dart.dart"), dartLibTemplate, libInfo, true)
 	if err != nil {
