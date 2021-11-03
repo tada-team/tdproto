@@ -23,6 +23,7 @@ func main() {
 var tsTypesMap = map[string]string{
 	"string":            "string",
 	"int":               "number",
+	"int32":             "number",
 	"int64":             "number",
 	"uint16":            "number",
 	"uint":              "number",
