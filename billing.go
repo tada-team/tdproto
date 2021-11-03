@@ -60,13 +60,9 @@ type GetTariffByIdResponse struct {
 	Status               string    `json:"status"`
 }
 
-type GetTariffsListRequest struct{}
-
 type GetTariffsListResponse struct {
 	Tariffs []GetTariffByIdResponse `json:"tariffs"`
 }
-
-type GetActiveTariffsListRequest struct{}
 
 type GetActiveTariffsListResponse struct {
 	Tariffs []GetTariffByIdResponse `json:"tariffs"`
