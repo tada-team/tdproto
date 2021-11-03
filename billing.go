@@ -63,13 +63,13 @@ type GetTariffByIdResponse struct {
 type GetTariffsListRequest struct{}
 
 type GetTariffsListResponse struct {
-	Tariffs []*GetTariffByIdResponse `json:"tariffs"`
+	Tariffs []GetTariffByIdResponse `json:"tariffs"`
 }
 
 type GetActiveTariffsListRequest struct{}
 
 type GetActiveTariffsListResponse struct {
-	Tariffs []*GetTariffByIdResponse `json:"tariffs"`
+	Tariffs []GetTariffByIdResponse `json:"tariffs"`
 }
 
 type CloseTariffRequest struct {
@@ -141,7 +141,7 @@ type Options struct {
 }
 
 type GetPersonalAccountsListResponse struct {
-	PersonalAccounts []*GetPersonalAccountByIDResponse `json:"personal_accounts"`
+	PersonalAccounts []GetPersonalAccountByIDResponse `json:"personal_accounts"`
 }
 
 type ActivatePersonalAccountRequest struct {
