@@ -20,6 +20,7 @@ const modelsPathPrefix = "./src/models"
 var dartTypeMap = map[string]string{
 	"string":            "String",
 	"int":               "int",
+	"int32":             "int",
 	"int64":             "int",
 	"uint16":            "int",
 	"uint":              "int",
