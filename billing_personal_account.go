@@ -2,6 +2,20 @@ package tdproto
 
 import "time"
 
+// PersonalAccountStatus is status of personal account
+type PersonalAccountStatus string
+
+const (
+	// ActiveAccount is active account status
+	ActiveAccount PersonalAccountStatus = "Active"
+
+	// SuspendedAccount is financial blocking account status
+	SuspendedAccount PersonalAccountStatus = "Suspended"
+
+	// BlockedAccount is account administrative blocking status
+	BlockedAccount PersonalAccountStatus = "Blocked"
+)
+
 // PersonalAccountBilling struct of billing api
 type PersonalAccountBilling struct {
 
@@ -30,7 +44,7 @@ type PersonalAccountBilling struct {
 	DiscountAmount int32 `json:"discount_amount"`
 
 	// Status of personal account
-	Status string `json:"status"`
+	Status PersonalAccountStatus `json:"status"`
 
 	// Date of next debiting funds
 	NextBillingDate time.Time `json:"next_billing_date"`

@@ -2,6 +2,17 @@ package tdproto
 
 import "time"
 
+// TariffStatus is status of tariff
+type TariffStatus string
+
+const (
+	// ActiveTariff is active tariff status
+	ActiveTariff TariffStatus = "Active"
+
+	// ArchiveTariff is archive tariff status
+	ArchiveTariff TariffStatus = "Archive"
+)
+
 // TariffBilling struct of billing api
 type TariffBilling struct {
 
@@ -51,7 +62,7 @@ type TariffBilling struct {
 	CloseDate *time.Time `json:"close_date,omitempty"`
 
 	// Status of tariff
-	Status string `json:"status,omitempty"`
+	Status TariffStatus `json:"status,omitempty"`
 }
 
 // CreateTariffRequest request on create tariff
