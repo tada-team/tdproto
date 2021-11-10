@@ -1,3 +1,7 @@
+v1.49.8
+- fix: change type for CallType: from string to CallType struct
+- fix: remove omitempty from server video calls
+
 v.1.49.7
 - feat(features): new settings for captcha
 
