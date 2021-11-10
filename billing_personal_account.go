@@ -6,7 +6,7 @@ import "time"
 type PersonalAccountBilling struct {
 
 	// PersonalAccountBilling ID
-	PersonalAccountId int64 `json:"personal_account_id"`
+	PersonalAccountId int64 `json:"personal_account_id,omitempty"`
 
 	// ID User who owns this personal account
 	OwnerUuid string `json:"owner_uuid"`
@@ -58,7 +58,7 @@ type CreatePersonalAccountResponse struct {
 
 // GetPersonalAccountByIDRequest request on get personal account by ID
 type GetPersonalAccountByIDRequest struct {
-	PersonalAccountId int64 `json:"personal_account_id"`
+	PersonalAccountId int64 `json:"personal_account_id,omitempty"`
 }
 
 // GetPersonalAccountByIDResponse response on get personal account by ID
@@ -80,12 +80,12 @@ type Options struct {
 
 // GetPersonalAccountsListResponse response on get list of personal accounts
 type GetPersonalAccountsListResponse struct {
-	PersonalAccounts []PersonalAccountBilling `json:"personal_accounts"`
+	PersonalAccounts []PersonalAccountBilling `json:"personal_accounts,omitempty"`
 }
 
 // ActivatePersonalAccountRequest request on activate suspended personal account
 type ActivatePersonalAccountRequest struct {
-	PersonalAccountId int64 `json:"personal_account_id"`
+	PersonalAccountId int64 `json:"personal_account_id,omitempty"`
 }
 
 // ActivatePersonalAccountResponse response on activate suspended personal account
@@ -95,7 +95,7 @@ type ActivatePersonalAccountResponse struct {
 
 // BlockPersonalAccountRequest request on block unblocked personal account
 type BlockPersonalAccountRequest struct {
-	PersonalAccountId int64 `json:"personal_account_id"`
+	PersonalAccountId int64 `json:"personal_account_id,omitempty"`
 }
 
 // BlockPersonalAccountResponse response on block unblocked personal account
@@ -105,7 +105,7 @@ type BlockPersonalAccountResponse struct {
 
 // UnblockPersonalAccountRequest request on unblock blocked personal account
 type UnblockPersonalAccountRequest struct {
-	PersonalAccountId int64 `json:"personal_account_id"`
+	PersonalAccountId int64 `json:"personal_account_id,omitempty"`
 }
 
 // UnblockPersonalAccountResponse response on unblock blocked personal account
@@ -115,7 +115,7 @@ type UnblockPersonalAccountResponse struct {
 
 // SuspendPersonalAccountRequest request on suspend active personal account
 type SuspendPersonalAccountRequest struct {
-	PersonalAccountId int64 `json:"personal_account_id"`
+	PersonalAccountId int64 `json:"personal_account_id,omitempty"`
 }
 
 // SuspendPersonalAccountResponse response on suspend active personal account

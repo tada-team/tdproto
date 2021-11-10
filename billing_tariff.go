@@ -6,7 +6,7 @@ import "time"
 type TariffBilling struct {
 
 	// Tariff id
-	TariffId int64 `json:"tariff_id"`
+	TariffId int64 `json:"tariff_id,omitempty"`
 
 	// Name of tariff
 	TariffName string `json:"tariff_name,omitempty"`
@@ -66,7 +66,7 @@ type CreateTariffResponse struct {
 
 // GetTariffByIdRequest request on get tariff by ID
 type GetTariffByIdRequest struct {
-	Id int64 `json:"id"`
+	Id int64 `json:"id,omitempty"`
 }
 
 // GetTariffByIdResponse response on get tariff by ID
@@ -86,7 +86,7 @@ type GetActiveTariffsListResponse struct {
 
 // CloseTariffRequest request on close(archive) tariff
 type CloseTariffRequest struct {
-	TariffId  int64     `json:"tariff_id"`
+	TariffId  int64     `json:"tariff_id,omitempty"`
 	CloseDate time.Time `json:"close_date,omitempty"`
 }
 
@@ -97,7 +97,7 @@ type CloseTariffResponse struct {
 
 // SetTariffAsDefaultRequest request on set tariff as default
 type SetTariffAsDefaultRequest struct {
-	TariffId int64 `json:"tariff_id"`
+	TariffId int64 `json:"tariff_id,omitempty"`
 }
 
 // SetTariffAsDefaultResponse response on set tariff as default
