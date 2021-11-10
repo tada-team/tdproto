@@ -24,7 +24,7 @@ type clientCallOfferParams struct {
 	Sdp string `json:"sdp"`
 
 	// CallType is a type of call("audio" - audio room, "video" - video room). default = "audio"
-	CallType string `json:"call_type,omitempty"`
+	CallType CallType `json:"call_type,omitempty"`
 
 	// Audio state
 	EnabledAudio bool `json:"enabled_audio,omitempty"`
