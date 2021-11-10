@@ -8,6 +8,12 @@ type PersonalAccountBilling struct {
 	// PersonalAccountBilling ID
 	PersonalAccountId int64 `json:"personal_account_id,omitempty"`
 
+	// Full name of owner personal account
+	FullName string `json:"full_name,omitempty"`
+
+	// Phone number of owner account
+	Phone string `json:"phone,omitempty"`
+
 	// ID User who owns this personal account
 	OwnerUuid string `json:"owner_uuid"`
 
@@ -48,6 +54,8 @@ type PersonalAccountBilling struct {
 // CreatePersonalAccountRequest request on create personal account
 type CreatePersonalAccountRequest struct {
 	OwnerUuid string `json:"owner_uuid"`
+	FullName  string `json:"full_name,omitempty"`
+	Phone     string `json:"phone,omitempty"`
 	TeamUuid  string `json:"team_uuid"`
 }
 
