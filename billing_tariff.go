@@ -9,9 +9,6 @@ const (
 	// ActiveTariff is active tariff status
 	ActiveTariff TariffStatus = "Active"
 
-	// DefaultTariff is default tariff status
-	DefaultTariff TariffStatus = "Default"
-
 	// ArchiveTariff is archive tariff status
 	ArchiveTariff TariffStatus = "Archive"
 )
