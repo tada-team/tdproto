@@ -98,16 +98,6 @@ type CreateTariffRequest struct {
 	TariffName string `json:"tariff_name"`
 }
 
-// CreateTariffResponse response on create tariff
-type CreateTariffResponse struct {
-	TariffBilling
-}
-
-// GetTariffByIdResponse response on get tariff by ID
-type GetTariffByIdResponse struct {
-	TariffBilling
-}
-
 // GetTariffsListResponse response on get tariffs list
 type GetTariffsListResponse struct {
 	Tariffs []TariffBilling `json:"tariffs"`
