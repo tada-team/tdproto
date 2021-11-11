@@ -118,6 +118,11 @@ type GetActiveTariffsListResponse struct {
 	Tariffs []TariffBilling `json:"tariffs"`
 }
 
+// CloseTariffRequest request on close(archive) tariff
+type CloseTariffRequest struct {
+	CloseDate time.Time `json:"close_date,omitempty"`
+}
+
 // CloseTariffResponse response on close(archive) tariff
 type CloseTariffResponse struct {
 	Success bool `json:"success"`
