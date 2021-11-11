@@ -2,11 +2,31 @@ package tdproto
 
 import "time"
 
+// PersonalAccountStatus is status of personal account
+type PersonalAccountStatus string
+
+const (
+	// ActiveAccount is active account status
+	ActiveAccount PersonalAccountStatus = "Active"
+
+	// SuspendedAccount is financial blocking account status
+	SuspendedAccount PersonalAccountStatus = "Suspended"
+
+	// BlockedAccount is account administrative blocking status
+	BlockedAccount PersonalAccountStatus = "Blocked"
+)
+
 // PersonalAccountBilling struct of billing api
 type PersonalAccountBilling struct {
 
 	// PersonalAccountBilling ID
-	PersonalAccountId int64 `json:"personal_account_id"`
+	PersonalAccountId int64 `json:"personal_account_id,omitempty"`
+
+	// Full name of owner personal account
+	FullName string `json:"full_name,omitempty"`
+
+	// Phone number of owner account
+	Phone string `json:"phone,omitempty"`
 
 	// ID User who owns this personal account
 	OwnerUuid string `json:"owner_uuid"`
@@ -24,7 +44,7 @@ type PersonalAccountBilling struct {
 	DiscountAmount int32 `json:"discount_amount"`
 
 	// Status of personal account
-	Status string `json:"status"`
+	Status PersonalAccountStatus `json:"status"`
 
 	// Date of next debiting funds
 	NextBillingDate time.Time `json:"next_billing_date"`
@@ -48,6 +68,8 @@ type PersonalAccountBilling struct {
 // CreatePersonalAccountRequest request on create personal account
 type CreatePersonalAccountRequest struct {
 	OwnerUuid string `json:"owner_uuid"`
+	FullName  string `json:"full_name,omitempty"`
+	Phone     string `json:"phone,omitempty"`
 	TeamUuid  string `json:"team_uuid"`
 }
 
@@ -58,7 +80,7 @@ type CreatePersonalAccountResponse struct {
 
 // GetPersonalAccountByIDRequest request on get personal account by ID
 type GetPersonalAccountByIDRequest struct {
-	PersonalAccountId int64 `json:"personal_account_id"`
+	PersonalAccountId int64 `json:"personal_account_id,omitempty"`
 }
 
 // GetPersonalAccountByIDResponse response on get personal account by ID
@@ -80,12 +102,12 @@ type Options struct {
 
 // GetPersonalAccountsListResponse response on get list of personal accounts
 type GetPersonalAccountsListResponse struct {
-	PersonalAccounts []PersonalAccountBilling `json:"personal_accounts"`
+	PersonalAccounts []PersonalAccountBilling `json:"personal_accounts,omitempty"`
 }
 
 // ActivatePersonalAccountRequest request on activate suspended personal account
 type ActivatePersonalAccountRequest struct {
-	PersonalAccountId int64 `json:"personal_account_id"`
+	PersonalAccountId int64 `json:"personal_account_id,omitempty"`
 }
 
 // ActivatePersonalAccountResponse response on activate suspended personal account
@@ -95,7 +117,7 @@ type ActivatePersonalAccountResponse struct {
 
 // BlockPersonalAccountRequest request on block unblocked personal account
 type BlockPersonalAccountRequest struct {
-	PersonalAccountId int64 `json:"personal_account_id"`
+	PersonalAccountId int64 `json:"personal_account_id,omitempty"`
 }
 
 // BlockPersonalAccountResponse response on block unblocked personal account
@@ -105,7 +127,7 @@ type BlockPersonalAccountResponse struct {
 
 // UnblockPersonalAccountRequest request on unblock blocked personal account
 type UnblockPersonalAccountRequest struct {
-	PersonalAccountId int64 `json:"personal_account_id"`
+	PersonalAccountId int64 `json:"personal_account_id,omitempty"`
 }
 
 // UnblockPersonalAccountResponse response on unblock blocked personal account
@@ -115,7 +137,7 @@ type UnblockPersonalAccountResponse struct {
 
 // SuspendPersonalAccountRequest request on suspend active personal account
 type SuspendPersonalAccountRequest struct {
-	PersonalAccountId int64 `json:"personal_account_id"`
+	PersonalAccountId int64 `json:"personal_account_id,omitempty"`
 }
 
 // SuspendPersonalAccountResponse response on suspend active personal account

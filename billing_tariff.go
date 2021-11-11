@@ -2,11 +2,22 @@ package tdproto
 
 import "time"
 
+// TariffStatus is status of tariff
+type TariffStatus string
+
+const (
+	// ActiveTariff is active tariff status
+	ActiveTariff TariffStatus = "Active"
+
+	// ArchiveTariff is archive tariff status
+	ArchiveTariff TariffStatus = "Archive"
+)
+
 // TariffBilling struct of billing api
 type TariffBilling struct {
 
 	// Tariff id
-	TariffId int64 `json:"tariff_id"`
+	TariffId int64 `json:"tariff_id,omitempty"`
 
 	// Name of tariff
 	TariffName string `json:"tariff_name,omitempty"`
@@ -51,7 +62,7 @@ type TariffBilling struct {
 	CloseDate *time.Time `json:"close_date,omitempty"`
 
 	// Status of tariff
-	Status string `json:"status,omitempty"`
+	Status TariffStatus `json:"status,omitempty"`
 }
 
 // CreateTariffRequest request on create tariff
@@ -66,7 +77,7 @@ type CreateTariffResponse struct {
 
 // GetTariffByIdRequest request on get tariff by ID
 type GetTariffByIdRequest struct {
-	Id int64 `json:"id"`
+	Id int64 `json:"id,omitempty"`
 }
 
 // GetTariffByIdResponse response on get tariff by ID
@@ -86,7 +97,7 @@ type GetActiveTariffsListResponse struct {
 
 // CloseTariffRequest request on close(archive) tariff
 type CloseTariffRequest struct {
-	TariffId  int64     `json:"tariff_id"`
+	TariffId  int64     `json:"tariff_id,omitempty"`
 	CloseDate time.Time `json:"close_date,omitempty"`
 }
 
@@ -97,7 +108,7 @@ type CloseTariffResponse struct {
 
 // SetTariffAsDefaultRequest request on set tariff as default
 type SetTariffAsDefaultRequest struct {
-	TariffId int64 `json:"tariff_id"`
+	TariffId int64 `json:"tariff_id,omitempty"`
 }
 
 // SetTariffAsDefaultResponse response on set tariff as default
