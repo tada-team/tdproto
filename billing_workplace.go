@@ -22,7 +22,7 @@ type GetWorkplacesByPersonalAccountRequest struct {
 
 // GetWorkplacesByPersonalAccountResponse response on get workplaces by personal account
 type GetWorkplacesByPersonalAccountResponse struct {
-	Workplaces []*WorkplaceBilling `json:"workplaces,omitempty"`
+	Workplaces []WorkplaceBilling `json:"workplaces,omitempty"`
 }
 
 // GetUnpaidWorkplacesByPersonalAccountRequest request on get count unpaid workplaces by personal account

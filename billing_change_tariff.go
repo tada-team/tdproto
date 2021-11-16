@@ -18,7 +18,7 @@ type GetChangesTariffsByPersonalAccountRequest struct {
 
 // GetChangesTariffsByPersonalAccountResponse response on get changes tariffs by personal account
 type GetChangesTariffsByPersonalAccountResponse struct {
-	TariffsChanges []*ChangeTariffBilling `json:"tariffs_changes,omitempty"`
+	TariffsChanges []ChangeTariffBilling `json:"tariffs_changes,omitempty"`
 }
 
 // CreateChangeTariffOnPersonalAccountRequest request on create change tariff on personal account
