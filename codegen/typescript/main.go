@@ -24,7 +24,7 @@ var tsTypesMap = map[string]string{
 	"string":            "string",
 	"int":               "number",
 	"int32":             "number",
-	"int64":             "number",
+	"int64":             "string",
 	"uint16":            "number",
 	"uint":              "number",
 	"float":             "number",
@@ -267,14 +267,14 @@ export interface TeamUnreadJSON {
    task: UnreadJSON;
    /* eslint-enable camelcase */
 }
- 
+
 export class TeamUnread implements TDProtoClass<TeamUnread> {
   constructor (
     public direct: Unread,
     public group: Unread,
     public task: Unread
   ) {}
- 
+
   public static fromJSON (raw: TeamUnreadJSON): TeamUnread {
     return new TeamUnread(
       Unread.fromJSON(raw.direct),
@@ -282,13 +282,13 @@ export class TeamUnread implements TDProtoClass<TeamUnread> {
       Unread.fromJSON(raw.task),
     )
   }
- 
+
   public mappableFields = [
    'direct',
    'group',
    'task',
   ] as const
- 
+
   readonly #mapper = {
    /* eslint-disable camelcase */
    direct: () => ({ direct: this.direct.toJSON() }),
@@ -296,7 +296,7 @@ export class TeamUnread implements TDProtoClass<TeamUnread> {
    task: () => ({ task: this.task.toJSON() }),
    /* eslint-enable camelcase */
   }
- 
+
   public toJSON (): TeamUnreadJSON
   public toJSON (fields: Array<this['mappableFields'][number]>): Partial<TeamUnreadJSON>
   public toJSON (fields?: Array<this['mappableFields'][number]>) {
