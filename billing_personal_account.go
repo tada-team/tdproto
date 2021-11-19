@@ -20,7 +20,7 @@ const (
 type PersonalAccountBilling struct {
 
 	// PersonalAccountBilling ID
-	PersonalAccountId int64 `json:"personal_account_id,omitempty"`
+	PersonalAccountId string `json:"personal_account_id,omitempty"` // TODO: must be int64
 
 	// Full name of owner personal account
 	FullName string `json:"full_name,omitempty"`
@@ -32,13 +32,13 @@ type PersonalAccountBilling struct {
 	OwnerUuid string `json:"owner_uuid"`
 
 	// ID Tariff on this personal account
-	TariffId int64 `json:"tariff_id"`
+	TariffId string `json:"tariff_id"` // TODO: must be int64
 
 	// Name Tariff on this personal account
 	TariffName string `json:"tariff_name"`
 
 	// ID Discount on personal account
-	DiscountId int64 `json:"discount_id"`
+	DiscountId string `json:"discount_id"` // TODO: must be int64
 
 	// Amount of Discount on personal account
 	DiscountAmount int32 `json:"discount_amount"`
@@ -78,26 +78,9 @@ type CreatePersonalAccountResponse struct {
 	PersonalAccountBilling
 }
 
-// GetPersonalAccountByIDRequest request on get personal account by ID
-type GetPersonalAccountByIDRequest struct {
-	PersonalAccountId int64 `json:"personal_account_id,omitempty"`
-}
-
 // GetPersonalAccountByIDResponse response on get personal account by ID
 type GetPersonalAccountByIDResponse struct {
 	PersonalAccountBilling
-}
-
-// GetPersonalAccountsListRequest request on get list of personal accounts
-type GetPersonalAccountsListRequest struct {
-	PersonalAccountId int64    `json:"personal_account_id,omitempty"`
-	Options           *Options `json:"options,omitempty"`
-}
-
-// Options struct for pagination
-type Options struct {
-	Limit  int64 `json:"limit,omitempty"`
-	Offset int64 `json:"offset,omitempty"`
 }
 
 // GetPersonalAccountsListResponse response on get list of personal accounts
@@ -105,19 +88,9 @@ type GetPersonalAccountsListResponse struct {
 	PersonalAccounts []PersonalAccountBilling `json:"personal_accounts,omitempty"`
 }
 
-// ActivatePersonalAccountRequest request on activate suspended personal account
-type ActivatePersonalAccountRequest struct {
-	PersonalAccountId int64 `json:"personal_account_id,omitempty"`
-}
-
 // ActivatePersonalAccountResponse response on activate suspended personal account
 type ActivatePersonalAccountResponse struct {
 	Success bool `json:"success"`
-}
-
-// BlockPersonalAccountRequest request on block unblocked personal account
-type BlockPersonalAccountRequest struct {
-	PersonalAccountId int64 `json:"personal_account_id,omitempty"`
 }
 
 // BlockPersonalAccountResponse response on block unblocked personal account
@@ -125,19 +98,9 @@ type BlockPersonalAccountResponse struct {
 	Success bool `json:"success"`
 }
 
-// UnblockPersonalAccountRequest request on unblock blocked personal account
-type UnblockPersonalAccountRequest struct {
-	PersonalAccountId int64 `json:"personal_account_id,omitempty"`
-}
-
 // UnblockPersonalAccountResponse response on unblock blocked personal account
 type UnblockPersonalAccountResponse struct {
 	Success bool `json:"success"`
-}
-
-// SuspendPersonalAccountRequest request on suspend active personal account
-type SuspendPersonalAccountRequest struct {
-	PersonalAccountId int64 `json:"personal_account_id,omitempty"`
 }
 
 // SuspendPersonalAccountResponse response on suspend active personal account
