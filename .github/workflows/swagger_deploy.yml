@@ -34,12 +34,11 @@ jobs:
         run: |
           git rm --cached -r .
       - name: Run makefile
-        working-directory: ${{ env.TDPROTO_DIR }}
         run: |
           make \
-            TDPROTO_OPEN_API_DIR="./codegen/openapi/" \
+            TDPROTO_OPEN_API_DIR="${GITHUB_WORKSPACE}/${TDPROTO_DIR}/codegen/openapi/" \
             DESTDIR="${GITHUB_WORKSPACE}/${CLONE_DIR}" \
-            --file "./codegen/openapi/Makefile" \
+            --file "${GITHUB_WORKSPACE}/${TDPROTO_DIR}/codegen/openapi/Makefile" \
             install
       - name: Commit and upload swagger
         if: github.ref == 'refs/heads/master'
