@@ -47,7 +47,7 @@ type TariffBilling struct {
 	Status TariffStatus `json:"status"`
 
 	// Tariff id
-	TariffId int64 `json:"tariff_id"`
+	TariffId string `json:"tariff_id"` // TODO: must be int64
 
 	// Name of tariff
 	TariffName string `json:"tariff_name"`
