@@ -12,6 +12,7 @@ import (
 var golangTypeToOpenApiType = map[string]openApiType{
 	"string":            openApiString,
 	"int":               openApiInteger,
+	"int32":             openApiInteger,
 	"int64":             openApiInteger,
 	"uint16":            openApiInteger,
 	"uint":              openApiInteger,
