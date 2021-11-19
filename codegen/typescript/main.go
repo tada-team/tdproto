@@ -24,7 +24,7 @@ var tsTypesMap = map[string]string{
 	"string":            "string",
 	"int":               "number",
 	"int32":             "number",
-	"int64":             "string",
+	"int64":             "number", // TODO: must be string
 	"uint16":            "number",
 	"uint":              "number",
 	"float":             "number",
