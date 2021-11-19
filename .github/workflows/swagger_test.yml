@@ -38,6 +38,7 @@ jobs:
           make \
             TDPROTO_OPEN_API_DIR="${GITHUB_WORKSPACE}/${TDPROTO_DIR}/codegen/openapi/" \
             DESTDIR="${GITHUB_WORKSPACE}/${CLONE_DIR}" \
+            SWAGGER_SERVER_URL="https://stage.tada.team" \
             --file "${GITHUB_WORKSPACE}/${TDPROTO_DIR}/codegen/openapi/Makefile" \
             install
       - name: Commit and upload swagger

@@ -3,6 +3,7 @@ SWAGGER_VERSION ?= 4.1.0
 DESTDIR ?= ./build
 TDPROTO_OPEN_API_DIR ?= ./
 OPENAPI_FILE ?= v4.json
+SWAGGER_SERVER_URL ?= https://web.tada.team
 
 SWAGGER_URL = https://github.com/swagger-api/swagger-ui/archive/refs/tags/v${SWAGGER_VERSION}.tar.gz
 SWAGGER_ARCHIVE = swagger.tar.gz
@@ -26,4 +27,7 @@ install: $(SWAGGER_ARCHIVE) $(DESTDIR_ABSOLUTE)
 		-e 's/\.\//dist\//g' \
 		-e 's/url\: ".*"/url\: "${SED_OPENAPI_FILE}"/g' \
 		"${DESTDIR_ABSOLUTE}/index.html"
-	cd "${TDPROTO_OPEN_API_DIR}" && go run ./ > "${DESTDIR_ABSOLUTE}/${OPENAPI_FILE}"
+	cd "${TDPROTO_OPEN_API_DIR}" && \
+		go run  ./ \
+			-server "${SWAGGER_SERVER_URL}" \
+		> "${DESTDIR_ABSOLUTE}/${OPENAPI_FILE}"
