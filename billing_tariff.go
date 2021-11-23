@@ -100,6 +100,9 @@ type CreateTariffRequest struct {
 
 // Request to update the tariff
 type UpdateTariffRequest struct {
+	// Date of closing tariff
+	CloseDate *time.Time `json:"close_date,omitempty"`
+
 	// Default tariff flag that is set when registering an account
 	IsDefaultTariff bool `json:"is_default_tariff,omitempty"`
 
