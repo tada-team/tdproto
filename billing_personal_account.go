@@ -2,25 +2,11 @@ package tdproto
 
 import "time"
 
-// PersonalAccountStatus is status of personal account
-type PersonalAccountStatus string
-
-const (
-	// ActiveAccount is active account status
-	ActiveAccount PersonalAccountStatus = "Active"
-
-	// SuspendedAccount is financial blocking account status
-	SuspendedAccount PersonalAccountStatus = "Suspended"
-
-	// BlockedAccount is account administrative blocking status
-	BlockedAccount PersonalAccountStatus = "Blocked"
-)
-
 // PersonalAccountBilling struct of billing api
 type PersonalAccountBilling struct {
 
 	// PersonalAccountBilling ID
-	PersonalAccountId string `json:"personal_account_id,omitempty"` // TODO: must be int64
+	PersonalAccountId string `json:"personal_account_id"` // TODO: must be int64
 
 	// Full name of owner personal account
 	FullName string `json:"full_name,omitempty"`
