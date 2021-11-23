@@ -98,6 +98,15 @@ type CreateTariffRequest struct {
 	TariffName string `json:"tariff_name"`
 }
 
+// Request to update the tariff
+type UpdateTariffRequest struct {
+	// Default tariff flag that is set when registering an account
+	IsDefaultTariff bool `json:"is_default_tariff,omitempty"`
+
+	// Status of tariff
+	Status TariffStatus `json:"status,omitempty"`
+}
+
 // Response from getting a list of tariffs
 type GetTariffsListResponse struct {
 	Tariffs []TariffBilling `json:"tariffs"`
@@ -106,19 +115,4 @@ type GetTariffsListResponse struct {
 // Response from getting a list of active tariffs
 type GetActiveTariffsListResponse struct {
 	Tariffs []TariffBilling `json:"tariffs"`
-}
-
-// Request to close (archive) the tariff
-type CloseTariffRequest struct {
-	CloseDate time.Time `json:"close_date,omitempty"`
-}
-
-// Response from closing (archiving) the tariff
-type CloseTariffResponse struct {
-	Success bool `json:"success"`
-}
-
-// Response from setting the tariff as default
-type SetTariffAsDefaultResponse struct {
-	Success bool `json:"success"`
 }
