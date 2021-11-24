@@ -6,9 +6,6 @@ on: workflow_dispatch
 env:
   TDPROTO_DIR: tdproto
   CLONE_DIR: clone_dir
-  OPENAPI_FILE: v4.json
-  SWAGGER_VERSION: '3.47.1'
-  SWAGGER_ARCHIVE: swagger.tar.gz
 
 concurrency:
   group: ${{ github.workflow }}
@@ -35,26 +32,15 @@ jobs:
         continue-on-error: true
         working-directory: ${{ env.CLONE_DIR }}
         run: |
-          rm $(git ls-files)
-      - name: Get swagger release
+          git rm --cached -r .
+      - name: Run makefile
         run: |
-          SWAGGER_URL="https://github.com/swagger-api/swagger-ui/archive/refs/tags/v${SWAGGER_VERSION}.tar.gz"
-          wget "$SWAGGER_URL" --output-document=${SWAGGER_ARCHIVE}
-      - name: Prepare swagger files
-        run: |
-          SWAGGER_DIST_PATH="swagger-ui-${SWAGGER_VERSION}/dist"
-          tar --extract --file "./swagger.tar.gz" "${SWAGGER_DIST_PATH}"
-          mv "./${SWAGGER_DIST_PATH}/" "${CLONE_DIR}"
-      - name: Modify swagger files
-        working-directory: ${{ env.CLONE_DIR }}
-        run: |
-          mv "./dist/index.html" "./"
-          sed --in-place 's/\.\//dist\//g' "./index.html"
-          sed --in-place 's/url\: ".*"/url\: "v4\.json"/g' "./index.html"
-      - name: Generate OpenAPI
-        working-directory: ${{ env.TDPROTO_DIR }}
-        run: |
-          go run "./codegen/openapi/" > "${GITHUB_WORKSPACE}/${CLONE_DIR}/${OPENAPI_FILE}"
+          make \
+            TDPROTO_OPEN_API_DIR="${GITHUB_WORKSPACE}/${TDPROTO_DIR}/codegen/openapi/" \
+            DESTDIR="${GITHUB_WORKSPACE}/${CLONE_DIR}" \
+            SWAGGER_SERVER_URL="https://stage.tada.team" \
+            --file "${GITHUB_WORKSPACE}/${TDPROTO_DIR}/codegen/openapi/Makefile" \
+            install
       - name: Commit and upload swagger
         working-directory: ${{ env.CLONE_DIR }}
         run: |

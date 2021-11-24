@@ -51,7 +51,7 @@ type CallOnliner struct {
 	Muted bool `json:"muted"`
 
 	// Video state
-	EnabledVideo bool `json:"enabled_video,omitempty"`
+	EnabledVideo bool `json:"enabled_video"`
 
 	// Member devices, strictly one for now
 	Devices []CallDevice `json:"devices"`

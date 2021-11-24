@@ -2,28 +2,16 @@ package tdproto
 
 import "time"
 
-// TariffStatus is status of tariff
-type TariffStatus string
-
-const (
-	// ActiveTariff is active tariff status
-	ActiveTariff TariffStatus = "Active"
-
-	// ArchiveTariff is archive tariff status
-	ArchiveTariff TariffStatus = "Archive"
-)
-
-// TariffBilling struct of billing api
+// Tariff struct of billing API
 type TariffBilling struct {
+	// Date of closing tariff
+	CloseDate *time.Time `json:"close_date,omitempty"`
 
-	// Tariff id
-	TariffId int64 `json:"tariff_id,omitempty"`
+	// Cost of one workplace
+	CostWorkplace string `json:"cost_workplace"`
 
-	// Name of tariff
-	TariffName string `json:"tariff_name,omitempty"`
-
-	// Count of free workspaces
-	FreeWorkplace int32 `json:"free_workplace,omitempty"`
+	// Currency of tariff
+	Currency Currency `json:"currency"`
 
 	// Count of minimum workspaces on tariff
 	MinTariffWorkplaces int32 `json:"min_tariff_workplaces"`
@@ -32,25 +20,73 @@ type TariffBilling struct {
 	MinStepWorkplaces int32 `json:"min_step_workplaces"`
 
 	// Disk space limit per user
-	DiskSpaceQuota string `json:"disk_space_quota,omitempty"`
+	DiskSpaceQuotaMb string `json:"disk_space_quota_mb"`
+
+	// Count of free workspaces
+	FreeWorkplaces int32 `json:"free_workplaces"`
 
 	// Flag of availability of free seats when exceeding FreeWorkplace
-	IsBillingFree bool `json:"billing_free,omitempty"`
+	IsBillingFree bool `json:"is_billing_free"`
 
 	// Flag of accounting without looking at the number of days before the billing period
-	IsBillingFullTime bool `json:"billing_full_time,omitempty"`
+	IsBillingFullTime bool `json:"is_billing_full_time"`
+
+	// Default tariff flag that is set when registering an account
+	IsDefaultTariff bool `json:"is_default_tariff"`
+
+	// Flag for accounting for unspent days when switching to a new tariff
+	IsRecalcChangeTariff bool `json:"is_recalc_change_tariff"`
+
+	// Maximum count of users in voice conference
+	MaxVoiceUser int32 `json:"max_voice_user"`
+
+	// Maximum count of users in video conference
+	MaxVideoUser int32 `json:"max_video_user"`
+
+	// Date of opening tariff
+	OpenDate *time.Time `json:"open_date"`
 
 	// Number of paid days
-	PeriodDays int32 `json:"period_days,omitempty"`
+	PeriodDays int32 `json:"period_days"`
+
+	// Status of tariff
+	Status TariffStatus `json:"status"`
+
+	// Tariff id
+	TariffId string `json:"tariff_id"` // TODO: must be int64
+
+	// Name of tariff
+	TariffName string `json:"tariff_name"`
+}
+
+// Request to create the tariff
+type CreateTariffRequest struct {
+	// Date of closing tariff
+	CloseDate *time.Time `json:"close_date,omitempty"`
 
 	// Cost of one workplace
 	CostWorkplace string `json:"cost_workplace,omitempty"`
 
-	// Currency of tariff in ISO
-	Currency string `json:"currency,omitempty"`
+	// Currency of tariff
+	Currency Currency `json:"currency"`
+
+	// Disk space limit per user
+	DiskSpaceQuotaMb string `json:"disk_space_quota_mb,omitempty"`
+
+	// Count of free workspaces
+	FreeWorkplaces int32 `json:"free_workplaces,omitempty"`
+
+	// Flag of availability of free seats when exceeding FreeWorkplace
+	IsBillingFree bool `json:"is_billing_free,omitempty"`
+
+	// Flag of accounting without looking at the number of days before the billing period
+	IsBillingFullTime bool `json:"is_billing_full_time,omitempty"`
+
+	// Default tariff flag that is set when registering an account
+	IsDefaultTariff bool `json:"is_default_tariff,omitempty"`
 
 	// Flag for accounting for unspent days when switching to a new tariff
-	IsRecalcChangeTariff bool `json:"recalc_change_tariff,omitempty"`
+	IsRecalcChangeTariff bool `json:"is_recalc_change_tariff,omitempty"`
 
 	// Maximum count of users in voice conference
 	MaxVoiceUser int32 `json:"max_voice_user,omitempty"`
@@ -67,60 +103,31 @@ type TariffBilling struct {
 	// Date of opening tariff
 	OpenDate *time.Time `json:"open_date,omitempty"`
 
+	// Number of paid days
+	PeriodDays int32 `json:"period_days"`
+
+	// Name of tariff
+	TariffName string `json:"tariff_name"`
+}
+
+// Request to update the tariff
+type UpdateTariffRequest struct {
 	// Date of closing tariff
 	CloseDate *time.Time `json:"close_date,omitempty"`
+
+	// Default tariff flag that is set when registering an account
+	IsDefaultTariff bool `json:"is_default_tariff,omitempty"`
 
 	// Status of tariff
 	Status TariffStatus `json:"status,omitempty"`
 }
 
-// CreateTariffRequest request on create tariff
-type CreateTariffRequest struct {
-	TariffBilling
-}
-
-// CreateTariffResponse response on create tariff
-type CreateTariffResponse struct {
-	TariffBilling
-}
-
-// GetTariffByIdRequest request on get tariff by ID
-type GetTariffByIdRequest struct {
-	Id int64 `json:"id,omitempty"`
-}
-
-// GetTariffByIdResponse response on get tariff by ID
-type GetTariffByIdResponse struct {
-	TariffBilling
-}
-
-// GetTariffsListResponse response on get tariffs list
+// Response from getting a list of tariffs
 type GetTariffsListResponse struct {
 	Tariffs []TariffBilling `json:"tariffs"`
 }
 
-// GetActiveTariffsListResponse response on get active tariffs list
+// Response from getting a list of active tariffs
 type GetActiveTariffsListResponse struct {
 	Tariffs []TariffBilling `json:"tariffs"`
-}
-
-// CloseTariffRequest request on close(archive) tariff
-type CloseTariffRequest struct {
-	TariffId  int64     `json:"tariff_id,omitempty"`
-	CloseDate time.Time `json:"close_date,omitempty"`
-}
-
-// CloseTariffResponse response on close(archive) tariff
-type CloseTariffResponse struct {
-	Success bool `json:"success"`
-}
-
-// SetTariffAsDefaultRequest request on set tariff as default
-type SetTariffAsDefaultRequest struct {
-	TariffId int64 `json:"tariff_id,omitempty"`
-}
-
-// SetTariffAsDefaultResponse response on set tariff as default
-type SetTariffAsDefaultResponse struct {
-	Success bool `json:"success"`
 }

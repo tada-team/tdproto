@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-func NewServerCallBuzz(teamShort TeamShort, chatShort ChatShort, actorShort ContactShort, uid string, timeout time.Duration) (r ServerCallBuzz) {
+func NewServerCallBuzz(teamShort TeamShort, chatShort ChatShort, actorShort ContactShort, uid string, callType CallType, timeout time.Duration) (r ServerCallBuzz) {
 	r.Name = r.GetName()
 	r.Params.TeamShort = teamShort
 	r.Params.ChatShort = chatShort
@@ -15,6 +15,7 @@ func NewServerCallBuzz(teamShort TeamShort, chatShort ChatShort, actorShort Cont
 	r.Params.Icons = chatShort.Icons
 	r.Params.DisplayName = chatShort.DisplayName
 	r.Params.Team = teamShort.Uid
+	r.Params.CallType = callType
 	return r
 }
 
@@ -56,5 +57,5 @@ type serverCallBuzzParams struct {
 	Team string `json:"team"`
 
 	// CallType is a type of call("audio" - audio room, "video" - video room)
-	CallType string `json:"call_type,omitempty"`
+	CallType CallType `json:"call_type"`
 }

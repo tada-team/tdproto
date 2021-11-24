@@ -218,7 +218,14 @@ type Features struct {
 	FirebaseStorageBucket string `json:"firebase_storage_bucket"`
 
 	// Calls version. 0 = disabled, 1 = audio only, 2 = audio+video
+	// Deprecated: use CallsAudioEnabled and CallsVideoEnabled
 	CallsVersion int `json:"calls_version"`
+
+	// CallsAudioEnabled enabled or disabled audio calls
+	CallsAudioEnabled bool `json:"calls_audio_enabled"`
+
+	// CallsVideoEnabled enabled or disabled video calls
+	CallsVideoEnabled bool `json:"calls_video_enabled"`
 
 	// Calls functions enabled for mobile applications
 	MobileCalls bool `json:"mobile_calls"`

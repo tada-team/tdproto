@@ -54,5 +54,5 @@ type OnlineCall struct {
 	OnlineCount int `json:"online_count,omitempty"`
 
 	// CallType is a type of call("audio" - audio room, "video" - video room)
-	CallType string `json:"call_type,omitempty"`
+	CallType CallType `json:"call_type"`
 }
