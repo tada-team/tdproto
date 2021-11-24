@@ -73,6 +73,12 @@ type CreateTariffRequest struct {
 	// Currency of tariff
 	Currency Currency `json:"currency"`
 
+	// Count of minimum workspaces on tariff
+	MinTariffWorkplaces int32 `json:"min_tariff_workplaces"`
+
+	// Minimum step of change count workspaces on tariff
+	MinStepWorkplaces int32 `json:"min_step_workplaces"`
+
 	// Disk space limit per user
 	DiskSpaceQuotaMb string `json:"disk_space_quota_mb,omitempty"`
 
@@ -112,6 +118,9 @@ type CreateTariffRequest struct {
 
 // Request to update the tariff
 type UpdateTariffRequest struct {
+	// Tariff id
+	TariffId string `json:"tariff_id"`
+
 	// Date of closing tariff
 	CloseDate *time.Time `json:"close_date,omitempty"`
 
