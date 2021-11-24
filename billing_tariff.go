@@ -25,6 +25,12 @@ type TariffBilling struct {
 	// Count of free workspaces
 	FreeWorkplace int32 `json:"free_workplace,omitempty"`
 
+	// Count of minimum workspaces on tariff
+	MinTariffWorkplaces int32 `json:"min_tariff_workplaces"`
+
+	// Minimum step of change count workspaces on tariff
+	MinStepWorkplaces int32 `json:"min_step_workplaces"`
+
 	// Disk space limit per user
 	DiskSpaceQuota string `json:"disk_space_quota,omitempty"`
 
@@ -51,6 +57,9 @@ type TariffBilling struct {
 
 	// Maximum count of users in video conference
 	MaxVideoUser int32 `json:"max_video_user,omitempty"`
+
+	// Bitrate of video in video co
+	VideoCallBitrate int32 `json:"video_call_bitrate"`
 
 	// Default tariff flag that is set when registering an account
 	IsDefaultTariff bool `json:"default_tariff,omitempty"`
