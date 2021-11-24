@@ -1,11 +1,29 @@
 package tdproto
 
+import (
+	"time"
+)
+
 // WorkplaceBilling struct of workplace on personal account
 type WorkplaceBilling struct {
 	PersonalAccountId int64  `json:"personal_account_id"`
 	WorkplaceId       int64  `json:"workplace_id,omitempty"`
 	UserId            int64  `json:"user_id,omitempty"`
 	UserUuid          string `json:"user_uuid,omitempty"`
+}
+
+// UserInfo user information
+type UserInfo struct {
+	Uuid         string    `json:"uuid"`
+	Fio          string    `json:"fio,omitempty"`
+	Phone        string    `json:"phone,omitempty"`
+	Email        string    `json:"email,omitempty"`
+	LastActivity time.Time `json:"last_activity,omitempty"`
+}
+
+// UsersInfo users information
+type UsersInfo struct {
+	UserInfo []UserInfo `json:"user_info,omitempty"`
 }
 
 // WorkplaceOptions struct for pagination
@@ -93,4 +111,19 @@ type DeleteUserFromWorkplaceRequest struct {
 // DeleteUserFromWorkplaceResponse response on delete user from workplace on personal account
 type DeleteUserFromWorkplaceResponse struct {
 	Success bool `json:"success,omitempty"`
+}
+
+// GetUsersInfoByUserUUIDArrayRequest request on get user information by array of UUID's users
+type GetUsersInfoByUserUUIDArrayRequest struct {
+	UserUuid []string `json:"user_uuid"`
+	Limit    int32    `json:"limit,omitempty"`
+	Offset   int32    `json:"offset,omitempty"`
+}
+
+// GetUsersInfoByUserUUIDArrayExcludingTeamMembersRequest request on get user information by array of UUID's users excluding team members in uuid team
+type GetUsersInfoByUserUUIDArrayExcludingTeamMembersRequest struct {
+	UserUuid []string `json:"user_uuid"`
+	TeamUuid string   `json:"team_uuid"`
+	Limit    int32    `json:"limit,omitempty"`
+	Offset   int32    `json:"offset,omitempty"`
 }
