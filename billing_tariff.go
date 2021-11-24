@@ -82,9 +82,6 @@ type CreateTariffRequest struct {
 	// Flag of accounting without looking at the number of days before the billing period
 	IsBillingFullTime bool `json:"is_billing_full_time,omitempty"`
 
-	// Default tariff flag that is set when registering an account
-	IsDefaultTariff bool `json:"is_default_tariff,omitempty"`
-
 	// Flag for accounting for unspent days when switching to a new tariff
 	IsRecalcChangeTariff bool `json:"is_recalc_change_tariff,omitempty"`
 
