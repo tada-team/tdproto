@@ -43,6 +43,9 @@ type TariffBilling struct {
 	// Maximum count of users in video conference
 	MaxVideoUser int32 `json:"max_video_user"`
 
+	// Bitrate of video in video co
+	VideoCallBitrate int32 `json:"video_call_bitrate"`
+
 	// Date of opening tariff
 	OpenDate *time.Time `json:"open_date"`
 
@@ -95,7 +98,7 @@ type CreateTariffRequest struct {
 	VideoCallBitrate int32 `json:"video_call_bitrate"`
 
 	// Default tariff flag that is set when registering an account
-	IsDefaultTariff bool `json:"default_tariff,omitempty"`
+	IsDefaultTariff bool `json:"is_default_tariff,omitempty"`
 
 	// Date of opening tariff
 	OpenDate *time.Time `json:"open_date,omitempty"`
