@@ -14,11 +14,11 @@ type WorkplaceBilling struct {
 
 // UserInfo user information
 type UserInfo struct {
-	Uuid         string    `json:"uuid"`
-	Fio          string    `json:"fio,omitempty"`
-	Phone        string    `json:"phone,omitempty"`
-	Email        string    `json:"email,omitempty"`
-	LastActivity time.Time `json:"last_activity,omitempty"`
+	Uuid         string     `json:"uuid"`
+	Fio          string     `json:"fio,omitempty"`
+	Phone        string     `json:"phone,omitempty"`
+	Email        string     `json:"email,omitempty"`
+	LastActivity *time.Time `json:"last_activity,omitempty"`
 }
 
 // UsersInfo users information
