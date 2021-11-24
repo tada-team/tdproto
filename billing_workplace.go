@@ -21,11 +21,6 @@ type UserInfo struct {
 	LastActivity *time.Time `json:"last_activity,omitempty"`
 }
 
-// UsersInfo users information
-type UsersInfo struct {
-	UserInfo []UserInfo `json:"user_info,omitempty"`
-}
-
 // WorkplaceOptions struct for pagination
 type WorkplaceOptions struct {
 	Limit  int32 `json:"limit,omitempty"`
@@ -120,10 +115,20 @@ type GetUsersInfoByUserUUIDArrayRequest struct {
 	Offset   int32    `json:"offset,omitempty"`
 }
 
+// GetUsersInfoByUserUUIDArrayResponse response on get user information by array of UUID's users
+type GetUsersInfoByUserUUIDArrayResponse struct {
+	UserInfo []UserInfo `json:"user_info,omitempty"`
+}
+
 // GetUsersInfoByUserUUIDArrayExcludingTeamMembersRequest request on get user information by array of UUID's users excluding team members in uuid team
 type GetUsersInfoByUserUUIDArrayExcludingTeamMembersRequest struct {
 	UserUuid []string `json:"user_uuid"`
 	TeamUuid string   `json:"team_uuid"`
 	Limit    int32    `json:"limit,omitempty"`
 	Offset   int32    `json:"offset,omitempty"`
+}
+
+// GetUsersInfoByUserUUIDArrayExcludingTeamMembersResponse response on get user information by array of UUID's users excluding team members in uuid team
+type GetUsersInfoByUserUUIDArrayExcludingTeamMembersResponse struct {
+	UserInfo []UserInfo `json:"user_info,omitempty"`
 }
