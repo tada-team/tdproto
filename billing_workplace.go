@@ -6,9 +6,9 @@ import (
 
 // WorkplaceBilling struct of workplace on personal account
 type WorkplaceBilling struct {
-	PersonalAccountId int64  `json:"personal_account_id"`
-	WorkplaceId       int64  `json:"workplace_id,omitempty"`
-	UserId            int64  `json:"user_id,omitempty"`
+	PersonalAccountId string `json:"personal_account_id"`
+	WorkplaceId       string `json:"workplace_id,omitempty"`
+	UserId            string `json:"user_id,omitempty"`
 	UserUuid          string `json:"user_uuid,omitempty"`
 }
 
@@ -34,7 +34,7 @@ type WorkplaceOptions struct {
 
 // GetWorkplacesByPersonalAccountRequest request on get workplaces by personal account
 type GetWorkplacesByPersonalAccountRequest struct {
-	PersonalAccountId int64             `json:"personal_account_id"`
+	PersonalAccountId string            `json:"personal_account_id"`
 	Options           *WorkplaceOptions `json:"options,omitempty"`
 }
 
@@ -45,7 +45,7 @@ type GetWorkplacesByPersonalAccountResponse struct {
 
 // GetUnpaidWorkplacesByPersonalAccountRequest request on get count unpaid workplaces by personal account
 type GetUnpaidWorkplacesByPersonalAccountRequest struct {
-	PersonalAccountId int64 `json:"personal_account_id"`
+	PersonalAccountId string `json:"personal_account_id"`
 }
 
 // GetUnpaidWorkplacesByPersonalAccountResponse response on get count unpaid workplaces by personal account
