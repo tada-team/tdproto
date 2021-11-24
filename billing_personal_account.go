@@ -64,6 +64,33 @@ type CreatePersonalAccountResponse struct {
 	PersonalAccountBilling
 }
 
+// UpdatePersonalAccountRequest request on update personal account
+type UpdatePersonalAccountRequest struct {
+	PersonalAccountId int64  `json:"personal_account_id"`
+	FullName          string `json:"full_name,omitempty"`
+	Phone             string `json:"phone,omitempty"`
+}
+
+// UpdatePersonalAccountResponse response on update personal account
+type UpdatePersonalAccountResponse struct {
+	Success bool `json:"success,omitempty"`
+}
+
+// CheckActivePersonalAccountRequest request on check active personal account
+type CheckActivePersonalAccountRequest struct {
+	PersonalAccountId int64 `json:"personal_account_id"`
+}
+
+// CheckActivePersonalAccountResponse response on check active personal account
+type CheckActivePersonalAccountResponse struct {
+	Success bool `json:"success,omitempty"`
+}
+
+// GetPersonalAccountByIDRequest request on get personal account by ID
+type GetPersonalAccountByIDRequest struct {
+	PersonalAccountId int64 `json:"personal_account_id,omitempty"`
+}
+
 // GetPersonalAccountByIDResponse response on get personal account by ID
 type GetPersonalAccountByIDResponse struct {
 	PersonalAccountBilling

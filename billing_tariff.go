@@ -13,6 +13,12 @@ type TariffBilling struct {
 	// Currency of tariff
 	Currency Currency `json:"currency"`
 
+	// Count of minimum workspaces on tariff
+	MinTariffWorkplaces int32 `json:"min_tariff_workplaces"`
+
+	// Minimum step of change count workspaces on tariff
+	MinStepWorkplaces int32 `json:"min_step_workplaces"`
+
 	// Disk space limit per user
 	DiskSpaceQuotaMb string `json:"disk_space_quota_mb"`
 
@@ -36,6 +42,9 @@ type TariffBilling struct {
 
 	// Maximum count of users in video conference
 	MaxVideoUser int32 `json:"max_video_user"`
+
+	// Bitrate of video in video co
+	VideoCallBitrate int32 `json:"video_call_bitrate"`
 
 	// Date of opening tariff
 	OpenDate *time.Time `json:"open_date"`
@@ -64,6 +73,12 @@ type CreateTariffRequest struct {
 	// Currency of tariff
 	Currency Currency `json:"currency"`
 
+	// Count of minimum workspaces on tariff
+	MinTariffWorkplaces int32 `json:"min_tariff_workplaces"`
+
+	// Minimum step of change count workspaces on tariff
+	MinStepWorkplaces int32 `json:"min_step_workplaces"`
+
 	// Disk space limit per user
 	DiskSpaceQuotaMb string `json:"disk_space_quota_mb,omitempty"`
 
@@ -76,9 +91,6 @@ type CreateTariffRequest struct {
 	// Flag of accounting without looking at the number of days before the billing period
 	IsBillingFullTime bool `json:"is_billing_full_time,omitempty"`
 
-	// Default tariff flag that is set when registering an account
-	IsDefaultTariff bool `json:"is_default_tariff,omitempty"`
-
 	// Flag for accounting for unspent days when switching to a new tariff
 	IsRecalcChangeTariff bool `json:"is_recalc_change_tariff,omitempty"`
 
@@ -87,6 +99,12 @@ type CreateTariffRequest struct {
 
 	// Maximum count of users in video conference
 	MaxVideoUser int32 `json:"max_video_user,omitempty"`
+
+	// Bitrate of video in video co
+	VideoCallBitrate int32 `json:"video_call_bitrate"`
+
+	// Default tariff flag that is set when registering an account
+	IsDefaultTariff bool `json:"is_default_tariff,omitempty"`
 
 	// Date of opening tariff
 	OpenDate *time.Time `json:"open_date,omitempty"`
@@ -100,6 +118,9 @@ type CreateTariffRequest struct {
 
 // Request to update the tariff
 type UpdateTariffRequest struct {
+	// Tariff id
+	TariffId string `json:"tariff_id"`
+
 	// Date of closing tariff
 	CloseDate *time.Time `json:"close_date,omitempty"`
 
