@@ -46,6 +46,9 @@ type TariffBilling struct {
 	// Bitrate of video in video co
 	VideoCallBitrate int32 `json:"video_call_bitrate"`
 
+	// Bitrate of video in video sharing
+	VideoSharingBitrate int32 `json:"video_sharing_bitrate"`
+
 	// Date of opening tariff
 	OpenDate *time.Time `json:"open_date"`
 
@@ -102,6 +105,9 @@ type CreateTariffRequest struct {
 
 	// Bitrate of video in video co
 	VideoCallBitrate int32 `json:"video_call_bitrate"`
+
+	// Bitrate of video in video sharing
+	VideoSharingBitrate int32 `json:"video_sharing_bitrate"`
 
 	// Default tariff flag that is set when registering an account
 	IsDefaultTariff bool `json:"is_default_tariff,omitempty"`
