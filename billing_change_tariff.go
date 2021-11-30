@@ -11,11 +11,6 @@ type ChangeTariffBilling struct {
 	CreateDate        time.Time `json:"create_date,omitempty"`
 }
 
-// GetChangesTariffsByPersonalAccountRequest request on get changes tariffs by personal account
-type GetChangesTariffsByPersonalAccountRequest struct {
-	PersonalAccountId int64 `json:"personal_account_id"`
-}
-
 // GetChangesTariffsByPersonalAccountResponse response on get changes tariffs by personal account
 type GetChangesTariffsByPersonalAccountResponse struct {
 	TariffsChanges []ChangeTariffBilling `json:"tariffs_changes,omitempty"`
@@ -23,9 +18,8 @@ type GetChangesTariffsByPersonalAccountResponse struct {
 
 // CreateChangeTariffOnPersonalAccountRequest request on create change tariff on personal account
 type CreateChangeTariffOnPersonalAccountRequest struct {
-	PersonalAccountId int64     `json:"personal_account_id"`
-	TariffId          int64     `json:"tariff_id"`
-	OpenDate          time.Time `json:"open_date,omitempty"`
+	TariffId int64     `json:"tariff_id"`
+	OpenDate time.Time `json:"open_date,omitempty"`
 }
 
 // CreateChangeTariffOnPersonalAccountResponse response on create change tariff on personal account
@@ -35,8 +29,7 @@ type CreateChangeTariffOnPersonalAccountResponse struct {
 
 // DeleteChangeTariffOnPersonalAccountRequest request on delete change tariff on personal account
 type DeleteChangeTariffOnPersonalAccountRequest struct {
-	PersonalAccountId int64 `json:"personal_account_id"`
-	TariffId          int64 `json:"tariff_id"`
+	TariffId int64 `json:"tariff_id"`
 }
 
 // DeleteChangeTariffOnPersonalAccountResponse response on delete change tariff om personal account
