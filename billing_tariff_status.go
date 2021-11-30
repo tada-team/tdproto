@@ -5,8 +5,8 @@ type TariffStatus string
 
 const (
 	// Tariff is active
-	ActiveTariff TariffStatus = "Active"
+	ActiveTariff TariffStatus = "TARIFF_STATUS_ACTIVE"
 
 	// Tariff in archive
-	ArchiveTariff TariffStatus = "Archive"
+	ArchiveTariff TariffStatus = "TARIFF_STATUS_ARCHIVE"
 )

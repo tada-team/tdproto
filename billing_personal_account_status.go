@@ -5,11 +5,11 @@ type PersonalAccountStatus string
 
 const (
 	// Personal account is active
-	ActiveAccount PersonalAccountStatus = "Active"
+	ActiveAccount PersonalAccountStatus = "PERSONAL_ACCOUNT_STATUS_ACTIVE"
 
 	// Personal account is under financial blocking
-	SuspendedAccount PersonalAccountStatus = "Suspended"
+	SuspendedAccount PersonalAccountStatus = "PERSONAL_ACCOUNT_STATUS_SUSPENDED"
 
 	// Personal account is under administrative blocking
-	BlockedAccount PersonalAccountStatus = "Blocked"
+	BlockedAccount PersonalAccountStatus = "PERSONAL_ACCOUNT_STATUS_BLOCKED"
 )
