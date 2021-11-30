@@ -29,8 +29,7 @@ type WorkplaceOptions struct {
 
 // GetWorkplacesByPersonalAccountRequest request on get workplaces by personal account
 type GetWorkplacesByPersonalAccountRequest struct {
-	PersonalAccountId string            `json:"personal_account_id"`
-	Options           *WorkplaceOptions `json:"options,omitempty"`
+	Options *WorkplaceOptions `json:"options,omitempty"`
 }
 
 // GetWorkplacesByPersonalAccountResponse response on get workplaces by personal account
@@ -55,8 +54,7 @@ type GetWorkplaceByPersonalAccountResponse struct {
 
 // AddWorkplacesOnPersonalAccountRequest request on add workplace on personal account
 type AddWorkplacesOnPersonalAccountRequest struct {
-	PersonalAccountId string `json:"personal_account_id"` // TODO: must be int64
-	CountWorkplaces   int32  `json:"count_workplaces"`
+	CountWorkplaces int32 `json:"count_workplaces"`
 }
 
 // AddWorkplacesOnPersonalAccountResponse response on add workplace on personal account
@@ -66,8 +64,7 @@ type AddWorkplacesOnPersonalAccountResponse struct {
 
 // ActivateWorkplacesOnPersonalAccountRequest request on activate workplace on personal account
 type ActivateWorkplacesOnPersonalAccountRequest struct {
-	PersonalAccountId string `json:"personal_account_id"` // TODO: must be int64
-	CountWorkplaces   int32  `json:"count_workplaces"`
+	CountWorkplaces int32 `json:"count_workplaces"`
 }
 
 // ActivateWorkplacesOnPersonalAccountResponse response on activate workplace on personal account
@@ -77,8 +74,7 @@ type ActivateWorkplacesOnPersonalAccountResponse struct {
 
 // DeleteWorkplacesOnPersonalAccountRequest request on delete workplace on personal account
 type DeleteWorkplacesOnPersonalAccountRequest struct {
-	PersonalAccountId string `json:"personal_account_id"` // TODO: must be int64
-	CountWorkplaces   int32  `json:"count_workplaces"`
+	CountWorkplaces int32 `json:"count_workplaces"`
 }
 
 // DeleteWorkplacesOnPersonalAccountResponse response on delete workplace on personal account
@@ -88,8 +84,7 @@ type DeleteWorkplacesOnPersonalAccountResponse struct {
 
 // AddUserInWorkplaceRequest request on add user in workplace on personal account
 type AddUserInWorkplaceRequest struct {
-	PersonalAccountId string `json:"personal_account_id"` // TODO: must be int64
-	UserUuid          string `json:"user_uuid"`
+	UserUuid string `json:"user_uuid"`
 }
 
 // AddUserInWorkplaceResponse response on add user in workplace on personal account
@@ -99,8 +94,7 @@ type AddUserInWorkplaceResponse struct {
 
 // DeleteUserFromWorkplaceRequest request on delete user from workplace on personal account
 type DeleteUserFromWorkplaceRequest struct {
-	PersonalAccountId string `json:"personal_account_id"` // TODO: must be int64
-	UserUuid          string `json:"user_uuid"`
+	UserUuid string `json:"user_uuid"`
 }
 
 // DeleteUserFromWorkplaceResponse response on delete user from workplace on personal account
@@ -135,8 +129,7 @@ type GetUsersInfoByUserUUIDArrayExcludingTeamMembersResponse struct {
 
 // AddUserInWorkplaceByJidRequest request on add user on workplace by contact JID
 type AddUserInWorkplaceByJidRequest struct {
-	PersonalAccountId string `json:"personal_account_id"` // TODO: must be int64
-	ContactUuid       string `json:"contact_uuid,omitempty"`
+	ContactUuid string `json:"contact_uuid,omitempty"`
 }
 
 // AddUserInWorkplaceByJidResponse response on add user on workplace by contact JID
