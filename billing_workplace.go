@@ -6,16 +6,15 @@ import (
 
 // WorkplaceBilling struct of workplace on personal account
 type WorkplaceBilling struct {
-	PersonalAccountId string `json:"personal_account_id"`
-	WorkplaceId       string `json:"workplace_id,omitempty"`
-	UserId            string `json:"user_id,omitempty"`
-	UserUuid          string `json:"user_uuid,omitempty"`
+	WorkplaceId string `json:"workplace_id,omitempty"`
+	UserId      string `json:"user_id,omitempty"`
+	UserUuid    string `json:"user_uuid,omitempty"`
 }
 
 // UserInfo user information
 type UserInfo struct {
 	Uuid         string     `json:"uuid"`
-	Fio          string     `json:"fio,omitempty"`
+	FullName     string     `json:"full_name,omitempty"`
 	Phone        string     `json:"phone,omitempty"`
 	Email        string     `json:"email,omitempty"`
 	LastActivity *time.Time `json:"last_activity,omitempty"`
@@ -29,18 +28,12 @@ type WorkplaceOptions struct {
 
 // GetWorkplacesByPersonalAccountRequest request on get workplaces by personal account
 type GetWorkplacesByPersonalAccountRequest struct {
-	PersonalAccountId string            `json:"personal_account_id"`
-	Options           *WorkplaceOptions `json:"options,omitempty"`
+	Options *WorkplaceOptions `json:"options,omitempty"`
 }
 
 // GetWorkplacesByPersonalAccountResponse response on get workplaces by personal account
 type GetWorkplacesByPersonalAccountResponse struct {
 	Workplaces []WorkplaceBilling `json:"workplaces,omitempty"`
-}
-
-// GetUnpaidWorkplacesByPersonalAccountRequest request on get count unpaid workplaces by personal account
-type GetUnpaidWorkplacesByPersonalAccountRequest struct {
-	PersonalAccountId string `json:"personal_account_id"`
 }
 
 // GetUnpaidWorkplacesByPersonalAccountResponse response on get count unpaid workplaces by personal account
@@ -55,8 +48,7 @@ type GetWorkplaceByPersonalAccountResponse struct {
 
 // AddWorkplacesOnPersonalAccountRequest request on add workplace on personal account
 type AddWorkplacesOnPersonalAccountRequest struct {
-	PersonalAccountId string `json:"personal_account_id"` // TODO: must be int64
-	CountWorkplaces   int32  `json:"count_workplaces"`
+	CountWorkplaces int32 `json:"count_workplaces"`
 }
 
 // AddWorkplacesOnPersonalAccountResponse response on add workplace on personal account
@@ -66,8 +58,7 @@ type AddWorkplacesOnPersonalAccountResponse struct {
 
 // ActivateWorkplacesOnPersonalAccountRequest request on activate workplace on personal account
 type ActivateWorkplacesOnPersonalAccountRequest struct {
-	PersonalAccountId string `json:"personal_account_id"` // TODO: must be int64
-	CountWorkplaces   int32  `json:"count_workplaces"`
+	CountWorkplaces int32 `json:"count_workplaces"`
 }
 
 // ActivateWorkplacesOnPersonalAccountResponse response on activate workplace on personal account
@@ -77,8 +68,7 @@ type ActivateWorkplacesOnPersonalAccountResponse struct {
 
 // DeleteWorkplacesOnPersonalAccountRequest request on delete workplace on personal account
 type DeleteWorkplacesOnPersonalAccountRequest struct {
-	PersonalAccountId string `json:"personal_account_id"` // TODO: must be int64
-	CountWorkplaces   int32  `json:"count_workplaces"`
+	CountWorkplaces int32 `json:"count_workplaces"`
 }
 
 // DeleteWorkplacesOnPersonalAccountResponse response on delete workplace on personal account
@@ -88,8 +78,7 @@ type DeleteWorkplacesOnPersonalAccountResponse struct {
 
 // AddUserInWorkplaceRequest request on add user in workplace on personal account
 type AddUserInWorkplaceRequest struct {
-	PersonalAccountId string `json:"personal_account_id"` // TODO: must be int64
-	UserUuid          string `json:"user_uuid"`
+	UserUuid string `json:"user_uuid"`
 }
 
 // AddUserInWorkplaceResponse response on add user in workplace on personal account
@@ -99,8 +88,7 @@ type AddUserInWorkplaceResponse struct {
 
 // DeleteUserFromWorkplaceRequest request on delete user from workplace on personal account
 type DeleteUserFromWorkplaceRequest struct {
-	PersonalAccountId string `json:"personal_account_id"` // TODO: must be int64
-	UserUuid          string `json:"user_uuid"`
+	UserUuid string `json:"user_uuid"`
 }
 
 // DeleteUserFromWorkplaceResponse response on delete user from workplace on personal account
@@ -131,4 +119,14 @@ type GetUsersInfoByUserUUIDArrayExcludingTeamMembersRequest struct {
 // GetUsersInfoByUserUUIDArrayExcludingTeamMembersResponse response on get user information by array of UUID's users excluding team members in uuid team
 type GetUsersInfoByUserUUIDArrayExcludingTeamMembersResponse struct {
 	UserInfo []UserInfo `json:"user_info,omitempty"`
+}
+
+// AddUserInWorkplaceByJidRequest request on add user on workplace by contact JID
+type AddUserInWorkplaceByJidRequest struct {
+	ContactUuid string `json:"contact_uuid,omitempty"`
+}
+
+// AddUserInWorkplaceByJidResponse response on add user on workplace by contact JID
+type AddUserInWorkplaceByJidResponse struct {
+	UserInfo
 }

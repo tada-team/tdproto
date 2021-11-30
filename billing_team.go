@@ -4,9 +4,8 @@ import "time"
 
 // TeamBilling struct of billing api
 type TeamBilling struct {
-	PersonalAccountId string    `json:"personal_account_id,omitempty"` // TODO: must be int64
-	TeamUuid          string    `json:"team_uuid,omitempty"`
-	DeleteDate        time.Time `json:"delete_date,omitempty"`
+	TeamUuid   string    `json:"team_uuid,omitempty"`
+	DeleteDate time.Time `json:"delete_date,omitempty"`
 }
 
 // AddTeamOnPersonalAccountRequest request on add team on personal account
