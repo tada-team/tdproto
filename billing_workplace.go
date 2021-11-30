@@ -15,7 +15,7 @@ type WorkplaceBilling struct {
 // UserInfo user information
 type UserInfo struct {
 	Uuid         string     `json:"uuid"`
-	Fio          string     `json:"fio,omitempty"`
+	FullName     string     `json:"full_name,omitempty"`
 	Phone        string     `json:"phone,omitempty"`
 	Email        string     `json:"email,omitempty"`
 	LastActivity *time.Time `json:"last_activity,omitempty"`
@@ -131,4 +131,15 @@ type GetUsersInfoByUserUUIDArrayExcludingTeamMembersRequest struct {
 // GetUsersInfoByUserUUIDArrayExcludingTeamMembersResponse response on get user information by array of UUID's users excluding team members in uuid team
 type GetUsersInfoByUserUUIDArrayExcludingTeamMembersResponse struct {
 	UserInfo []UserInfo `json:"user_info,omitempty"`
+}
+
+// AddUserInWorkplaceByJidRequest request on add user on workplace by contact JID
+type AddUserInWorkplaceByJidRequest struct {
+	PersonalAccountId string `json:"personal_account_id"` // TODO: must be int64
+	ContactUuid       string `json:"contact_uuid,omitempty"`
+}
+
+// AddUserInWorkplaceByJidResponse response on add user on workplace by contact JID
+type AddUserInWorkplaceByJidResponse struct {
+	UserInfo
 }
