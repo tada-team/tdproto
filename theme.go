@@ -112,6 +112,9 @@ type Theme struct {
 	// Icon colors for app
 	Icon *IconColors `json:"ic"`
 
+	// Avatar colors for app
+	Avatar *AvatarColors `json:"avatar"`
+
 	// WebBase colors for web
 	WebBase *WebBase `json:"web_base"`
 
@@ -237,4 +240,10 @@ type WebBase struct {
 	Attention      RGBColor `json:"attention"`
 	AttentionLight RGBColor `json:"attention_light"`
 	Fade           RGBColor `json:"fade"`
+}
+
+// AvatarColors avatar colors for app
+type AvatarColors struct {
+	// TaskDefault color
+	TaskDefault RGBColor `json:"task_default"`
 }
