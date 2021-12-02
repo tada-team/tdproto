@@ -118,6 +118,15 @@ type Theme struct {
 	// WebBase colors for web
 	WebBase *WebBase `json:"web_base"`
 
+	// Bg colors for app
+	Bg *Bg `json:"bg"`
+
+	// Swipe colors for app
+	Swipe *SwipeColors `json:"swipe"`
+
+	// Call colors for app
+	Call CallColors `json:"call"`
+
 	// Deprecated
 	AppAccentColor RGBColor
 
@@ -168,6 +177,12 @@ type FontColors struct {
 
 	// Bubble received color
 	BubbleReceived RGBColor `json:"bubble_received"`
+
+	// TextAvatar color
+	TextAvatar RGBColor `json:"text_avatar"`
+
+	// TextBadge color
+	TextBadge RGBColor `json:"text_badge"`
 }
 
 // MessageColors message colors for app
@@ -204,6 +219,9 @@ type InputColors struct {
 
 	// Error color
 	Error RGBColor `json:"error"`
+
+	// Selection color
+	Selection RGBColor `json:"selection"`
 }
 
 // SwitcherColors switcher colors for app
@@ -229,21 +247,87 @@ type IconColors struct {
 
 // WebBase base colors for web
 type WebBase struct {
-	Brand          RGBColor `json:"brand"`
-	BrandLight     RGBColor `json:"brand_light"`
-	BrandDark      RGBColor `json:"brand_dark"`
-	BackLight      RGBColor `json:"back_light"`
-	Error          RGBColor `json:"error"`
-	ErrorLight     RGBColor `json:"error_light"`
-	Success        RGBColor `json:"success"`
-	SuccessLight   RGBColor `json:"success_light"`
-	Attention      RGBColor `json:"attention"`
+	// Brand color
+	Brand RGBColor `json:"brand"`
+
+	// BrandLight color
+	BrandLight RGBColor `json:"brand_light"`
+
+	// BrandDark color
+	BrandDark RGBColor `json:"brand_dark"`
+
+	// BackLight color
+	BackLight RGBColor `json:"back_light"`
+
+	// Error color
+	Error RGBColor `json:"error"`
+
+	// ErrorLight color
+	ErrorLight RGBColor `json:"error_light"`
+
+	// Success color
+	Success RGBColor `json:"success"`
+
+	// SuccessLight color
+	SuccessLight RGBColor `json:"success_light"`
+
+	// Attention color
+	Attention RGBColor `json:"attention"`
+
+	// AttentionLight color
 	AttentionLight RGBColor `json:"attention_light"`
-	Fade           RGBColor `json:"fade"`
+
+	// Fade color
+	Fade RGBColor `json:"fade"`
 }
 
 // AvatarColors avatar colors for app
 type AvatarColors struct {
 	// TaskDefault color
 	TaskDefault RGBColor `json:"task_default"`
+}
+
+// Bg bg colors for app
+type Bg struct {
+	// BadgeBackground color
+	BadgeBackground RGBColor `json:"badge_background"`
+
+	// Fade color
+	Fade RGBColor `json:"fade"`
+}
+
+// SwipeColors swipe colors for app
+type SwipeColors struct {
+	// Notification color
+	Notification RGBColor `json:"notification"`
+
+	// Call color
+	Call RGBColor `json:"call"`
+
+	// EndCall
+	EndCall RGBColor `json:"end_call"`
+
+	// Hide color
+	Hide RGBColor `json:"hide"`
+
+	// Pin color
+	Pin RGBColor `json:"pin"`
+
+	// Message color
+	Message RGBColor `json:"message"`
+}
+
+// CallColors call colors for app
+type CallColors struct {
+	// CallBarBackground color
+	CallBarBackground RGBColor `json:"callbar_background"`
+
+	// IconCallBar color
+	IconCallBar RGBColor `json:"icon_callbar"`
+
+	// ButtonActive color
+	ButtonActive RGBColor `json:"button_active"`
+
+	// ButtonEndCall color
+	ButtonEndCall RGBColor `json:"button_end_call"`
 }

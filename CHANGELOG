@@ -1,3 +1,6 @@
+v1.49.18
+ - added new color structs for app: theme.CallColors, theme.SwipeColors, theme.Bg
+
 v1.49.16
  - added avatar colors for app to theme.avatar
 
