@@ -125,7 +125,7 @@ type Theme struct {
 	Swipe *SwipeColors `json:"swipe"`
 
 	// Call colors for app
-	Call CallColors `json:"call"`
+	Call *CallColors `json:"call"`
 
 	// Deprecated
 	AppAccentColor RGBColor

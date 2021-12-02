@@ -1,3 +1,6 @@
+v1.49.19
+ - theme.CallColors pointer fixed
+
 v1.49.18
  - added new color structs for app: theme.CallColors, theme.SwipeColors, theme.Bg
 
