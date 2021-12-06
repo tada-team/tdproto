@@ -1,3 +1,6 @@
+v1.49.20
+- feat(calls): add screen share events(client.call.screenshare, server.call.screenshare)
+
 v1.49.19
  - theme.CallColors pointer fixed
 
