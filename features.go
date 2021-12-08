@@ -133,8 +133,8 @@ type Features struct {
 	// Two-factor authentication (2FA) enabled
 	Auth2fa bool `json:"auth_2fa,omitempty"`
 
-	// NTLM authentication enabled
-	AuthByNTLM bool `json:"auth_by_ntlm,omitempty"`
+	// Kerberos authentication enabled
+	AuthByKerberos bool `json:"auth_by_kerberos,omitempty"`
 
 	// Captcha enabled
 	ReCaptchaEnabled bool `json:"is_recaptcha_enabled,omitempty"`
