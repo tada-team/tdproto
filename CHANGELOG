@@ -1,3 +1,6 @@
+v1.50.0
+- feat(auth): add kerberos auth feature flag and drop ntlm flag
+
 v1.49.20
 - feat(calls): add screen share events(client.call.screenshare, server.call.screenshare)
 
