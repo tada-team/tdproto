@@ -64,6 +64,6 @@ type UserWithMe struct {
 	// Registered push devices
 	Devices []PushDevice `json:"devices"`
 
-	// Billing personal account
-	Account PersonalAccountBilling `json:"account"`
+	// Personal account from billing
+	Account PersonalAccountBilling `json:"account,omitempty"`
 }
