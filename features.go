@@ -288,7 +288,7 @@ type Features struct {
 	Calls bool `json:"calls"`
 
 	// Billing services integrations
-	Billing bool `json:"billing"`
+	Billing bool `json:"billing,omitempty"`
 
 	// Deprecated
 	MinAppVersion string `json:"min_app_version"`
