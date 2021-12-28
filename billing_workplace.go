@@ -48,7 +48,7 @@ type GetWorkplaceByPersonalAccountResponse struct {
 
 // AddWorkplacesOnPersonalAccountRequest request on add workplace on personal account
 type AddWorkplacesOnPersonalAccountRequest struct {
-	CountWorkplaces int32 `json:"count_workplaces"`
+	WorkplacesCount int32 `json:"workplaces_count"`
 }
 
 // AddWorkplacesOnPersonalAccountResponse response on add workplace on personal account
