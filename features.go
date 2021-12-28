@@ -103,7 +103,7 @@ type Features struct {
 	// Maximum length for ColorRule description
 	MaxColorRuleDescriptionLength int `json:"max_color_rule_description_length"`
 
-	//Maximum length for urls
+	// Maximum length for urls
 	MaxUrlLength int `json:"max_url_length"`
 
 	// Maximum length for Integration comment
@@ -286,6 +286,9 @@ type Features struct {
 
 	// Deprecated
 	Calls bool `json:"calls"`
+
+	// Billing services integrations
+	Billing bool `json:"billing,omitempty"`
 
 	// Deprecated
 	MinAppVersion string `json:"min_app_version"`
