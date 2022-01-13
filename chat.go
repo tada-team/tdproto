@@ -32,98 +32,35 @@ type DeletedChat struct {
 
 // Chat (direct, group, task) representation
 type Chat struct {
-	// Group/Task/Contact id
-	Jid JID `json:"jid"`
+	// Task urgency, if available in team
+	Urgency *int `chattype:"task" json:"urgency,omitempty"`
 
-	// Chat type
-	ChatType ChatType `json:"chat_type"`
+	// Checked items in checklist. Tasks only
+	NumCheckedItems *uint `chattype:"task" json:"num_checked_items,omitempty"`
 
-	// Base fields (not related to concrete participant) version
-	BaseGentime int64 `json:"base_gentime,omitempty"`
+	// Task importance, if available in team
+	Importance *int `chattype:"task" json:"importance,omitempty"`
 
-	// Chat fields related to concrete participant) version
-	Gentime int64 `json:"gentime"`
-
-	// Creation date, iso datetime
-	Created ISODateTimeString `json:"created"`
-
-	// Title
-	DisplayName string `json:"display_name"`
-
-	// Icons info
-	Icons IconData `json:"icons"`
-
-	// Include unread messages to counters
-	CountersEnabled bool `json:"counters_enabled,omitempty"`
-
-	// Can I call to this chat
-	CanCall bool `json:"can_call,omitempty"`
-
-	// Can I send message to this chat
-	CanSendMessage bool `json:"can_send_message,omitempty"`
-
-	// Why I can't send message to this chat (if can't)
-	CantSendMessageReason string `json:"cant_send_message_reason,omitempty"`
-
-	// Description collapsed. Used for tasks only
-	Collapsed bool `json:"collapsed,omitempty"`
-
-	// Last message draft, if any
-	Draft string `json:"draft,omitempty"`
-
-	// Last message draft version, if any
-	DraftGentime int64 `json:"draft_gentime,omitempty"`
-
-	// Hidden chat
-	Hidden bool `json:"hidden,omitempty"`
-
-	// Push notifications enabled
-	NotificationsEnabled bool `json:"notifications_enabled,omitempty"`
-
-	// Number of important messages
-	NumImportants int `json:"num_importants,omitempty"`
-
-	// Unread counter
-	NumUnread uint `json:"num_unread,omitempty"`
-
-	// Mentions (@) counter
-	NumUnreadNotices uint `json:"num_unread_notices,omitempty"`
-
-	// Last message object
-	LastMessage *Message `json:"last_message,omitempty"`
-
-	// Last read message id, if any
-	LastReadMessageId string `json:"last_read_message_id,omitempty"`
-
-	// Project / section id, if any
-	Section string `json:"section,omitempty"`
-
-	// List of editable fields
-	ChangeableFields []string `json:"changeable_fields,omitempty"`
-
-	// Is chat pinned on top
-	Pinned bool `json:"pinned,omitempty"`
-
-	// Sort ordering for pinned chat
-	PinnedSortOrdering int `json:"pinned_sort_ordering,omitempty"`
+	// Task complexity, number
+	Complexity *int `chattype:"task" json:"complexity,omitempty"`
 
 	// Non-archive participants number
 	NumMembers *uint `json:"num_members,omitempty"`
 
-	// Can I delete this chat
-	CanDelete bool `json:"can_delete,omitempty"`
+	// Last message object
+	LastMessage *Message `json:"last_message,omitempty"`
 
-	// Group or task description
-	Description string `json:"description,omitempty"`
-
-	// Markup entities for description field. Experimental
-	Markup []MarkupEntity `json:"markup,omitempty" tdproto:"readonly"`
-
-	// Present in feed (main screen)
-	Feed bool `json:"feed,omitempty"`
+	// Task spent time, number
+	SpentTime *int `chattype:"task" json:"spent_time,omitempty"`
 
 	// Pinned message for this chat
 	PinnedMessage *Message `json:"pinned_message,omitempty"`
+
+	// My status in group chat
+	Status *GroupStatus `chattype:"group" json:"status,omitempty"`
+
+	// Delete messages in this chat in seconds. Experimental function
+	AutocleanupAge *int `chattype:"group" json:"autocleanup_age,omitempty"`
 
 	// Custom color index from table of colors. Tasks only
 	ColorIndex *uint16 `chattype:"task" json:"color_index,omitempty"`
@@ -131,59 +68,68 @@ type Chat struct {
 	// Items in checklist. Tasks only
 	NumItems *uint `chattype:"task" json:"num_items,omitempty"`
 
-	// Checked items in checklist. Tasks only
-	NumCheckedItems *uint `chattype:"task" json:"num_checked_items,omitempty"`
+	// Task done reason, if any
+	DoneReason string `chattype:"task" json:"done_reason,omitempty"`
 
-	// Assignee contact id. Tasks only
-	Assignee JID `chattype:"task" json:"assignee,omitempty"`
+	// Last message draft, if any
+	Draft string `json:"draft,omitempty"`
 
-	// Task number in this team
-	Num uint `chattype:"task" json:"num,omitempty"`
+	// Why I can't send message to this chat (if can't)
+	CantSendMessageReason string `json:"cant_send_message_reason,omitempty"`
 
-	// Task followers id's. TODO: rename to "followers"
-	Observers []JID `chattype:"task" json:"observers,omitempty"`
-
-	// Task creator
-	Owner JID `chattype:"task" json:"owner,omitempty"`
-
-	// Task status. May be custom
-	TaskStatus string `chattype:"task" json:"task_status,omitempty"`
+	// Group/Task/Contact id
+	Jid JID `json:"jid"`
 
 	// Task title. Generated from number and description
 	Title string `chattype:"task" json:"title,omitempty"`
 
-	// Task done date in iso format, if any
-	Done ISODateTimeString `chattype:"task" json:"done,omitempty"`
+	// Task status. May be custom
+	TaskStatus string `chattype:"task" json:"task_status,omitempty"`
 
-	// Task done reason, if any
-	DoneReason string `chattype:"task" json:"done_reason,omitempty"`
+	// Date of the last message sent even if it was deleted
+	LastActivity ISODateTimeString `json:"last_activity,omitempty"`
+
+	// Title
+	DisplayName string `json:"display_name"`
+
+	// Last read message id, if any
+	LastReadMessageId string `json:"last_read_message_id,omitempty"`
+
+	// Project / section id, if any
+	Section string `json:"section,omitempty"`
+
+	// Task creator
+	Owner JID `chattype:"task" json:"owner,omitempty"`
+
+	// Assignee contact id. Tasks only
+	Assignee JID `chattype:"task" json:"assignee,omitempty"`
 
 	// Task deadline in iso format, if any
 	Deadline ISODateTimeString `chattype:"task" json:"deadline,omitempty"`
 
-	// Is task deadline expired
-	DeadlineExpired bool `chattype:"task" json:"deadline_expired,omitempty"`
+	// Creation date, iso datetime
+	Created ISODateTimeString `json:"created"`
 
-	// Links in description
-	Links MessageLinks `chattype:"task" json:"links,omitempty"`
+	// Chat type
+	ChatType ChatType `json:"chat_type"`
 
-	// Task tags list, if any
-	Tags []string `chattype:"task" json:"tags,omitempty"`
+	// Group or task description
+	Description string `json:"description,omitempty"`
 
-	// Task importance, if available in team
-	Importance *int `chattype:"task" json:"importance,omitempty"`
+	// Task done date in iso format, if any
+	Done ISODateTimeString `chattype:"task" json:"done,omitempty"`
 
-	// Task urgency, if available in team
-	Urgency *int `chattype:"task" json:"urgency,omitempty"`
+	// Tab names
+	Tabs []TaskTabKey `chattype:"task" json:"tabs,omitempty"`
 
-	// Task spent time, number
-	SpentTime *int `chattype:"task" json:"spent_time,omitempty"`
-
-	// Task complexity, number
-	Complexity *int `chattype:"task" json:"complexity,omitempty"`
+	// Parent tasks
+	Parents []Subtask `chattype:"task" json:"parents,omitempty"`
 
 	// Used for "Create task from messages..."
 	LinkedMessages []interface{} `chattype:"task" json:"linked_messages,omitempty"`
+
+	// Markup entities for description field. Experimental
+	Markup []MarkupEntity `json:"markup,omitempty" tdproto:"readonly"`
 
 	// Upload uids for request, upload objects for response
 	Uploads []Upload `chattype:"task" json:"uploads,omitempty"`
@@ -191,17 +137,71 @@ type Chat struct {
 	// Checklist items. Task only
 	Items []TaskItem `chattype:"task" json:"items,omitempty"`
 
-	// Parent tasks
-	Parents []Subtask `chattype:"task" json:"parents,omitempty"`
-
-	// Tab names
-	Tabs []TaskTabKey `chattype:"task" json:"tabs,omitempty"`
-
-	// My status in group chat
-	Status *GroupStatus `chattype:"group" json:"status,omitempty"`
-
 	// Group chat members
 	Members []GroupMembership `chattype:"group" json:"members,omitempty"`
+
+	// Task followers id's. TODO: rename to "followers"
+	Observers []JID `chattype:"task" json:"observers,omitempty"`
+
+	// List of editable fields
+	ChangeableFields []string `json:"changeable_fields,omitempty"`
+
+	// Links in description
+	Links MessageLinks `chattype:"task" json:"links,omitempty"`
+
+	// Task tags list, if any
+	Tags []string `chattype:"task" json:"tags,omitempty"`
+
+	// Icons info
+	Icons IconData `json:"icons"`
+
+	// Sort ordering for pinned chat
+	PinnedSortOrdering int `json:"pinned_sort_ordering,omitempty"`
+
+	// Last message draft version, if any
+	DraftGentime int64 `json:"draft_gentime,omitempty"`
+
+	// Chat fields related to concrete participant) version
+	Gentime int64 `json:"gentime"`
+
+	// Unread counter
+	NumUnread uint `json:"num_unread,omitempty"`
+
+	// Task number in this team
+	Num uint `chattype:"task" json:"num,omitempty"`
+
+	// Base fields (not related to concrete participant) version
+	BaseGentime int64 `json:"base_gentime,omitempty"`
+
+	// Mentions (@) counter
+	NumUnreadNotices uint `json:"num_unread_notices,omitempty"`
+
+	// Number of important messages
+	NumImportants int `json:"num_importants,omitempty"`
+
+	// Deprecated
+	DraftNum int64 `json:"draft_num,omitempty"`
+
+	// Push notifications enabled
+	NotificationsEnabled bool `json:"notifications_enabled,omitempty"`
+
+	// Can I delete this chat
+	CanDelete bool `json:"can_delete,omitempty"`
+
+	// Is chat pinned on top
+	Pinned bool `json:"pinned,omitempty"`
+
+	// Any new team member will be added to this group chat
+	DefaultForAll bool `chattype:"group" json:"default_for_all,omitempty"`
+
+	// Can I call to this chat
+	CanCall bool `json:"can_call,omitempty"`
+
+	// Can I change member status in this group chat
+	CanChangeMemberStatus bool `chattype:"group" json:"can_change_member_status,omitempty"`
+
+	// Hidden chat
+	Hidden bool `json:"hidden,omitempty"`
 
 	// Can I add member to this group chat
 	CanAddMember bool `chattype:"group" json:"can_add_member,omitempty"`
@@ -209,20 +209,20 @@ type Chat struct {
 	// Can I remove member from this group chat
 	CanRemoveMember bool `chattype:"group" json:"can_remove_member,omitempty"`
 
-	// Can I change member status in this group chat
-	CanChangeMemberStatus bool `chattype:"group" json:"can_change_member_status,omitempty"`
+	// Present in feed (main screen)
+	Feed bool `json:"feed,omitempty"`
 
 	// deprecated: use changeable fields
 	CanChangeSettings bool `chattype:"group" json:"can_change_settings,omitempty"`
 
-	// Any new team member will be added to this group chat
-	DefaultForAll bool `chattype:"group" json:"default_for_all,omitempty"`
+	// Description collapsed. Used for tasks only
+	Collapsed bool `json:"collapsed,omitempty"`
 
 	// Readonly for non-admins group chat (Like Channels in Telegram but switchable)
 	ReadonlyForMembers bool `chattype:"group" json:"readonly_for_members,omitempty"`
 
-	// Delete messages in this chat in seconds. Experimental function
-	AutocleanupAge *int `chattype:"group" json:"autocleanup_age,omitempty"`
+	// Can I send message to this chat
+	CanSendMessage bool `json:"can_send_message,omitempty"`
 
 	// Can other team member see this task/group chat
 	Public bool `chattype:"group,task" json:"public,omitempty"`
@@ -236,11 +236,11 @@ type Chat struct {
 	// Can I change Important flag in any message in this chat
 	CanSetImportantAnyMessage bool `json:"can_set_important_any_message,omitempty"`
 
-	// Date of the last message sent even if it was deleted
-	LastActivity ISODateTimeString `json:"last_activity,omitempty"`
+	// Include unread messages to counters
+	CountersEnabled bool `json:"counters_enabled,omitempty"`
 
-	// Deprecated
-	DraftNum int64 `json:"draft_num,omitempty"`
+	// Is task deadline expired
+	DeadlineExpired bool `chattype:"task" json:"deadline_expired,omitempty"`
 }
 
 // Link to sub/sup task
@@ -254,32 +254,35 @@ type Subtask struct {
 	// Task title. Generated from number and description
 	Title string `json:"title"`
 
-	// Task number in this team
-	Num uint `json:"num"`
-
 	// Title
 	DisplayName string `json:"display_name"`
 
-	// Is task or group public for non-guests
-	Public bool `json:"public,omitempty"`
-
 	// Subtask task status
 	TaskStatus string `json:"task_status,omitempty"`
+
+	// Task number in this team
+	Num uint `json:"num"`
+
+	// Is task or group public for non-guests
+	Public bool `json:"public,omitempty"`
 }
 
 // Task checklist item
 type TaskItem struct {
-	// Id
+	// Link to subtask. Optional
+	Subtask *Subtask `json:"subtask,omitempty"`
+
+	// Is task or group public for non-guests
 	Uid string `json:"uid,omitempty"`
 
-	// Object version
-	Gentime int64 `json:"gentime" tdproto:"readonly"`
+	// Text or "#{OtherTaskNumber}"
+	Text string `json:"text"`
 
 	// Sort ordering
 	SortOrdering uint `json:"sort_ordering,omitempty"`
 
-	// Text or "#{OtherTaskNumber}"
-	Text string `json:"text"`
+	// Object version
+	Gentime int64 `json:"gentime" tdproto:"readonly"`
 
 	// Item checked
 	Checked bool `json:"checked,omitempty"`
@@ -289,9 +292,6 @@ type TaskItem struct {
 
 	// Can I change this item
 	CanChange bool `json:"can_change,omitempty"`
-
-	// Link to subtask. Optional
-	Subtask *Subtask `json:"subtask,omitempty"`
 }
 
 // Group chat membership status

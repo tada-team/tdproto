@@ -2,89 +2,87 @@ package tdproto
 
 // Team
 type Team struct {
-	// Team id
-	Uid string `json:"uid" tdproto:"readonly"`
-
-	// Team deleted
-	IsArchive bool `json:"is_archive,omitempty" tdproto:"readonly"`
-
-	// Object version
-	Gentime int64 `json:"gentime" tdproto:"readonly"`
-
-	// Team name
-	Name string `json:"name"`
-
-	// Default task deadline
-	DefaultTaskDeadline string `json:"default_task_deadline,omitempty"`
-
-	// Max message update/deletion age, in seconds
-	MaxMessageUpdateAge int `json:"max_message_update_age"`
-
-	// Team icons
-	Icons IconData `json:"icons" tdproto:"readonly"`
-
-	// User last activity was in this team
-	LastActive bool `json:"last_active" tdproto:"readonly"`
-
-	// What status I can set to other team members
-	ChangeableStatuses []TeamStatus `json:"changeable_statuses,omitempty" tdproto:"readonly"`
-
-	// My profile in this team isn't full
-	BadProfile bool `json:"bad_profile,omitempty" tdproto:"readonly"`
-
-	// Need confirmation after invite to this team
-	NeedConfirmation bool `json:"need_confirmation" tdproto:"readonly"`
-
-	// Patronymic in usernames for this team
-	UsePatronymic bool `json:"use_patronymic,omitempty"`
-
-	// Username fields ordering. Possible values: "family_name", "given_name", "patronymic"
-	UserFields []string `json:"user_fields" tdproto:"readonly"`
-
-	// Family name should be first in display name
-	DisplayFamilyNameFirst bool `json:"display_family_name_first,omitempty"`
-
-	// Use importance field in task
-	UseTaskImportance bool `json:"use_task_importance,omitempty"`
-
-	// Minimal value of task importance. Default is 1
-	TaskImportanceMin int `json:"task_importance_min,omitempty"`
-
-	// Maximum value of task importance. Default is 5
-	TaskImportanceMax int `json:"task_importance_max,omitempty"`
-
-	// Bigger number = bigger importance. Default: lower number = bigger importance
-	TaskImportanceRev bool `json:"task_importance_rev,omitempty"`
-
-	// Use urgency field in task
-	UseTaskUrgency bool `json:"use_task_urgency,omitempty"`
-
-	// Use complexity field in task
-	UseTaskComplexity bool `json:"use_task_complexity,omitempty"`
-
-	// Use spent time field in task
-	UseTaskSpentTime bool `json:"use_task_spent_time,omitempty"`
-
-	// Total uploads size, bytes
-	UploadsSize int64 `json:"uploads_size,omitempty" tdproto:"readonly"`
-
-	// Maximum uploads size, bytes, if any
-	UploadsSizeLimit int64 `json:"uploads_size_limit,omitempty" tdproto:"readonly"`
+	// Color theme, if any
+	Theme *Theme `json:"theme,omitempty" tdproto:"readonly"`
 
 	// Unread message counters
 	Unreads *TeamUnread `json:"unread"`
 
-	// My profile in this team
-	Me Contact `json:"me"`
+	// Сurrent team subscription
+	Subscription Subscription `json:"subscription,omitempty"`
 
-	// Team contacts. Used only for team creation
-	Contacts []Contact `json:"contacts,omitempty" tdproto:"readonly"`
+	// Team id
+	Uid string `json:"uid" tdproto:"readonly"`
+
+	// Default task deadline
+	DefaultTaskDeadline string `json:"default_task_deadline,omitempty"`
 
 	// For single group teams, jid of chat
 	SingleGroup JID `json:"single_group,omitempty" tdproto:"readonly"`
 
-	// Color theme, if any
-	Theme *Theme `json:"theme,omitempty" tdproto:"readonly"`
+	// Team name
+	Name string `json:"name"`
+
+	// Team's available tariff by includig archive ones
+	AvailableTariffs []string `json:"available_tariffs,omitempty"`
+
+	// Username fields ordering. Possible values: "family_name", "given_name", "patronymic"
+	UserFields []string `json:"user_fields" tdproto:"readonly"`
+
+	// Team contacts. Used only for team creation
+	Contacts []Contact `json:"contacts,omitempty" tdproto:"readonly"`
+
+	// What status I can set to other team members
+	ChangeableStatuses []TeamStatus `json:"changeable_statuses,omitempty" tdproto:"readonly"`
+
+	// Team icons
+	Icons IconData `json:"icons" tdproto:"readonly"`
+
+	// My profile in this team
+	Me Contact `json:"me"`
+
+	// Total uploads size, bytes
+	UploadsSize int64 `json:"uploads_size,omitempty" tdproto:"readonly"`
+
+	// Object version
+	Gentime int64 `json:"gentime" tdproto:"readonly"`
+
+	// Max message update/deletion age, in seconds
+	MaxMessageUpdateAge int `json:"max_message_update_age"`
+
+	// Maximum value of task importance. Default is 5
+	TaskImportanceMax int `json:"task_importance_max,omitempty"`
+
+	// Maximum uploads size, bytes, if any
+	UploadsSizeLimit int64 `json:"uploads_size_limit,omitempty" tdproto:"readonly"`
+
+	// Minimal value of task importance. Default is 1
+	TaskImportanceMin int `json:"task_importance_min,omitempty"`
+
+	// Use spent time field in task
+	UseTaskSpentTime bool `json:"use_task_spent_time,omitempty"`
+
+	// Use complexity field in task
+	UseTaskComplexity bool `json:"use_task_complexity,omitempty"`
+
+	// Use urgency field in task
+	UseTaskUrgency bool `json:"use_task_urgency,omitempty"`
+
+	// Bigger number = bigger importance. Default: lower number = bigger importance
+	TaskImportanceRev bool `json:"task_importance_rev,omitempty"`
+
+	// User last activity was in this team
+	LastActive bool `json:"last_active" tdproto:"readonly"`
+
+	// Use importance field in task
+	UseTaskImportance bool `json:"use_task_importance,omitempty"`
+
+	// Family name should be first in display name
+	DisplayFamilyNameFirst bool `json:"display_family_name_first,omitempty"`
+	UsePatronymic          bool `json:"use_patronymic,omitempty"`
+
+	// Team deleted
+	IsArchive bool `json:"is_archive,omitempty" tdproto:"readonly"`
 
 	// Don't show archived users by default
 	HideArchivedUsers bool `json:"hide_archived_users,omitempty"`
@@ -92,11 +90,11 @@ type Team struct {
 	// Team pinned
 	Pinned bool `json:"pinned,omitempty"`
 
-	// Team's available tariff by includig archive ones
-	AvailableTariffs []string `json:"available_tariffs,omitempty"`
+	// Need confirmation after invite to this team
+	NeedConfirmation bool `json:"need_confirmation" tdproto:"readonly"`
 
-	// Сurrent team subscription
-	Subscription Subscription `json:"subscription,omitempty"`
+	// My profile in this team isn't full
+	BadProfile bool `json:"bad_profile,omitempty" tdproto:"readonly"`
 }
 
 // Short team representation. For invites, push notifications, etc. Readonly.

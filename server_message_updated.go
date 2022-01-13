@@ -32,18 +32,18 @@ func (p ServerMessageUpdated) GetName() string { return "server.message.updated"
 
 // Params of the server.message.updated event
 type serverMessageUpdatedParams struct {
-	// Messages data
-	Messages []Message `json:"messages"`
-
-	// true = silently message update, false = new message
-	Delayed bool `json:"delayed"`
-
-	// Chat counters
-	ChatCounters []ChatCounters `json:"chat_counters"`
-
 	// Current team counters
 	TeamUnread *TeamUnread `json:"team_unread"`
 
 	// Total number of unreads, if changed
 	Badge *uint `json:"badge"`
+
+	// Messages data
+	Messages []Message `json:"messages"`
+
+	// Chat counters
+	ChatCounters []ChatCounters `json:"chat_counters"`
+
+	// true = silently message update, false = new message
+	Delayed bool `json:"delayed"`
 }

@@ -14,24 +14,24 @@ type ShortMessage struct {
 	// Message creation datetime (set by server side) or sending datetime in future for draft messages
 	Created ISODateTimeString `json:"created" tdproto:"readonly"`
 
-	// Object version
-	Gentime int64 `json:"gentime" tdproto:"readonly"`
-
 	// Chat type
 	ChatType ChatType `json:"chat_type" tdproto:"readonly"`
 
 	// Chat id
 	Chat JID `json:"chat" tdproto:"readonly"`
 
-	// This message is archive. True or null
+	// Object version
+	Gentime int64 `json:"gentime" tdproto:"readonly"`
+
+	// This message is archive
 	IsArchive bool `json:"is_archive,omitempty" tdproto:"readonly"`
 }
 
 // Upload + ShortMessage
 type UploadShortMessage struct {
-	// Upload information
-	Upload Upload `json:"upload"`
-
 	// Short message information
 	Message ShortMessage `json:"message"`
+
+	// Upload information
+	Upload Upload `json:"upload"`
 }

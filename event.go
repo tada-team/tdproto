@@ -8,8 +8,8 @@ type BaseEvent struct {
 
 // Generic event representation
 type AnyEvent struct {
-	BaseEvent
 	Params *map[string]interface{} `json:"params"`
+	BaseEvent
 }
 
 func (ev BaseEvent) GetName() string      { return ev.Name }

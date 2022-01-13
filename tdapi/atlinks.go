@@ -13,6 +13,12 @@ type AtLinks []AtLink
 
 // @-link autocomplete information
 type AtLink struct {
+	// Icon data, if any
+	Icons *tdproto.IconData `json:"icons,omitempty"`
+
+	// Internal details, if any
+	Meta *AtLinkMeta `json:"meta,omitempty"`
+
 	// What should be inserted to the chat
 	Key string `json:"key"`
 
@@ -21,12 +27,6 @@ type AtLink struct {
 
 	// Hint for user, if any
 	Help string `json:"help,omitempty"`
-
-	// Icon data, if any
-	Icons *tdproto.IconData `json:"icons,omitempty"`
-
-	// Internal details, if any
-	Meta *AtLinkMeta `json:"meta,omitempty"`
 }
 
 // @-link autocomplete details

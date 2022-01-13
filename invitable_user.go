@@ -11,9 +11,9 @@ type InvitableUser struct {
 	// Full name
 	DisplayName string `json:"display_name"`
 
-	// Icons
-	Icons IconData `json:"icons"`
-
 	// Common team uids, if any
 	Teams []string `json:"teams,omitempty"`
+
+	// Icons
+	Icons IconData `json:"icons"`
 }

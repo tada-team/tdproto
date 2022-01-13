@@ -11,16 +11,16 @@ func NewServerUiSettings(namespace string, data UiSettingsData) (r ServerUiSetti
 
 // Part of UI settings changed
 type ServerUiSettings struct {
-	BaseEvent
 	Params ServerUiSettingsParams `json:"params"`
+	BaseEvent
 }
 
 type ServerUiSettingsParams struct {
-	// Namespace. For example: web, app
-	Namespace string `json:"namespace"`
-
 	// UiSettingsData
 	Data UiSettingsData `json:"data"`
+
+	// Namespace. For example: web, app
+	Namespace string `json:"namespace"`
 }
 
 func (p ServerUiSettings) GetName() string { return "server.uisettings" }

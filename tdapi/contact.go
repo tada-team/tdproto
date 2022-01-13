@@ -36,26 +36,26 @@ type Contact struct {
 	// Mood in team
 	Mood string `json:"mood"`
 
-	// Enable debug messages in UI
-	DebugShowActivity bool `json:"debug_show_activity"`
+	// Quiet time finish
+	QuietTimeFinish string `json:"quiet_time_finish"`
 
 	// Status in team
 	Status tdproto.TeamStatus `json:"status"`
 
-	// ContactSection uids, if any
-	Sections []string `json:"sections"`
+	// Timezone, if any
+	Timezone string `json:"timezone"`
 
-	// Use Ctrl/Cmd + Enter instead Enter
-	AltSend bool `json:"alt_send"`
+	// Start silently time (no pushes, no sounds)
+	QuietTimeStart string `json:"quiet_time_start"`
 
 	// Focus mode enabled until
 	FocusUntil tdproto.ISODateTimeString `json:"focus_until"`
 
-	// Use * as @ for mentions
-	AsteriskMention bool `json:"asterisk_mention"`
+	// Default language code
+	DefaultLang string `json:"default_lang"`
 
-	// Send push notifications even contact is online
-	AlwaysSendPushes bool `json:"always_send_pushes"`
+	// ContactSection uids, if any
+	Sections []string `json:"sections"`
 
 	// Hide pushes body
 	HidePushesContent bool `json:"hide_pushes_content"`
@@ -66,17 +66,17 @@ type Contact struct {
 	// Show unread chats first (mobile app)
 	MunreadFirst bool `json:"munread_first"`
 
-	// Default language code
-	DefaultLang string `json:"default_lang"`
+	// Send push notifications even contact is online
+	AlwaysSendPushes bool `json:"always_send_pushes"`
 
-	// Timezone, if any
-	Timezone string `json:"timezone"`
+	// Use * as @ for mentions
+	AsteriskMention bool `json:"asterisk_mention"`
 
-	// Start silently time (no pushes, no sounds)
-	QuietTimeStart string `json:"quiet_time_start"`
+	// Use Ctrl/Cmd + Enter instead Enter
+	AltSend bool `json:"alt_send"`
 
-	// Quiet time finish
-	QuietTimeFinish string `json:"quiet_time_finish"`
+	// Enable debug messages in UI
+	DebugShowActivity bool `json:"debug_show_activity"`
 
 	// Push notifications for group chats
 	GroupNotificationsEnabled bool `json:"group_notifications_enabled"`

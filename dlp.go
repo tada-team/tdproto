@@ -5,9 +5,9 @@ import "time"
 // DLPBasicData structure for basic data (used for team, group, task, etc.)
 type DLPBasicData struct {
 	UUID        string `json:"uuid"`
-	Number      uint   `json:"number"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
+	Number      uint   `json:"number"`
 }
 
 // DLPUserData structure to store sender/receiver user information
@@ -39,15 +39,15 @@ type DLPFileData struct {
 
 // DLPEvent structure to store all information about event
 type DLPEvent struct {
-	UUID         string         `json:"uuid"`
-	EventChannel ChatType       `json:"event_channel"`
 	EventTime    time.Time      `json:"event_time"`
-	MediaType    Mediatype      `json:"media_type"`
-	TeamData     DLPBasicData   `json:"team_data"`
-	SenderData   DLPUserData    `json:"sender_data"`
-	DirectData   DLPUserData    `json:"direct_data"`
 	GroupData    DLPBasicData   `json:"group_data"`
+	TeamData     DLPBasicData   `json:"team_data"`
 	TaskData     DLPBasicData   `json:"task_data"`
 	FileData     DLPFileData    `json:"file_data"`
 	MessageData  DLPMessageData `json:"message_data"`
+	UUID         string         `json:"uuid"`
+	EventChannel ChatType       `json:"event_channel"`
+	MediaType    Mediatype      `json:"media_type"`
+	SenderData   DLPUserData    `json:"sender_data"`
+	DirectData   DLPUserData    `json:"direct_data"`
 }

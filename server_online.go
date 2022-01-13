@@ -50,9 +50,9 @@ type OnlineCall struct {
 	// Call start
 	Start ISODateTimeString `json:"start,omitempty"`
 
-	// Number participants in call
-	OnlineCount int `json:"online_count,omitempty"`
-
 	// CallType is a type of call("audio" - audio room, "video" - video room)
 	CallType CallType `json:"call_type"`
+
+	// Number participants in call
+	OnlineCount int `json:"online_count,omitempty"`
 }

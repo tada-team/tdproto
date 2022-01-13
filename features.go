@@ -7,14 +7,14 @@ const (
 
 // Server information. Readonly.
 type Features struct {
-	// Current host
-	Host string `json:"host"`
+	// Default wallpaper url for mobile apps, if any
+	DefaultWallpaper *Wallpaper `json:"default_wallpaper,omitempty"`
 
-	// Build/revision of server side
-	Build string `json:"build"`
+	// Team entity naming. Experimental.
+	Terms Terms `json:"terms"`
 
-	// Desktop application version
-	DesktopVersion string `json:"desktop_version"`
+	// ReCaptcha Web Key V3
+	ReCaptchaWebKeyV3 string `json:"recaptcha_web_key_v3,omitempty"`
 
 	// Webclient version
 	FrontVersion string `json:"front_version"`
@@ -25,8 +25,8 @@ type Features struct {
 	// Landing page address, if any
 	LandingUrl string `json:"landing_url,omitempty"`
 
-	// Local applications urls
-	AppSchemes []string `json:"app_schemes"`
+	// Current host
+	Host string `json:"host"`
 
 	// Static files server address
 	Userver string `json:"userver"`
@@ -37,7 +37,7 @@ type Features struct {
 	// Link to Google Play
 	AndroidApp string `json:"android_app"`
 
-	// Link to AppStore for corporate app
+	// Link to AppStore for corporate appz
 	IOSCorpApp string `json:"ios_corp_app"`
 
 	// Link to Google Play for corporate app
@@ -55,11 +55,89 @@ type Features struct {
 	// Minimal iOS corp application version required for this server. Used for breaking changes
 	MinCorpIOSVersion string `json:"min_corp_ios_version"`
 
+	// Desktop application version
+	DesktopVersion string `json:"desktop_version"`
+
+	// Name of installation
+	InstallationType string `json:"installation_type"`
+
+	// Frontend sentry.io settings
+	SentryDsnJS string `json:"sentry_dsn_js"`
+
+	// Deprecated
+	MinAppVersion string `json:"min_app_version"`
+
+	// Support email
+	SupportEmail string `json:"support_email"`
+
+	// Custom application icon name, if any
+	CustomAppIconName string `json:"custom_app_icon_name,omitempty"`
+
+	// Build/revision of server side
+	Build string `json:"build"`
+
+	// Safari push id for web-push notifications
+	SafariPushId string `json:"safari_push_id"`
+
+	// Firebase settings for web-push notifications
+	FirebaseStorageBucket string `json:"firebase_storage_bucket"`
+
+	// Firebase settings for web-push notifications
+	FirebaseProjectId string `json:"firebase_project_id"`
+
+	// Firebase settings for web-push notifications
+	FirebaseDatabaseUrl string `json:"firebase_database_url"`
+
+	// Firebase settings for web-push notifications
+	FirebaseAuthDomain string `json:"firebase_auth_domain"`
+
+	// Firebase settings for web-push notifications
+	FirebaseApiKey string `json:"firebase_api_key"`
+
+	// Firebase settings for web-push notifications
+	FirebaseSenderId string `json:"firebase_sender_id"`
+
+	// Firebase settings for web-push notifications
+	FirebaseAppId string `json:"firebase_app_id"`
+
+	// Amplitude api key
+	AmplitudeApiKey string `json:"amplitude_api_key,omitempty"`
+
+	// Yandex metrika counter id
+	Metrika string `json:"metrika"`
+
+	// WebBackground image url, if any
+	WebLoginBackground string `json:"web_login_background,omitempty"`
+
+	// AppBackground image url, if any
+	AppLoginBackground string `json:"app_login_background,omitempty"`
+
 	// Minimal android corp application version required for this server. Used for breaking changes
 	MinCorpAndroidVersion string `json:"min_corp_android_version"`
 
-	// Free registration allowed
-	FreeRegistration bool `json:"free_registration"`
+	// Installation title, used on login screen
+	InstallationTitle string `json:"installation_title,omitempty"`
+
+	// ReCaptcha Web Key V2
+	ReCaptchaWebKeyV2 string `json:"recaptcha_web_key_v2,omitempty"`
+
+	// File Extension Blacklist
+	FileExtensionBlacklist []string `json:"file_extension_blacklist,omitempty"`
+
+	// Local applications urls
+	AppSchemes []string `json:"app_schemes"`
+
+	// External services
+	OAuthServices []OAuthService `json:"oauth_services,omitempty"`
+
+	// File Extension Whitelist
+	FileExtensionWhitelist []string `json:"file_extension_whitelist,omitempty"`
+
+	// ICE servers for WebRTC
+	ICEServers []ICEServer `json:"ice_servers"`
+
+	// Maximum chars for text message
+	MaxMessageLength int `json:"max_message_length"`
 
 	// Maximum size of user's upload
 	MaxUploadMb int `json:"max_upload_mb"`
@@ -70,8 +148,14 @@ type Features struct {
 	// Maximum number of message uploads
 	MaxMessageUploads int `json:"max_message_uploads"`
 
+	// Max number of attempts to enter an invalid PIN code
+	PinCodeWrongLimit int `json:"pin_code_wrong_limit"`
+
 	// Maximum chars for: family_name, given_name, patronymic if any
 	MaxUsernamePartLength int `json:"max_username_part_length"`
+
+	// Maximum length for Integration comment
+	MaxIntegrationCommentLength int `json:"max_integration_comment_length"`
 
 	// Maximum chars for group chat name
 	MaxGroupTitleLength int `json:"max_group_title_length"`
@@ -79,110 +163,27 @@ type Features struct {
 	// Maximum chars for team name
 	MaxTeamTitleLength int `json:"max_team_title_length"`
 
-	// Maximum chars for role in team
-	MaxRoleLength int `json:"max_role_length"`
-
-	// Maximum chars for mood in team
-	MaxMoodLength int `json:"max_mood_length"`
-
-	// Maximum chars for text message
-	MaxMessageLength int `json:"max_message_length"`
-
-	// Maximum length for contact's sections names
-	MaxSectionLength int `json:"max_section_length"`
-
-	// Maximum length for project
-	MaxProjectLength int `json:"max_project_length"`
-
-	// Maximum length for tags
-	MaxTagLength int `json:"max_tag_length"`
-
-	// Maximum length for task title
-	MaxTaskTitleLength int `json:"max_task_title_length"`
-
-	// Maximum length for ColorRule description
-	MaxColorRuleDescriptionLength int `json:"max_color_rule_description_length"`
-
-	// Maximum length for urls
-	MaxUrlLength int `json:"max_url_length"`
-
-	// Maximum length for Integration comment
-	MaxIntegrationCommentLength int `json:"max_integration_comment_length"`
-
-	// Maximum teams for one account
-	MaxTeams int `json:"max_teams"`
+	// Maximum number of participants per call
+	MaxParticipantsPerCall int `json:"max_participants_per_call,omitempty"`
 
 	// Maximum search result
 	MaxMessageSearchLimit int `json:"max_message_search_limit"`
 
-	// Multi nodes mode (federation) enabled
-	MultiNodes bool `json:"multi_nodes,omitempty"`
+	// Maximum teams for one account
+	MaxTeams int `json:"max_teams"`
 
-	// Max inactivity seconds
-	AfkAge int `json:"afk_age"`
+	// Calls version. 0 = disabled, 1 = audio only, 2 = audio+video
+	// Deprecated: use CallsAudioEnabled and CallsVideoEnabled
+	CallsVersion int `json:"calls_version"`
 
-	// Password authentication enabled
-	AuthByPassword bool `json:"auth_by_password,omitempty"`
+	// Maximum chars for role in team
+	MaxRoleLength int `json:"max_role_length"`
 
-	// QR-code / link authentication enabled
-	AuthByQrCode bool `json:"auth_by_qr_code,omitempty"`
+	// Maximum length for urls
+	MaxUrlLength int `json:"max_url_length"`
 
-	// SMS authentication enabled
-	AuthBySms bool `json:"auth_by_sms,omitempty"`
-
-	// Two-factor authentication (2FA) enabled
-	Auth2fa bool `json:"auth_2fa,omitempty"`
-
-	// Kerberos authentication enabled
-	AuthByKerberos bool `json:"auth_by_kerberos,omitempty"`
-
-	// Captcha enabled
-	ReCaptchaEnabled bool `json:"is_recaptcha_enabled,omitempty"`
-
-	// ReCaptcha Web Key V3
-	ReCaptchaWebKeyV3 string `json:"recaptcha_web_key_v3,omitempty"`
-
-	// ReCaptcha Web Key V2
-	ReCaptchaWebKeyV2 string `json:"recaptcha_web_key_v2,omitempty"`
-
-	// Mandatory setting of the pin code in the application
-	IsPinCodeRequired bool `json:"is_pin_code_required"`
-
-	// Max number of attempts to enter an invalid PIN code
-	PinCodeWrongLimit int `json:"pin_code_wrong_limit"`
-
-	// External services
-	OAuthServices []OAuthService `json:"oauth_services,omitempty"`
-
-	// ICE servers for WebRTC
-	ICEServers []ICEServer `json:"ice_servers"`
-
-	// True for premise installation
-	CustomServer bool `json:"custom_server"`
-
-	// Name of installation
-	InstallationType string `json:"installation_type"`
-
-	// Installation title, used on login screen
-	InstallationTitle string `json:"installation_title,omitempty"`
-
-	// Custom application icon name, if any
-	CustomAppIconName string `json:"custom_app_icon_name,omitempty"`
-
-	// AppBackground image url, if any
-	AppLoginBackground string `json:"app_login_background,omitempty"`
-
-	// WebBackground image url, if any
-	WebLoginBackground string `json:"web_login_background,omitempty"`
-
-	// Testing installation
-	IsTesting bool `json:"is_testing"`
-
-	// Yandex metrika counter id
-	Metrika string `json:"metrika"`
-
-	// Amplitude api key
-	AmplitudeApiKey string `json:"amplitude_api_key,omitempty"`
+	// Maximum length for ColorRule description
+	MaxColorRuleDescriptionLength int `json:"max_color_rule_description_length"`
 
 	// Minimal chars number for starting global search
 	MinSearchLength int `json:"min_search_length"`
@@ -190,41 +191,40 @@ type Features struct {
 	// Resend message in n seconds if no confirmation from server given
 	ResendTimeout int `json:"resend_timeout"`
 
-	// Frontend sentry.io settings
-	SentryDsnJS string `json:"sentry_dsn_js"`
+	// Max inactivity seconds
+	AfkAge int `json:"afk_age"`
+
+	// Maximum chars for mood in team
+	MaxMoodLength int `json:"max_mood_length"`
+
+	// Maximum length for task title
+	MaxTaskTitleLength int `json:"max_task_title_length"`
+
+	// Maximum length for tags
+	MaxTagLength int `json:"max_tag_length"`
+
+	// Maximum length for project
+	MaxProjectLength int `json:"max_project_length"`
+
+	// Maximum length for contact's sections names
+	MaxSectionLength int `json:"max_section_length"`
+
+	// QR-code / link authentication enabled
+	AuthByQrCode bool `json:"auth_by_qr_code,omitempty"`
 
 	// Message drafts saved on server
 	ServerDrafts bool `json:"server_drafts"`
 
-	// Firebase settings for web-push notifications
-	FirebaseAppId string `json:"firebase_app_id"`
+	// Testing installation
+	IsTesting bool `json:"is_testing"`
 
-	// Firebase settings for web-push notifications
-	FirebaseSenderId string `json:"firebase_sender_id"`
+	// Captcha enabled
+	ReCaptchaEnabled bool `json:"is_recaptcha_enabled,omitempty"`
 
-	// Firebase settings for web-push notifications
-	FirebaseApiKey string `json:"firebase_api_key"`
-
-	// Firebase settings for web-push notifications
-	FirebaseAuthDomain string `json:"firebase_auth_domain"`
-
-	// Firebase settings for web-push notifications
-	FirebaseDatabaseUrl string `json:"firebase_database_url"`
-
-	// Firebase settings for web-push notifications
-	FirebaseProjectId string `json:"firebase_project_id"`
-
-	// Firebase settings for web-push notifications
-	FirebaseStorageBucket string `json:"firebase_storage_bucket"`
-
-	// Calls version. 0 = disabled, 1 = audio only, 2 = audio+video
-	// Deprecated: use CallsAudioEnabled and CallsVideoEnabled
-	CallsVersion int `json:"calls_version"`
-
-	// CallsAudioEnabled enabled or disabled audio calls
+	// Enabled or disabled audio calls
 	CallsAudioEnabled bool `json:"calls_audio_enabled"`
 
-	// CallsVideoEnabled enabled or disabled video calls
+	// Enabled or disabled video calls
 	CallsVideoEnabled bool `json:"calls_video_enabled"`
 
 	// Calls functions enabled for mobile applications
@@ -236,17 +236,17 @@ type Features struct {
 	// Disallow call from multiple devices. Experimental
 	OnlyOneDevicePerCall bool `json:"only_one_device_per_call,omitempty"`
 
-	// Maximum number of participants per call
-	MaxParticipantsPerCall int `json:"max_participants_per_call,omitempty"`
+	// Multi nodes mode (federation) enabled
+	MultiNodes bool `json:"multi_nodes,omitempty"`
 
-	// Safari push id for web-push notifications
-	SafariPushId string `json:"safari_push_id"`
+	// Password authentication enabled
+	AuthByPassword bool `json:"auth_by_password,omitempty"`
 
 	// Multiple message uploads
 	MessageUploads bool `json:"message_uploads"`
 
-	// Team entity naming. Experimental.
-	Terms Terms `json:"terms"`
+	// True for premise installation
+	CustomServer bool `json:"custom_server"`
 
 	// Cross team communication. Experimental.
 	SingleGroupTeams bool `json:"single_group_teams"`
@@ -257,11 +257,11 @@ type Features struct {
 	// Wiki pages in chats. Experimental
 	AllowAdminMute bool `json:"allow_admin_mute,omitempty"`
 
-	// Default wallpaper url for mobile apps, if any
-	DefaultWallpaper *Wallpaper `json:"default_wallpaper,omitempty"`
+	// SMS authentication enabled
+	AuthBySms bool `json:"auth_by_sms,omitempty"`
 
-	// Support email
-	SupportEmail string `json:"support_email"`
+	// Mandatory setting of the pin code in the application
+	IsPinCodeRequired bool `json:"is_pin_code_required"`
 
 	// True if server has custom theme
 	CustomTheme bool `json:"custom_theme"`
@@ -290,14 +290,14 @@ type Features struct {
 	// Billing services integrations
 	Billing bool `json:"billing,omitempty"`
 
-	// Deprecated
-	MinAppVersion string `json:"min_app_version"`
+	// Two-factor authentication (2FA) enabled
+	Auth2fa bool `json:"auth_2fa,omitempty"`
 
-	// File Extension Whitelist
-	FileExtensionWhitelist []string `json:"file_extension_whitelist,omitempty"`
+	// Kerberos authentication enabled
+	AuthByKerberos bool `json:"auth_by_kerberos,omitempty"`
 
-	// File Extension Blacklist
-	FileExtensionBlacklist []string `json:"file_extension_blacklist,omitempty"`
+	// Free registration allowed
+	FreeRegistration bool `json:"free_registration"`
 
 	// File Extension Whitelist Priority
 	FileExtensionWhitelistPriority bool `json:"file_extension_whitelist_priority,omitempty"`

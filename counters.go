@@ -2,13 +2,13 @@ package tdproto
 
 // Unread messages counter
 type ChatCounters struct {
+	LastReadMessageUid *string           `json:"last_read_message_id"`
 	Jid                JID               `json:"jid"`
 	ChatType           ChatType          `json:"chat_type"`
+	LastActivity       ISODateTimeString `json:"last_activity,omitempty"`
 	Gentime            int64             `json:"gentime"`
 	NumUnread          uint              `json:"num_unread"`
 	NumUnreadNotices   uint              `json:"num_unread_notices"`
-	LastReadMessageUid *string           `json:"last_read_message_id"`
-	LastActivity       ISODateTimeString `json:"last_activity,omitempty"`
 }
 
 // Unread message counters
@@ -27,11 +27,11 @@ type TeamUnread map[ChatType]*Unread
 
 // Unread message counters
 type TeamCounter struct {
-	// Team id
-	Uid string `json:"uid"`
-
 	// Unread message counters
 	Unreads TeamUnread `json:"unread"`
+
+	// Team id
+	Uid string `json:"uid"`
 }
 
 func EmptyTeamUnread() TeamUnread {

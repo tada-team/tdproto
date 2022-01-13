@@ -25,12 +25,12 @@ type serverChatComposingParams struct {
 	// Actor id
 	Actor JID `json:"actor"`
 
+	// Composing event max lifetime
+	ValidUntil ISODateTimeString `json:"valid_until,omitempty"`
+
 	// true = start typing / audio recording, false = stop
 	Composing bool `json:"composing"`
 
 	// true = audiomessage, false = text typing
 	IsAudio bool `json:"is_audio,omitempty"`
-
-	// Composing event max lifetime
-	ValidUntil ISODateTimeString `json:"valid_until,omitempty"`
 }

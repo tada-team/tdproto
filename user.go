@@ -2,14 +2,14 @@ package tdproto
 
 // Account data
 type User struct {
+	// Finish silently time (no pushes, no sounds)
+	QuietTimeFinish *string `json:"quiet_time_finish"`
+
+	// Start silently time (no pushes, no sounds)
+	QuietTimeStart *string `json:"quiet_time_start"`
+
 	// Phone for login
 	Phone string `json:"phone,omitempty"`
-
-	// Email for login
-	Email string `json:"email,omitempty"`
-
-	// Family name
-	FamilyName string `json:"family_name,omitempty"`
 
 	// Given name
 	GivenName string `json:"given_name,omitempty"`
@@ -20,17 +20,17 @@ type User struct {
 	// Default language code
 	DefaultLang string `json:"default_lang,omitempty"`
 
-	// Use Ctrl/Cmd + Enter instead Enter
-	AltSend bool `json:"alt_send"`
+	// Timezone
+	Timezone string `json:"timezone"`
 
-	// Use * as @ for mentions
-	AsteriskMention bool `json:"asterisk_mention"`
+	// Email for login
+	Email string `json:"email,omitempty"`
 
-	// Send pushes even user is online
-	AlwaysSendPushes bool `json:"always_send_pushes"`
+	// Family name
+	FamilyName string `json:"family_name,omitempty"`
 
-	// Hide pushes body
-	HidePushesContent bool `json:"hide_pushes_content"`
+	// Icon data
+	Icons IconData `json:"icons"`
 
 	// Show unread chats in chat list first
 	UnreadFirst bool `json:"unread_first"`
@@ -38,17 +38,17 @@ type User struct {
 	// Show unread chats in chat list first on mobiles
 	MUnreadFirst bool `json:"munread_first"`
 
-	// Timezone
-	Timezone string `json:"timezone"`
+	// Hide pushes body
+	HidePushesContent bool `json:"hide_pushes_content"`
 
-	// Start silently time (no pushes, no sounds)
-	QuietTimeStart *string `json:"quiet_time_start"`
+	// Use * as @ for mentions
+	AsteriskMention bool `json:"asterisk_mention"`
 
-	// Finish silently time (no pushes, no sounds)
-	QuietTimeFinish *string `json:"quiet_time_finish"`
+	// Use Ctrl/Cmd + Enter instead Enter
+	AltSend bool `json:"alt_send"`
 
-	// Icon data
-	Icons IconData `json:"icons"`
+	// Send pushes even user is online
+	AlwaysSendPushes bool `json:"always_send_pushes"`
 }
 
 // Account data with extra information

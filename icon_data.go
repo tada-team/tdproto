@@ -14,12 +14,6 @@ type SingleIcon struct {
 
 // Icon data. For icon generated from display name contains Letters + Color fields.
 type IconData struct {
-	// Small icon
-	Sm SingleIcon `json:"sm"`
-
-	// Large image
-	Lg SingleIcon `json:"lg"`
-
 	// Letters (only for stub icon)
 	Letters string `json:"letters,omitempty"`
 
@@ -31,4 +25,10 @@ type IconData struct {
 
 	// Deprecated
 	Stub string `json:"stub,omitempty"`
+
+	// Small icon
+	Sm SingleIcon `json:"sm"`
+
+	// Large image
+	Lg SingleIcon `json:"lg"`
 }

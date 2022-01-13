@@ -4,7 +4,7 @@ import "github.com/tada-team/tdproto"
 
 type MessageFilter struct {
 	UserParams
-	Paginator
+	DateTo string `schema:"date_to"`
 
 	// ?chat=jid,jid
 	Chat string `schema:"chat"`
@@ -30,8 +30,8 @@ type MessageFilter struct {
 	// ?date_from=dt (include)
 	DateFrom string `schema:"date_from"`
 
-	// ?date_to=dt
-	DateTo string `schema:"date_to"`
+	// ?new_from_inc=msgId (include msgId)
+	NewFromInc string `schema:"new_from_inc"`
 
 	// ?include_deleted=true|false (default: false)
 	IncludeDeleted string `schema:"include_deleted"`
@@ -54,25 +54,26 @@ type MessageFilter struct {
 	// ?old_from_inc=msgId (include msgId)
 	OldFromInc string `schema:"old_from_inc"`
 
-	// ?new_from_inc=msgId (include msgId)
-	NewFromInc string `schema:"new_from_inc"`
-
 	// ?around=msgId (include msgId)
 	Around string `schema:"around"`
+
+	Paginator
 }
 
 type MessageUpdate struct {
+	// Draft message, send later
+	SendAt string `json:"send_at,omitempty"`
+
 	// Important flag. Not required. Default: false
 	Important bool `json:"important,omitempty"`
 
 	// Disable links preview generation. Not required. Default: false
 	Nopreview bool `json:"nopreview,omitempty"`
-
-	// Draft message, send later
-	SendAt string `json:"send_at,omitempty"`
 }
 
 type Message struct {
+	MessageUpdate
+
 	// Message type
 	Type tdproto.Mediatype `json:"type"`
 
@@ -87,8 +88,6 @@ type Message struct {
 
 	// Backward compatibility mode
 	OldStyleAttachment bool `json:"old_style_attachment,omitempty"`
-
-	MessageUpdate
 }
 
 // Message markup with checked links

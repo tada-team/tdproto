@@ -21,11 +21,11 @@ func (p ServerChatDeleted) GetName() string { return "server.chat.deleted" }
 
 // Params of the server.chat.deleted event
 type serverChatDeletedParams struct {
-	// List of deleted chats
-	Chats []DeletedChat `json:"chats"`
-
 	// Current team counters
 	TeamUnread *TeamUnread `json:"team_unread"`
+
+	// List of deleted chats
+	Chats []DeletedChat `json:"chats"`
 
 	// Total number of unreads
 	Badge uint `json:"badge"`

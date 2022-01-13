@@ -48,15 +48,6 @@ type TaskTab struct {
 	// Tab title
 	Title string `json:"title"`
 
-	// Disable this tab when it has no contents
-	HideEmpty bool `json:"hide_empty"`
-
-	// Show unread badge
-	ShowCounter bool `json:"show_counter"`
-
-	// Enable pagination
-	Pagination bool `json:"pagination"`
-
 	// Filters inside tab
 	Filters []TaskFilter `json:"filters"`
 
@@ -65,4 +56,13 @@ type TaskTab struct {
 
 	// Unread tasks with jid and counters
 	UnreadTasks []TaskCounters `json:"unread_tasks"`
+
+	// Disable this tab when it has no contents
+	HideEmpty bool `json:"hide_empty"`
+
+	// Show unread badge
+	ShowCounter bool `json:"show_counter"`
+
+	// Enable pagination
+	Pagination bool `json:"pagination"`
 }

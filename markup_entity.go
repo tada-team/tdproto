@@ -6,6 +6,24 @@ import (
 
 // Markup entity. Experimental
 type MarkupEntity struct {
+	// Text replacement.
+	Repl string `json:"repl,omitempty"`
+
+	// Time, for Time type
+	Time string `json:"time,omitempty"`
+
+	// Marker type
+	Type MarkupType `json:"typ"`
+
+	// Url, for Link type
+	Url string `json:"url,omitempty"`
+
+	// List of internal markup entities
+	Childs []MarkupEntity `json:"childs,omitempty"`
+
+	// Close marker length
+	CloseLength int `json:"cllen,omitempty"`
+
 	// Open marker offset
 	Open int `json:"op"`
 
@@ -14,24 +32,6 @@ type MarkupEntity struct {
 
 	// Close marker offset
 	Close int `json:"cl"`
-
-	// Close marker length
-	CloseLength int `json:"cllen,omitempty"`
-
-	// Marker type
-	Type MarkupType `json:"typ"`
-
-	// Url, for Link type
-	Url string `json:"url,omitempty"`
-
-	// Text replacement.
-	Repl string `json:"repl,omitempty"`
-
-	// Time, for Time type
-	Time string `json:"time,omitempty"`
-
-	// List of internal markup entities
-	Childs []MarkupEntity `json:"childs,omitempty"`
 }
 
 func (e MarkupEntity) String() string {

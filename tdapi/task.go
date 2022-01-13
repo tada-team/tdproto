@@ -4,23 +4,26 @@ import "github.com/tada-team/tdproto"
 
 // Task
 type Task struct {
+	// Task importance
+	Importance *int `json:"importance,omitempty"`
+
+	// Time spent
+	SpentTime *int `json:"spent_time,omitempty"`
+
+	// Task complexity
+	Complexity *int `json:"complexity,omitempty"`
+
+	// Task urgency
+	Urgency *int `json:"urgency,omitempty"`
+
 	// Custom task color
 	CustomColorIndex *uint16 `json:"custom_color_index,omitempty"`
 
 	// Task description
 	Description string `json:"description,omitempty"`
 
-	// Task tags
-	Tags []string `json:"tags,omitempty"`
-
 	// Task section UID
 	SectionUid string `json:"section,omitempty"`
-
-	// User who follow the task
-	Observers []tdproto.JID `json:"observers,omitempty"` // TODO: rename to "followers"
-
-	// Items of the task
-	Items []string `json:"items,omitempty"`
 
 	// User who was assigned the task
 	Assignee tdproto.JID `json:"assignee,omitempty"`
@@ -28,38 +31,36 @@ type Task struct {
 	// Deadline time, if any
 	Deadline tdproto.ISODateTimeString `json:"deadline,omitempty"`
 
-	// Is task or group public for non-guests
-	Public bool `json:"public,omitempty"`
-
 	// Fire a reminder at this time
 	RemindAt tdproto.ISODateTimeString `json:"remind_at,omitempty"`
 
 	// Task status
 	TaskStatus string `json:"task_status,omitempty"`
 
-	// Task importance
-	Importance *int `json:"importance,omitempty"`
-
-	// Task urgency
-	Urgency *int `json:"urgency,omitempty"`
-
-	// Task complexity
-	Complexity *int `json:"complexity,omitempty"`
-
-	// Time spent
-	SpentTime *int `json:"spent_time,omitempty"`
-
-	// Linked messages
-	LinkedMessages []string `json:"linked_messages,omitempty"` // TODO: Message object
-
 	// Task uploads
 	Uploads []string `json:"uploads,omitempty"`
+
+	// Items of the task
+	Items []string `json:"items,omitempty"`
+
+	// User who follow the task
+	Observers []tdproto.JID `json:"observers,omitempty"`
+
+	// Task tags
+	Tags []string `json:"tags,omitempty"`
+
+	// Linked messages
+	LinkedMessages []string `json:"linked_messages,omitempty"`
+
+	// Is task or group public for non-guests
+	Public bool `json:"public,omitempty"`
 }
 
 // Query parameters for listing messages
 type TaskFilter struct {
 	UserParams
-	Paginator
+
+	Tag string `schema:"tag"`
 
 	//* ?sort = [ "created" | "-created" | "last_message" | "-last_message" | "deadline" | "-deadline" ]
 	Sort string `schema:"sort"`
@@ -86,10 +87,10 @@ type TaskFilter struct {
 	Owner string `schema:"owner"`
 
 	//* ?section=[ uid,uid... | "-" ]
-	Section string `schema:"section"` // TODO: rename to ?project=
+	Section string `schema:"section"`
 
-	//* ?tag=[ tag,tag,tag... | "-" ]
-	Tag string `schema:"tag"`
+	//* ?short=true|false
+	Short string `schema:"short"`
 
 	//* ?q=
 	Q string `schema:"q"`
@@ -115,8 +116,7 @@ type TaskFilter struct {
 	//* ?created_lte=<isodate>
 	CreatedLTE string `schema:"created_lte"`
 
-	//* ?short=true|false
-	Short string `schema:"short"`
+	Paginator
 
 	// gentime great than group/chat
 	GentimeGT int64 `schema:"gentime_gt"`
@@ -127,4 +127,3 @@ type TaskColors struct {
 	// Color list
 	Colors []tdproto.TaskColor `json:"colors"`
 }
-

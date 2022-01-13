@@ -18,6 +18,9 @@ func (p ClientChatComposing) GetName() string { return "client.chat.composing" }
 
 // Params of the client.chat.composing event
 type clientChatComposingParams struct {
+	// Message draft data
+	Draft *string `json:"draft,omitempty"`
+
 	// Chat or contact id
 	Jid JID `json:"jid"`
 
@@ -26,7 +29,4 @@ type clientChatComposingParams struct {
 
 	// true = start typing / audio recording, false = stop
 	Composing bool `json:"composing,omitempty"`
-
-	// Message draft data
-	Draft *string `json:"draft,omitempty"`
 }

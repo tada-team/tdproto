@@ -3,8 +3,6 @@ package tdapi
 import "github.com/tada-team/tdproto"
 
 type UploadFilter struct {
-	Paginator
-
 	// ?chat=jid,jid
 	Chat string `schema:"chat"`
 
@@ -19,4 +17,5 @@ type UploadFilter struct {
 
 	// ?text=substr
 	Text string `schema:"text"`
+	Paginator
 }

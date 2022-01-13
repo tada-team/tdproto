@@ -10,23 +10,17 @@ type GroupMembers struct {
 
 // Group form
 type Group struct {
+	// Delete messages in this chat in seconds. Experimental function
+	AutocleanupAge *int `json:"autocleanup_age"`
+
 	// Group title
 	DisplayName string `json:"display_name"`
 
 	// Group description, optional
 	Description string `json:"description"`
 
-	// Readonly for non-admins group chat (Like Channels in Telegram bug switchable)
-	ReadonlyForMembers bool `json:"readonly_for_members"`
-
-	// Is task or group public for non-guests
-	Public bool `json:"public"`
-
-	// Any new team member will be added to this group chat
-	DefaultForAll bool `json:"default_for_all"`
-
-	// Delete messages in this chat in seconds. Experimental function
-	AutocleanupAge *int `json:"autocleanup_age"`
+	// Deprecated
+	Section string `json:"section"`
 
 	// Pinned message for this group
 	PinnedMessage string `json:"pinned_message"`
@@ -34,6 +28,12 @@ type Group struct {
 	// Group members list
 	Members []tdproto.GroupMembership `json:"members"`
 
-	// Deprecated
-	Section string `json:"section"`
+	// Is task or group public for non-guests
+	Public bool `json:"public"`
+
+	// Any new team member will be added to this group chat
+	DefaultForAll bool `json:"default_for_all"`
+
+	// Readonly for non-admins group chat (Like Channels in Telegram bug switchable)
+	ReadonlyForMembers bool `json:"readonly_for_members"`
 }

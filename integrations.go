@@ -5,11 +5,11 @@ type IntegrationField struct {
 	// Label
 	Label string `json:"label"`
 
-	// Is field readonly
-	Readonly bool `json:"readonly"`
-
 	// Current value
 	Value string `json:"value"`
+
+	// Is field readonly
+	Readonly bool `json:"readonly"`
 }
 
 // Integration form
@@ -26,6 +26,9 @@ type IntegrationForm struct {
 
 // Integration for concrete chat
 type Integration struct {
+	// Creation datetime, iso
+	Form IntegrationForm `json:"form"`
+
 	// Id
 	Uid string `json:"uid,omitempty"`
 
@@ -34,12 +37,6 @@ type Integration struct {
 
 	// Creation datetime, iso
 	Created ISODateTimeString `json:"created,omitempty"`
-
-	// Integration enabled
-	Enabled bool `json:"enabled"`
-
-	// Integration form
-	Form IntegrationForm `json:"form"`
 
 	// Chat id
 	Group JID `json:"group"`
@@ -51,6 +48,9 @@ type Integration struct {
 	Kind string `json:"kind"`
 
 	Title string `json:"-"`
+
+	// Integration enabled
+	Enabled bool `json:"enabled"`
 }
 
 // Integration kind
@@ -61,14 +61,14 @@ type IntegrationKind struct {
 	// Plugin title
 	Title string `json:"title"`
 
-	// Integration template
-	Template Integration `json:"template"`
-
 	// Path to icon
 	Icon string `json:"icon"`
 
 	// Plugin description
 	Description string `json:"description"`
+
+	// Integration template
+	Template Integration `json:"template"`
 }
 
 // Complete integrations data, as received from server

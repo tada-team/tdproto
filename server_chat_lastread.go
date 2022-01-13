@@ -18,11 +18,11 @@ func (p ServerChatLastread) GetName() string { return "server.chat.lastread" }
 
 // Params of the server.chat.lastread event
 type serverChatLastreadParams struct {
-	// Chat counters
-	Chats []ChatCounters `json:"chats"`
-
 	// Current team counters
 	TeamUnread *TeamUnread `json:"team_unread"`
+
+	// Chat counters
+	Chats []ChatCounters `json:"chats"`
 
 	// Total number of unreads
 	Badge uint `json:"badge"`
