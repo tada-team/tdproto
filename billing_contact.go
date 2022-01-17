@@ -2,11 +2,11 @@ package tdproto
 
 type CreateBillingContactRequest struct {
 	Phone      string     `json:"phone"`
-	GivenName  string     `json:"given_name"`
-	FamilyName string     `json:"family_name"`
-	Patronymic string     `json:"patronymic"`
-	Status     TeamStatus `json:"status"`
-	Role       string     `json:"role"`
-	UserUid    string     `json:"user_uid"`
-	Sections   []string   `json:"sections"`
+	GivenName  string     `json:"given_name,omitempty"`
+	FamilyName string     `json:"family_name,omitempty"`
+	Patronymic string     `json:"patronymic,omitempty"`
+	Status     TeamStatus `json:"status,omitempty"`
+	Role       string     `json:"role,omitempty"`
+	UserUid    string     `json:"user_uid,omitempty"`
+	Sections   []string   `json:"sections,omitempty"`
 }
