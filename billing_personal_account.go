@@ -109,3 +109,15 @@ type UnblockPersonalAccountResponse struct {
 type SuspendPersonalAccountResponse struct {
 	Success bool `json:"success"`
 }
+
+type GetTeamsOnPersonalAccountResponse struct {
+	Teams []GetTeamOnPersonalAccountResponse `json:"teams"`
+}
+
+type GetTeamOnPersonalAccountResponse struct {
+	PersonalAccountId string    `json:"personal_account_id"`
+	TeamId            string    `json:"team_id"`
+	TeamUuid          string    `json:"team_uuid"`
+	OpenDate          time.Time `json:"open_date"`
+	CloseDate         time.Time `json:"close_date,omitempty"`
+}
