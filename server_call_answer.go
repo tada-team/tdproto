@@ -20,20 +20,20 @@ func (p ServerCallAnswer) GetName() string { return "server.call.answer" }
 
 // Params of the server.call.answer event
 type serverCallAnswerParams struct {
+	// SDP data
+	JSEP JSEP `json:"jsep"`
+
 	// Chat or contact id
 	Jid JID `json:"jid"`
+
+	// Call id
+	Uid string `json:"uid"`
 
 	// List of ICE candidates (when trickle = false)
 	Candidates []serverCallAnswerCandidate `json:"candidates,omitempty"`
 
 	// Current call participants
 	Onliners []CallOnliner `json:"onliners,omitempty"`
-
-	// SDP data
-	JSEP JSEP `json:"jsep"`
-
-	// Call id
-	Uid string `json:"uid"`
 }
 
 // ICE candidate for call answer

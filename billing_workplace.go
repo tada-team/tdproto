@@ -13,11 +13,11 @@ type WorkplaceBilling struct {
 
 // UserInfo user information
 type UserInfo struct {
+	LastActivity *time.Time `json:"last_activity,omitempty"`
 	Uuid         string     `json:"uuid"`
 	FullName     string     `json:"full_name,omitempty"`
 	Phone        string     `json:"phone,omitempty"`
 	Email        string     `json:"email,omitempty"`
-	LastActivity *time.Time `json:"last_activity,omitempty"`
 }
 
 // WorkplaceOptions struct for pagination
@@ -110,8 +110,8 @@ type GetUsersInfoByUserUUIDArrayResponse struct {
 
 // GetUsersInfoByUserUUIDArrayExcludingTeamMembersRequest request on get user information by array of UUID's users excluding team members in uuid team
 type GetUsersInfoByUserUUIDArrayExcludingTeamMembersRequest struct {
-	UserUuid []string `json:"user_uuid"`
 	TeamUuid string   `json:"team_uuid"`
+	UserUuid []string `json:"user_uuid"`
 	Limit    int32    `json:"limit,omitempty"`
 	Offset   int32    `json:"offset,omitempty"`
 }

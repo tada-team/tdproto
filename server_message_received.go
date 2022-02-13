@@ -8,14 +8,14 @@ type ReceivedMessage struct {
 	// Message id
 	MessageId string `json:"message_id"`
 
-	// Is received
-	Received bool `json:"received"`
+	// Debug message, if any
+	Debug string `json:"_debug,omitempty"`
 
 	// Number of contacts received this message. Experimental.
 	NumReceived int `json:"num_received,omitempty"`
 
-	// Debug message, if any
-	Debug string `json:"_debug,omitempty"`
+	// Is received
+	Received bool `json:"received"`
 }
 
 func NewServerMessageReceived(messages []ReceivedMessage) (r ServerMessageReceived) {

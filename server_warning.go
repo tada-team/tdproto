@@ -9,17 +9,17 @@ func NewServerWarning(message, orig string) (r ServerWarning) {
 
 // Something went wrong with client message
 type ServerWarning struct {
-	BaseEvent
 	Params serverWarningParams `json:"params"`
+	BaseEvent
 }
 
 func (p ServerWarning) GetName() string { return "server.warning" }
 
 // Params of the server.warning event
 type serverWarningParams struct {
-	// Message
-	Message string `json:"message"`
-
 	// Debug information
 	Orig interface{} `json:"orig"`
+
+	// Message
+	Message string `json:"message"`
 }

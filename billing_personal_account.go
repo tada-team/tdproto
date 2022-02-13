@@ -4,6 +4,11 @@ import "time"
 
 // PersonalAccountBilling struct of billing api
 type PersonalAccountBilling struct {
+	// Status of personal account
+	Status PersonalAccountStatus `json:"status"`
+
+	// Date of next debiting funds
+	NextBillingDate time.Time `json:"next_billing_date"`
 
 	// PersonalAccountBilling ID
 	PersonalAccountId string `json:"personal_account_id"` // TODO: must be int64
@@ -28,12 +33,6 @@ type PersonalAccountBilling struct {
 
 	// Amount of Discount on personal account
 	DiscountAmount int32 `json:"discount_amount"`
-
-	// Status of personal account
-	Status PersonalAccountStatus `json:"status"`
-
-	// Date of next debiting funds
-	NextBillingDate time.Time `json:"next_billing_date"`
 
 	// Count of teams on personal account
 	TeamCount int32 `json:"team_count"`

@@ -5,17 +5,17 @@ type Section struct {
 	// Section uid
 	Uid string `json:"uid"`
 
-	// Sort ordering
-	SortOrdering uint `json:"sort_ordering"`
-
 	// Name
 	Name string `json:"name"`
 
-	// Object version
-	Gentime int64 `json:"gentime"`
-
 	// Description, if any
 	Description string `json:"description,omitempty"`
+
+	// Sort ordering
+	SortOrdering uint `json:"sort_ordering"`
+
+	// Object version
+	Gentime int64 `json:"gentime"`
 
 	// Is deleted
 	IsArchive bool `json:"is_archive,omitempty"`

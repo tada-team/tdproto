@@ -29,33 +29,33 @@ func (p ServerCallBuzz) GetName() string { return "server.call.buzz" }
 
 // Params of the server.call.buzz event
 type serverCallBuzzParams struct {
-	// Chat or contact id
-	Jid JID `json:"jid"`
-
-	// Chat icons
-	Icons IconData `json:"icons"`
-
-	// Chat title
-	DisplayName string `json:"display_name"`
+	// Short chat information
+	ChatShort ChatShort `json:"chat"`
 
 	// Short team information
 	TeamShort TeamShort `json:"teaminfo"`
 
-	// Short chat information
-	ChatShort ChatShort `json:"chat"`
+	// Chat icons
+	Icons IconData `json:"icons"`
 
-	// Short call creator information
-	ActorShort ContactShort `json:"actor"`
+	// Chat or contact id
+	Jid JID `json:"jid"`
+
+	// Chat title
+	DisplayName string `json:"display_name"`
 
 	// Call id
 	Uid string `json:"uid"`
-
-	// Number of seconds for stop buzzing
-	BuzzTimeout int `json:"buzz_timeout"`
 
 	// Deprecated
 	Team string `json:"team"`
 
 	// CallType is a type of call("audio" - audio room, "video" - video room)
 	CallType CallType `json:"call_type"`
+
+	// Short call creator information
+	ActorShort ContactShort `json:"actor"`
+
+	// Number of seconds for stop buzzing
+	BuzzTimeout int `json:"buzz_timeout"`
 }

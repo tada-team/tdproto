@@ -4,10 +4,10 @@ import "time"
 
 // ChangeTariffBilling struct of changes tariffs by personal account
 type ChangeTariffBilling struct {
-	TariffId   string    `json:"tariff_id"` // TODO: must be int64
 	OpenDate   time.Time `json:"open_date,omitempty"`
 	CloseDate  time.Time `json:"close_date,omitempty"`
 	CreateDate time.Time `json:"create_date,omitempty"`
+	TariffId   string    `json:"tariff_id"` // TODO: must be int64
 }
 
 // GetChangesTariffsByPersonalAccountResponse response on get changes tariffs by personal account
@@ -17,8 +17,8 @@ type GetChangesTariffsByPersonalAccountResponse struct {
 
 // CreateChangeTariffOnPersonalAccountRequest request on create change tariff on personal account
 type CreateChangeTariffOnPersonalAccountRequest struct {
-	TariffId string    `json:"tariff_id"` // TODO: must be int64
 	OpenDate time.Time `json:"open_date,omitempty"`
+	TariffId string    `json:"tariff_id"` // TODO: must be int64
 }
 
 // CreateChangeTariffOnPersonalAccountResponse response on create change tariff on personal account

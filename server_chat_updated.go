@@ -22,11 +22,11 @@ func (p ServerChatUpdated) GetName() string { return "server.chat.updated" }
 
 // Params of the server.chat.updated event
 type serverChatUpdatedParams struct {
-	// Chat counters
-	Chats []Chat `json:"chats"`
-
 	// Current team counters
 	TeamUnread *TeamUnread `json:"team_unread"`
+
+	// Chat counters
+	Chats []Chat `json:"chats"`
 
 	// Total number of unreads
 	Badge uint `json:"badge"`

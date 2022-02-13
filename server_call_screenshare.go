@@ -18,12 +18,12 @@ func (p ServerCallScreenShare) GetName() string { return "server.call.screenshar
 
 // Params of the server.call.screenshare event
 type serverCallScreenShareParams struct {
-	// ScreenShareEnabled enabled or disabled screen share
-	ScreenShareEnabled bool `json:"screenshare_enabled"`
-
-	// CallJid - Chat or contact id
+	// Chat or contact id
 	CallJid JID `json:"call_jid"`
 
-	// ActorJid - contact id which enable/disable screen sharing
+	// Contact id which enable/disable screen sharing
 	ActorJid JID `json:"actor_jid"`
+
+	// Enabled or disabled screen share
+	ScreenShareEnabled bool `json:"screenshare_enabled"`
 }

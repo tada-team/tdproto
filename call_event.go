@@ -8,9 +8,6 @@ type CallEvent struct {
 	// Call id
 	Uid string `json:"uid"`
 
-	// Call buzzing
-	Buzz bool `json:"buzz,omitempty"`
-
 	// Creation date, iso datetime
 	Created ISODateTimeString `json:"created"`
 
@@ -20,9 +17,6 @@ type CallEvent struct {
 	// Call finish
 	Finish ISODateTimeString `json:"finish,omitempty"`
 
-	// Call record enabled
-	Audiorecord bool `json:"audiorecord"`
-
 	// Call participants
 	Onliners []CallOnliner `json:"onliners,omitempty"`
 
@@ -31,6 +25,12 @@ type CallEvent struct {
 
 	// Deprecated: use gentime or created
 	Timestamp int64 `json:"timestamp"`
+
+	// Call record enabled
+	Audiorecord bool `json:"audiorecord"`
+
+	// Call buzzing
+	Buzz bool `json:"buzz,omitempty"`
 }
 
 // Call participant
@@ -47,21 +47,21 @@ type CallOnliner struct {
 	// Contact icon
 	Icon string `json:"icon"`
 
+	// Member devices, strictly one for now
+	Devices []CallDevice `json:"devices"`
+
 	// Microphone muted. Computed from devices muted states
 	Muted bool `json:"muted"`
 
 	// Video state
 	EnabledVideo bool `json:"enabled_video"`
-
-	// Member devices, strictly one for now
-	Devices []CallDevice `json:"devices"`
 }
 
 // Call participant device
 type CallDevice struct {
-	// Device muted
-	Muted bool `json:"muted"`
-
 	// Device description
 	Useragent string `json:"useragent"`
+
+	// Device muted
+	Muted bool `json:"muted"`
 }

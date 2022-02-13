@@ -3,8 +3,8 @@ package tdapi
 import "github.com/tada-team/tdproto"
 
 type Integration struct {
-	// Enabled
-	Enabled bool `json:"enabled"`
+	// Integration form
+	IntegrationForm *tdproto.IntegrationForm `json:"form"`
 
 	// Optional commend
 	Comment string `json:"comment"`
@@ -18,6 +18,6 @@ type Integration struct {
 	// WebhookUrl, if any
 	WebhookUrl string `json:"webhook_url"`
 
-	// Integration form
-	IntegrationForm *tdproto.IntegrationForm `json:"form"`
+	// Enabled
+	Enabled bool `json:"enabled"`
 }

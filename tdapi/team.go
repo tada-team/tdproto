@@ -3,17 +3,17 @@ package tdapi
 import "github.com/tada-team/tdproto"
 
 type Team struct {
+	// Max message update/deletion age, in seconds
+	MaxMessageUpdateAge interface{} `json:"max_message_update_age"`
+
 	// Team name
 	Name string `json:"name"`
 
 	// Default task deadline
 	DefaultTaskDeadline string `json:"default_task_deadline"`
 
-	// Max message update/deletion age, in seconds
-	MaxMessageUpdateAge interface{} `json:"max_message_update_age"`
-
-	// Patronymic in usernames for this team
-	UsePatronymic bool `json:"use_patronymic"`
+	// Contacts (for creation only)
+	Contacts []Contact `json:"contacts"`
 
 	// Family name should be first in display name
 	DisplayFamilyNameFirst bool `json:"display_family_name_first"`
@@ -21,8 +21,8 @@ type Team struct {
 	// Use importance field in task
 	UseTaskImportance bool `json:"use_task_importance"`
 
-	// Reverse importance
-	TaskImportanceRev bool `json:"task_importance_rev"`
+	// Patronymic in usernames for this team
+	UsePatronymic bool `json:"use_patronymic"`
 
 	// Use urgency field in task
 	UseTaskUrgency bool `json:"use_task_urgency"`
@@ -39,8 +39,8 @@ type Team struct {
 	// Team pinned
 	Pinned bool `json:"pinned,omitempty"`
 
-	// Contacts (for creation only)
-	Contacts []Contact `json:"contacts"`
+	// Reverse importance
+	TaskImportanceRev bool `json:"task_importance_rev"`
 }
 
 // Invitation information
