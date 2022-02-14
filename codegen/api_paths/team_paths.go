@@ -9,6 +9,13 @@ var TeamPaths = []PathSpec{
 			Response:    []tdproto.Team{},
 			Description: "Get the list of teams on the server.",
 		},
+		Post: &OperationSpec{
+			Request:             tdproto.Team{},
+			Response:            tdproto.Team{},
+			Description:         "Create new team.",
+			RequestDescription:  ":tdproto:ref:`Team` object with fields of new team.",
+			ResponseDescription: ":tdproto:ref:`Team` of new team.",
+		},
 	},
 	{
 		Path: "/api/v4/teams/{team_id}",
