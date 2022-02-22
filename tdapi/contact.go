@@ -5,6 +5,9 @@ import "github.com/tada-team/tdproto"
 type ContactFilter struct {
 	// Comma separated statuses in team
 	Status string `schema:"status"`
+
+	//* ?id=jid,jid
+	ID string `schema:"id"`
 }
 
 // Contact invite/edit form

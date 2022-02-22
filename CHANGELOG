@@ -1,3 +1,6 @@
+v1.50.9
+- feat(contact): add id field for contactFilter
+
 v1.50.0
 - feat(auth): add kerberos auth feature flag and drop ntlm flag
 
