@@ -85,6 +85,10 @@ type MeetingsUpdateRequest struct {
 	IsOutside  bool   `json:"is_outside,omitempty"`
 }
 
+type MeetingsDeleteRequestParams struct {
+	Date ISODateTimeString `json:"date,omitempty"`
+}
+
 type MeetingMember struct {
 	Contact           Contact               `json:"contact"`
 	Presence          MeetingMemberPresence `json:"presence"`
