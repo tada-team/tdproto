@@ -3,16 +3,17 @@ package tdproto
 type MeetingMemberStatus string
 
 const (
-	MeetingMemberStatusOwner  MeetingMemberStatus = "owner"
-	MeetingMemberStatusAdmin  MeetingMemberStatus = "admin"
-	MeetingMemberStatusMember MeetingMemberStatus = "member"
+	MeetingMemberStatusOwner          MeetingMemberStatus = "MEETING_MEMBER_STATUS_OWNER"
+	MeetingMemberStatusAdmin          MeetingMemberStatus = "MEETING_MEMBER_STATUS_ADMIN"
+	MeetingMemberStatusMember         MeetingMemberStatus = "MEETING_MEMBER_STATUS_MEMBER"
+	MeetingMemberStatusOptionalMember MeetingMemberStatus = "MEETING_MEMBER_STATUS_OPTIONAL_MEMBER"
 )
 
-type MeetingMemberPresence string
+type MeetingPresenceStatus string
 
 const (
-	MeetingMemberStatusAccepted MeetingMemberStatus = "accepted"
-	MeetingMemberStatusRejected MeetingMemberStatus = "rejected"
-	MeetingMemberStatusDoubts   MeetingMemberStatus = "doubts"
-	MeetingMemberStatusWaiting  MeetingMemberStatus = "waiting"
+	MeetingPresenceStatusAccepted MeetingPresenceStatus = "MEETING_PRESENCE_STATUS_ACCEPTED"
+	MeetingPresenceStatusRejected MeetingPresenceStatus = "MEETING_PRESENCE_STATUS_REJECTED"
+	MeetingPresenceStatusDoubts   MeetingPresenceStatus = "MEETING_PRESENCE_STATUS_DOUBTS"
+	MeetingPresenceStatusWaiting  MeetingPresenceStatus = "MEETING_PRESENCE_STATUS_WAITING"
 )
