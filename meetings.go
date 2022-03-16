@@ -40,23 +40,6 @@ type MeetingsResponse struct {
 	Total  int       `json:"total,omitempty"`
 }
 
-type MeetingMemberStatus string
-
-const (
-	MeetingMemberStatusOwner  MeetingMemberStatus = "owner"
-	MeetingMemberStatusAdmin  MeetingMemberStatus = "admin"
-	MeetingMemberStatusMember MeetingMemberStatus = "member"
-)
-
-type MeetingMemberPresence string
-
-const (
-	MeetingMemberStatusAccepted MeetingMemberStatus = "accepted"
-	MeetingMemberStatusRejected MeetingMemberStatus = "rejected"
-	MeetingMemberStatusDoubts   MeetingMemberStatus = "doubts"
-	MeetingMemberStatusWaiting  MeetingMemberStatus = "waiting"
-)
-
 type MeetingsCreateRequestMembers struct {
 	Jid        JID                 `json:"jid"`
 	Status     MeetingMemberStatus `json:"status,omitempty"`
@@ -70,7 +53,7 @@ type MeetingsCreateRequest struct {
 	Freq          int                            `json:"freq,omitempty"`
 	FreqDays      []int                          `json:"freq_days,omitempty"`
 	Members       []MeetingsCreateRequestMembers `json:"members"`
-	OwnerPresence MeetingMemberPresence          `json:"owner_presence"`
+	OwnerPresence MeetingPresenceStatus          `json:"owner_presence"`
 	IsPublic      bool                           `json:"is_public,omitempty"`
 	IsOutside     bool                           `json:"is_outside,omitempty"`
 }
@@ -85,9 +68,13 @@ type MeetingsUpdateRequest struct {
 	IsOutside  bool   `json:"is_outside,omitempty"`
 }
 
+type MeetingsDeleteRequestParams struct {
+	Date ISODateTimeString `json:"date,omitempty"`
+}
+
 type MeetingMember struct {
 	Contact           Contact               `json:"contact"`
-	Presence          MeetingMemberPresence `json:"presence"`
+	Presence          MeetingPresenceStatus `json:"presence"`
 	Status            MeetingMemberStatus   `json:"status"`
 	IsRequired        bool                  `json:"is_required,omitempty"`
 	CanChangePresence bool                  `json:"can_change_presence,omitempty"`
@@ -97,7 +84,7 @@ type MeetingMember struct {
 
 type MeetingsMembersRequestParams struct {
 	Sections   []string              `json:"sections,omitempty"`
-	Presence   MeetingMemberPresence `json:"presence,omitempty"`
+	Presence   MeetingPresenceStatus `json:"presence,omitempty"`
 	Status     MeetingMemberStatus   `json:"status,omitempty"`
 	Limit      int                   `json:"limit,omitempty"`
 	Offset     int                   `json:"offset,omitempty"`
