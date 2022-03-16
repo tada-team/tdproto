@@ -16,6 +16,7 @@ const (
 	ContactSectionPrefix = "sd-"
 	GroupSectionPrefix   = "sg-"
 	TaskSectionPrefix    = "st-"
+	MeetingPrefix        = "m-"
 )
 
 type HasJid interface {
@@ -32,6 +33,8 @@ func (jid JID) ChatType() ChatType {
 		return GroupChatType
 	case jid.IsTask():
 		return TaskChatType
+	case jid.IsMeeting():
+		return MeetingPrefix
 	default:
 		log.Fatalf("invalid chat type: %s", jid)
 		return ""
@@ -42,12 +45,13 @@ func (jid JID) IsDirect() bool  { return strings.HasPrefix(jid.String(), Contact
 func (jid JID) IsGroup() bool   { return strings.HasPrefix(jid.String(), GroupPrefix) }
 func (jid JID) IsTask() bool    { return strings.HasPrefix(jid.String(), TaskPrefix) }
 func (jid JID) IsSection() bool { return strings.HasPrefix(jid.String(), ContactSectionPrefix) }
+func (jid JID) IsMeeting() bool { return strings.HasPrefix(jid.String(), MeetingPrefix) }
 
-func (jid JID) Empty() bool          { return jid.String() == "" }
-func (jid JID) JID() JID             { return jid }
-func (jid JID) String() string       { return string(jid) }
-func (jid JID) Valid() bool          { return jid.Uid() != "" }
-func (jid JID) Value() string        { return jid.String() }
+func (jid JID) Empty() bool    { return jid.String() == "" }
+func (jid JID) JID() JID       { return jid }
+func (jid JID) String() string { return string(jid) }
+func (jid JID) Valid() bool    { return jid.Uid() != "" }
+func (jid JID) Value() string  { return jid.String() }
 
 func (jid JID) Uid() string {
 	if jid.Empty() {
@@ -82,7 +86,7 @@ func (jid *JID) UnmarshalMsgpack(data []byte) error {
 	if err := msgpack.Unmarshal(data, &s); err != nil {
 		return err
 	}
-	* jid = JID(s)
+	*jid = JID(s)
 	return nil
 }
 
@@ -95,7 +99,7 @@ func (jid *JID) UnmarshalCBOR(data []byte) error {
 	if err := cbor.Unmarshal(data, &s); err != nil {
 		return err
 	}
-	* jid = JID(s)
+	*jid = JID(s)
 	return nil
 }
 
