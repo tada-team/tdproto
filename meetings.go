@@ -1,36 +1,39 @@
 package tdproto
 
 type Meeting struct {
-	Id           string            `json:"id"`
-	TeamUuid     string            `json:"team_uuid"`
-	ChatUuid     string            `json:"chat_uuid"`
-	StartAt      ISODateTimeString `json:"start_at"`
-	EndAt        ISODateTimeString `json:"end_at"`
-	FreqDays     []int             `json:"freq_days,omitempty"`
-	Freq         int               `json:"freq,omitempty"`
-	IsArchive    bool              `json:"is_archive,omitempty"`
-	IsPublic     bool              `json:"is_public,omitempty"`
-	IsOutside    bool              `json:"is_outside,omitempty"`
-	CanAddMember bool              `json:"can_add_member,omitempty"`
-	CanDelete    bool              `json:"can_delete,omitempty"`
-	CanEdit      bool              `json:"can_edit,omitempty"`
-	CanJoin      bool              `json:"can_join,omitempty"`
+	Id                string            `json:"id"`
+	TeamUuid          string            `json:"team_uuid"`
+	ChatUuid          string            `json:"chat_uuid"`
+	StartAt           ISODateTimeString `json:"start_at"`
+	EndAt             ISODateTimeString `json:"end_at"`
+	PersonalAccountId string            `json:"personal_account_id"`
+	FreqDays          []int             `json:"freq_days,omitempty"`
+	Freq              int               `json:"freq,omitempty"`
+	IsArchive         bool              `json:"is_archive,omitempty"`
+	IsPublic          bool              `json:"is_public,omitempty"`
+	IsOutside         bool              `json:"is_outside,omitempty"`
+	CanAddMember      bool              `json:"can_add_member,omitempty"`
+	CanDelete         bool              `json:"can_delete,omitempty"`
+	CanEdit           bool              `json:"can_edit,omitempty"`
+	CanJoin           bool              `json:"can_join,omitempty"`
+	IsFreq            bool              `json:"is_freq"`
 }
 
 type MeetingsRequestParams struct {
-	Year           int      `json:"year"`
-	Month          int      `json:"month"`
-	Day            int      `json:"day,omitempty"`
-	TeamUuid       string   `json:"team_uuid,omitempty"`
-	Owners         []string `json:"owners,omitempty"`
-	OwnersSections []string `json:"owners_sections,omitempty"`
-	Members        []string `json:"members,omitempty"`
-	Limit          int      `json:"limit,omitempty"`
-	Offset         int      `json:"offset,omitempty"`
-	IsArchive      bool     `json:"is_archive,omitempty"`
-	IsFreq         bool     `json:"is_freq,omitempty"`
-	IsPublic       bool     `json:"is_public,omitempty"`
-	IsOutside      bool     `json:"is_outside,omitempty"`
+	PersonalAccountId string   `json:"personal_account_id"`
+	Year              int      `json:"year"`
+	Month             int      `json:"month"`
+	Day               int      `json:"day,omitempty"`
+	TeamUuid          string   `json:"team_uuid,omitempty"`
+	Owners            []string `json:"owners,omitempty"`
+	OwnersSections    []string `json:"owners_sections,omitempty"`
+	Members           []string `json:"members,omitempty"`
+	Limit             int      `json:"limit,omitempty"`
+	Offset            int      `json:"offset,omitempty"`
+	IsArchive         bool     `json:"is_archive,omitempty"`
+	IsFreq            bool     `json:"is_freq,omitempty"`
+	IsPublic          bool     `json:"is_public,omitempty"`
+	IsOutside         bool     `json:"is_outside,omitempty"`
 }
 
 type MeetingsResponse struct {
@@ -47,25 +50,28 @@ type MeetingsCreateRequestMembers struct {
 }
 
 type MeetingsCreateRequest struct {
-	TeamUuid      string                         `json:"team_uuid,omitempty"`
-	StartAt       ISODateTimeString              `json:"start_at"`
-	EndAt         string                         `json:"end_at"`
-	Freq          int                            `json:"freq,omitempty"`
-	FreqDays      []int                          `json:"freq_days,omitempty"`
-	Members       []MeetingsCreateRequestMembers `json:"members"`
-	OwnerPresence MeetingPresenceStatus          `json:"owner_presence"`
-	IsPublic      bool                           `json:"is_public,omitempty"`
-	IsOutside     bool                           `json:"is_outside,omitempty"`
+	TeamUuid  string                         `json:"team_uuid,omitempty"`
+	StartAt   ISODateTimeString              `json:"start_at"`
+	EndAt     string                         `json:"end_at"`
+	Freq      int                            `json:"freq,omitempty"`
+	FreqDays  []int                          `json:"freq_days,omitempty"`
+	Members   []MeetingsCreateRequestMembers `json:"members"`
+	IsPublic  bool                           `json:"is_public,omitempty"`
+	IsOutside bool                           `json:"is_outside,omitempty"`
+	IsFreq    bool                           `json:"is_freq"`
 }
 
 type MeetingsUpdateRequest struct {
+	MeetingId  string `json:"meeting_id"`
 	ActiveFrom string `json:"active_from,omitempty"`
 	StartAt    string `json:"start_at,omitempty"`
 	EndAt      string `json:"end_at,omitempty"`
+	TeamUuid   string `json:"team_uuid,omitempty"`
 	Freq       int    `json:"freq,omitempty"`
 	FreqDays   []int  `json:"freq_days,omitempty"`
 	IsPublic   bool   `json:"is_public,omitempty"`
 	IsOutside  bool   `json:"is_outside,omitempty"`
+	IsFreq     bool   `json:"is_freq"`
 }
 
 type MeetingsDeleteRequestParams struct {
@@ -73,6 +79,7 @@ type MeetingsDeleteRequestParams struct {
 }
 
 type MeetingMember struct {
+	MeetingId         string                `json:"meeting_id,omitempty"`
 	Contact           Contact               `json:"contact"`
 	Presence          MeetingPresenceStatus `json:"presence"`
 	Status            MeetingMemberStatus   `json:"status"`
@@ -83,12 +90,12 @@ type MeetingMember struct {
 }
 
 type MeetingsMembersRequestParams struct {
-	Sections   []string              `json:"sections,omitempty"`
-	Presence   MeetingPresenceStatus `json:"presence,omitempty"`
-	Status     MeetingMemberStatus   `json:"status,omitempty"`
-	Limit      int                   `json:"limit,omitempty"`
-	Offset     int                   `json:"offset,omitempty"`
-	IsRequired bool                  `json:"is_required,omitempty"`
+	UuidSections []string              `json:"uuid_sections,omitempty"`
+	Presence     MeetingPresenceStatus `json:"presence,omitempty"`
+	Status       MeetingMemberStatus   `json:"status,omitempty"`
+	MeetingId    string                `json:"meeting_id"`
+	Limit        int                   `json:"limit,omitempty"`
+	Offset       int                   `json:"offset,omitempty"`
 }
 
 type MeetingsMembersResponse struct {
