@@ -25,8 +25,6 @@ type MeetingsRequestParams struct {
 	Month             int32    `json:"month"`
 	Day               int32    `json:"day,omitempty"`
 	TeamUuid          string   `json:"team_uuid,omitempty"`
-	Owners            []string `json:"owners,omitempty"`
-	OwnersSections    []string `json:"owners_sections,omitempty"`
 	Members           []string `json:"members,omitempty"`
 	Limit             int      `json:"limit,omitempty"`
 	Offset            int      `json:"offset,omitempty"`
