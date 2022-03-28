@@ -26,8 +26,8 @@ type MeetingsRequestParams struct {
 	Day               int32    `json:"day,omitempty"`
 	TeamUuid          string   `json:"team_uuid,omitempty"`
 	Members           []string `json:"members,omitempty"`
-	Limit             int      `json:"limit,omitempty"`
-	Offset            int      `json:"offset,omitempty"`
+	Limit             int32    `json:"limit,omitempty"`
+	Offset            int32    `json:"offset,omitempty"`
 	IsArchive         bool     `json:"is_archive,omitempty"`
 	IsFreq            bool     `json:"is_freq,omitempty"`
 	IsPublic          bool     `json:"is_public,omitempty"`
@@ -36,9 +36,9 @@ type MeetingsRequestParams struct {
 
 type MeetingsResponse struct {
 	Items  []Meeting `json:"items"`
-	Limit  int       `json:"limit,omitempty"`
-	Offset int       `json:"offset,omitempty"`
-	Total  int       `json:"total,omitempty"`
+	Limit  int32     `json:"limit,omitempty"`
+	Offset int32     `json:"offset,omitempty"`
+	Total  int32     `json:"total,omitempty"`
 }
 
 type MeetingsCreateRequestMembers struct {
