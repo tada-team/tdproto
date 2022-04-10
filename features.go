@@ -157,6 +157,9 @@ type Features struct {
 	// ICE servers for WebRTC
 	ICEServers []ICEServer `json:"ice_servers"`
 
+	// IceTransportPolicy a ice transport policy
+	IceTransportPolicy ICETransportPolicy `json:"ice_transport_policy,omitempty"`
+
 	// True for premise installation
 	CustomServer bool `json:"custom_server"`
 
@@ -305,9 +308,28 @@ type Features struct {
 
 // Interactive Connectivity Establishment Server for WEB Rtc connection. Readonly.
 type ICEServer struct {
-	// URls
+	// Urls - STUN or TURN addresses
 	Urls string `json:"urls"`
+
+	// UserName - username for TURN server
+	UserName string `json:"username,omitempty"`
+
+	// Credential - credential for TURN server
+	Credential string `json:"credential,omitempty"`
 }
+
+// ICETransportPolicy is a string indicating the transport selection policy
+// the ICE agent should use during negotiation of connections.
+// Available values: 'all', 'relay'
+type ICETransportPolicy string
+
+const (
+	// ICETransportPolicyRelay for get only TURN candidate pairs
+	ICETransportPolicyRelay ICETransportPolicy = "relay"
+
+	// ICETransportPolicyAll for get both STUN and TURN candidate pairs
+	ICETransportPolicyAll ICETransportPolicy = "all"
+)
 
 // Experimental translation fields for "team" entity renaming. Readonly.
 type Terms struct {
