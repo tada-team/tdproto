@@ -10,7 +10,7 @@ type Meeting struct {
 	Description       string            `json:"description,omitempty"`
 	StartAt           ISODateTimeString `json:"start_at"`
 	Duration          int32             `json:"duration"`
-	Freq              Freq              `json:"freq,omitempty"`
+	Freq              *Freq             `json:"freq,omitempty"`
 	IsArchive         bool              `json:"is_archive,omitempty"`
 	IsPublic          bool              `json:"is_public,omitempty"`
 	IsOutside         bool              `json:"is_outside,omitempty"`
@@ -49,7 +49,7 @@ type MeetingsCreateRequest struct {
 	Description string                        `json:"description,omitempty"`
 	StartAt     ISODateTimeString             `json:"start_at"`
 	Duration    int32                         `json:"duration"`
-	Freq        Freq                          `json:"freq,omitempty"`
+	Freq        *Freq                         `json:"freq,omitempty"`
 	Members     []MeetingsMembersCreateParams `json:"members"`
 	IsPublic    bool                          `json:"is_public,omitempty"`
 	IsOutside   bool                          `json:"is_outside,omitempty"`
@@ -67,7 +67,7 @@ type MeetingsUpdateRequest struct {
 	ActiveFrom *string `json:"active_from,omitempty"`
 	StartAt    *string `json:"start_at,omitempty"`
 	Duration   *int32  `json:"duration,omitempty"`
-	Freq       Freq    `json:"freq,omitempty"`
+	Freq       *Freq   `json:"freq,omitempty"`
 	IsPublic   *bool   `json:"is_public,omitempty"`
 	IsOutside  *bool   `json:"is_outside,omitempty"`
 }
