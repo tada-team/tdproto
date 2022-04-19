@@ -56,9 +56,9 @@ type MeetingsCreateRequest struct {
 }
 
 type Freq struct {
-	Frequency         int32
-	FreqDays          []int32
-	RepeatabilityType MeetingRepeatabilityType
+	Frequency         int32                    `json:"frequency"`
+	FreqDays          []int32                  `json:"freq_days,omitempty"`
+	RepeatabilityType MeetingRepeatabilityType `json:"repeatability_type"`
 }
 
 type MeetingsUpdateRequest struct {
