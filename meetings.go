@@ -83,7 +83,6 @@ type MeetingMember struct {
 	Contact           Contact               `json:"contact"`
 	Presence          MeetingPresenceStatus `json:"presence"`
 	Status            MeetingMemberStatus   `json:"status"`
-	IsRequired        bool                  `json:"is_required,omitempty"`
 	CanChangePresence bool                  `json:"can_change_presence,omitempty"`
 	CanChangeStatus   bool                  `json:"can_change_status,omitempty"`
 	CanRemove         bool                  `json:"can_remove,omitempty"`
@@ -111,9 +110,8 @@ type MeetingsMembersCreateRequest struct {
 	TeamUuid string                        `json:"team_uuid"`
 }
 type MeetingsMembersCreateParams struct {
-	Jid        JID                 `json:"jid"`
-	Status     MeetingMemberStatus `json:"status,omitempty"`
-	IsRequired bool                `json:"is_required,omitempty"`
+	Jid    JID                 `json:"jid"`
+	Status MeetingMemberStatus `json:"status,omitempty"`
 }
 
 type MeetingsMembersCreateResponse struct {
@@ -122,9 +120,8 @@ type MeetingsMembersCreateResponse struct {
 }
 
 type MeetingsMembersUpdateRequest struct {
-	Status     MeetingMemberStatus `json:"status,omitempty"`
-	IsRequired bool                `json:"is_required,omitempty"`
-	TeamUuid   string              `json:"team_uuid,omitempty"`
+	Status   MeetingMemberStatus `json:"status,omitempty"`
+	TeamUuid string              `json:"team_uuid,omitempty"`
 }
 
 type MeetingsMembersDeleteRequestParams struct {
