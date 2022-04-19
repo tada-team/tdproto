@@ -10,9 +10,7 @@ type Meeting struct {
 	Description       string            `json:"description,omitempty"`
 	StartAt           ISODateTimeString `json:"start_at"`
 	Duration          int32             `json:"duration"`
-	IsFreq            bool              `json:"is_freq"`
-	FreqDays          []int32           `json:"freq_days,omitempty"`
-	Freq              int32             `json:"freq,omitempty"`
+	Freq              Freq              `json:"freq,omitempty"`
 	IsArchive         bool              `json:"is_archive,omitempty"`
 	IsPublic          bool              `json:"is_public,omitempty"`
 	IsOutside         bool              `json:"is_outside,omitempty"`
@@ -51,12 +49,16 @@ type MeetingsCreateRequest struct {
 	Description string                        `json:"description,omitempty"`
 	StartAt     ISODateTimeString             `json:"start_at"`
 	Duration    int32                         `json:"duration"`
-	Freq        int32                         `json:"freq,omitempty"`
-	FreqDays    []int32                       `json:"freq_days,omitempty"`
+	Freq        Freq                          `json:"freq,omitempty"`
 	Members     []MeetingsMembersCreateParams `json:"members"`
 	IsPublic    bool                          `json:"is_public,omitempty"`
 	IsOutside   bool                          `json:"is_outside,omitempty"`
-	IsFreq      bool                          `json:"is_freq"`
+}
+
+type Freq struct {
+	Frequency         int32                    `json:"frequency"`
+	FreqDays          []int32                  `json:"freq_days,omitempty"`
+	RepeatabilityType MeetingRepeatabilityType `json:"repeatability_type"`
 }
 
 type MeetingsUpdateRequest struct {
@@ -65,11 +67,9 @@ type MeetingsUpdateRequest struct {
 	ActiveFrom *string `json:"active_from,omitempty"`
 	StartAt    *string `json:"start_at,omitempty"`
 	Duration   *int32  `json:"duration,omitempty"`
-	Freq       *int32  `json:"freq,omitempty"`
-	FreqDays   []int32 `json:"freq_days,omitempty"`
+	Freq       Freq    `json:"freq,omitempty"`
 	IsPublic   *bool   `json:"is_public,omitempty"`
 	IsOutside  *bool   `json:"is_outside,omitempty"`
-	IsFreq     bool    `json:"is_freq"`
 }
 
 type MeetingsDeleteRequestParams struct {
