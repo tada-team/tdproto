@@ -17,3 +17,14 @@ const (
 	MeetingPresenceStatusDoubts   MeetingPresenceStatus = "MEETING_PRESENCE_STATUS_DOUBTS"
 	MeetingPresenceStatusWaiting  MeetingPresenceStatus = "MEETING_PRESENCE_STATUS_WAITING"
 )
+
+type MeetingRepeatabilityType string
+
+const (
+	MeetingRepeatabilityStatusUnspecified MeetingRepeatabilityType = "MEETING_PRESENCE_STATUS_UNSPECIFIED"
+	MeetingRepeatabilityStatusDaily       MeetingRepeatabilityType = "MEETING_PRESENCE_STATUS_DAILY"
+	MeetingRepeatabilityTypeWeekly        MeetingRepeatabilityType = "MEETING_PRESENCE_STATUS_WEEKLY"
+	MeetingRepeatabilityTypeMonthly       MeetingRepeatabilityType = "MEETING_PRESENCE_STATUS_MONTHLY"
+	MeetingRepeatabilityTypeNDOW          MeetingRepeatabilityType = "MEETING_PRESENCE_STATUS_NDOW"
+	MeetingRepeatabilityTypeAnnually      MeetingRepeatabilityType = "MEETING_PRESENCE_STATUS_ANNUALLY"
+)
