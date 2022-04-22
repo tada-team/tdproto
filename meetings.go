@@ -14,6 +14,7 @@ type Meeting struct {
 	IsArchive         bool              `json:"is_archive,omitempty"`
 	IsPublic          bool              `json:"is_public,omitempty"`
 	IsOutside         bool              `json:"is_outside,omitempty"`
+	IsRequired        bool              `json:"is_required,omitempty"`
 	CanAddMember      bool              `json:"can_add_member,omitempty"`
 	CanDelete         bool              `json:"can_delete,omitempty"`
 	CanEdit           bool              `json:"can_edit,omitempty"`
@@ -22,17 +23,18 @@ type Meeting struct {
 }
 
 type MeetingsRequestParams struct {
-	TeamUuid  string   `json:"team_uuid"`
-	Year      int32    `json:"year"`
-	Month     int32    `json:"month"`
-	Day       *int32   `json:"day,omitempty"`
-	Members   []string `json:"members,omitempty"`
-	Limit     *int32   `json:"limit,omitempty"`
-	Offset    *int32   `json:"offset,omitempty"`
-	IsArchive *bool    `json:"is_archive,omitempty"`
-	IsFreq    *bool    `json:"is_freq,omitempty"`
-	IsPublic  *bool    `json:"is_public,omitempty"`
-	IsOutside *bool    `json:"is_outside,omitempty"`
+	TeamUuid   string   `json:"team_uuid"`
+	Year       int32    `json:"year"`
+	Month      int32    `json:"month"`
+	Day        *int32   `json:"day,omitempty"`
+	Members    []string `json:"members,omitempty"`
+	Limit      *int32   `json:"limit,omitempty"`
+	Offset     *int32   `json:"offset,omitempty"`
+	IsArchive  *bool    `json:"is_archive,omitempty"`
+	IsFreq     *bool    `json:"is_freq,omitempty"`
+	IsPublic   *bool    `json:"is_public,omitempty"`
+	IsOutside  *bool    `json:"is_outside,omitempty"`
+	IsRequired *bool    `json:"is_required,omitempty"`
 }
 
 type MeetingsResponse struct {
