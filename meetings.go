@@ -3,7 +3,7 @@ package tdproto
 type Meeting struct {
 	Id                string            `json:"id"`
 	TeamUuid          string            `json:"team_uuid"`
-	GroupUuid         string            `json:"group_uuid"`
+	ChatUuid          string            `json:"chat_uuid"`
 	OwnerUuid         string            `json:"owner_uuid"`
 	PersonalAccountId string            `json:"personal_account_id,omitempty"`
 	Title             string            `json:"title,omitempty"`
