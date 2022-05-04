@@ -1,3 +1,7 @@
+v1.50.24
+ - feat(TaskFilter): add filter contact_section
+ - feat(Subtask): add Deadline
+
 v1.50.9
 - feat(contact): add id field for contactFilter
 

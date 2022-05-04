@@ -265,6 +265,9 @@ type Subtask struct {
 
 	// Subtask task status
 	TaskStatus string `json:"task_status,omitempty"`
+
+	// Deadline task deadline
+	Deadline ISODateTimeString `json:"deadline,omitempty"`
 }
 
 // Task checklist item
