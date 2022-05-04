@@ -3,11 +3,16 @@ package tdapi
 import "github.com/tada-team/tdproto"
 
 type ContactFilter struct {
+	Paginator
+
 	// Comma separated statuses in team
 	Status string `schema:"status"`
 
 	//* ?id=jid,jid
 	ID string `schema:"id"`
+
+	//* ?display_name=
+	DisplayName string `schema:"display_name"`
 }
 
 // Contact invite/edit form
