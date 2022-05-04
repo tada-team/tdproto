@@ -1,3 +1,6 @@
+v1.50.25
+ - feat(ContactFilter): add display_name filter
+
 v1.50.24
  - feat(TaskFilter): add filter contact_section
  - feat(Subtask): add Deadline
