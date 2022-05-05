@@ -1,3 +1,6 @@
+v1.50.26
+ - feat(Subtask): added `DeadlineExpired` field
+
 v1.50.25
  - feat(ContactFilter): add display_name filter
 
@@ -176,7 +179,7 @@ v.1.36.4
  - Tariff: "MaxUploadFilesize" omitempty now
  - Tariff: "MaxMembersInTeam" omitempty now
  - Tariff: "MaxParticipantsPerCall" omitempty now
- 
+
 v.1.36.3
  - add MaxUploadFilesize field
 
