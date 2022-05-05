@@ -268,6 +268,9 @@ type Subtask struct {
 
 	// Deadline task deadline
 	Deadline ISODateTimeString `json:"deadline,omitempty"`
+
+	// Is subtask deadline expired
+	DeadlineExpired bool `json:"deadline_expired,omitempty"`
 }
 
 // Task checklist item
