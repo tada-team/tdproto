@@ -4,8 +4,8 @@ type Meeting struct {
 	Id                string            `json:"id"`
 	TeamUuid          string            `json:"team_uuid"`
 	ChatUuid          string            `json:"chat_uuid"`
-	OwnerJid          JID               `json:"owner_jid"`
-	OwnerUuid         string            `json:"owner_uuid"`
+	OwnerContactUuid  JID               `json:"owner_contact_uuid"`
+	OwnerUserUuid     string            `json:"owner_user_uuid"`
 	PersonalAccountId string            `json:"personal_account_id,omitempty"`
 	Title             string            `json:"title,omitempty"`
 	Description       string            `json:"description,omitempty"`
@@ -45,16 +45,16 @@ type MeetingsResponse struct {
 }
 
 type MeetingsCreateRequest struct {
-	OwnerUuid   string                       `json:"owner_uuid"`
-	TeamUuid    string                       `json:"team_uuid"`
-	Title       string                       `json:"title,omitempty"`
-	Description string                       `json:"description,omitempty"`
-	StartAt     ISODateTimeString            `json:"start_at"`
-	Duration    int32                        `json:"duration"`
-	Freq        *Freq                        `json:"freq,omitempty"`
-	Members     []MeetingsMemberCreateParams `json:"members"`
-	IsPublic    bool                         `json:"is_public,omitempty"`
-	IsOutside   bool                         `json:"is_outside,omitempty"`
+	OwnerContactUuid JID                          `json:"owner_contact_uuid"`
+	TeamUuid         string                       `json:"team_uuid"`
+	Title            string                       `json:"title,omitempty"`
+	Description      string                       `json:"description,omitempty"`
+	StartAt          ISODateTimeString            `json:"start_at"`
+	Duration         int32                        `json:"duration"`
+	Freq             *Freq                        `json:"freq,omitempty"`
+	Members          []MeetingsMemberCreateParams `json:"members"`
+	IsPublic         bool                         `json:"is_public,omitempty"`
+	IsOutside        bool                         `json:"is_outside,omitempty"`
 }
 
 type Freq struct {
