@@ -24,17 +24,17 @@ type Meeting struct {
 }
 
 type MeetingsGetRequest struct {
-	TeamUuid   string            `json:"team_uuid"`
-	DateFrom   ISODateTimeString `json:"date_from"`
-	DateTo     ISODateTimeString `json:"date_to"`
-	Members    []string          `json:"members,omitempty"`
-	Limit      *int32            `json:"limit,omitempty"`
-	Offset     *int32            `json:"offset,omitempty"`
-	IsArchive  *bool             `json:"is_archive,omitempty"`
-	IsFreq     *bool             `json:"is_freq,omitempty"`
-	IsPublic   *bool             `json:"is_public,omitempty"`
-	IsOutside  *bool             `json:"is_outside,omitempty"`
-	IsRequired *bool             `json:"is_required,omitempty"`
+	TeamUuid   string   `json:"team_uuid"`
+	DateFrom   string   `json:"date_from"`
+	DateTo     string   `json:"date_to"`
+	Members    []string `json:"members,omitempty"`
+	Limit      *int32   `json:"limit,omitempty"`
+	Offset     *int32   `json:"offset,omitempty"`
+	IsArchive  *bool    `json:"is_archive,omitempty"`
+	IsFreq     *bool    `json:"is_freq,omitempty"`
+	IsPublic   *bool    `json:"is_public,omitempty"`
+	IsOutside  *bool    `json:"is_outside,omitempty"`
+	IsRequired *bool    `json:"is_required,omitempty"`
 }
 
 type MeetingsResponse struct {
@@ -42,6 +42,10 @@ type MeetingsResponse struct {
 	Limit  *int32    `json:"limit,omitempty"`
 	Offset *int32    `json:"offset,omitempty"`
 	Total  *int32    `json:"total,omitempty"`
+}
+
+type MeetingsDatesResponse struct {
+	Dates []string `json:"dates"`
 }
 
 type MeetingsCreateRequest struct {
