@@ -34,7 +34,7 @@ func (jid JID) ChatType() ChatType {
 	case jid.IsTask():
 		return TaskChatType
 	case jid.IsMeeting():
-		return MeetingPrefix
+		return MeetingChatType
 	default:
 		log.Fatalf("invalid chat type: %s", jid)
 		return ""
