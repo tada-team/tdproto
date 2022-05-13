@@ -13,7 +13,7 @@ type Meeting struct {
 	IsOutside         bool              `json:"is_outside,omitempty"`
 	IsRequired        bool              `json:"is_required,omitempty"`
 	CanEdit           bool              `json:"can_edit,omitempty"`
-	Members           []MeetingMember   `json:"meeting_members,omitempty"`
+	MeetingMembers    []MeetingMember   `json:"meeting_members,omitempty"`
 	Chat
 }
 
