@@ -6,19 +6,13 @@ type Meeting struct {
 	OwnerContactUuid  JID               `json:"owner_contact_uuid"`
 	OwnerUserUuid     string            `json:"owner_user_uuid"`
 	PersonalAccountId string            `json:"personal_account_id,omitempty"`
-	Title             string            `json:"title,omitempty"`
-	Description       string            `json:"description,omitempty"`
 	StartAt           ISODateTimeString `json:"start_at"`
 	Duration          int32             `json:"duration"`
 	Freq              *Freq             `json:"freq,omitempty"`
 	IsArchive         bool              `json:"is_archive,omitempty"`
-	IsPublic          bool              `json:"is_public,omitempty"`
 	IsOutside         bool              `json:"is_outside,omitempty"`
 	IsRequired        bool              `json:"is_required,omitempty"`
-	CanAddMember      bool              `json:"can_add_member,omitempty"`
-	CanDelete         bool              `json:"can_delete,omitempty"`
 	CanEdit           bool              `json:"can_edit,omitempty"`
-	CanJoin           bool              `json:"can_join,omitempty"`
 	Members           []MeetingMember   `json:"meeting_members,omitempty"`
 	Chat
 }
