@@ -3,7 +3,6 @@ package tdproto
 type Meeting struct {
 	Id                string            `json:"id"`
 	TeamUuid          string            `json:"team_uuid"`
-	ChatUuid          string            `json:"chat_uuid"`
 	OwnerContactUuid  JID               `json:"owner_contact_uuid"`
 	OwnerUserUuid     string            `json:"owner_user_uuid"`
 	PersonalAccountId string            `json:"personal_account_id,omitempty"`
@@ -21,6 +20,7 @@ type Meeting struct {
 	CanEdit           bool              `json:"can_edit,omitempty"`
 	CanJoin           bool              `json:"can_join,omitempty"`
 	Members           []MeetingMember   `json:"meeting_members,omitempty"`
+	Chat
 }
 
 type MeetingsGetRequest struct {
@@ -38,10 +38,7 @@ type MeetingsGetRequest struct {
 }
 
 type MeetingsResponse struct {
-	Items  []Meeting `json:"items"`
-	Limit  *int32    `json:"limit,omitempty"`
-	Offset *int32    `json:"offset,omitempty"`
-	Total  *int32    `json:"total,omitempty"`
+	PaginatedMeetings
 }
 
 type MeetingsDatesResponse struct {
