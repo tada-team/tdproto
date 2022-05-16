@@ -1,5 +1,7 @@
 package tdproto
 
+import "github.com/tada-team/tdproto/tdapi"
+
 // Contact
 type Contact struct {
 	// Contact Id
@@ -223,4 +225,17 @@ type ContactShort struct {
 
 	// Object version
 	Gentime int64 `json:"gentime"`
+}
+
+type ContactFilter struct {
+	tdapi.Paginator
+
+	// Comma separated statuses in team
+	Status string `json:"status"`
+
+	//* ?id=jid,jid
+	ID string `json:"id"`
+
+	//* ?display_name=
+	DisplayName string `json:"display_name"`
 }
