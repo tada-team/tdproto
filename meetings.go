@@ -44,7 +44,7 @@ type MeetingsCreateRequest struct {
 	TeamUuid         string                       `json:"team_uuid"`
 	Title            string                       `json:"title,omitempty"`
 	Description      string                       `json:"description,omitempty"`
-	StartAt          ISODateTimeString            `json:"start_at"`
+	StartAt          string                       `json:"start_at"`
 	Duration         int32                        `json:"duration"`
 	Freq             *Freq                        `json:"freq,omitempty"`
 	Members          []MeetingsMemberCreateParams `json:"members"`
