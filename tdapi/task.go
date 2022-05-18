@@ -88,6 +88,9 @@ type TaskFilter struct {
 	//* ?section=[ uid,uid... | "-" ]
 	Section string `schema:"section"` // TODO: rename to ?project=
 
+	//* ?contact_section=[ uid,uid... | "-" ]
+	ContactSection string `schema:"contact_section"` // TODO: rename to ?section=
+
 	//* ?tag=[ tag,tag,tag... | "-" ]
 	Tag string `schema:"tag"`
 
@@ -127,4 +130,3 @@ type TaskColors struct {
 	// Color list
 	Colors []tdproto.TaskColor `json:"colors"`
 }
-
