@@ -2,7 +2,13 @@ package tdproto
 
 func NewServerMeetingUpdated(meeting Meeting) (r ServerMeetingUpdated) {
 	r.Name = r.GetName()
-	r.Params.Meetings = []Meeting{}
+	r.Params.Meetings = []Meeting{meeting}
+	return r
+}
+
+func NewServerMeetingsUpdated(meetings []Meeting) (r ServerMeetingUpdated) {
+	r.Name = r.GetName()
+	r.Params.Meetings = meetings
 	return r
 }
 
