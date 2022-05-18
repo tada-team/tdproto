@@ -64,14 +64,16 @@ type Freq struct {
 }
 
 type MeetingsUpdateRequest struct {
-	MeetingId  string  `json:"meeting_id"`
-	TeamUuid   string  `json:"team_uuid,omitempty"`
-	ActiveFrom *string `json:"active_from,omitempty"`
-	StartAt    *string `json:"start_at,omitempty"`
-	Duration   *int32  `json:"duration,omitempty"`
-	Freq       *Freq   `json:"freq,omitempty"`
-	IsPublic   *bool   `json:"is_public,omitempty"`
-	IsOutside  *bool   `json:"is_outside,omitempty"`
+	MeetingId   string  `json:"meeting_id"`
+	TeamUuid    string  `json:"team_uuid,omitempty"`
+	ActiveFrom  *string `json:"active_from,omitempty"`
+	StartAt     *string `json:"start_at,omitempty"`
+	Duration    *int32  `json:"duration,omitempty"`
+	Freq        *Freq   `json:"freq,omitempty"`
+	IsPublic    *bool   `json:"is_public,omitempty"`
+	IsOutside   *bool   `json:"is_outside,omitempty"`
+	Title       *string `json:"title,omitempty"`
+	Description *string `json:"description,omitempty"`
 }
 
 type MeetingsDeleteRequestParams struct {
