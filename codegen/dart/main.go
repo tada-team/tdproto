@@ -112,9 +112,10 @@ func (s *DartClassField) DefaultStr() string {
 		return ""
 	}
 
-	if s.DartType == "bool" {
-		return "@Default(false) "
-	}
+	// Remove DKelin
+	// if s.DartType == "bool" {
+	// 	return "@Default(false) "
+	// }
 
 	return ""
 }
