@@ -39,6 +39,11 @@ type MeetingsDatesResponse struct {
 	Dates []string `json:"dates"`
 }
 
+type MeetingsCountResponse struct {
+	CountCells    string `json:"count_cells"`
+	CountMeetings string `json:"count_meetings"`
+}
+
 type MeetingsCreateRequest struct {
 	OwnerContactUuid JID                          `json:"owner_contact_uuid"`
 	TeamUuid         string                       `json:"team_uuid"`
