@@ -40,8 +40,8 @@ type MeetingsDatesResponse struct {
 }
 
 type MeetingsCountResponse struct {
-	CountCells    string `json:"count_cells"`
-	CountMeetings string `json:"count_meetings"`
+	CountCells    int32 `json:"count_cells"`
+	CountMeetings int32 `json:"count_meetings"`
 }
 
 type MeetingsCreateRequest struct {
