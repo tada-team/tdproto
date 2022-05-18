@@ -1,19 +1,19 @@
 package tdproto
 
 type Meeting struct {
-	Id                string          `json:"id"`
-	TeamUuid          string          `json:"team_uuid"`
-	OwnerContactUuid  JID             `json:"owner_contact_uuid"`
-	OwnerUserUuid     string          `json:"owner_user_uuid"`
-	PersonalAccountId string          `json:"personal_account_id,omitempty"`
-	StartAt           string          `json:"start_at"`
-	Duration          int32           `json:"duration"`
-	Freq              *Freq           `json:"freq,omitempty"`
-	IsArchive         bool            `json:"is_archive,omitempty"`
-	IsOutside         bool            `json:"is_outside,omitempty"`
-	IsRequired        bool            `json:"is_required,omitempty"`
-	CanEdit           bool            `json:"can_edit,omitempty"`
-	MeetingMembers    []MeetingMember `json:"meeting_members,omitempty"`
+	Id                string            `json:"id"`
+	TeamUuid          string            `json:"team_uuid"`
+	OwnerContactUuid  JID               `json:"owner_contact_uuid"`
+	OwnerUserUuid     string            `json:"owner_user_uuid"`
+	PersonalAccountId string            `json:"personal_account_id,omitempty"`
+	StartAt           ISODateTimeString `json:"start_at"`
+	Duration          int32             `json:"duration"`
+	Freq              *Freq             `json:"freq,omitempty"`
+	IsArchive         bool              `json:"is_archive,omitempty"`
+	IsOutside         bool              `json:"is_outside,omitempty"`
+	IsRequired        bool              `json:"is_required,omitempty"`
+	CanEdit           bool              `json:"can_edit,omitempty"`
+	MeetingMembers    []MeetingMember   `json:"meeting_members,omitempty"`
 	Chat
 }
 
@@ -37,6 +37,11 @@ type MeetingsResponse struct {
 
 type MeetingsDatesResponse struct {
 	Dates []string `json:"dates"`
+}
+
+type MeetingsCountResponse struct {
+	CountCells    int32 `json:"count_cells"`
+	CountMeetings int32 `json:"count_meetings"`
 }
 
 type MeetingsCreateRequest struct {
