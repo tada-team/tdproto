@@ -36,9 +36,10 @@ type TeamCounter struct {
 
 func EmptyTeamUnread() TeamUnread {
 	return TeamUnread{
-		DirectChatType: new(Unread),
-		GroupChatType:  new(Unread),
-		TaskChatType:   new(Unread),
+		DirectChatType:  new(Unread),
+		GroupChatType:   new(Unread),
+		TaskChatType:    new(Unread),
+		MeetingChatType: new(Unread),
 	}
 }
 
