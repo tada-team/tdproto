@@ -66,7 +66,6 @@ type Freq struct {
 type MeetingsUpdateRequest struct {
 	MeetingId   string  `json:"meeting_id"`
 	TeamUuid    string  `json:"team_uuid,omitempty"`
-	ActiveFrom  *string `json:"active_from,omitempty"`
 	StartAt     *string `json:"start_at,omitempty"`
 	Duration    *int32  `json:"duration,omitempty"`
 	Freq        *Freq   `json:"freq,omitempty"`
@@ -131,4 +130,9 @@ type MeetingsMembersUpdateRequest struct {
 
 type MeetingsMembersDeleteRequestParams struct {
 	TeamUuid string `json:"team_uuid"`
+}
+
+type MeetingsMembersBatchDeleteRequestParams struct {
+	TeamUuid    string `json:"team_uuid"`
+	MembersJids []JID  `json:"members_jids"`
 }
