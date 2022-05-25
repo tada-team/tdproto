@@ -298,7 +298,7 @@ export class TeamUnread implements TDProtoClass<TeamUnread> {
    direct: () => ({ direct: this.direct.toJSON() }),
    group: () => ({ group: this.group.toJSON() }),
    task: () => ({ task: this.task.toJSON() }),
-   meeting: () => ({ task: this.meeting.toJSON() }),
+   meeting: () => ({ meeting: this.meeting.toJSON() }),
    /* eslint-enable camelcase */
   }
 
