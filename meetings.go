@@ -125,7 +125,7 @@ type MeetingsMembersCreateResponse struct {
 
 type MeetingsMembersUpdateRequest struct {
 	Status   MeetingMemberStatus `json:"status,omitempty"`
-	TeamUuid string              `json:"team_uuid,omitempty"`
+	TeamUuid string              `json:"team_uuid"`
 }
 
 type MeetingsMembersDeleteRequestParams struct {

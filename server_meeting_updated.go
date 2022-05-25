@@ -22,4 +22,6 @@ func (p ServerMeetingUpdated) GetName() string { return "server.meeting.updated"
 type serverMeetingUpdatedParams struct {
 	// Meeting info
 	Meetings []Meeting `json:"meetings"`
+	// Meetings count
+	MeetingsCount int32 `json:"meetings_count"`
 }
