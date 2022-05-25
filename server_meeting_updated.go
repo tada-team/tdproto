@@ -1,12 +1,13 @@
 package tdproto
 
-func NewServerMeetingUpdated(meeting Meeting) (r ServerMeetingUpdated) {
-	return NewServerMeetingsUpdated([]Meeting{meeting})
+func NewServerMeetingUpdated(meeting Meeting, count int32) (r ServerMeetingUpdated) {
+	return NewServerMeetingsUpdated([]Meeting{meeting}, count)
 }
 
-func NewServerMeetingsUpdated(meetings []Meeting) (r ServerMeetingUpdated) {
+func NewServerMeetingsUpdated(meetings []Meeting, count int32) (r ServerMeetingUpdated) {
 	r.Name = r.GetName()
 	r.Params.Meetings = meetings
+	r.Params.MeetingsCount = count
 	return r
 }
 
