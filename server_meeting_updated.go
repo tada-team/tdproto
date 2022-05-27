@@ -1,13 +1,14 @@
 package tdproto
 
-func NewServerMeetingUpdated(meeting Meeting, count int32) (r ServerMeetingUpdated) {
-	return NewServerMeetingsUpdated([]Meeting{meeting}, count)
+func NewServerMeetingUpdated(meeting Meeting, countTeam, countUser int32) (r ServerMeetingUpdated) {
+	return NewServerMeetingsUpdated([]Meeting{meeting}, countTeam, countUser)
 }
 
-func NewServerMeetingsUpdated(meetings []Meeting, count int32) (r ServerMeetingUpdated) {
+func NewServerMeetingsUpdated(meetings []Meeting, countTeam, countUser int32) (r ServerMeetingUpdated) {
 	r.Name = r.GetName()
 	r.Params.Meetings = meetings
-	r.Params.MeetingsCount = count
+	r.Params.TeamMeetingsCount = countTeam
+	r.Params.UserMeetingsCount = countUser
 	return r
 }
 
@@ -23,6 +24,8 @@ func (p ServerMeetingUpdated) GetName() string { return "server.meeting.updated"
 type serverMeetingUpdatedParams struct {
 	// Meeting info
 	Meetings []Meeting `json:"meetings"`
-	// Meetings count
-	MeetingsCount int32 `json:"meetings_count"`
+	// Team Meetings count
+	TeamMeetingsCount int32 `json:"team_meetings_count"`
+	// User Meetings count
+	UserMeetingsCount int32 `json:"user_meetings_count"`
 }
