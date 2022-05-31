@@ -29,7 +29,7 @@ type MeetingsGetRequest struct {
 	IsPublic    *bool    `json:"is_public,omitempty"`
 	IsOutside   *bool    `json:"is_outside,omitempty"`
 	IsRequired  *bool    `json:"is_required,omitempty"`
-	MembersJids []JID    `json:"members_jids,omitempty"`
+	MembersJids string   `json:"members_jids,omitempty"`
 }
 
 type MeetingsResponse struct {
