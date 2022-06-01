@@ -28,4 +28,8 @@ type serverMeetingUpdatedParams struct {
 	TeamMeetingsCount int32 `json:"team_meetings_count"`
 	// User Meetings count
 	UserMeetingsCount int32 `json:"user_meetings_count"`
+	// Dates of team meetings
+	TeamMeetingsDates []string `json:"team_meetings_dates"`
+	// Dates of user meetings
+	UserMeetingsDates []string `json:"user_meetings_dates"`
 }
