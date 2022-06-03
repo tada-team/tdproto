@@ -77,6 +77,7 @@ type MeetingsUpdateRequest struct {
 	AddMembers           []MeetingsMemberCreateParams `json:"add_members,omitempty"`
 	RemoveMembers        []JID                        `json:"remove_members,omitempty"`
 	NotificationsEnabled *bool                        `json:"notifications_enabled,omitempty"`
+	CountersEnabled      *bool                        `json:"counters_enabled,omitempty"`
 }
 
 type MeetingsDeleteRequestParams struct {
