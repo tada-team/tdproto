@@ -43,6 +43,9 @@ type Features struct {
 	// Link to Google Play for corporate app
 	AndroidCorpApp string `json:"android_corp_app"`
 
+	// Link to Rumarket store
+	RumarketApp string `json:"rumarket_app"`
+
 	// Default UI theme
 	Theme string `json:"theme"`
 

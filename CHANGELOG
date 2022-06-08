@@ -1,3 +1,6 @@
+v1.50.50
+ - feat(Features): add rumarket app url
+
 v1.50.27
  - feat(Subtask): added `DeadlineExpired` field
 
