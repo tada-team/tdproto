@@ -53,7 +53,7 @@ class {{.Name}} with _${{.Name}} {
     {{$field.DefaultStr}}{{if $field.IsDeprecated}}@Deprecated('{{$field.Parent.Help}}.') {{end}}@JsonKey(name: '{{$field.Parent.JsonName}}') 
 	{{- if eq $field.DartType "DateTime"}} @DateTimeConverter(){{end -}}
     {{- if $field.IsNotRequired}} {{else}} required {{end -}}
-    {{if $field.Parent.IsList}}List<{{$field.DartType}}>{{else}}{{$field.DartType}}{{end -}}
+    {{if $field.Parent.IsList || $field.Name "MessageLink"}}List<{{$field.DartType}}>{{else}}{{$field.DartType}}{{end -}}
 	{{- if $field.IsNotRequired}}? {{else}} {{end -}}
 	{{$field.Name}},
     
