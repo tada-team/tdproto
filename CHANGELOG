@@ -1,3 +1,6 @@
+v1.50.56
+ - feat(Contact): added `canCreateMeeting` field
+
 v1.50.50
  - feat(Features): add rumarket app url
 
