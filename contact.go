@@ -173,6 +173,9 @@ type Contact struct {
 	// Can I create group chats in this team
 	CanCreateGroup bool `json:"can_create_group,omitempty"`
 
+	// Can I create meetings in this team
+	CanCreateMeeting bool `json:"can_create_meeting,omitempty"`
+
 	// Can I view/join public group in this team
 	CanJoinPublicGroups bool `json:"can_join_public_groups,omitempty"`
 
