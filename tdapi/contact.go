@@ -101,6 +101,9 @@ type Contact struct {
 	// Short view in task list
 	TaskShortView bool `json:"task_short_view"`
 
+	// Short view in meeting list
+	MeetingShortView bool `json:"meeting_short_view"`
+
 	// Short view in contact list in mobile app
 	ContactMshortView bool `json:"contact_mshort_view"`
 
@@ -112,4 +115,7 @@ type Contact struct {
 
 	// Short view in task list in mobile app
 	TaskMshortView bool `json:"task_mshort_view"`
+
+	// Short view in meeting list in mobile app
+	MeetingMshortView bool `json:"meeting_mshort_view"`
 }
