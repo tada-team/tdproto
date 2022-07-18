@@ -8,7 +8,7 @@ type ParserUploadArchiveRequest struct {
 
 // ParserUploadArchiveResponse response structure for method UploadArchive
 type ParserUploadArchiveResponse struct {
-	// Success result or upload archive
+	// Success result
 	Success bool `json:"success"`
 }
 
@@ -40,6 +40,6 @@ type ParserMapUsersRequest struct {
 
 // ParserMapUsersResponse ...
 type ParserMapUsersResponse struct {
-	// Users ...
-	Users []*tdproto.MappedUser `json:"users"`
+	// Success result
+	Success bool `json:"success"`
 }
