@@ -1,3 +1,6 @@
+v1.51.0
+ - feat(parser): tdapi.Parser, Parser structs
+
 v1.50.56
  - feat(Contact): added `canCreateMeeting` field
 
