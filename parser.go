@@ -37,6 +37,6 @@ type MappedUser struct {
 	// IsArchive flag of archive user
 	IsArchive bool `json:"is_archive"`
 
-	// IsAdmin flag of deleted user from messenger
+	// IsAdmin group admin flag
 	IsAdmin bool `json:"is_admin"`
 }
