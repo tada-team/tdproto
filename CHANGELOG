@@ -1,3 +1,6 @@
+v1.51.2
+ - feat: features.ChatsImportEnabled flag
+
 v1.51.1
  - fix: use contact structure for mappedUser
 
