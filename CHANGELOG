@@ -1,3 +1,7 @@
+v1.51.3:
+ - feat: action type for serverProcessingParams
+ - feat: tdapi.GenerateChatsRequest/GenerateChatsResponse
+
 v1.51.2
  - feat: features.ChatsImportEnabled flag
 
