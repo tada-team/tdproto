@@ -24,7 +24,7 @@ func (ct ParseStatus) String() string { return string(ct) }
 // MappedUser struct for map internal user with external user
 type MappedUser struct {
 	// Contact tada contact data
-	Contact Contact `json:"contact"`
+	Contact Contact `json:"contact,omitempty"`
 
 	// ExternalUserID user id from messenger
 	ExternalUserID string `json:"external_user_id"`

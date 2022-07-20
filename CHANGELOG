@@ -1,3 +1,6 @@
+v1.51.7
+ - fix: MappedUser.Contact - set omitempty
+
 v1.51.6
  - feat: codegen for parser
 
