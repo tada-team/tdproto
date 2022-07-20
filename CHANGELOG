@@ -1,6 +1,10 @@
-v1.51.3:
+v1.51.4
+ - feat: action type added for tdapi.GenerateChatsResponse,tdapi.ParserUploadArchiveResponse,tdapi.BackgroundAction
+ - feat: tdapi.ParserSendArchiveStatusRequest,tdapi.ParserSendArchiveStatusResponse
+
+v1.51.3
  - feat: action type for serverProcessingParams
- - feat: tdapi.GenerateChatsRequest/GenerateChatsResponse
+ - feat: tdapi.GenerateChatsRequest,tdapi.GenerateChatsResponse
 
 v1.51.2
  - feat: features.ChatsImportEnabled flag

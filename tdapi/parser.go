@@ -13,6 +13,9 @@ type ParserUploadArchiveResponse struct {
 
 	// ProcessingAction action for background notifications about archive unpacking.
 	ProcessingAction string `json:"processing_action"`
+
+	// ActionType must be archive_unpacking
+	ActionType tdproto.ActionType `json:"action_type"`
 }
 
 // ParserGetArchiveStatusRequest request structure for method GetArchiveStatus
@@ -23,6 +26,16 @@ type ParserGetArchiveStatusRequest struct {
 type ParserGetArchiveStatusResponse struct {
 	// Status archive parse status
 	Status tdproto.ParseStatus `json:"status"`
+}
+
+// ParserSendArchiveStatusRequest ...
+type ParserSendArchiveStatusRequest struct {
+	Status   tdproto.ParseStatus `json:"status"`
+	Progress uint16              `json:"progress"`
+}
+
+// ParserSendArchiveStatusResponse ...
+type ParserSendArchiveStatusResponse struct {
 }
 
 // ParserGetMappedUsersRequest ...
@@ -55,4 +68,7 @@ type GenerateChatsRequest struct {
 type GenerateChatsResponse struct {
 	// ProcessingAction action for background notifications about generation of chats and messages.
 	ProcessingAction string `json:"processing_action"`
+
+	// ActionType must be generate_chat
+	ActionType tdproto.ActionType `json:"action_type"`
 }
