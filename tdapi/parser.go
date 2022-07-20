@@ -60,12 +60,12 @@ type ParserMapUsersResponse struct {
 	Success bool `json:"success"`
 }
 
-// GenerateChatsRequest
-type GenerateChatsRequest struct {
+// ParserGenerateChatsRequest
+type ParserGenerateChatsRequest struct {
 }
 
-// GenerateChatsResponse
-type GenerateChatsResponse struct {
+// ParserGenerateChatsResponse
+type ParserGenerateChatsResponse struct {
 	// ProcessingAction action for background notifications about generation of chats and messages.
 	ProcessingAction string `json:"processing_action"`
 
