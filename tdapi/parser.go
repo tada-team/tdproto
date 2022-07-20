@@ -3,8 +3,8 @@ package tdapi
 import "github.com/tada-team/tdproto"
 
 // ParserUploadArchiveRequest request structure for method UploadArchive, which take and parse archive
-type ParserUploadArchiveRequest struct {
-}
+// type ParserUploadArchiveRequest struct {
+// }
 
 // ParserUploadArchiveResponse response structure for method UploadArchive
 type ParserUploadArchiveResponse struct {
@@ -19,8 +19,8 @@ type ParserUploadArchiveResponse struct {
 }
 
 // ParserGetArchiveStatusRequest request structure for method GetArchiveStatus
-type ParserGetArchiveStatusRequest struct {
-}
+// type ParserGetArchiveStatusRequest struct {
+// }
 
 // ParserGetArchiveStatusResponse response structure for method GetArchiveStatus
 type ParserGetArchiveStatusResponse struct {
@@ -35,12 +35,12 @@ type ParserSendArchiveStatusRequest struct {
 }
 
 // ParserSendArchiveStatusResponse ...
-type ParserSendArchiveStatusResponse struct {
-}
+// type ParserSendArchiveStatusResponse struct {
+// }
 
 // ParserGetMappedUsersRequest ...
-type ParserGetMappedUsersRequest struct {
-}
+// type ParserGetMappedUsersRequest struct {
+// }
 
 // ParserGetMappedUsersResponse ...
 type ParserGetMappedUsersResponse struct {
@@ -61,8 +61,8 @@ type ParserMapUsersResponse struct {
 }
 
 // ParserGenerateChatsRequest
-type ParserGenerateChatsRequest struct {
-}
+// type ParserGenerateChatsRequest struct {
+// }
 
 // ParserGenerateChatsResponse
 type ParserGenerateChatsResponse struct {
