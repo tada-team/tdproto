@@ -1,3 +1,6 @@
+v1.51.6
+ - feat: codegen for parser
+
 v1.51.5
  - feat: added action type for NewServerProcessing constructor
 
