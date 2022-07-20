@@ -1,8 +1,9 @@
 package tdproto
 
-func NewServerProcessing(num, total int, action, message string, hasError bool) (r ServerProcessing) {
+func NewServerProcessing(num, total int, action, message string, hasError bool, actionType ActionType) (r ServerProcessing) {
 	r.Name = r.GetName()
 	r.Params.Action = action
+	r.Params.ActionType = actionType
 	r.Params.Message = message
 	r.Params.HasError = hasError
 	r.Params.Num = num

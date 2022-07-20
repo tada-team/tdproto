@@ -1,3 +1,6 @@
+v1.51.5
+ - feat: added action type for NewServerProcessing constructor
+
 v1.51.4
  - feat: action type added for tdapi.GenerateChatsResponse,tdapi.ParserUploadArchiveResponse,tdapi.BackgroundAction
  - feat: tdapi.ParserSendArchiveStatusRequest,tdapi.ParserSendArchiveStatusResponse
