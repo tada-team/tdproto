@@ -23,6 +23,9 @@ type serverProcessingParams struct {
 	// Action name
 	Action string `json:"action"`
 
+	// ActionType. Ex: [contact_import || task_import || archive_unpacking || generate_chats]
+	ActionType ActionType `json:"action_type,omitempty"`
+
 	// Message
 	Message string `json:"message"`
 

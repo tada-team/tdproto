@@ -10,6 +10,9 @@ type ParserUploadArchiveRequest struct {
 type ParserUploadArchiveResponse struct {
 	// Success result
 	Success bool `json:"success"`
+
+	// ProcessingAction action for background notifications about archive unpacking.
+	ProcessingAction string `json:"processing_action"`
 }
 
 // ParserGetArchiveStatusRequest request structure for method GetArchiveStatus
@@ -42,4 +45,14 @@ type ParserMapUsersRequest struct {
 type ParserMapUsersResponse struct {
 	// Success result
 	Success bool `json:"success"`
+}
+
+// GenerateChatsRequest
+type GenerateChatsRequest struct {
+}
+
+// GenerateChatsResponse
+type GenerateChatsResponse struct {
+	// ProcessingAction action for background notifications about generation of chats and messages.
+	ProcessingAction string `json:"processing_action"`
 }

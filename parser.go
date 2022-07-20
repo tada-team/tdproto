@@ -12,10 +12,11 @@ type ParseStatus string
 
 const (
 	ParseStatusCreated        ParseStatus = "created"         // archive just start for uploading
-	ParseStatusUploaded                   = "uploaded"        // archive fully uploaded
-	ParseStatusInProgress                 = "in_progress"     // parse in progress
-	ParseStatusUploadingMedia             = "uploading_media" // uploading media in progress
-	ParseStatusCompleted                  = "completed"       // parse and uploading media completed
+	ParseStatusUploaded       ParseStatus = "uploaded"        // archive fully uploaded
+	ParseStatusInProgress     ParseStatus = "in_progress"     // parse in progress
+	ParseStatusUploadingMedia ParseStatus = "uploading_media" // uploading media in progress
+	ParseStatusCompleted      ParseStatus = "completed"       // parse and uploading media completed
+	ParseStatusError          ParseStatus = "error"           // parse and uploading error
 )
 
 func (ct ParseStatus) String() string { return string(ct) }
