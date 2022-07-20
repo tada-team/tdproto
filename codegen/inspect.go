@@ -283,20 +283,20 @@ func ParseTdproto() (infoToFill *TdProto, err error) {
 
 	// Parser
 	// ParserUploadArchiveRequest
-	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "ParserUploadArchiveRequest")
-	if err != nil {
-		return nil, err
-	}
+	//err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "ParserUploadArchiveRequest")
+	//if err != nil {
+	//	return nil, err
+	//}
 	// ParserUploadArchiveResponse
 	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "ParserUploadArchiveResponse")
 	if err != nil {
 		return nil, err
 	}
 	// ParserGetArchiveStatusRequest
-	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "ParserGetArchiveStatusRequest")
-	if err != nil {
-		return nil, err
-	}
+	//err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "ParserGetArchiveStatusRequest")
+	//if err != nil {
+	//	return nil, err
+	//}
 	// ParserGetArchiveStatusResponse
 	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "ParserGetArchiveStatusResponse")
 	if err != nil {
@@ -308,15 +308,15 @@ func ParseTdproto() (infoToFill *TdProto, err error) {
 		return nil, err
 	}
 	// ParserSendArchiveStatusResponse
-	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "ParserSendArchiveStatusResponse")
-	if err != nil {
-		return nil, err
-	}
+	//err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "ParserSendArchiveStatusResponse")
+	//if err != nil {
+	//	return nil, err
+	//}
 	// ParserGetMappedUsersRequest
-	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "ParserGetMappedUsersRequest")
-	if err != nil {
-		return nil, err
-	}
+	//err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "ParserGetMappedUsersRequest")
+	//if err != nil {
+	//	return nil, err
+	//}
 	// ParserGetMappedUsersResponse
 	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "ParserGetMappedUsersResponse")
 	if err != nil {
@@ -333,10 +333,10 @@ func ParseTdproto() (infoToFill *TdProto, err error) {
 		return nil, err
 	}
 	// ParserGenerateChatsRequest
-	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "ParserGenerateChatsRequest")
-	if err != nil {
-		return nil, err
-	}
+	//err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "ParserGenerateChatsRequest")
+	//if err != nil {
+	//	return nil, err
+	//}
 	// ParserGenerateChatsResponse
 	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "ParserGenerateChatsResponse")
 	if err != nil {
