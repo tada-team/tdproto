@@ -30,6 +30,9 @@ type serverProcessingParams struct {
 	// Message
 	Message string `json:"message"`
 
+	// Body
+	Body string `json:"body,omitempty"`
+
 	// Has error
 	HasError bool `json:"has_error"`
 
