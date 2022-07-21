@@ -16,6 +16,7 @@ const (
 	ParseStatusInProgress     ParseStatus = "in_progress"     // parse in progress
 	ParseStatusUploadingMedia ParseStatus = "uploading_media" // uploading media in progress
 	ParseStatusCompleted      ParseStatus = "completed"       // parse and uploading media completed
+	ParseNotFound             ParseStatus = "not_found"       // archive not exists
 	ParseStatusError          ParseStatus = "error"           // parse and uploading error
 )
 

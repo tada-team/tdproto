@@ -70,7 +70,7 @@ type ParserMapUsersResponse struct {
 // type ParserGenerateChatsRequest struct {
 // }
 
-// ParserGenerateChatsResponse
+// ParserGenerateChatsResponse ...
 type ParserGenerateChatsResponse struct {
 	// ProcessingAction action for background notifications about generation of chats and messages.
 	ProcessingAction string `json:"processing_action"`

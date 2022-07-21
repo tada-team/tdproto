@@ -1,3 +1,6 @@
+v1.51.9
+ - feat(ParseStatus): new status: not_found
+
 v1.51.8
  - feat: parser.ParserGetArchiveStatusResponse progress added
 
