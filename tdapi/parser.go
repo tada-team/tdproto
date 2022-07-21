@@ -26,12 +26,18 @@ type ParserUploadArchiveResponse struct {
 type ParserGetArchiveStatusResponse struct {
 	// Status archive parse status
 	Status tdproto.ParseStatus `json:"status"`
+
+	// Progress of archive unpacking
+	Progress uint16 `json:"progress"`
 }
 
 // ParserSendArchiveStatusRequest ...
 type ParserSendArchiveStatusRequest struct {
-	Status   tdproto.ParseStatus `json:"status"`
-	Progress uint16              `json:"progress"`
+	// Status archive parse status
+	Status tdproto.ParseStatus `json:"status"`
+
+	// Progress of archive unpacking
+	Progress uint16 `json:"progress"`
 }
 
 // ParserSendArchiveStatusResponse ...

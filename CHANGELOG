@@ -1,3 +1,6 @@
+v1.51.8
+ - feat: parser.ParserGetArchiveStatusResponse progress added
+
 v1.51.7
  - fix: MappedUser.Contact - set omitempty
 
