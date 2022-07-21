@@ -1,3 +1,6 @@
+v1.51.11
+ - fix(server.Processing): add body to constructor
+
 v1.51.10
  - feat(server.Processing): body field
 

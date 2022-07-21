@@ -1,6 +1,6 @@
 package tdproto
 
-func NewServerProcessing(num, total int, action, message string, hasError bool, actionType ActionType) (r ServerProcessing) {
+func NewServerProcessing(num, total int, action, message, body string, hasError bool, actionType ActionType) (r ServerProcessing) {
 	r.Name = r.GetName()
 	r.Params.Action = action
 	r.Params.ActionType = actionType
@@ -8,6 +8,7 @@ func NewServerProcessing(num, total int, action, message string, hasError bool, 
 	r.Params.HasError = hasError
 	r.Params.Num = num
 	r.Params.Total = total
+	r.Params.Body = body
 	return r
 }
 
