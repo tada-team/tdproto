@@ -14,7 +14,7 @@ type ParserUploadArchiveResponse struct {
 	ActionType tdproto.ActionType `json:"action_type"`
 }
 
-// ParserGetStateResponse response structure for method GetArchiveStatus
+// ParserGetStateResponse response structure for method GetArchiveState
 type ParserGetStateResponse struct {
 	// State of import chats
 	State tdproto.ParseState `json:"state"`
