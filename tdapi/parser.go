@@ -12,6 +12,9 @@ type ParserUploadArchiveResponse struct {
 
 	// ActionType must be archive_unpacking
 	ActionType tdproto.ActionType `json:"action_type"`
+
+	// ArchiveName name of archive
+	ArchiveName string `json:"archive_name"`
 }
 
 // ParserGetStateResponse response structure for method GetArchiveState
@@ -33,6 +36,9 @@ type ParserGetStateResponse struct {
 
 	// Localized Body
 	Body string `json:"body,omitempty"`
+
+	// ArchiveName name of archive
+	ArchiveName string `json:"archive_name"`
 
 	// Has error
 	HasError bool `json:"has_error"`
@@ -78,4 +84,7 @@ type ParserGenerateChatsResponse struct {
 
 	// ActionType must be generate_chat
 	ActionType tdproto.ActionType `json:"action_type"`
+
+	// ArchiveName name of archive
+	ArchiveName string `json:"archive_name"`
 }

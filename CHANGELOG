@@ -1,3 +1,6 @@
+v1.51.14
+ - feat: archiveName field for ParserGenerateChatsResponse,ParserGetStateResponse,ParserUploadArchiveResponse
+
 v1.51.13
  - fix: parse archive state response generation
 
