@@ -1,3 +1,6 @@
+v1.51.13
+ - fix: parse archive state response generation
+
 v1.51.12
  - feat: parse error code
  - feat: parse get state

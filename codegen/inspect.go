@@ -287,8 +287,8 @@ func ParseTdproto() (infoToFill *TdProto, err error) {
 	if err != nil {
 		return nil, err
 	}
-	// ParserGetArchiveStatusResponse
-	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "ParserGetArchiveStatusResponse")
+	// ParserGetStateResponse
+	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "ParserGetStateResponse")
 	if err != nil {
 		return nil, err
 	}
