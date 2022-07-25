@@ -1,3 +1,8 @@
+v1.51.12
+ - feat: parse error code
+ - feat: parse get state
+ - feat: get mapped users resp added chat name
+
 v1.51.11
  - fix(server.Processing): add body to constructor
 

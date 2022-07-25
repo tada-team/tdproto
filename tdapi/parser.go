@@ -2,10 +2,6 @@ package tdapi
 
 import "github.com/tada-team/tdproto"
 
-// ParserUploadArchiveRequest request structure for method UploadArchive, which take and parse archive
-// type ParserUploadArchiveRequest struct {
-// }
-
 // ParserUploadArchiveResponse response structure for method UploadArchive
 type ParserUploadArchiveResponse struct {
 	// Success result
@@ -18,17 +14,28 @@ type ParserUploadArchiveResponse struct {
 	ActionType tdproto.ActionType `json:"action_type"`
 }
 
-// ParserGetArchiveStatusRequest request structure for method GetArchiveStatus
-// type ParserGetArchiveStatusRequest struct {
-// }
-
-// ParserGetArchiveStatusResponse response structure for method GetArchiveStatus
-type ParserGetArchiveStatusResponse struct {
-	// Status archive parse status
-	Status tdproto.ParseStatus `json:"status"`
+// ParserGetStateResponse response structure for method GetArchiveStatus
+type ParserGetStateResponse struct {
+	// State of import chats
+	State tdproto.ParseState `json:"state"`
 
 	// Progress of archive unpacking
-	Progress uint16 `json:"progress"`
+	Progress uint16 `json:"progress,omitempty"`
+
+	// Action name
+	Action string `json:"action,omitempty"`
+
+	// ActionType. Ex: [archive_unpacking || generate_chats]
+	ActionType tdproto.ActionType `json:"action_type,omitempty"`
+
+	// Localized Message
+	Message string `json:"message,omitempty"`
+
+	// Localized Body
+	Body string `json:"body,omitempty"`
+
+	// Has error
+	HasError bool `json:"has_error"`
 }
 
 // ParserSendArchiveStatusRequest ...
@@ -38,20 +45,18 @@ type ParserSendArchiveStatusRequest struct {
 
 	// Progress of archive unpacking
 	Progress uint16 `json:"progress"`
+
+	// ErrorCode if smth went wrong
+	ErrorCode tdproto.ParseErrCode `json:"error_code,omitempty"`
 }
-
-// ParserSendArchiveStatusResponse ...
-// type ParserSendArchiveStatusResponse struct {
-// }
-
-// ParserGetMappedUsersRequest ...
-// type ParserGetMappedUsersRequest struct {
-// }
 
 // ParserGetMappedUsersResponse ...
 type ParserGetMappedUsersResponse struct {
 	// Users ...
 	Users []tdproto.MappedUser `json:"users"`
+
+	// ChatName ...
+	ChatName string `json:"chat_name"`
 }
 
 // ParserMapUsersRequest ...
@@ -65,10 +70,6 @@ type ParserMapUsersResponse struct {
 	// Success result
 	Success bool `json:"success"`
 }
-
-// ParserGenerateChatsRequest
-// type ParserGenerateChatsRequest struct {
-// }
 
 // ParserGenerateChatsResponse ...
 type ParserGenerateChatsResponse struct {
