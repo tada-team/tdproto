@@ -1,3 +1,7 @@
+v1.51.15
+ - feat(contact): CanImportChats
+ - fix(features): ChatsImportEnabled removed
+
 v1.51.14
  - feat: archiveName field for ParserGenerateChatsResponse,ParserGetStateResponse,ParserUploadArchiveResponse
 

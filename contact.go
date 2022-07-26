@@ -188,6 +188,9 @@ type Contact struct {
 	// Can I view/join public tasks in this team
 	CanJoinPublicTasks bool `json:"can_join_public_tasks,omitempty"`
 
+	// Can I import chats from external services (now its only telegram)
+	CanImportChats bool `json:"can_import_chats,omitempty"`
+
 	// Extra contact fields
 	CustomFields *ContactCustomFields `json:"custom_fields,omitempty"`
 

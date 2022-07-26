@@ -307,9 +307,6 @@ type Features struct {
 
 	// File Extension Whitelist Priority
 	FileExtensionWhitelistPriority bool `json:"file_extension_whitelist_priority,omitempty"`
-
-	// ChatsImportEnabled import chat feature
-	ChatsImportEnabled bool `yaml:"chats_import_enabled,omitempty"`
 }
 
 // Interactive Connectivity Establishment Server for WEB Rtc connection. Readonly.
