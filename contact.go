@@ -119,6 +119,9 @@ type Contact struct {
 	// Push notifications for task chats
 	TaskNotificationsEnabled *bool `json:"task_notifications_enabled,omitempty"`
 
+	// Push notifications for meeting chats
+	MeetingNotificationsEnabled *bool `json:"meeting_notifications_enabled,omitempty"`
+
 	// Short view in contact list
 	ContactShortView *bool `json:"contact_short_view,omitempty"`
 
