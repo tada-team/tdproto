@@ -7,21 +7,6 @@ const (
 	MessengerTypeTelegram MessengerType = "telegram"
 )
 
-// ParseStatus parse status
-type ParseStatus string
-
-const (
-	ParseStatusCreated        ParseStatus = "created"         // archive just start for uploading
-	ParseStatusUploaded       ParseStatus = "uploaded"        // archive fully uploaded
-	ParseStatusInProgress     ParseStatus = "in_progress"     // parse in progress
-	ParseStatusUploadingMedia ParseStatus = "uploading_media" // uploading media in progress
-	ParseStatusCompleted      ParseStatus = "completed"       // parse and uploading media completed
-	ParseNotFound             ParseStatus = "not_found"       // archive not exists +
-	ParseStatusError          ParseStatus = "error"           // parse and uploading error
-)
-
-func (ct ParseStatus) String() string { return string(ct) }
-
 // ParseState parse status
 type ParseState string
 

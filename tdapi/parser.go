@@ -44,10 +44,10 @@ type ParserGetStateResponse struct {
 	HasError bool `json:"has_error"`
 }
 
-// ParserSendArchiveStatusRequest ...
-type ParserSendArchiveStatusRequest struct {
+// ParserSendArchiveStateRequest ...
+type ParserSendArchiveStateRequest struct {
 	// Status archive parse status
-	Status tdproto.ParseStatus `json:"status"`
+	Status tdproto.ParseState `json:"status"`
 
 	// Progress of archive unpacking
 	Progress uint16 `json:"progress"`
