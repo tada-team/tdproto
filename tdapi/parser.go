@@ -47,7 +47,7 @@ type ParserGetStateResponse struct {
 // ParserSendArchiveStateRequest ...
 type ParserSendArchiveStateRequest struct {
 	// State of chat import
-	State tdproto.ParseState `json:"status"`
+	State tdproto.ParseState `json:"state"`
 
 	// Progress of archive unpacking
 	Progress uint16 `json:"progress"`

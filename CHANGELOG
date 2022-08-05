@@ -1,3 +1,6 @@
+v1.51.18
+ - fix: json state field
+
 v1.51.17
  - fix(tdapi): ParserSendArchiveStateRequest field status renamed to field state
 
