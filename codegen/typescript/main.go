@@ -25,8 +25,10 @@ var tsTypesMap = map[string]string{
 	"int":               "number",
 	"int32":             "number",
 	"int64":             "number", // TODO: must be string
-	"uint16":            "number",
 	"uint":              "number",
+	"uint16":            "number",
+	"uint32":            "number",
+	"uint64":            "number",
 	"float":             "number",
 	"bool":              "boolean",
 	"interface{}":       "any",
