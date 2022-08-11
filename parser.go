@@ -28,12 +28,12 @@ type ParseErrCode uint64
 // 1005: отсутсвует нужный upload
 // 1006: сервер не сервер
 const (
-	ParseErrCodeInvalidZip            ParseErrCode = 1001
-	ParseErrCodeResultJsonNotFound    ParseErrCode = 1002
-	ParseErrCodeResultJsonIsCorrupted ParseErrCode = 1003
-	ParseErrCodeInvalidJsonFormat     ParseErrCode = 1004
-	ParseErrCodeUploadNotFound        ParseErrCode = 1005
-	ParseErrCodeServerError           ParseErrCode = 1006
+	ParseErrCodeInvalidZip            = ParseErrCode(1001)
+	ParseErrCodeResultJsonNotFound    = ParseErrCode(1002)
+	ParseErrCodeResultJsonIsCorrupted = ParseErrCode(1003)
+	ParseErrCodeInvalidJsonFormat     = ParseErrCode(1004)
+	ParseErrCodeUploadNotFound        = ParseErrCode(1005)
+	ParseErrCodeServerError           = ParseErrCode(1006)
 )
 
 // MappedUser struct for map internal user with external user
