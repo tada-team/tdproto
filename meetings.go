@@ -142,3 +142,9 @@ type MeetingsMembersBatchDeleteRequestParams struct {
 	TeamUuid    string `json:"team_uuid"`
 	MembersJids []JID  `json:"members_jids"`
 }
+
+type MeetingsGetFrequencyDescriptionParams struct {
+	Frequency         int32                    `json:"frequency"`
+	FreqDays          *string                  `json:"freq_days,omitempty"`
+	RepeatabilityType MeetingRepeatabilityType `json:"repeatability_type"`
+}
