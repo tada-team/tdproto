@@ -53,6 +53,9 @@ type CallOnliner struct {
 	// Video state
 	EnabledVideo bool `json:"enabled_video"`
 
+	// Screenshare state
+	EnabledScreenshare bool `json:"enabled_screenshare"`
+
 	// Member devices, strictly one for now
 	Devices []CallDevice `json:"devices"`
 }
