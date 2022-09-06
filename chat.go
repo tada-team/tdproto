@@ -241,6 +241,12 @@ type Chat struct {
 
 	// Deprecated
 	DraftNum int64 `json:"draft_num,omitempty"`
+
+	//Start date of meeting chat
+	MeetingStartAt ISODateTimeString `json:"meeting_start_at,omitempty"`
+
+	//Meeting has frequency
+	MeetingFreq bool `json:"meeting_freq,omitempty"`
 }
 
 // Link to sub/sup task
