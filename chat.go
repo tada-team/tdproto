@@ -247,6 +247,9 @@ type Chat struct {
 
 	//Meeting has frequency
 	MeetingFreq bool `json:"meeting_freq,omitempty"`
+
+	//Meeting duration
+	MeetingDuration int32 `json:"meeting_duration,omitempty"`
 }
 
 // Link to sub/sup task
