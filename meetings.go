@@ -10,7 +10,7 @@ type Meeting struct {
 	Duration          int32             `json:"duration"`
 	Freq              *Freq             `json:"freq,omitempty"`
 	IsArchive         bool              `json:"is_archive,omitempty"`
-	IsOutside         bool              `json:"is_outside,omitempty"`
+	IsOutside         *bool             `json:"is_outside,omitempty"`
 	IsRequired        bool              `json:"is_required,omitempty"`
 	CanEdit           bool              `json:"can_edit,omitempty"`
 	MeetingMembers    []MeetingMember   `json:"meeting_members,omitempty"`
