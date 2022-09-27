@@ -55,7 +55,7 @@ type MeetingsCreateRequest struct {
 	Freq             *Freq                        `json:"freq,omitempty"`
 	Members          []MeetingsMemberCreateParams `json:"members"`
 	IsPublic         bool                         `json:"is_public,omitempty"`
-	IsOutside        bool                         `json:"is_outside,omitempty"`
+	IsOutside        *bool                        `json:"is_outside,omitempty"`
 }
 
 type Freq struct {
