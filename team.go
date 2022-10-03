@@ -97,6 +97,9 @@ type Team struct {
 
 	// Сurrent team subscription
 	Subscription Subscription `json:"subscription,omitempty"`
+
+	// Сurrent team favorites bot, jid of chat
+	Notebot JID `json:"notebot,omitempty" tdproto:"readonly"`
 }
 
 // Short team representation. For invites, push notifications, etc. Readonly.
