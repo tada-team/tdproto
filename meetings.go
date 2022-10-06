@@ -15,11 +15,11 @@ type Meeting struct {
 	CanEdit           bool              `json:"can_edit,omitempty"`
 	MeetingMembers    []MeetingMember   `json:"meeting_members,omitempty"`
 	VCSEnabled        bool              `json:"vcs_enabled,omitempty"`
-	IVCSInfo          *IVCS             `json:"ivcs_info,omitempty"`
+	IVCSInfo          *IVCSInfo         `json:"ivcs_info,omitempty"`
 	Chat
 }
 
-type IVCS struct {
+type IVCSInfo struct {
 	ConferenceID string `json:"conference_id,omitempty"`
 
 	GuestJoinToken     string `json:"guest_join_token,omitempty"`
