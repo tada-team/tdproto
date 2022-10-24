@@ -1,20 +1,29 @@
 package tdproto
 
 type Meeting struct {
-	Id                string            `json:"id"`
-	TeamUuid          string            `json:"team_uuid"`
-	OwnerContactUuid  JID               `json:"owner_contact_uuid"`
-	OwnerUserUuid     string            `json:"owner_user_uuid"`
-	PersonalAccountId string            `json:"personal_account_id,omitempty"`
-	StartAt           ISODateTimeString `json:"start_at"`
-	Duration          int32             `json:"duration"`
-	Freq              *Freq             `json:"freq,omitempty"`
-	IsArchive         bool              `json:"is_archive,omitempty"`
-	IsOutside         *bool             `json:"is_outside,omitempty"`
-	IsRequired        bool              `json:"is_required,omitempty"`
-	CanEdit           bool              `json:"can_edit,omitempty"`
-	MeetingMembers    []MeetingMember   `json:"meeting_members,omitempty"`
+	Id                     string                 `json:"id"`
+	TeamUuid               string                 `json:"team_uuid,omitempty"`
+	OwnerContactUuid       JID                    `json:"owner_contact_uuid,omitempty"`
+	OwnerUserUuid          string                 `json:"owner_user_uuid,omitempty"`
+	PersonalAccountId      string                 `json:"personal_account_id,omitempty"`
+	StartAt                ISODateTimeString      `json:"start_at"`
+	EndAt                  ISODateTimeString      `json:"end_at"`
+	Duration               int32                  `json:"duration"`
+	Freq                   *Freq                  `json:"freq,omitempty"`
+	IsArchive              bool                   `json:"is_archive,omitempty"`
+	IsOutside              *bool                  `json:"is_outside,omitempty"`
+	IsRequired             bool                   `json:"is_required,omitempty"`
+	CanEdit                bool                   `json:"can_edit,omitempty"`
+	MeetingMembers         []MeetingMember        `json:"meeting_members,omitempty"`
+	VCSEnabled             bool                   `json:"vcs_enabled,omitempty"`
+	IVCSInfo               *IVCSInfo              `json:"ivcs_info,omitempty"`
+	MeetingRecipientStatus MeetingRecipientStatus `json:"meeting_recipient_status"`
 	Chat
+}
+
+type IVCSInfo struct {
+	ConferenceID string `json:"conference_id,omitempty"`
+	JoinToken    string `json:"join_token,omitempty"`
 }
 
 type MeetingsGetRequest struct {
@@ -56,6 +65,7 @@ type MeetingsCreateRequest struct {
 	Members          []MeetingsMemberCreateParams `json:"members"`
 	IsPublic         bool                         `json:"is_public,omitempty"`
 	IsOutside        *bool                        `json:"is_outside,omitempty"`
+	VCSEnabled       bool                         `json:"vcs_enabled,omitempty"`
 }
 
 type Freq struct {
@@ -79,6 +89,7 @@ type MeetingsUpdateRequest struct {
 	RemoveMembers        []JID                        `json:"remove_members,omitempty"`
 	NotificationsEnabled *bool                        `json:"notifications_enabled,omitempty"`
 	CountersEnabled      *bool                        `json:"counters_enabled,omitempty"`
+	VCSEnabled           *bool                        `json:"vcs_enabled,omitempty"`
 }
 
 type MeetingsDeleteRequestParams struct {
