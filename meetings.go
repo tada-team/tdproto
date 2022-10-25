@@ -30,7 +30,6 @@ type MeetingsGetRequest struct {
 	TeamUuid    string   `json:"team_uuid"`
 	DateFrom    string   `json:"date_from"`
 	DateTo      string   `json:"date_to"`
-	Members     []string `json:"members,omitempty"`
 	Limit       *int32   `json:"limit,omitempty"`
 	Offset      *int32   `json:"offset,omitempty"`
 	IsArchive   *bool    `json:"is_archive,omitempty"`
@@ -38,7 +37,7 @@ type MeetingsGetRequest struct {
 	IsPublic    *bool    `json:"is_public,omitempty"`
 	IsOutside   *bool    `json:"is_outside,omitempty"`
 	IsRequired  *bool    `json:"is_required,omitempty"`
-	MembersJids string   `json:"members_jids,omitempty"`
+	MembersJids []string `json:"members_jids,omitempty"`
 }
 
 type MeetingsResponse struct {
