@@ -314,11 +314,6 @@ func ParseTdproto() (infoToFill *TdProto, err error) {
 		return nil, err
 	}
 
-	// Contact
-	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "Contact")
-	if err != nil {
-		return nil, err
-	}
 	// ContactFilter query
 	err = cherryPickQuery(tdModelsPackage, tdFormsPackage, "ContactFilter")
 	if err != nil {
