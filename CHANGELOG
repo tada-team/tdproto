@@ -1,3 +1,6 @@
+v1.51.30
+ - feat: contact entity to code gen
+
 v1.51.18
  - fix: json state field
 
