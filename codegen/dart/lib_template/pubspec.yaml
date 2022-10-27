@@ -11,7 +11,7 @@ environment:
 dependencies:
   meta: ^1.7.0
   json_annotation: ^4.1.0
-  freezed_annotation: ^0.14.3
+  freezed_annotation: ^2.2.0
 
 dev_dependencies:
   pedantic: ^1.11.1
