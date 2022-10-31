@@ -37,6 +37,7 @@ jobs:
         working-directory: ${{ env.TDPROTO_DIR }}
         run: |
           cd ./codegen
+          chmod a+x make-dart.sh
           ./make-dart.sh "${GITHUB_WORKSPACE}/${CLONE_DIR}/"
       - name: Analyze flutter
         run: |
