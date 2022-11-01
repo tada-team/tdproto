@@ -233,6 +233,9 @@ type Features struct {
 	// CallsVideoEnabled enabled or disabled video calls
 	CallsVideoEnabled bool `json:"calls_video_enabled"`
 
+	// VcsEnabled enabled or disabled vcs
+	VcsEnabled bool `json:"vcs_enabled"`
+
 	// Calls functions enabled for mobile applications
 	MobileCalls bool `json:"mobile_calls"`
 

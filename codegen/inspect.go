@@ -210,6 +210,7 @@ func ParseTdproto() (infoToFill *TdProto, err error) {
 			"easy_api":     "",
 			"botcommands":  "",
 			"parser":       "",
+			"contact":      "",
 		},
 	)
 	if err != nil {
@@ -309,6 +310,12 @@ func ParseTdproto() (infoToFill *TdProto, err error) {
 	}
 	// ParserGenerateChatsResponse
 	err = cherryPickStruct(tdModelsPackage, tdFormsPackage, "ParserGenerateChatsResponse")
+	if err != nil {
+		return nil, err
+	}
+
+	// ContactFilter query
+	err = cherryPickQuery(tdModelsPackage, tdFormsPackage, "ContactFilter")
 	if err != nil {
 		return nil, err
 	}
