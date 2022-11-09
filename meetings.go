@@ -24,6 +24,7 @@ type Meeting struct {
 type IVCSInfo struct {
 	ConferenceID string `json:"conference_id,omitempty"`
 	JoinToken    string `json:"join_token,omitempty"`
+	InviteLink   string `json:"invite_link,omitempty"`
 }
 
 type MeetingsGetRequest struct {
