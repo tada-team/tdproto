@@ -26,7 +26,7 @@ var dartTypeMap = map[string]string{
 	"uint16":            "int",
 	"uint32":            "int",
 	"uint64":            "int",
-	"ISODateTimeString": "String",
+	"ISODateTimeString": "DateTime",
 	"interface{}":       "dynamic",
 	"time.Time":         "String",
 	"bool":              "bool",
