@@ -1,9 +1,10 @@
 package tdproto
 
-func NewServerMeetingCellUpdated(meetingID string, startAt ISODateTimeString, duration int32) (r ServerMeetingCellUpdated) {
+func NewServerMeetingCellUpdated(meetingID string, startAtOld, startAtNew ISODateTimeString, duration int32) (r ServerMeetingCellUpdated) {
 	r.Name = r.GetName()
 	r.Params.MeetingID = meetingID
-	r.Params.StartAt = startAt
+	r.Params.StartAtOld = startAtOld
+	r.Params.StartAtNew = startAtNew
 	r.Params.Duration = duration
 	return r
 }
@@ -19,7 +20,8 @@ func (p ServerMeetingCellUpdated) GetName() string { return "server.meetingcell.
 // Params of the server.meetingcell.updated event
 type serverMeetingCellUpdatedParams struct {
 	// Meeting Cell info
-	MeetingID string            `json:"meeting_id"`
-	StartAt   ISODateTimeString `json:"start_at"`
-	Duration  int32             `json:"duration"`
+	MeetingID  string            `json:"meeting_id"`
+	StartAtOld ISODateTimeString `json:"start_at_old"`
+	StartAtNew ISODateTimeString `json:"start_at_new"`
+	Duration   int32             `json:"duration"`
 }
