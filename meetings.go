@@ -159,3 +159,12 @@ type MeetingsGetFrequencyDescriptionParams struct {
 	FreqDays          *string                  `json:"freq_days,omitempty"`
 	RepeatabilityType MeetingRepeatabilityType `json:"repeatability_type"`
 }
+
+type MeetingsUpdateCellRequest struct {
+	MeetingId        string `json:"meeting_id"`
+	TeamUuid         string `json:"team_uuid"`
+	Duration         int32  `json:"duration"`
+	IsOutside        bool   `json:"is_outside"`
+	CellStartOldDate string `json:"cell_start_old_date"`
+	CellStartNewDate string `json:"cell_start_new_date"`
+}
