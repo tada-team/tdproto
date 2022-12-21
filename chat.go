@@ -13,6 +13,9 @@ type ChatShort struct {
 
 	// Icon data
 	Icons IconData `json:"icons"`
+
+	// MessagesFromGentime show messages from this gentime for this chat
+	MessagesFromGentime *int64 `json:"messages_from_gentime,omitempty"`
 }
 
 // Minimal chat representation for deletion
@@ -250,6 +253,15 @@ type Chat struct {
 
 	//Meeting duration
 	MeetingDuration int32 `json:"meeting_duration,omitempty"`
+
+	// Can I delete local messages history in this chat
+	CanDeleteLocalHistory bool `json:"can_delete_local_history,omitempty"`
+
+	// Can I delete all messages history in this chat
+	CanDeleteGlobalHistory bool `json:"can_delete_global_history,omitempty"`
+
+	// MessagesFromGentime show messages from this gentime for this chat
+	MessagesFromGentime *int64 `json:"messages_from_gentime,omitempty"`
 }
 
 // Link to sub/sup task
