@@ -9,9 +9,12 @@ const (
 
 	// CallTypeVideo is a video room
 	CallTypeVideo CallType = "video"
+
+	// CallTypeVideoMultistream is a video room in multistream mode
+	CallTypeVideoMultistream CallType = "video_multistream"
 )
 
-func (ct CallType) IsVideo() bool { return ct == CallTypeVideo }
+func (ct CallType) IsVideo() bool { return ct == CallTypeVideo || ct == CallTypeVideoMultistream }
 func (ct CallType) IsAudio() bool { return ct == CallTypeAudio }
 
 func (ct CallType) String() string { return string(ct) }
