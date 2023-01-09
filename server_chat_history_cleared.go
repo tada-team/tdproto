@@ -11,6 +11,17 @@ func NewServerChatHistoryCleared(jid JID, lastCleared *string) (r ServerChatHist
 	return r
 }
 
+// NewServerChatHistoryCleared2 returns the new ServerChatHistoryCleared instance.
+func NewServerChatHistoryCleared2(jid JID, lastCleared *string) (r ServerChatHistoryCleared) {
+	r.Name = r.GetName()
+	r.Params.JID = jid
+	if lastCleared != nil {
+		r.Params.LastCleared = lastCleared
+	}
+
+	return r
+}
+
 // ServerChatHistoryCleared represents the event about clearing the chat messages history for user.
 type ServerChatHistoryCleared struct {
 	BaseEvent
