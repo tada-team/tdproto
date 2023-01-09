@@ -19,8 +19,9 @@ func (p ServerChatHistoryCleared) GetName() string { return "server.chat.history
 
 // Params of the server.chat.history.cleared event
 type serverChatHistoryClearedParams struct {
-	// chat jid
+	// Chat jid
 	JID JID `json:"jid"`
 
+	// Last clear chat history
 	LastCleared *string `json:"last_cleared,omitempty"`
 }
