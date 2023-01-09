@@ -251,11 +251,11 @@ type Chat struct {
 	//Meeting duration
 	MeetingDuration int32 `json:"meeting_duration,omitempty"`
 
-	// Can I delete local messages history in this chat
-	CanDeleteLocalHistory bool `json:"can_delete_local_history,omitempty"`
-
 	// Can I delete all messages history in this chat
 	CanDeleteGlobalHistory bool `json:"can_delete_global_history,omitempty"`
+
+	// Can I delete local messages history in this chat
+	CanDeleteLocalHistory bool `json:"can_delete_local_history,omitempty"`
 }
 
 // Link to sub/sup task
