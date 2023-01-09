@@ -5,7 +5,7 @@ func NewServerChatHistoryCleared(jid JID, lastCleared *string) (r ServerChatHist
 	r.Name = r.GetName()
 	r.Params.JID = jid
 	if lastCleared != nil {
-		r.Params.LastCleared = lastCleared
+		r.Params.LastClear = lastCleared
 	}
 
 	return r
@@ -25,6 +25,6 @@ type serverChatHistoryClearedParams struct {
 	// Chat jid
 	JID JID `json:"jid"`
 
-	// Last clear chat history
-	LastCleared *string `json:"last_cleared,omitempty"`
+	// LastClear last clear chat history
+	LastClear *string `json:"last_clear"`
 }
