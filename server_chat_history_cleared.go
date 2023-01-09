@@ -1,8 +1,11 @@
 package tdproto
 
-func NewServerChatHistoryCleared(jid JID) (r ServerChatHistoryCleared) {
+func NewServerChatHistoryCleared(jid JID, lastCleared *string) (r ServerChatHistoryCleared) {
 	r.Name = r.GetName()
 	r.Params.JID = jid
+	if lastCleared != nil {
+		r.Params.LastCleared = lastCleared
+	}
 	return r
 }
 
