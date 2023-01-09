@@ -15,6 +15,13 @@ type ContactFilter struct {
 	DisplayName string `schema:"display_name"`
 }
 
+type ContactsSectionFilter struct {
+	Paginator
+
+	// Team Section
+	SectionId string `schema:"section_id"`
+}
+
 // Contact invite/edit form
 type Contact struct {
 	// User uid (for invitation from other team)
