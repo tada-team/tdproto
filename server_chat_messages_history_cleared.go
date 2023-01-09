@@ -14,14 +14,14 @@ func NewServerChatHistoryCleared(jid JID, lastCleared *string) (r ServerChatHist
 // ServerChatHistoryCleared represents the event about clearing the chat messages history for user.
 type ServerChatHistoryCleared struct {
 	BaseEvent
-	Params serverChatHistoryClearedParams `json:"params"`
+	Params serverChatMessagesHistoryClearedParams `json:"params"`
 }
 
 // GetName returns the name of ServerChatHistoryCleared instance.
 func (p ServerChatHistoryCleared) GetName() string { return "server.chat.history.cleared" }
 
 // Params of the server.chat.history.cleared event
-type serverChatHistoryClearedParams struct {
+type serverChatMessagesHistoryClearedParams struct {
 	// Chat jid
 	JID JID `json:"jid"`
 
