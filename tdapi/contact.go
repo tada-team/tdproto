@@ -15,7 +15,7 @@ type ContactFilter struct {
 	DisplayName string `schema:"display_name"`
 
 	//* ?is_archived=
-	IsArchived bool `schema:"is_archived"`
+	IsArchived *bool `schema:"is_archived"`
 }
 
 // Contact invite/edit form
