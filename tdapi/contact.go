@@ -19,7 +19,7 @@ type ContactsSectionFilter struct {
 	Paginator
 
 	// Team Section
-	SectionId string `schema:"section_id"`
+	SectionUid string `schema:"section_uid"`
 }
 
 // Contact invite/edit form
