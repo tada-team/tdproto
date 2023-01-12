@@ -18,6 +18,16 @@ type ContactFilter struct {
 	IsArchived *bool `schema:"is_archived"`
 }
 
+type ContactsSectionFilter struct {
+	Paginator
+
+	// Team Section
+	SectionUid string `schema:"section_uid"`
+
+	//* ?is_archived=
+	IsArchived *bool `schema:"is_archived"`
+}
+
 // Contact invite/edit form
 type Contact struct {
 	// User uid (for invitation from other team)
