@@ -20,6 +20,9 @@ type ContactsSectionFilter struct {
 
 	// Team Section
 	SectionUid string `schema:"section_uid"`
+
+	//* ?is_archived=
+	IsArchived *bool `schema:"is_archived"`
 }
 
 // Contact invite/edit form
