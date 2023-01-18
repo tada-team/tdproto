@@ -122,6 +122,9 @@ type Contact struct {
 	// Push notifications for meeting chats
 	MeetingNotificationsEnabled *bool `json:"meeting_notifications_enabled,omitempty"`
 
+	// Push notifications from systembot
+	SystembotNotificationsEnabled *bool `json:"systembot_notifications_enabled,omitempty"`
+
 	// Short view in contact list
 	ContactShortView *bool `json:"contact_short_view,omitempty"`
 
