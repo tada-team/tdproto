@@ -16,6 +16,9 @@ type ContactFilter struct {
 
 	//* ?is_archived=
 	IsArchived *bool `schema:"is_archived"`
+
+	//* ?is_bot=
+	IsBot *bool `schema:"is_bot"`
 }
 
 type ContactsSectionFilter struct {
@@ -26,6 +29,9 @@ type ContactsSectionFilter struct {
 
 	//* ?is_archived=
 	IsArchived *bool `schema:"is_archived"`
+
+	//* ?is_bot=
+	IsBot *bool `schema:"is_bot"`
 }
 
 // Contact invite/edit form
