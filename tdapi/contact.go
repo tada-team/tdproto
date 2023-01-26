@@ -21,19 +21,6 @@ type ContactFilter struct {
 	IsBot *bool `schema:"is_bot"`
 }
 
-type ContactsSectionFilter struct {
-	Paginator
-
-	// Team Section
-	SectionUid string `schema:"section_uid"`
-
-	//* ?is_archived=
-	IsArchived *bool `schema:"is_archived"`
-
-	//* ?is_bot=
-	IsBot *bool `schema:"is_bot"`
-}
-
 // Contact invite/edit form
 type Contact struct {
 	// User uid (for invitation from other team)
