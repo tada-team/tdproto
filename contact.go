@@ -1,5 +1,7 @@
 package tdproto
 
+import "github.com/tada-team/tdproto/tdapi"
+
 // Contact
 type Contact struct {
 	// Contact Id
@@ -238,4 +240,17 @@ type ContactShort struct {
 
 	// Object version
 	Gentime int64 `json:"gentime"`
+}
+
+type ContactsSectionGetRequest struct {
+	tdapi.Paginator
+
+	// Team Section
+	SectionUid string `schema:"section_uid"`
+
+	//* ?is_archived=
+	IsArchived *bool `schema:"is_archived"`
+
+	//* ?is_bot=
+	IsBot *bool `schema:"is_bot"`
 }
