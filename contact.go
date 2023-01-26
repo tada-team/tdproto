@@ -1,7 +1,5 @@
 package tdproto
 
-import "github.com/tada-team/tdproto/tdapi"
-
 // Contact
 type Contact struct {
 	// Contact Id
@@ -243,8 +241,6 @@ type ContactShort struct {
 }
 
 type ContactsSectionGetRequest struct {
-	tdapi.Paginator
-
 	// Team Section
 	SectionUid string `schema:"section_uid"`
 
@@ -253,4 +249,8 @@ type ContactsSectionGetRequest struct {
 
 	//* ?is_bot=
 	IsBot *bool `schema:"is_bot"`
+
+	Limit int `schema:"limit"`
+
+	Offset int `schema:"offset"`
 }
