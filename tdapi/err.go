@@ -14,6 +14,9 @@ const (
 	InternalServerError = Err("INTERNAL_SERVER_ERROR")
 	InvalidMethod       = Err("INVALID_METHOD")
 	InvalidData         = Err("INVALID_DATA")
+	AccountNotFound     = Err("ACCOUNT_NOT_FOUND")
+	AccountSuspended    = Err("ACCOUNT_SUSPENDED")
+	AccountBlocked      = Err("ACCOUNT_BLOCKED")
 )
 
 func (e Err) Error() string { return string(e) }
