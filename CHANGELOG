@@ -1,3 +1,6 @@
+v1.51.37
+ - feat: new field contact.ReactionNotificationsEnabled
+
 v1.51.36
  - feat: new field contact.SystembotNotificationsEnabled
 
