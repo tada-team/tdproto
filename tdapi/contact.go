@@ -19,6 +19,9 @@ type ContactFilter struct {
 
 	// * ?is_bot=
 	IsBot *bool `schema:"is_bot"`
+
+	// * ?without_me=
+	WithoutMe bool `schema:"without_me"`
 }
 
 // Contact invite/edit form
