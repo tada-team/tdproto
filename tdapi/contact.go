@@ -17,8 +17,11 @@ type ContactFilter struct {
 	// * ?is_archived=
 	IsArchived *bool `schema:"is_archived"`
 
-	//* ?is_bot=
+	// * ?is_bot=
 	IsBot *bool `schema:"is_bot"`
+
+	// * ?without_me=
+	WithoutMe bool `schema:"without_me"`
 }
 
 // Contact invite/edit form
@@ -103,6 +106,9 @@ type Contact struct {
 
 	// Push notifications for meeting chats
 	MeetingNotificationsEnabled bool `json:"meeting_notifications_enabled"`
+
+	// Push notifications for reactions
+	ReactionNotificationsEnabled bool `json:"reaction_notifications_enabled"`
 
 	// Short view in contact list
 	ContactShortView bool `json:"contact_short_view"`

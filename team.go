@@ -103,6 +103,9 @@ type Team struct {
 
 	// Personal account status for current team
 	AccountStatus PersonalAccountStatus `json:"account_status,omitempty" tdproto:"readonly"`
+
+	// Team owner
+	Owner Contact `json:"owner,omitempty"`
 }
 
 // Short team representation. For invites, push notifications, etc. Readonly.
