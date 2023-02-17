@@ -102,7 +102,7 @@ type Team struct {
 	Notebot JID `json:"notebot,omitempty" tdproto:"readonly"`
 
 	// Personal account status for current team
-	AccountStatus PersonalAccountStatus `json:"account_status,omitempty" tdproto:"readonly"`
+	AccountStatus PersonalAccountStatus `json:"account_status" tdproto:"readonly"`
 
 	// Team owner
 	Owner Contact `json:"owner,omitempty"`
