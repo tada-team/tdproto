@@ -236,6 +236,9 @@ type Chat struct {
 	// Can I change Important flag in any message in this chat
 	CanSetImportantAnyMessage bool `json:"can_set_important_any_message,omitempty"`
 
+	// Can I mute all in call
+	CanMuteAll bool `json:"can_mute_all,omitempty"`
+
 	// Date of the last message sent even if it was deleted
 	LastActivity ISODateTimeString `json:"last_activity,omitempty"`
 
