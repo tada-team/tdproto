@@ -264,6 +264,7 @@ type Features struct {
 	WikiPages bool `json:"wiki_pages"`
 
 	// Wiki pages in chats. Experimental
+	// Deprecated: this field is not used
 	AllowAdminMute bool `json:"allow_admin_mute,omitempty"`
 
 	// Default wallpaper url for mobile apps, if any
