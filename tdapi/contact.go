@@ -8,11 +8,20 @@ type ContactFilter struct {
 	// Comma separated statuses in team
 	Status string `schema:"status"`
 
-	//* ?id=jid,jid
+	// * ?id=jid,jid
 	ID string `schema:"id"`
 
-	//* ?display_name=
+	// * ?display_name=
 	DisplayName string `schema:"display_name"`
+
+	// * ?is_archived=
+	IsArchived *bool `schema:"is_archived"`
+
+	// * ?is_bot=
+	IsBot *bool `schema:"is_bot"`
+
+	// * ?without_me=
+	WithoutMe bool `schema:"without_me"`
 }
 
 // Contact invite/edit form
@@ -92,8 +101,14 @@ type Contact struct {
 	// Push notifications for task chats
 	TaskNotificationsEnabled bool `json:"task_notifications_enabled"`
 
+	// Push notifications from systembot
+	SystembotNotificationsEnabled bool `json:"systembot_notifications_enabled"`
+
 	// Push notifications for meeting chats
 	MeetingNotificationsEnabled bool `json:"meeting_notifications_enabled"`
+
+	// Push notifications for reactions
+	ReactionNotificationsEnabled bool `json:"reaction_notifications_enabled"`
 
 	// Short view in contact list
 	ContactShortView bool `json:"contact_short_view"`

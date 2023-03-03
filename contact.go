@@ -122,6 +122,12 @@ type Contact struct {
 	// Push notifications for meeting chats
 	MeetingNotificationsEnabled *bool `json:"meeting_notifications_enabled,omitempty"`
 
+	// Push notifications from systembot
+	SystembotNotificationsEnabled *bool `json:"systembot_notifications_enabled,omitempty"`
+
+	// Push notifications for reactions
+	ReactionNotificationsEnabled *bool `json:"reaction_notifications_enabled,omitempty"`
+
 	// Short view in contact list
 	ContactShortView *bool `json:"contact_short_view,omitempty"`
 
@@ -238,4 +244,19 @@ type ContactShort struct {
 
 	// Object version
 	Gentime int64 `json:"gentime"`
+}
+
+type ContactsSectionGetRequest struct {
+	// Team Section
+	SectionUid string `schema:"section_uid"`
+
+	// * ?is_archived=
+	IsArchived *bool `schema:"is_archived"`
+
+	// * ?is_bot=
+	IsBot *bool `schema:"is_bot"`
+
+	Limit int `schema:"limit"`
+
+	Offset int `schema:"offset"`
 }
