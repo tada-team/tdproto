@@ -30,6 +30,8 @@ var tsTypesMap = map[string]string{
 	"uint32":            "number",
 	"uint64":            "number",
 	"float":             "number",
+	"float32":           "number",
+	"float64":           "number",
 	"bool":              "boolean",
 	"interface{}":       "any",
 	"ISODateTimeString": "string",
