@@ -26,7 +26,7 @@ type TariffBilling struct {
 	Priority uint32 `json:"priority,omitempty"`
 
 	// Cost of one workplace
-	CostWorkplace float32 `json:"cost_workplace"`
+	CostWorkplace string `json:"cost_workplace"`
 
 	// Count of maximum workspaces on tariff
 	MaxWorkplaceCount uint32 `json:"max_workplace_count,omitempty"`
@@ -41,7 +41,7 @@ type TariffBilling struct {
 	StepIncreasingWorkplaces uint32 `json:"step_increasing_workplaces"`
 
 	// Disk space limit per user
-	DiskSpaceQuotaMb float32 `json:"disk_space_quota_mb"`
+	DiskSpaceQuotaMb string `json:"disk_space_quota_mb"`
 
 	// Number of paid days
 	PeriodDays int32 `json:"period_days"`
@@ -95,7 +95,7 @@ type CreateTariffRequest struct {
 	Currency Currency `json:"currency"`
 
 	// Cost of one workplace
-	CostWorkplace float32 `json:"cost_workplace"`
+	CostWorkplace string `json:"cost_workplace"`
 
 	// Priority of tariff
 	Priority uint32 `json:"priority,omitempty"`
@@ -113,7 +113,7 @@ type CreateTariffRequest struct {
 	StepIncreasingWorkplaces uint32 `json:"step_increasing_workplaces,omitempty"`
 
 	// Disk space limit per user
-	DiskSpaceQuotaMb float32 `json:"disk_space_quota_mb,omitempty"`
+	DiskSpaceQuotaMb string `json:"disk_space_quota_mb,omitempty"`
 
 	// Number of paid days
 	PeriodDays uint32 `json:"period_days"`
