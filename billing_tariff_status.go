@@ -9,4 +9,7 @@ const (
 
 	// Tariff in archive
 	ArchiveTariff TariffStatus = "TARIFF_STATUS_ARCHIVE"
+
+	// Tariff is unknown
+	UnspecifiedTariff TariffStatus = "TARIFF_STATUS_UNSPECIFIED"
 )
