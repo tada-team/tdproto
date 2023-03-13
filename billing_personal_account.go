@@ -51,7 +51,7 @@ type PersonalAccountBilling struct {
 	Status PersonalAccountStatus `json:"status"`
 
 	// Tariff on this personal account
-	Tariff string `json:"tariff"`
+	Tariff TariffBilling `json:"tariff"`
 }
 
 // CreatePersonalAccountRequest request on create personal account
