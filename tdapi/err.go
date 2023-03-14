@@ -40,9 +40,9 @@ func (e Err) StatusCode() int {
 	case InvalidData:
 		return 422
 	case AccountNotFound, AccountBlocked:
-		return 402
-	case AccountSuspended:
 		return 451
+	case AccountSuspended:
+		return 402
 	default:
 		return 200
 	}
