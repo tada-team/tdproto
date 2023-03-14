@@ -12,4 +12,7 @@ const (
 
 	// BlockedAccount account is under administrative blocking
 	BlockedAccount PersonalAccountStatus = "PERSONAL_ACCOUNT_STATUS_BLOCKED"
+
+	// UnspecifiedStatus Unknown account status
+	UnspecifiedStatus PersonalAccountStatus = "PERSONAL_ACCOUNT_STATUS_UNSPECIFIED"
 )

@@ -26,7 +26,7 @@ type TariffBilling struct {
 	Priority uint32 `json:"priority,omitempty"`
 
 	// Cost of one workplace
-	CostWorkplace string `json:"cost_workplace"`
+	CostWorkplace float64 `json:"cost_workplace"`
 
 	// Count of maximum workspaces on tariff
 	MaxWorkplaceCount uint32 `json:"max_workplace_count,omitempty"`
@@ -41,22 +41,22 @@ type TariffBilling struct {
 	StepIncreasingWorkplaces uint32 `json:"step_increasing_workplaces"`
 
 	// Disk space limit per user
-	DiskSpaceQuotaMb string `json:"disk_space_quota_mb"`
+	DiskSpaceQuotaMb float64 `json:"disk_space_quota_mb"`
 
 	// Number of paid days
-	PeriodDays int32 `json:"period_days"`
+	PeriodDays uint32 `json:"period_days"`
 
 	// Maximum count of users in voice conference
-	MaxVoiceUser int32 `json:"max_voice_user"`
+	MaxVoiceUser uint32 `json:"max_voice_user"`
 
 	// Maximum count of users in video conference
-	MaxVideoUser int32 `json:"max_video_user"`
+	MaxVideoUser uint32 `json:"max_video_user"`
 
 	// Bitrate of video in video co
-	VideoCallBitrate int32 `json:"video_call_bitrate"`
+	VideoCallBitrate uint32 `json:"video_call_bitrate"`
 
 	// Bitrate of video in video sharing
-	VideoSharingBitrate int32 `json:"video_sharing_bitrate"`
+	VideoSharingBitrate uint32 `json:"video_sharing_bitrate"`
 
 	// Flag of availability of free seats when exceeding FreeWorkplace
 	IsFree bool `json:"is_free"`
