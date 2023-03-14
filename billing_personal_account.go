@@ -39,13 +39,13 @@ type PersonalAccountBilling struct {
 	IsSuspended bool `json:"is_suspended"`
 
 	// Date of next debiting funds
-	NextBillingDate *time.Time `json:"next_billing_date"`
+	NextBillingDate *time.Time `json:"next_billing_date,omitempty"`
 
 	// Account blocking date
-	BlockDate *time.Time `json:"block_date"`
+	BlockDate *time.Time `json:"block_date,omitempty"`
 
 	// Account suspending date
-	SuspendDate *time.Time `json:"suspend_date"`
+	SuspendDate *time.Time `json:"suspend_date,omitempty"`
 
 	// Status of personal account
 	Status PersonalAccountStatus `json:"status"`
