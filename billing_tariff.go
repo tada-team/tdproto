@@ -160,10 +160,10 @@ type UpdateTariffRequest struct {
 
 // Response from getting a list of tariffs
 type GetTariffsListResponse struct {
-	Tariffs []TariffBilling `json:"tariffs"`
+	TariffList []TariffBilling `json:"tariff_list"`
 }
 
 // Response from getting a list of active tariffs
 type GetActiveTariffsListResponse struct {
-	Tariffs []TariffBilling `json:"tariffs"`
+	TariffList []TariffBilling `json:"tariff_list"`
 }
