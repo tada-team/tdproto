@@ -5,7 +5,7 @@ import "time"
 // Tariff struct of billing API
 type TariffBilling struct {
 	// Tariff id
-	Id uint64 `json:"id"`
+	Id string `json:"id"`
 
 	// Name of tariff
 	Name string `json:"name"`
