@@ -1,3 +1,6 @@
+v1.51.43
+ - feat(Subtask): added `Importance` and `Complexity` fields
+
 v1.51.37
  - feat: new field contact.ReactionNotificationsEnabled
 
