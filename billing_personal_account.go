@@ -52,6 +52,9 @@ type PersonalAccountBilling struct {
 
 	// Tariff on this personal account
 	Tariff TariffBilling `json:"tariff"`
+
+	// Owner of this personal account
+	Owner Contact `json:"owner,omitempty"`
 }
 
 // CreatePersonalAccountRequest request on create personal account
