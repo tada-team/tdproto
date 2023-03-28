@@ -1,6 +1,6 @@
 package tdproto
 
-func NewServerlCallTrickle(jid JID, candidate, sdpMid string, sdpMlineIndex int) (r ServerCallTrickle) {
+func NewServerCallTrickle(jid JID, candidate, sdpMid string, sdpMlineIndex int) (r ServerCallTrickle) {
 	r.Name = r.GetName()
 	r.Params.Jid = jid
 	r.Params.Candidate = candidate
