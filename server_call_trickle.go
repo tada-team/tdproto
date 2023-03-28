@@ -20,10 +20,10 @@ func (p ServerCallTrickle) GetName() string { return "server.call.trickle" }
 // Params of server.call.trickle event
 type serverCallTrickleParams struct {
 	// Chat or contact id
-	Jid JID `json:"jid,omitempty"`
+	Jid JID `json:"jid"`
 
 	// Trickle candidate
-	Candidate string `json:"candidate,omitempty"`
+	Candidate string `json:"candidate"`
 
 	// SDP mid
 	SdpMid string `json:"sdp_mid,omitempty"`
