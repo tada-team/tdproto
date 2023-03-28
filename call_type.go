@@ -12,6 +12,9 @@ const (
 
 	// CallTypeVideoMultistream is a video room in multistream mode
 	CallTypeVideoMultistream CallType = "video_multistream"
+
+	// CallTypeIVCS is a vcs using IVA
+	CallTypeIVCS CallType = "ivcs"
 )
 
 func (ct CallType) IsVideo() bool { return ct == CallTypeVideo || ct == CallTypeVideoMultistream }
