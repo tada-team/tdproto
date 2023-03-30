@@ -242,13 +242,13 @@ type Chat struct {
 	// Deprecated
 	DraftNum int64 `json:"draft_num,omitempty"`
 
-	//Start date of meeting chat
+	// Start date of meeting chat
 	MeetingStartAt ISODateTimeString `json:"meeting_start_at,omitempty"`
 
-	//Meeting has frequency
+	// Meeting has frequency
 	MeetingFreq bool `json:"meeting_freq,omitempty"`
 
-	//Meeting duration
+	// Meeting duration
 	MeetingDuration int32 `json:"meeting_duration,omitempty"`
 }
 
@@ -280,6 +280,12 @@ type Subtask struct {
 
 	// Is subtask deadline expired
 	DeadlineExpired bool `json:"deadline_expired,omitempty"`
+
+	// Subtask importance, if available in team
+	Importance *int `chattype:"task" json:"importance,omitempty"`
+
+	// Subtask complexity, number
+	Complexity *int `chattype:"task" json:"complexity,omitempty"`
 }
 
 // Task checklist item
