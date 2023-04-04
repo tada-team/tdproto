@@ -1,4 +1,4 @@
-UNRELEASED
+v1.51.44
  - feat(tdapi): added `Message.LinkedMessages` field
 
 v1.51.43
