@@ -33,7 +33,6 @@ type CounterpartyCreateResponse struct {
 }
 
 type CounterpartyUpdateRequest struct {
-	Id                                string           `json:"id"`
 	PersonalAccountId                 string           `json:"personal_account_id"`
 	ElectronicDocumentManagementId    string           `json:"electronic_document_management_id,omitempty"`
 	FullName                          string           `json:"full_name"`
@@ -59,10 +58,6 @@ type CounterpartyGetRequest struct {
 
 type CounterpartyGetResponse struct {
 	CounterpartyList []Counterparty `json:"counterparty_list"`
-}
-
-type CounterpartyDeleteRequest struct {
-	CounterpartyIds string `json:"counterparty_ids,omitempty"`
 }
 
 type CounterpartyType string
