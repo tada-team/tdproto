@@ -19,17 +19,19 @@ type PathSpec struct {
 }
 
 var AllPaths = map[string][]PathSpec{
-	"group": GroupPaths,
-	"team":  TeamPaths,
-	"chat":  ChatPaths,
-	"misc":  MiscPaths,
-	"task":  TaskPaths,
+	"group":   GroupPaths,
+	"team":    TeamPaths,
+	"chat":    ChatPaths,
+	"misc":    MiscPaths,
+	"task":    TaskPaths,
+	"billing": BillingPaths,
 }
 
 var PathTitles = map[string]string{
-	"group": "Group related paths",
-	"team":  "Team related paths",
-	"chat":  "Chat related paths",
-	"misc":  "Miscellaneous paths",
-	"task":  "Task related paths",
+	"group":   "Group related paths",
+	"team":    "Team related paths",
+	"chat":    "Chat related paths",
+	"misc":    "Miscellaneous paths",
+	"task":    "Task related paths",
+	"billing": "Billing related paths",
 }
