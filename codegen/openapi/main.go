@@ -12,6 +12,7 @@ import (
 
 func main() {
 	serverUrl := flag.String("server", "https://web.tada.team", "URL for swagger target")
+	version := flag.String("version", "0.0.1", "current version of API")
 	flag.Parse()
 
 	tdInfo, err := codegen.ParseTdproto()
@@ -21,7 +22,7 @@ func main() {
 
 	openapiInfo, err := generateOpenApiRoot(tdInfo.TdModels, []openApiServer{
 		{Url: *serverUrl},
-	})
+	}, *version)
 	if err != nil {
 		panic(err)
 	}
@@ -81,12 +82,12 @@ func addPaths(root *openApiRoot, pathsToAdd []api_paths.PathSpec) error {
 	return nil
 }
 
-func generateOpenApiRoot(tdInfo *codegen.TdPackage, servers []openApiServer) (openApiRoot, error) {
+func generateOpenApiRoot(tdInfo *codegen.TdPackage, servers []openApiServer, version string) (openApiRoot, error) {
 	root := openApiRoot{
 		OpenApiVersion: "3.0.3",
 		Info: openApiInfo{
 			Title:   "tdproto",
-			Version: "0.0.1", // TODO: take from git tag
+			Version: version,
 		},
 		Servers: servers,
 		//{Url: },

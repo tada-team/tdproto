@@ -11,6 +11,7 @@ SWAGGER_DIST_PATH = swagger-ui-${SWAGGER_VERSION}/dist
 DESTDIR_ABSOLUTE := $(shell readlink --canonicalize "${DESTDIR}")
 # Escape dots for sed
 SED_OPENAPI_FILE := $(shell printf '%s' '${OPENAPI_FILE}' | sed 's/\./\\\./g' )
+TDPROTO_GIT_VERSION := $(shell git describe --tags)
 
 $(SWAGGER_ARCHIVE):
 	wget "${SWAGGER_URL}" --output-document "${SWAGGER_ARCHIVE}"
@@ -29,5 +30,5 @@ install: $(SWAGGER_ARCHIVE) $(DESTDIR_ABSOLUTE)
 		"${DESTDIR_ABSOLUTE}/index.html"
 	cd "${TDPROTO_OPEN_API_DIR}" && \
 		go run  ./ \
-			-server "${SWAGGER_SERVER_URL}" \
+			-server "${SWAGGER_SERVER_URL}" -version "${TDPROTO_GIT_VERSION}" \
 		> "${DESTDIR_ABSOLUTE}/${OPENAPI_FILE}"
