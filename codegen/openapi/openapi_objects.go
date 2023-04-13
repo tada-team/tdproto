@@ -141,4 +141,5 @@ type openApiRoot struct {
 	Paths          map[string]openApiPath `json:"paths"`
 	Components     openApiComponents      `json:"components"`
 	Security       []map[string][]string  `json:"security,omitempty"`
+	Tags           []string               `json:"tags,omitempty"`
 }

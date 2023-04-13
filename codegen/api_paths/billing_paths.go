@@ -1,6 +1,9 @@
 package api_paths
 
-import "github.com/tada-team/tdproto"
+import (
+	"github.com/tada-team/tdproto"
+	"github.com/tada-team/tdproto/codegen/openapi/tags"
+)
 
 var BillingPaths = []PathSpec{
 	{
@@ -9,6 +12,6 @@ var BillingPaths = []PathSpec{
 			Response:    []tdproto.TariffBilling{},
 			Description: "Get all tariffs.",
 		},
-		Tags: []string{"billing"},
+		Tags: []string{tags.BillingTag},
 	},
 }

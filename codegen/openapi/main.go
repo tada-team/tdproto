@@ -7,6 +7,7 @@ import (
 
 	"github.com/tada-team/tdproto/codegen"
 	"github.com/tada-team/tdproto/codegen/api_paths"
+	"github.com/tada-team/tdproto/codegen/openapi/tags"
 )
 
 func main() {
@@ -103,6 +104,7 @@ func generateOpenApiRoot(tdInfo *codegen.TdPackage, servers []openApiServer) (op
 				},
 			},
 		},
+		Tags: tags.TagList,
 	}
 
 	err := addAllSchemas(tdInfo, root)
