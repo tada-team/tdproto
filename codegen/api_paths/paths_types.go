@@ -1,5 +1,7 @@
 package api_paths
 
+import "github.com/tada-team/tdproto/codegen/openapi/tags"
+
 type OperationSpec struct {
 	Request             interface{}
 	Response            interface{}
@@ -20,12 +22,12 @@ type PathSpec struct {
 }
 
 var AllPaths = map[string][]PathSpec{
-	"group":   GroupPaths,
-	"team":    TeamPaths,
-	"chat":    ChatPaths,
-	"misc":    MiscPaths,
-	"task":    TaskPaths,
-	"billing": BillingPaths,
+	tags.GroupsTag:  GroupPaths,
+	tags.TeamsTag:   TeamPaths,
+	tags.ChatsTag:   ChatPaths,
+	tags.MiscTag:    MiscPaths,
+	tags.TasksTag:   TaskPaths,
+	tags.BillingTag: BillingPaths,
 }
 
 var PathTitles = map[string]string{
