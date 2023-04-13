@@ -22,7 +22,7 @@ $(DESTDIR_ABSOLUTE):
 install: $(SWAGGER_ARCHIVE) $(DESTDIR_ABSOLUTE)
 	tar --extract --file "./${SWAGGER_ARCHIVE}" "${SWAGGER_DIST_PATH}"
 	cp -r "./${SWAGGER_DIST_PATH}" "${DESTDIR_ABSOLUTE}"
-	mv "${DESTDIR_ABSOLUTE}/dist/index.html" "${DESTDIR_ABSOLUTE}/"
+#	mv "${DESTDIR_ABSOLUTE}/dist/index.html" "${DESTDIR_ABSOLUTE}/"
 	echo ${SED_OPENAPI_FILE} ${OPENAPI_FILE}
 	sed --in-place \
 		-e 's/\.\//dist\//g' \
