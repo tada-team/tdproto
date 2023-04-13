@@ -16,6 +16,7 @@ type PathSpec struct {
 	Put    *OperationSpec
 	Delete *OperationSpec
 	Post   *OperationSpec
+	Tags   []string
 }
 
 var AllPaths = map[string][]PathSpec{

@@ -262,7 +262,7 @@ func addQueryParameters(operation *openApiOperation, queryStruct interface{}) er
 	return nil
 }
 
-func convertPathSpecMethod(method api_paths.OperationSpec, operation **openApiOperation) error {
+func convertPathSpecMethod(method api_paths.OperationSpec, operation **openApiOperation, tags []string) error {
 	getRepsonce := openApiResponse{}
 	err := interfaceToOaContents(method.Response, &getRepsonce.Content, true)
 	if err != nil {
@@ -274,6 +274,10 @@ func convertPathSpecMethod(method api_paths.OperationSpec, operation **openApiOp
 			"200": getRepsonce,
 		},
 		Description: getDescription(method),
+	}
+
+	if len(tags) != 0 {
+		(*operation).Tags = append((*operation).Tags, tags...)
 	}
 
 	if method.Request != nil {
@@ -304,28 +308,28 @@ func convertPathSpecMethod(method api_paths.OperationSpec, operation **openApiOp
 func pathSpecToOpenApiPath(path api_paths.PathSpec, newPath *openApiPath) error {
 
 	if path.Get != nil {
-		err := convertPathSpecMethod(*path.Get, &newPath.Get)
+		err := convertPathSpecMethod(*path.Get, &newPath.Get, path.Tags)
 		if err != nil {
 			return err
 		}
 	}
 
 	if path.Put != nil {
-		err := convertPathSpecMethod(*path.Put, &newPath.Put)
+		err := convertPathSpecMethod(*path.Put, &newPath.Put, path.Tags)
 		if err != nil {
 			return err
 		}
 	}
 
 	if path.Delete != nil {
-		err := convertPathSpecMethod(*path.Delete, &newPath.Delete)
+		err := convertPathSpecMethod(*path.Delete, &newPath.Delete, path.Tags)
 		if err != nil {
 			return err
 		}
 	}
 
 	if path.Post != nil {
-		err := convertPathSpecMethod(*path.Post, &newPath.Post)
+		err := convertPathSpecMethod(*path.Post, &newPath.Post, path.Tags)
 		if err != nil {
 			return err
 		}

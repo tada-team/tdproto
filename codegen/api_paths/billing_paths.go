@@ -9,5 +9,6 @@ var BillingPaths = []PathSpec{
 			Response:    []tdproto.TariffBilling{},
 			Description: "Get all tariffs.",
 		},
+		Tags: []string{"billing"},
 	},
 }
