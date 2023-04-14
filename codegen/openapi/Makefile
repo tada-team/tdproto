@@ -11,7 +11,7 @@ SWAGGER_DIST_PATH = swagger-ui-${SWAGGER_VERSION}/dist
 DESTDIR_ABSOLUTE := $(shell readlink --canonicalize "${DESTDIR}")
 # Escape dots for sed
 SED_OPENAPI_FILE := $(shell printf '%s' '${OPENAPI_FILE}' | sed 's/\./\\\./g' )
-WORKING_DIR := $(shell ls -la)
+WORKING_DIR := $(shell cd ./tdproto && ls -la)
 TDPROTO_GIT_VERSION := $(shell git describe --tags)
 
 $(SWAGGER_ARCHIVE):
