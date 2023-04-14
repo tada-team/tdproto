@@ -18,6 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
+          fetch-depth: 0
           path: ${{ env.TDPROTO_DIR }}
       - uses: actions/setup-go@v2
         with:
