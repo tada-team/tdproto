@@ -20,11 +20,11 @@ const (
 	EnquiryPaymentStatusWaitingCrediting    EnquiryPaymentStatus = "ENQUIRY_PAYMENT_STATUS_WAITING_CREDITING"
 	EnquiryPaymentStatusPaid                EnquiryPaymentStatus = "ENQUIRY_PAYMENT_STATUS_PAID"
 
-	PaymentTypeUnspecified                  PaymentType          = "PAYMENT_TYPE_UNSPECIFIED"
-	PaymentTypePaperDocumentManagement      EnquiryPaymentStatus = "PAYMENT_TYPE_PAPER_DOCUMENT_MANAGEMENT"
-	PaymentTypeElectronicDocumentManagement EnquiryPaymentStatus = "PAYMENT_TYPE_ELECTRONIC_DOCUMENT_MANAGEMENT"
-	PaymentTypeBankCard                     EnquiryPaymentStatus = "PAYMENT_TYPE_BANK_CARD"
-	PaymentTypeTechnical                    EnquiryPaymentStatus = "PAYMENT_TYPE_TECHNICAL"
+	PaymentTypeUnspecified                  PaymentType = "PAYMENT_TYPE_UNSPECIFIED"
+	PaymentTypePaperDocumentManagement      PaymentType = "PAYMENT_TYPE_PAPER_DOCUMENT_MANAGEMENT"
+	PaymentTypeElectronicDocumentManagement PaymentType = "PAYMENT_TYPE_ELECTRONIC_DOCUMENT_MANAGEMENT"
+	PaymentTypeBankCard                     PaymentType = "PAYMENT_TYPE_BANK_CARD"
+	PaymentTypeTechnical                    PaymentType = "PAYMENT_TYPE_TECHNICAL"
 )
 
 type EnquiryType string
