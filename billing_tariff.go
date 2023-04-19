@@ -4,122 +4,143 @@ import "time"
 
 // Tariff struct of billing API
 type TariffBilling struct {
-	// Date of closing tariff
-	CloseDate *time.Time `json:"close_date,omitempty"`
+	// Tariff id
+	Id string `json:"id"`
 
-	// Cost of one workplace
-	CostWorkplace string `json:"cost_workplace"`
+	// Name of tariff
+	Name string `json:"name"`
+
+	// Nomenclature name of tariff
+	NomenclatureName string `json:"nomenclature_name"`
+
+	// Description of tariff
+	Description string `json:"description"`
+
+	// Benefit of tariff
+	Benefit string `json:"benefit,omitempty"`
 
 	// Currency of tariff
 	Currency Currency `json:"currency"`
 
+	// Priority of tariff
+	Priority uint32 `json:"priority,omitempty"`
+
+	// Cost of one workplace
+	CostWorkplace float64 `json:"cost_workplace"`
+
+	// Count of maximum workspaces on tariff
+	MaxWorkplaceCount uint32 `json:"max_workplace_count,omitempty"`
+
 	// Count of minimum workspaces on tariff
-	MinTariffWorkplaces int32 `json:"min_tariff_workplaces"`
-
-	// Minimum step of change count workspaces on tariff
-	MinStepWorkplaces int32 `json:"min_step_workplaces"`
-
-	// Disk space limit per user
-	DiskSpaceQuotaMb string `json:"disk_space_quota_mb"`
+	MinWorkplaceCount uint32 `json:"min_workplace_count,omitempty"`
 
 	// Count of free workspaces
-	FreeWorkplaces int32 `json:"free_workplaces"`
+	FreeWorkplaceCount uint32 `json:"free_workplace_count"`
 
-	// Flag of availability of free seats when exceeding FreeWorkplace
-	IsBillingFree bool `json:"is_billing_free"`
+	// Minimum step of change count workspaces on tariff
+	StepIncreasingWorkplaces uint32 `json:"step_increasing_workplaces"`
 
-	// Flag of accounting without looking at the number of days before the billing period
-	IsBillingFullTime bool `json:"is_billing_full_time"`
+	// Disk space limit per user
+	DiskSpaceQuotaMb float64 `json:"disk_space_quota_mb"`
 
-	// Default tariff flag that is set when registering an account
-	IsDefaultTariff bool `json:"is_default_tariff"`
-
-	// Flag for accounting for unspent days when switching to a new tariff
-	IsRecalcChangeTariff bool `json:"is_recalc_change_tariff"`
+	// Number of paid days
+	PeriodDays uint32 `json:"period_days"`
 
 	// Maximum count of users in voice conference
-	MaxVoiceUser int32 `json:"max_voice_user"`
+	MaxVoiceUser uint32 `json:"max_voice_user"`
 
 	// Maximum count of users in video conference
-	MaxVideoUser int32 `json:"max_video_user"`
+	MaxVideoUser uint32 `json:"max_video_user"`
 
 	// Bitrate of video in video co
-	VideoCallBitrate int32 `json:"video_call_bitrate"`
+	VideoCallBitrate uint32 `json:"video_call_bitrate"`
 
 	// Bitrate of video in video sharing
-	VideoSharingBitrate int32 `json:"video_sharing_bitrate"`
+	VideoSharingBitrate uint32 `json:"video_sharing_bitrate"`
+
+	// Flag of availability of free seats when exceeding FreeWorkplace
+	IsFree bool `json:"is_free"`
+
+	// Flag of publicity
+	IsPublic bool `json:"is_public"`
+
+	// Default tariff flag that is set when registering an account
+	IsDefault bool `json:"is_default"`
 
 	// Date of opening tariff
 	OpenDate *time.Time `json:"open_date"`
 
-	// Number of paid days
-	PeriodDays int32 `json:"period_days"`
+	// Date of closing tariff
+	CloseDate *time.Time `json:"close_date,omitempty"`
 
 	// Status of tariff
 	Status TariffStatus `json:"status"`
-
-	// Tariff id
-	TariffId string `json:"tariff_id"` // TODO: must be int64
-
-	// Name of tariff
-	TariffName string `json:"tariff_name"`
 }
 
 // Request to create the tariff
 type CreateTariffRequest struct {
-	// Date of closing tariff
-	CloseDate *time.Time `json:"close_date,omitempty"`
+	// Name of tariff
+	Name string `json:"name"`
 
-	// Cost of one workplace
-	CostWorkplace string `json:"cost_workplace,omitempty"`
+	// Nomenclature name of tariff
+	NomenclatureName string `json:"nomenclature_name"`
+
+	// Description of tariff
+	Description string `json:"description,omitempty"`
+
+	// Benefit of tariff
+	Benefit string `json:"benefit,omitempty"`
 
 	// Currency of tariff
 	Currency Currency `json:"currency"`
 
+	// Cost of one workplace
+	CostWorkplace string `json:"cost_workplace"`
+
+	// Priority of tariff
+	Priority uint32 `json:"priority,omitempty"`
+
+	// Count of maximum workspaces on tariff
+	MaxWorkplaceCount uint32 `json:"max_workplace_count,omitempty"`
+
 	// Count of minimum workspaces on tariff
-	MinTariffWorkplaces int32 `json:"min_tariff_workplaces"`
+	MinWorkplaceCount uint32 `json:"min_workplace_count,omitempty"`
+
+	// Count of free workspaces
+	FreeWorkplaceCount uint32 `json:"free_workplace_countt,omitempty"`
 
 	// Minimum step of change count workspaces on tariff
-	MinStepWorkplaces int32 `json:"min_step_workplaces"`
+	StepIncreasingWorkplaces uint32 `json:"step_increasing_workplaces,omitempty"`
 
 	// Disk space limit per user
 	DiskSpaceQuotaMb string `json:"disk_space_quota_mb,omitempty"`
 
-	// Count of free workspaces
-	FreeWorkplaces int32 `json:"free_workplaces,omitempty"`
-
-	// Flag of availability of free seats when exceeding FreeWorkplace
-	IsBillingFree bool `json:"is_billing_free,omitempty"`
-
-	// Flag of accounting without looking at the number of days before the billing period
-	IsBillingFullTime bool `json:"is_billing_full_time,omitempty"`
-
-	// Flag for accounting for unspent days when switching to a new tariff
-	IsRecalcChangeTariff bool `json:"is_recalc_change_tariff,omitempty"`
+	// Number of paid days
+	PeriodDays uint32 `json:"period_days"`
 
 	// Maximum count of users in voice conference
-	MaxVoiceUser int32 `json:"max_voice_user,omitempty"`
+	MaxVoiceUser uint32 `json:"max_voice_user,omitempty"`
 
 	// Maximum count of users in video conference
-	MaxVideoUser int32 `json:"max_video_user,omitempty"`
+	MaxVideoUser uint32 `json:"max_video_user,omitempty"`
 
 	// Bitrate of video in video co
-	VideoCallBitrate int32 `json:"video_call_bitrate"`
+	VideoCallBitrate uint32 `json:"video_call_bitrate,omitempty"`
 
 	// Bitrate of video in video sharing
-	VideoSharingBitrate int32 `json:"video_sharing_bitrate"`
+	VideoSharingBitrate uint32 `json:"video_sharing_bitrate,omitempty"`
+
+	// Flag of availability of free seats when exceeding FreeWorkplace
+	IsFree bool `json:"is_free,omitempty"`
+
+	// Flag of publicity
+	IsPublic bool `json:"is_public,omitempty"`
 
 	// Default tariff flag that is set when registering an account
-	IsDefaultTariff bool `json:"is_default_tariff,omitempty"`
+	IsDefault bool `json:"is_default,omitempty"`
 
 	// Date of opening tariff
 	OpenDate *time.Time `json:"open_date,omitempty"`
-
-	// Number of paid days
-	PeriodDays int32 `json:"period_days"`
-
-	// Name of tariff
-	TariffName string `json:"tariff_name"`
 }
 
 // Request to update the tariff
@@ -131,7 +152,7 @@ type UpdateTariffRequest struct {
 	CloseDate *time.Time `json:"close_date,omitempty"`
 
 	// Default tariff flag that is set when registering an account
-	IsDefaultTariff bool `json:"is_default_tariff,omitempty"`
+	IsDefault bool `json:"is_default,omitempty"`
 
 	// Status of tariff
 	Status TariffStatus `json:"status,omitempty"`
@@ -139,10 +160,10 @@ type UpdateTariffRequest struct {
 
 // Response from getting a list of tariffs
 type GetTariffsListResponse struct {
-	Tariffs []TariffBilling `json:"tariffs"`
+	TariffList []TariffBilling `json:"tariff_list"`
 }
 
 // Response from getting a list of active tariffs
 type GetActiveTariffsListResponse struct {
-	Tariffs []TariffBilling `json:"tariffs"`
+	TariffList []TariffBilling `json:"tariff_list"`
 }

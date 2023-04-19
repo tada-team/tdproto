@@ -14,6 +14,9 @@ const (
 	InternalServerError = Err("INTERNAL_SERVER_ERROR")
 	InvalidMethod       = Err("INVALID_METHOD")
 	InvalidData         = Err("INVALID_DATA")
+	AccountNotFound     = Err("ACCOUNT_NOT_FOUND")
+	AccountSuspended    = Err("ACCOUNT_SUSPENDED")
+	AccountBlocked      = Err("ACCOUNT_BLOCKED")
 )
 
 func (e Err) Error() string { return string(e) }
@@ -36,6 +39,10 @@ func (e Err) StatusCode() int {
 		return 405
 	case InvalidData:
 		return 422
+	case AccountNotFound, AccountBlocked:
+		return 451
+	case AccountSuspended:
+		return 402
 	default:
 		return 200
 	}

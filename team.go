@@ -100,6 +100,12 @@ type Team struct {
 
 	// Сurrent team favorites bot, jid of chat
 	Notebot JID `json:"notebot,omitempty" tdproto:"readonly"`
+
+	// Personal account status for current team
+	AccountStatus PersonalAccountStatus `json:"account_status" tdproto:"readonly"`
+
+	// Team owner
+	Owner Contact `json:"owner,omitempty"`
 }
 
 // Short team representation. For invites, push notifications, etc. Readonly.

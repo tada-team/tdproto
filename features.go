@@ -233,6 +233,9 @@ type Features struct {
 	// CallsVideoEnabled enabled or disabled video calls
 	CallsVideoEnabled bool `json:"calls_video_enabled"`
 
+	// CallsVideoMultistreamEnabled enabled or disabled video in multistream mode (for janus)
+	CallsVideoMultistreamEnabled bool `json:"calls_video_multistream_enabled"`
+
 	// VcsEnabled enabled or disabled vcs
 	VcsEnabled bool `json:"vcs_enabled"`
 
@@ -264,6 +267,7 @@ type Features struct {
 	WikiPages bool `json:"wiki_pages"`
 
 	// Wiki pages in chats. Experimental
+	// Deprecated: this field is not used
 	AllowAdminMute bool `json:"allow_admin_mute,omitempty"`
 
 	// Default wallpaper url for mobile apps, if any
