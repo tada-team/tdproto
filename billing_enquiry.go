@@ -49,8 +49,10 @@ type Enquiry struct {
 	CreditedAt       *time.Time `json:"credited_at,omitempty"`
 	ActuallyPaidAt   *time.Time `json:"actually_paid_at,omitempty"`
 	FixationPaidAt   *time.Time `json:"fixation_paid_at,omitempty"`
-	ExpirationAt     *time.Time `json:"expiration_at,omitempty"`
+	ExpirationDate   *time.Time `json:"expiration_date,omitempty"`
+	ExpiredAt        *time.Time `json:"expired_at,omitempty"`
 	ActivateAt       *time.Time `json:"activate_at,omitempty"`
+	DeactivateAt     *time.Time `json:"deactivate_at,omitempty"`
 
 	EnquiryType          EnquiryType          `json:"enquiry_type"`
 	EnquiryStatus        EnquiryStatus        `json:"enquiry_status"`
