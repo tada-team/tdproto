@@ -56,6 +56,9 @@ type CallOnliner struct {
 	// Screenshare state
 	EnabledScreenshare bool `json:"enabled_screenshare"`
 
+	// HandUp - status of hand in VCS
+	HandUp bool `json:"hand_up"`
+
 	// Member devices, strictly one for now
 	Devices []CallDevice `json:"devices"`
 }
