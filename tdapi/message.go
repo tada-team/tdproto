@@ -82,6 +82,9 @@ type Message struct {
 	// Message id
 	MessageUid string `json:"message_id,omitempty"`
 
+	// Forwarded messages
+	LinkedMessages []string `json:"linked_messages,omitempty"`
+
 	// Message attachments
 	Uploads []string `json:"uploads,omitempty"`
 

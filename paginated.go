@@ -38,9 +38,17 @@ type PaginatedUploadShortMessages struct {
 	Offset  int                  `json:"offset"`
 }
 
-//Paginated meetings
+// Paginated meetings
 type PaginatedMeetings struct {
 	Objects []Meeting `json:"objects"`
+	Count   int       `json:"count"`
+	Limit   int       `json:"limit"`
+	Offset  int       `json:"offset"`
+}
+
+// Paginated billing enquirires
+type PaginatedBillingEnquiries struct {
+	Objects []Enquiry `json:"objects"`
 	Count   int       `json:"count"`
 	Limit   int       `json:"limit"`
 	Offset  int       `json:"offset"`

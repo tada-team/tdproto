@@ -1,3 +1,9 @@
+v1.51.45
+ - feat(Team): added `PinnedSortOrdering` field
+
+v1.51.44
+ - feat(tdapi): added `Message.LinkedMessages` field
+
 v1.51.43
  - feat(Subtask): added `Importance` and `Complexity` fields
 
