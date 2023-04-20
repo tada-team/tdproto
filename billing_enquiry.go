@@ -43,14 +43,14 @@ type Enquiry struct {
 	PeriodDays         uint32  `json:"period_days"`
 	FreeWorkplaceCount uint32  `json:"free_workplace_count"`
 
-	ActivationDate   time.Time `json:"activation_date,omitempty"`
-	DeactivationDate time.Time `json:"deactivation_date,omitempty"`
-	CreatedAt        time.Time `json:"created_at,omitempty"`
-	CreditedAt       time.Time `json:"credited_at,omitempty"`
-	ActuallyPaidAt   time.Time `json:"actually_paid_at,omitempty"`
-	FixationPaidAt   time.Time `json:"fixation_paid_at,omitempty"`
-	ExpirationAt     time.Time `json:"expiration_at,omitempty"`
-	ActivateAt       time.Time `json:"activate_at,omitempty"`
+	ActivationDate   *time.Time `json:"activation_date,omitempty"`
+	DeactivationDate *time.Time `json:"deactivation_date,omitempty"`
+	CreatedAt        *time.Time `json:"created_at,omitempty"`
+	CreditedAt       *time.Time `json:"credited_at,omitempty"`
+	ActuallyPaidAt   *time.Time `json:"actually_paid_at,omitempty"`
+	FixationPaidAt   *time.Time `json:"fixation_paid_at,omitempty"`
+	ExpirationAt     *time.Time `json:"expiration_at,omitempty"`
+	ActivateAt       *time.Time `json:"activate_at,omitempty"`
 
 	EnquiryType          EnquiryType          `json:"enquiry_type"`
 	EnquiryStatus        EnquiryStatus        `json:"enquiry_status"`
@@ -72,14 +72,14 @@ type EnquiryCreateResponse struct {
 }
 
 type EnquiryGetListRequest struct {
-	DateCreateFrom       time.Time            `json:"date_create_from,omitempty"`
-	DateCreateTo         time.Time            `json:"date_create_to,omitempty"`
-	DateActivateTo       time.Time            `json:"date_activate_to,omitempty"`
-	DateDeactivateTo     time.Time            `json:"date_deactivate_to,omitempty"`
-	EnquiryStatus        EnquiryStatus        `json:"enquiry_status,omitempty"`
-	EnquiryPaymentStatus EnquiryPaymentStatus `json:"enquiry_payment_status,omitempty"`
-	Limit                uint32               `json:"limit,omitempty"`
-	Offset               uint32               `json:"offset,omitempty"`
+	DateCreateFrom       *time.Time            `json:"date_create_from,omitempty"`
+	DateCreateTo         *time.Time            `json:"date_create_to,omitempty"`
+	DateActivateTo       *time.Time            `json:"date_activate_to,omitempty"`
+	DateDeactivateTo     *time.Time            `json:"date_deactivate_to,omitempty"`
+	EnquiryStatus        *EnquiryStatus        `json:"enquiry_status,omitempty"`
+	EnquiryPaymentStatus *EnquiryPaymentStatus `json:"enquiry_payment_status,omitempty"`
+	Limit                *uint32               `json:"limit,omitempty"`
+	Offset               *uint32               `json:"offset,omitempty"`
 }
 
 type EnquiryGetListResponse struct {
