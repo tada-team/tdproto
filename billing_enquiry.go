@@ -25,12 +25,18 @@ const (
 	PaymentTypeElectronicDocumentManagement PaymentType = "PAYMENT_TYPE_ELECTRONIC_DOCUMENT_MANAGEMENT"
 	PaymentTypeBankCard                     PaymentType = "PAYMENT_TYPE_BANK_CARD"
 	PaymentTypeTechnical                    PaymentType = "PAYMENT_TYPE_TECHNICAL"
+
+	EnquiryStatusFilterPaid      EnquiryStatusFilter = "ENQUIRY_STATUS_FILTER_PAID"
+	EnquiryStatusFilterExpired   EnquiryStatusFilter = "ENQUIRY_STATUS_FILTER_EXPIRED"
+	EnquiryStatusFilterCancelled EnquiryStatusFilter = "ENQUIRY_STATUS_FILTER_CANCELLED"
+	EnquiryStatusFilterWaiting   EnquiryStatusFilter = "ENQUIRY_STATUS_FILTER_WAITING"
 )
 
 type EnquiryType string
 type EnquiryStatus string
 type EnquiryPaymentStatus string
 type PaymentType string
+type EnquiryStatusFilter string
 
 type Enquiry struct {
 	Id                       string  `json:"id"`
@@ -74,14 +80,13 @@ type EnquiryCreateResponse struct {
 }
 
 type EnquiryGetListRequest struct {
-	DateCreateFrom       *time.Time            `json:"date_create_from,omitempty"`
-	DateCreateTo         *time.Time            `json:"date_create_to,omitempty"`
-	DateActivateTo       *time.Time            `json:"date_activate_to,omitempty"`
-	DateDeactivateTo     *time.Time            `json:"date_deactivate_to,omitempty"`
-	EnquiryStatus        *EnquiryStatus        `json:"enquiry_status,omitempty"`
-	EnquiryPaymentStatus *EnquiryPaymentStatus `json:"enquiry_payment_status,omitempty"`
-	Limit                *uint32               `json:"limit,omitempty"`
-	Offset               *uint32               `json:"offset,omitempty"`
+	DateCreateFrom      *time.Time          `json:"date_create_from,omitempty"`
+	DateCreateTo        *time.Time          `json:"date_create_to,omitempty"`
+	DateActivateTo      *time.Time          `json:"date_activate_to,omitempty"`
+	DateDeactivateTo    *time.Time          `json:"date_deactivate_to,omitempty"`
+	EnquiryStatusFilter EnquiryStatusFilter `json:"enquiry_status_filter,omitempty"`
+	Limit               *uint32             `json:"limit,omitempty"`
+	Offset              *uint32             `json:"offset,omitempty"`
 }
 
 type EnquiryGetListResponse struct {
