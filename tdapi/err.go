@@ -26,6 +26,8 @@ func (e Err) StatusCode() int {
 	switch e {
 	case NotModified:
 		return 304
+	case NoEmptyWorkplaces:
+		return 400
 	case EmptyToken, InvalidToken, EmptySession:
 		return 401
 	case AccessDenied:
@@ -42,7 +44,7 @@ func (e Err) StatusCode() int {
 		return 422
 	case AccountNotFound, AccountBlocked:
 		return 451
-	case AccountSuspended, NoEmptyWorkplaces:
+	case AccountSuspended:
 		return 402
 	default:
 		return 200
