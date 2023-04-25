@@ -26,10 +26,11 @@ const (
 	PaymentTypeBankCard                     PaymentType = "PAYMENT_TYPE_BANK_CARD"
 	PaymentTypeTechnical                    PaymentType = "PAYMENT_TYPE_TECHNICAL"
 
-	EnquiryStatusFilterPaid      EnquiryStatusFilter = "ENQUIRY_STATUS_FILTER_PAID"
-	EnquiryStatusFilterExpired   EnquiryStatusFilter = "ENQUIRY_STATUS_FILTER_EXPIRED"
-	EnquiryStatusFilterCancelled EnquiryStatusFilter = "ENQUIRY_STATUS_FILTER_CANCELLED"
-	EnquiryStatusFilterWaiting   EnquiryStatusFilter = "ENQUIRY_STATUS_FILTER_WAITING"
+	EnquiryStatusFilterPaid                EnquiryStatusFilter = "ENQUIRY_STATUS_FILTER_PAID"
+	EnquiryStatusFilterExpired             EnquiryStatusFilter = "ENQUIRY_STATUS_FILTER_EXPIRED"
+	EnquiryStatusFilterCancelled           EnquiryStatusFilter = "ENQUIRY_STATUS_FILTER_CANCELLED"
+	EnquiryStatusFilterWaitingConfirmation EnquiryStatusFilter = "ENQUIRY_STATUS_FILTER_WAITING_CONFIRMATION"
+	EnquiryStatusFilterWaitingCrediting    EnquiryStatusFilter = "ENQUIRY_STATUS_FILTER_WAITING_CREDITING"
 )
 
 type EnquiryType string
