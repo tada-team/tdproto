@@ -67,13 +67,13 @@ type EnquiryCreateResponse struct {
 }
 
 type EnquiryGetListRequest struct {
-	DateCreateFrom      *time.Time    `json:"date_create_from,omitempty"`
-	DateCreateTo        *time.Time    `json:"date_create_to,omitempty"`
-	DateActivateTo      *time.Time    `json:"date_activate_to,omitempty"`
-	DateDeactivateTo    *time.Time    `json:"date_deactivate_to,omitempty"`
-	EnquiryStatusFilter EnquiryStatus `json:"enquiry_status_filter,omitempty"`
-	Limit               *uint32       `json:"limit,omitempty"`
-	Offset              *uint32       `json:"offset,omitempty"`
+	DateCreateFrom   *time.Time    `json:"date_create_from,omitempty"`
+	DateCreateTo     *time.Time    `json:"date_create_to,omitempty"`
+	DateActivateTo   *time.Time    `json:"date_activate_to,omitempty"`
+	DateDeactivateTo *time.Time    `json:"date_deactivate_to,omitempty"`
+	Status           EnquiryStatus `json:"status,omitempty"`
+	Limit            *uint32       `json:"limit,omitempty"`
+	Offset           *uint32       `json:"offset,omitempty"`
 }
 
 type EnquiryGetListResponse struct {
