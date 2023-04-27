@@ -6,10 +6,10 @@ import "time"
 type PersonalAccountBilling struct {
 
 	// PersonalAccountBilling ID
-	PersonalAccountId uint64 `json:"personal_account_id"`
+	PersonalAccountId string `json:"personal_account_id"`
 
 	// ID User who owns this personal account
-	OwnerID uint64 `json:"owner_id"`
+	OwnerID string `json:"owner_id"`
 
 	// UUID of User who owns this personal account
 	OwnerUuid string `json:"owner_uuid"`
