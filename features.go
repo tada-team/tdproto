@@ -239,6 +239,9 @@ type Features struct {
 	// VcsEnabled enabled or disabled vcs
 	VcsEnabled bool `json:"vcs_enabled"`
 
+	// VcsType type of VCS
+	VcsType string `json:"vcs_type"`
+
 	// Calls functions enabled for mobile applications
 	MobileCalls bool `json:"mobile_calls"`
 
