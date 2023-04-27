@@ -12,13 +12,12 @@ type ResponsiblePerson struct {
 }
 
 type ResponsiblePersonCreateRequest struct {
-	PersonalAccountId string  `json:"personal_account_id"`
-	FirstName         string  `json:"first_name"`
-	LastName          string  `json:"last_name"`
-	Patronymic        *string `json:"patronymic,omitempty"`
-	Phone             string  `json:"phone"`
-	Email             string  `json:"email"`
-	HeldPost          *string `json:"held_post,omitempty"`
+	FirstName  string  `json:"first_name"`
+	LastName   string  `json:"last_name"`
+	Patronymic *string `json:"patronymic,omitempty"`
+	Phone      string  `json:"phone"`
+	Email      string  `json:"email"`
+	HeldPost   *string `json:"held_post,omitempty"`
 }
 
 type ResponsiblePersonCreateResponse struct {
