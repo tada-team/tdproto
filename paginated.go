@@ -53,3 +53,11 @@ type PaginatedBillingEnquiries struct {
 	Limit   int       `json:"limit"`
 	Offset  int       `json:"offset"`
 }
+
+// Paginated billing workplaces
+type PaginatedBillingUsersInfo struct {
+	UserList []UserInfo `json:"objects"`
+	Count    int        `json:"count"`
+	Limit    int        `json:"limit"`
+	Offset   int        `json:"offset"`
+}
