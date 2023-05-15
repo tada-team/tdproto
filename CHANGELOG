@@ -1,3 +1,6 @@
+v1.51.46
+ - feat: added `ServerLogout` event
+
 v1.51.45
  - feat(Team): added `PinnedSortOrdering` field
 
