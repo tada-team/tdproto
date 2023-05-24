@@ -14,17 +14,23 @@ const (
 	PaymentTypeBankCard                     PaymentType = "PAYMENT_TYPE_BANK_CARD"
 	PaymentTypeTechnical                    PaymentType = "PAYMENT_TYPE_TECHNICAL"
 
-	EnquiryStatusUnspecified         EnquiryStatus = "ENQUIRY_STATUS_UNSPECIFIED"
-	EnquiryStatusPaid                EnquiryStatus = "ENQUIRY_STATUS_PAID"
-	EnquiryStatusExpired             EnquiryStatus = "ENQUIRY_STATUS_EXPIRED"
-	EnquiryStatusCancelled           EnquiryStatus = "ENQUIRY_STATUS_CANCELLED"
-	EnquiryStatusWaitingConfirmation EnquiryStatus = "ENQUIRY_STATUS_WAITING_CONFIRMATION"
-	EnquiryStatusWaitingCrediting    EnquiryStatus = "ENQUIRY_STATUS_WAITING_CREDITING"
+	EnquiryStatusUnspecified EnquiryStatus = "ENQUIRY_STATUS_UNSPECIFIED"
+	EnquiryStatusWaiting     EnquiryStatus = "ENQUIRY_STATUS_WAITING"
+	EnquiryStatusCancelled   EnquiryStatus = "ENQUIRY_STATUS_CANCELLED"
+	EnquiryStatusActive      EnquiryStatus = "ENQUIRY_STATUS_ACTIVE"
+	EnquiryStatusExpired     EnquiryStatus = "ENQUIRY_STATUS_EXPIRED"
+	EnquiryStatusDone        EnquiryStatus = "ENQUIRY_STATUS_DONE"
+
+	EnquiryPaymentStatusUnspecified         EnquiryPaymentStatus = "ENQUIRY_PAYMENT_STATUS"
+	EnquiryPaymentStatusWaitingConfirmation EnquiryPaymentStatus = "ENQUIRY_PAYMENT_STATUS_WAITING_CONFIRMATION"
+	EnquiryPaymentStatusWaitingCrediting    EnquiryPaymentStatus = "ENQUIRY_PAYMENT_STATUS_WAITING_CREDITING"
+	EnquiryPaymentStatusPaid                EnquiryPaymentStatus = "ENQUIRY_PAYMENT_STATUS_PAID"
 )
 
 type EnquiryType string
 type PaymentType string
 type EnquiryStatus string
+type EnquiryPaymentStatus string
 
 type Enquiry struct {
 	Id                       string  `json:"id"`
@@ -48,9 +54,10 @@ type Enquiry struct {
 	ActivateAt       *time.Time `json:"activate_at,omitempty"`
 	DeactivateAt     *time.Time `json:"deactivate_at,omitempty"`
 
-	EnquiryType EnquiryType   `json:"enquiry_type"`
-	Status      EnquiryStatus `json:"status"`
-	PaymentType PaymentType   `json:"payment_type"`
+	EnquiryType   EnquiryType          `json:"enquiry_type"`
+	Status        EnquiryStatus        `json:"status"`
+	PaymentStatus EnquiryPaymentStatus `json:"payment_status"`
+	PaymentType   PaymentType          `json:"payment_type"`
 
 	FileName string `json:"file_name,omitempty"`
 	MediaUrl string `json:"media_url,omitempty"`
