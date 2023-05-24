@@ -7,8 +7,11 @@ type Draft struct {
 	// Draft content
 	Draft string `json:"draft"`
 
-	// Draft version
+	// Deprecated: use Revision instead
 	DraftGentime int64 `json:"draft_gentime,omitempty"  tdproto:"readonly"`
+
+	// Unixtime(ms)
+	Revision int64 `json:"revision,omitempty"`
 
 	// TdMarkup found in content (links included)
 	Markup []tdproto.MarkupEntity `json:"markup,omitempty"  tdproto:"readonly"`

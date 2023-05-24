@@ -134,3 +134,7 @@ type DeletedTeam struct {
 	// Object version
 	Gentime int64 `json:"gentime"`
 }
+
+type GetTeamsFilter struct {
+	Status TeamStatus `json:"status,omitempty"`
+}

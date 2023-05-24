@@ -105,7 +105,7 @@ type GetUsersInfoByUserUUIDArrayRequest struct {
 
 // GetUsersInfoByUserUUIDArrayResponse response on get user information by array of UUID's users
 type GetUsersInfoByUserUUIDArrayResponse struct {
-	UserInfo []UserInfo `json:"user_info,omitempty"`
+	UserList []UserInfo `json:"user_list,omitempty"`
 }
 
 // GetUsersInfoByUserUUIDArrayExcludingTeamMembersRequest request on get user information by array of UUID's users excluding team members in uuid team

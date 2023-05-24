@@ -71,8 +71,12 @@ type Chat struct {
 	// Last message draft, if any
 	Draft string `json:"draft,omitempty"`
 
+	// Deprecated: use DraftRevision instead.
 	// Last message draft version, if any
 	DraftGentime int64 `json:"draft_gentime,omitempty"`
+
+	// Last message draft version, if any. unixtime(ms)
+	DraftRevision int64 `json:"draft_revision,omitempty"`
 
 	// Hidden chat
 	Hidden bool `json:"hidden,omitempty"`
@@ -242,7 +246,7 @@ type Chat struct {
 	// Date of the last message sent even if it was deleted
 	LastActivity ISODateTimeString `json:"last_activity,omitempty"`
 
-	// Deprecated
+	// Deprecated: use DraftRevision instead.
 	DraftNum int64 `json:"draft_num,omitempty"`
 
 	// Start date of meeting chat

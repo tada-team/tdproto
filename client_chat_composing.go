@@ -28,5 +28,6 @@ type clientChatComposingParams struct {
 	Composing bool `json:"composing,omitempty"`
 
 	// Message draft data
+	// Deprecated
 	Draft *string `json:"draft,omitempty"`
 }
