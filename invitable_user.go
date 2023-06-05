@@ -16,4 +16,7 @@ type InvitableUser struct {
 
 	// Common team uids, if any
 	Teams []string `json:"teams,omitempty"`
+
+	// Флаг нахождения пользователя на другом аккаунте
+	FromAnotherAccount bool `json:"from_another_account"`
 }
