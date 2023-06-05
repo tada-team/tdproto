@@ -18,5 +18,5 @@ type InvitableUser struct {
 	Teams []string `json:"teams,omitempty"`
 
 	// Флаг нахождения пользователя на другом аккаунте
-	FromAnotherAccount bool `json:"from_another_account"`
+	FromAnotherAccount bool `json:"from_another_account,omitempty"`
 }
