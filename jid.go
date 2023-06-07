@@ -17,6 +17,7 @@ const (
 	GroupSectionPrefix   = "sg-"
 	TaskSectionPrefix    = "st-"
 	MeetingPrefix        = "m-"
+	ThreadPrefix         = "th-"
 )
 
 type HasJid interface {
@@ -35,6 +36,8 @@ func (jid JID) ChatType() ChatType {
 		return TaskChatType
 	case jid.IsMeeting():
 		return MeetingChatType
+	case jid.IsThread():
+		return ThreadChatType
 	default:
 		log.Fatalf("invalid chat type: %s", jid)
 		return ""
@@ -46,6 +49,7 @@ func (jid JID) IsGroup() bool   { return strings.HasPrefix(jid.String(), GroupPr
 func (jid JID) IsTask() bool    { return strings.HasPrefix(jid.String(), TaskPrefix) }
 func (jid JID) IsSection() bool { return strings.HasPrefix(jid.String(), ContactSectionPrefix) }
 func (jid JID) IsMeeting() bool { return strings.HasPrefix(jid.String(), MeetingPrefix) }
+func (jid JID) IsThread() bool  { return strings.HasPrefix(jid.String(), ThreadPrefix) }
 
 func (jid JID) Empty() bool    { return jid.String() == "" }
 func (jid JID) JID() JID       { return jid }
