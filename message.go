@@ -199,6 +199,12 @@ type Message struct {
 
 	// Debug information, if any
 	Debug string `json:"_debug,omitempty" tdproto:"readonly"`
+
+	// ThreadJID
+	ThreadJID JID `json:"thread_jid,omitempty"`
+
+	// Thread Messages Count
+	ThreadMessagesCount int `json:"thread_messages_count,omitempty"`
 }
 
 // Website title and description
