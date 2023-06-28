@@ -257,6 +257,12 @@ type Chat struct {
 
 	// Meeting duration
 	MeetingDuration int32 `json:"meeting_duration,omitempty"`
+
+	// Parent message uid for thread
+	ParentMessageId   string `json:"parent_message_id,omitempty"`
+
+	// Parent chat uid for thread
+	ParentChatId    JID    `json:"parent_chat_id,omitempty"`
 }
 
 // Link to sub/sup task
