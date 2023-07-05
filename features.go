@@ -314,6 +314,9 @@ type Features struct {
 
 	// File Extension Whitelist Priority
 	FileExtensionWhitelistPriority bool `json:"file_extension_whitelist_priority,omitempty"`
+
+	// Thread enabled flag
+	ThreadsEnabled bool `json:"threads_enabled,omitempty"`
 }
 
 // Interactive Connectivity Establishment Server for WEB Rtc connection. Readonly.
