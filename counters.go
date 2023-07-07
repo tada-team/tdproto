@@ -40,6 +40,7 @@ func EmptyTeamUnread() TeamUnread {
 		GroupChatType:   new(Unread),
 		TaskChatType:    new(Unread),
 		MeetingChatType: new(Unread),
+		ThreadChatType:  new(Unread),
 	}
 }
 
