@@ -41,7 +41,7 @@ jobs:
           npm run check-types
           npm run build
       - name: Commit and upload typescript
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/test-ci-cd'
         run: |
           cd "$CLONE_DIR"
           git add --all
