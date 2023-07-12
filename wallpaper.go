@@ -10,7 +10,4 @@ type Wallpaper struct {
 
 	// Url to jpg or png
 	Url string `json:"url"`
-	
-	// test description
-	Description string `json:"description"`
 }
