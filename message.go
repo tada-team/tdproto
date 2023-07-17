@@ -19,6 +19,7 @@ type Mediasubtype string
 const (
 	MediaSubtypeSticker Mediasubtype = "sticker"
 	MediaSubtypeNewtask Mediasubtype = "newtask"
+	MediaSubtypeNamed   Mediasubtype = "named"
 )
 
 // Chat message content
