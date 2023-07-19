@@ -16,4 +16,6 @@ type Subscription struct {
 	TariffUid string `json:"tariff_uid,omitempty"`
 	// ID of the user who subscribed
 	UserUid string `json:"user_uid,omitempty"`
+	// EmptyWorkplaceCount empty workplace count
+	EmptyWorkplaceCount uint32 `json:"empty_workplace_count,omitempty"`
 }
