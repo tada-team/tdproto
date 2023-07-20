@@ -29,6 +29,9 @@ type Contact struct {
 	// Role in this team
 	Role string `json:"role"`
 
+	// Selected public status
+	UserPublicStatus UserPublicStatus `json:"public_status"`
+
 	// Mood in this team
 	Mood string `json:"mood,omitempty"`
 
