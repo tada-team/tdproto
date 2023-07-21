@@ -20,7 +20,7 @@ type PublicStatus struct {
 
 type ContactPublicStatus struct {
 	// Public Status
-	PublicStatus PublicStatus `json:"public_status"`
+	Status PublicStatus `json:"status"`
 
 	// Expires at (iso datetime)
 	ExpiresAt ISODateTimeString `json:"expires_at"`
