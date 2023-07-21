@@ -50,11 +50,8 @@ type Contact struct {
 	// Role in team
 	Role string `json:"role"`
 
-	// Public Status Emoji
-	PublicStatusEmoji string `json:"public_status_emoji"`
-
-	// Public Status Emoji
-	PublicStatusExpiresAt tdproto.ISODateTimeString `json:"public_status_expires_at"`
+	// Public Status
+	ContactPublicStatus tdproto.ContactPublicStatus `json:"contact_public_status"`
 
 	// Mood in team
 	Mood string `json:"mood"`

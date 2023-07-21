@@ -29,11 +29,8 @@ type Contact struct {
 	// Role in this team
 	Role string `json:"role"`
 
-	// Public Status Emoji
-	PublicStatusEmoji string `json:"public_status_emoji"`
-
-	// Public Status Emoji
-	PublicStatusExpiresAt ISODateTimeString `json:"public_status_expires_at"`
+	// Public Status
+	ContactPublicStatus ContactPublicStatus `json:"contact_public_status"`
 
 	// Mood in this team
 	Mood string `json:"mood,omitempty"`
