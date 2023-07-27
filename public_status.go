@@ -2,6 +2,9 @@ package tdproto
 
 // Public Status
 type PublicStatus struct {
+	// Public Status Type
+	Type PublicStatusType `json:"type"`
+
 	// Display emoji
 	Emoji string `json:"emoji"`
 
@@ -10,9 +13,6 @@ type PublicStatus struct {
 
 	// Status Label English
 	StatusEn string `json:"status_en"`
-
-	// Duration in seconds
-	DurationSeconds int32 `json:"duration_seconds"`
 	
 	// Duration Label
 	DurationLabel string `json:"duration_label"`
