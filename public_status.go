@@ -13,6 +13,9 @@ type PublicStatus struct {
 
 	// Status Label English
 	StatusEn string `json:"status_en"`
+
+	// Duration in seconds
+	DurationSeconds int32 `json:"duration_seconds"`
 	
 	// Duration Label
 	DurationLabel string `json:"duration_label"`
