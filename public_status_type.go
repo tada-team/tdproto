@@ -4,12 +4,12 @@ package tdproto
 type PublicStatusType string
 
 const (
-	None PublicStatusType = "none"
-	Remote PublicStatusType = "remote"
-	Vacation PublicStatusType = "vacation"
-	Sick PublicStatusType = "sick"
-	Commuting PublicStatusType = "commuting"
-	DoNotDisturb PublicStatusType = "do_not_disturb"
-	Lunch PublicStatusType = "lunch"
-	BeRightBack PublicStatusType = "be_right_back"
+	PublicStatusNone PublicStatusType = "none"
+	PublicStatusRemote PublicStatusType = "remote"
+	PublicStatusVacation PublicStatusType = "vacation"
+	PublicStatusSick PublicStatusType = "sick"
+	PublicStatusCommuting PublicStatusType = "commuting"
+	PublicStatusDoNotDisturb PublicStatusType = "do_not_disturb"
+	PublicStatusLunch PublicStatusType = "lunch"
+	PublicStatusBeRightBack PublicStatusType = "be_right_back"
 )
