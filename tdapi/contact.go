@@ -50,6 +50,9 @@ type Contact struct {
 	// Role in team
 	Role string `json:"role"`
 
+	// Public Status
+	PublicStatus tdproto.PublicStatusType `json:"public_status"`
+
 	// Mood in team
 	Mood string `json:"mood"`
 
