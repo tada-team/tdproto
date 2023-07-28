@@ -30,7 +30,7 @@ type Contact struct {
 	Role string `json:"role"`
 
 	// Public Status
-	PublicStatus ContactPublicStatus `json:"public_status,omitempty"`
+	PublicStatus *ContactPublicStatus `json:"public_status,omitempty"`
 
 	// Mood in this team
 	Mood string `json:"mood,omitempty"`
