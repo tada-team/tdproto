@@ -50,6 +50,9 @@ type Chat struct {
 	// Title
 	DisplayName string `json:"display_name"`
 
+	// Public Status
+	PublicStatus *PublicStatus `json:"public_status,omitempty"`
+
 	// Icons info
 	Icons IconData `json:"icons"`
 
@@ -259,10 +262,10 @@ type Chat struct {
 	MeetingDuration int32 `json:"meeting_duration,omitempty"`
 
 	// Parent message uid for thread
-	ParentMessageId   string `json:"parent_message_id,omitempty"`
+	ParentMessageId string `json:"parent_message_id,omitempty"`
 
 	// Parent chat uid for thread
-	ParentChatId    JID    `json:"parent_chat_id,omitempty"`
+	ParentChatId JID `json:"parent_chat_id,omitempty"`
 }
 
 // Link to sub/sup task
