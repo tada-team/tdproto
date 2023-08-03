@@ -261,6 +261,12 @@ type Chat struct {
 	// Meeting duration
 	MeetingDuration int32 `json:"meeting_duration,omitempty"`
 
+	// Can I delete all messages history in this chat
+	CanDeleteGlobalHistory bool `json:"can_delete_global_history,omitempty"`
+
+	// Can I delete local messages history in this chat
+	CanDeleteLocalHistory bool `json:"can_delete_local_history,omitempty"`
+
 	// Parent message uid for thread
 	ParentMessageId string `json:"parent_message_id,omitempty"`
 
