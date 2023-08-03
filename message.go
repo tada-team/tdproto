@@ -19,6 +19,7 @@ type Mediasubtype string
 const (
 	MediaSubtypeSticker Mediasubtype = "sticker"
 	MediaSubtypeNewtask Mediasubtype = "newtask"
+	MediaSubtypeNamed   Mediasubtype = "named"
 )
 
 // Chat message content
@@ -199,6 +200,12 @@ type Message struct {
 
 	// Debug information, if any
 	Debug string `json:"_debug,omitempty" tdproto:"readonly"`
+
+	// ThreadJID
+	ThreadJID JID `json:"thread_jid,omitempty"`
+
+	// Thread Messages Count
+	ThreadMessagesCount int `json:"thread_messages_count,omitempty"`
 }
 
 // Website title and description

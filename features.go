@@ -233,6 +233,9 @@ type Features struct {
 	// CallsVideoEnabled enabled or disabled video calls
 	CallsVideoEnabled bool `json:"calls_video_enabled"`
 
+	// CallsVideoMultistreamEnabled enabled or disabled video in multistream mode (for janus)
+	CallsVideoMultistreamEnabled bool `json:"calls_video_multistream_enabled"`
+
 	// VcsEnabled enabled or disabled vcs
 	VcsEnabled bool `json:"vcs_enabled"`
 
@@ -311,6 +314,9 @@ type Features struct {
 
 	// File Extension Whitelist Priority
 	FileExtensionWhitelistPriority bool `json:"file_extension_whitelist_priority,omitempty"`
+
+	// Thread enabled flag
+	ThreadsEnabled bool `json:"threads_enabled,omitempty"`
 }
 
 // Interactive Connectivity Establishment Server for WEB Rtc connection. Readonly.

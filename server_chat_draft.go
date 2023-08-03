@@ -1,10 +1,11 @@
 package tdproto
 
-func NewServerChatDraft(jid JID, draft string, gentime int64) (r ServerChatDraft) {
+func NewServerChatDraft(jid JID, draft string, gentime int64, revision int64) (r ServerChatDraft) {
 	r.Name = r.GetName()
 	r.Params.Jid = jid
 	r.Params.Draft = draft
 	r.Params.DraftGentime = gentime
+	r.Params.Revision = revision
 	return r
 }
 
@@ -25,8 +26,12 @@ type serverChatDraftParams struct {
 	Draft string `json:"draft"`
 
 	// Draft version
+	// Deprecated: use Revision instead
 	DraftGentime int64 `json:"draft_gentime"`
 
-	// Deprecated
+	// Revision Unixtime(ms)
+	Revision int64 `json:"revision"`
+
+	// Deprecated: use Revision instead
 	DraftNum int64 `json:"draft_num"`
 }

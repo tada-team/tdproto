@@ -92,6 +92,9 @@ type Team struct {
 	// Team pinned
 	Pinned bool `json:"pinned,omitempty"`
 
+	// Sort ordering for pinned team
+	PinnedSortOrdering int `json:"pinned_sort_ordering,omitempty"`
+
 	// Team's available tariff by includig archive ones
 	AvailableTariffs []string `json:"available_tariffs,omitempty"`
 
@@ -130,4 +133,8 @@ type DeletedTeam struct {
 
 	// Object version
 	Gentime int64 `json:"gentime"`
+}
+
+type GetTeamsFilter struct {
+	Status TeamStatus `json:"status,omitempty"`
 }

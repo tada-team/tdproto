@@ -19,6 +19,9 @@ const (
 
 	//Meeting
 	MeetingChatType ChatType = "meeting"
+
+	// Thread chat
+	ThreadChatType ChatType = "thread"
 )
 
 func (ct ChatType) JidPrefix() string {
@@ -31,6 +34,8 @@ func (ct ChatType) JidPrefix() string {
 		return TaskPrefix
 	case MeetingChatType:
 		return MeetingPrefix
+	case ThreadChatType:
+		return ThreadPrefix
 	default:
 		log.Panicf("JidPrefix(): incorrect chat type: %s", ct)
 		return ""
@@ -43,3 +48,4 @@ func (ct ChatType) IsDirect() bool  { return ct == DirectChatType }
 func (ct ChatType) IsGroup() bool   { return ct == GroupChatType }
 func (ct ChatType) IsTask() bool    { return ct == TaskChatType }
 func (ct ChatType) IsMeeting() bool { return ct == MeetingChatType }
+func (ct ChatType) IsThread() bool  { return ct == ThreadChatType }

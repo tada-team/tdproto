@@ -50,6 +50,9 @@ type Chat struct {
 	// Title
 	DisplayName string `json:"display_name"`
 
+	// Public Status
+	PublicStatus *PublicStatus `json:"public_status,omitempty"`
+
 	// Icons info
 	Icons IconData `json:"icons"`
 
@@ -71,8 +74,12 @@ type Chat struct {
 	// Last message draft, if any
 	Draft string `json:"draft,omitempty"`
 
+	// Deprecated: use DraftRevision instead.
 	// Last message draft version, if any
 	DraftGentime int64 `json:"draft_gentime,omitempty"`
+
+	// Last message draft version, if any. unixtime(ms)
+	DraftRevision int64 `json:"draft_revision,omitempty"`
 
 	// Hidden chat
 	Hidden bool `json:"hidden,omitempty"`
@@ -242,16 +249,16 @@ type Chat struct {
 	// Date of the last message sent even if it was deleted
 	LastActivity ISODateTimeString `json:"last_activity,omitempty"`
 
-	// Deprecated
+	// Deprecated: use DraftRevision instead.
 	DraftNum int64 `json:"draft_num,omitempty"`
 
-	//Start date of meeting chat
+	// Start date of meeting chat
 	MeetingStartAt ISODateTimeString `json:"meeting_start_at,omitempty"`
 
-	//Meeting has frequency
+	// Meeting has frequency
 	MeetingFreq bool `json:"meeting_freq,omitempty"`
 
-	//Meeting duration
+	// Meeting duration
 	MeetingDuration int32 `json:"meeting_duration,omitempty"`
 
 	// Can I delete all messages history in this chat
@@ -259,6 +266,12 @@ type Chat struct {
 
 	// Can I delete local messages history in this chat
 	CanDeleteLocalHistory bool `json:"can_delete_local_history,omitempty"`
+
+	// Parent message uid for thread
+	ParentMessageId string `json:"parent_message_id,omitempty"`
+
+	// Parent chat uid for thread
+	ParentChatId JID `json:"parent_chat_id,omitempty"`
 }
 
 // Link to sub/sup task
@@ -289,6 +302,12 @@ type Subtask struct {
 
 	// Is subtask deadline expired
 	DeadlineExpired bool `json:"deadline_expired,omitempty"`
+
+	// Subtask importance, if available in team
+	Importance *int `chattype:"task" json:"importance,omitempty"`
+
+	// Subtask complexity, number
+	Complexity *int `chattype:"task" json:"complexity,omitempty"`
 }
 
 // Task checklist item

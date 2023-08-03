@@ -6,49 +6,55 @@ import "time"
 type PersonalAccountBilling struct {
 
 	// PersonalAccountBilling ID
-	PersonalAccountId string `json:"personal_account_id"` // TODO: must be int64
-
-	// Full name of owner personal account
-	FullName string `json:"full_name,omitempty"`
-
-	// Phone number of owner account
-	Phone string `json:"phone,omitempty"`
+	PersonalAccountId string `json:"personal_account_id"`
 
 	// ID User who owns this personal account
+	OwnerID string `json:"owner_id"`
+
+	// UUID of User who owns this personal account
 	OwnerUuid string `json:"owner_uuid"`
 
-	// ID Tariff on this personal account
-	TariffId string `json:"tariff_id"` // TODO: must be int64
+	// Count of teams on personal account
+	TeamsCount uint32 `json:"teams_count"`
 
-	// Name Tariff on this personal account
-	TariffName string `json:"tariff_name"`
+	// Count of workplaces on personal account
+	WorkplaceCount uint32 `json:"workplace_count"`
 
-	// ID Discount on personal account
-	DiscountId string `json:"discount_id"` // TODO: must be int64
+	// Count of empty workplaces on personal account
+	EmptyWorkplaceCount uint32 `json:"empty_workplace_count"`
 
-	// Amount of Discount on personal account
-	DiscountAmount int32 `json:"discount_amount"`
+	// Count of occupied workplaces on personal account
+	OccupiedWorkplaceCount uint32 `json:"occupied_workplace_count"`
+
+	// Count of free workplaces on personal account
+	FreeWorkplaceCount uint32 `json:"free_workplace_count"`
+
+	// Count of paid workplaces on personal account
+	PaidWorkplaceCount uint32 `json:"paid_workplace_count"`
+
+	// Is the account blocked
+	IsBlocked bool `json:"is_blocked"`
+
+	// Is the account suspended
+	IsSuspended bool `json:"is_suspended"`
+
+	// Date of next debiting funds
+	NextBillingDate *time.Time `json:"next_billing_date,omitempty"`
+
+	// Account blocking date
+	BlockDate *time.Time `json:"block_date,omitempty"`
+
+	// Account suspending date
+	SuspendDate *time.Time `json:"suspend_date,omitempty"`
 
 	// Status of personal account
 	Status PersonalAccountStatus `json:"status"`
 
-	// Date of next debiting funds
-	NextBillingDate time.Time `json:"next_billing_date"`
+	// Tariff on this personal account
+	Tariff TariffBilling `json:"tariff"`
 
-	// Count of teams on personal account
-	TeamCount int32 `json:"team_count"`
-
-	// Count of workplaces on personal account
-	WorkplaceCount int32 `json:"workplace_count"`
-
-	// Count of user on personal account
-	UsersCount int32 `json:"users_count"`
-
-	// Count of free workplaces on personal account
-	FreeWorkplaces int32 `json:"free_workplaces"`
-
-	// Count of paid workplaces on personal account
-	PaidWorkplaces int32 `json:"paid_workplaces"`
+	// Owner of this personal account
+	Owner Contact `json:"owner,omitempty"`
 }
 
 // CreatePersonalAccountRequest request on create personal account

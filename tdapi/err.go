@@ -17,6 +17,7 @@ const (
 	AccountNotFound     = Err("ACCOUNT_NOT_FOUND")
 	AccountSuspended    = Err("ACCOUNT_SUSPENDED")
 	AccountBlocked      = Err("ACCOUNT_BLOCKED")
+	NoEmptyWorkplaces   = Err("NO_EMPTY_WORKPLACES")
 )
 
 func (e Err) Error() string { return string(e) }
@@ -25,6 +26,8 @@ func (e Err) StatusCode() int {
 	switch e {
 	case NotModified:
 		return 304
+	case NoEmptyWorkplaces:
+		return 400
 	case EmptyToken, InvalidToken, EmptySession:
 		return 401
 	case AccessDenied:
@@ -40,9 +43,9 @@ func (e Err) StatusCode() int {
 	case InvalidData:
 		return 422
 	case AccountNotFound, AccountBlocked:
-		return 402
-	case AccountSuspended:
 		return 451
+	case AccountSuspended:
+		return 402
 	default:
 		return 200
 	}
