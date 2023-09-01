@@ -66,4 +66,7 @@ type UserWithMe struct {
 
 	// Personal account from billing
 	Account *PersonalAccountBilling `json:"account,omitempty"`
+
+	// Personal account from billing by opened team
+	TeamAccount *PersonalAccountBilling `json:"team_account,omitempty"`
 }
